@@ -196,7 +196,7 @@ function Login() {
 
                   <label
                     htmlFor="number"
-                    className="flex justify-start block mb-2 pt-2 text-xs text-gray-400 "
+                    className="flex justify-start mb-2 pt-2 text-xs text-gray-400 "
                   >
                     Example: “Hi. Kindly send me the ebook”
                   </label>
@@ -217,7 +217,7 @@ function Login() {
                 <div className=" py-3 flex justify-center">
                   <label
                     htmlFor="password"
-                    className="flex justify-start block mb-2 text-sm font-medium text-gray-400"
+                    className="flex justify-start mb-2 text-sm font-medium text-gray-400"
                   >
                     Or
                   </label>
@@ -243,14 +243,14 @@ function Login() {
                   <label
                     htmlFor="number"
                     style={{ color: '#616161' }}
-                    className="flex justify-start block mb-2 text-sm "
+                    className="flex justify-start mb-2 text-sm "
                   >
                     Your brand name
                   </label>
                   <input
                     type="text"
                     id="email"
-                    className=" shadow-sm bg-gray-100 block border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 "
+                    className=" shadow-sm bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 "
                     placeholder="Your brand name"
                     // defaultValue={phone}
                     // onChange={(e) => setPhone(e.target.value)}
@@ -339,7 +339,7 @@ function Login() {
                       <span
 
                         style={{ backgroundColor: '#FFFFFF', borderRadius: '50px' }}
-                        className="text-black hover:bg-green-800 ring-1 focus:outline-none ring-black font-medium border-black rounded-lg rounded-lg text-sm w-full px-2 py-2.5 text-center "
+                        className="text-black hover:bg-green-800 ring-1 focus:outline-none ring-black font-medium border-black rounded-lg text-sm w-full px-2 py-2.5 text-center "
                       >
                         <span className="flex justify-center">
                           <SvgElement type={icontypesEnum.WHATSAPP} /> <span className="pl-2"> Open on WhasApp</span>
