@@ -84,7 +84,7 @@ function Login() {
                 <div className="mb-6 ">
                   <label
                     htmlFor="email"
-                    className="flex justify-start block mb-2 text-sm font-medium text-gray-400 "
+                    className="flex justify-start mb-2 text-sm font-medium text-gray-400 "
                   >
                     Email
                   </label>
@@ -92,7 +92,7 @@ function Login() {
                     type="email"
                     id="email"
                     name="email"
-                    className="flex w-80 justify-center shadow-sm bg-gray-50 block border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 "
+                    className="flex justify-center shadow-sm bg-gray-50  border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 w-full p-2.5 "
                     placeholder="Email"
                     defaultValue={email}
                     onChange={(e) => setEmail(e.target.value)}
@@ -103,7 +103,7 @@ function Login() {
                 <div className="mb-4">
                   <label
                     htmlFor="password"
-                    className="flex justify-start block mb-2 text-sm font-medium text-gray-400"
+                    className="flex justify-start mb-2 text-sm font-medium text-gray-400"
                   >
                     Password
                   </label>
@@ -113,7 +113,7 @@ function Login() {
                       placeholder="Password"
                       id="password"
                       name="password"
-                      className="shadow-sm w-80 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 "
+                      className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 "
                       required={true}
                       defaultValue={password}
                       onChange={(e) => setPassword(e.target.value)}
