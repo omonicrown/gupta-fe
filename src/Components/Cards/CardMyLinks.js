@@ -21,6 +21,8 @@ export default function CardMyLinks() {
   let [contact, setContact] = React.useState('');
   let [effect, setEffect] = React.useState('');
 
+console?.log(value)
+
   function toggleModal(value2, contact) {
     setvalue(value2)
     setContact(contact)
@@ -35,6 +37,7 @@ export default function CardMyLinks() {
   // console.log(contact)
 
   const [message, setMessage] = React.useState("");
+  const [name, setName] = React.useState("");
   // console.log(message)
 
 
@@ -64,11 +67,12 @@ export default function CardMyLinks() {
   const handleSubmit = React.useCallback(
     (e) => {
       e.preventDefault();
-
+      console?.log(message)
       data = {
         'message': message,
-        'id': value,
-        'phone_number': contact
+        'id': value?.id,
+        'name': value?.name,
+        'phone_number': value?.link_info?.phone_number
       }
       AdminApis.editLink(data).then(
         (response) => {
@@ -88,7 +92,7 @@ export default function CardMyLinks() {
 
       });
     },
-    [value, message, contact]
+    [value, message, contact,name]
   );
 
   const deleteLink = React.useCallback(
@@ -175,10 +179,11 @@ export default function CardMyLinks() {
 
               <div>
                 {!loader ? (
-                  data?.link?.length >= 1 ?
+                  (data?.link?.length >= 1) ?
                     <div className="container flex-col md:flex-row md:justify-start mt-1 pt-1 grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-3">
                       {(inputEl?.current?.value?.length > 1 ? searchResult : data?.link).filter(data => data?.type !== 'tiered').map(
                         (data, index) => (
+
                           <>
 
                             <div class="max-w-sm bg-white rounded-lg border border-gray-200 shadow-md">
@@ -209,7 +214,7 @@ export default function CardMyLinks() {
                                 <span className="flex justify-start gap-1">
                                   <span
                                     style={{ color: 'white' }}
-                                    className="ring-1 outline-none bg-[#149E49] font-xs rounded-lg text-xs px-4 h-5 mt-3 text-center cursor-pointer"
+                                    className="ring-1 outline-none bg-[#149E49] font-xs rounded-lg text-xs px-4 h-5 pt-[2px] text-center cursor-pointer"
                                   >
                                     Active
                                   </span>
@@ -217,7 +222,7 @@ export default function CardMyLinks() {
                                   {data?.type === 'catalog' ?
                                     <span
                                       style={{ borderColor: '#61A24F' }}
-                                      className=" bg-blue-100 text-blue-800 outline-none font-xs rounded-lg text-xs px-3 h-4 mt-2 text-center "
+                                      className=" bg-blue-100 text-blue-800 outline-none font-xs rounded-lg text-xs px-4 h-5 pt-[2px] text-center "
                                     >
                                       Catalog
                                     </span>
@@ -235,7 +240,7 @@ export default function CardMyLinks() {
                                   <button
                                     type="button"
                                     style={{}}
-                                    onClick={(e) => toggleModal(data?.id, data?.link_info?.phone_number)}
+                                    onClick={(e) => toggleModal(data)}
                                     className=" outline-none  font-xs rounded-full text-xs px-2 py-2 text-center "
                                   >
                                     <FaEdit />
@@ -320,24 +325,24 @@ export default function CardMyLinks() {
             <span className="flex justify-end p-3">
               <p className="cursor-pointer font-bold" onClick={(e) => setVisible(false)}><SvgElement type={icontypesEnum.CANCEL} /></p>
             </span>
-            <div className="container flex flex-row justify-around bg-[#fff]  items-center rounded-lg p-1">
+            <div className=" flex flex-row justify-around bg-[#fff]  items-center rounded-lg p-1">
 
               <div className="">
 
                 <span className="flex justify-around">
-                  <h1 className=" text-xs text-red-600" style={{ fontSize: '10px' }}>Link can’t be edited in free plan. <span style={{ color: '#61A24F' }} className="font-bold text-xs">Upgrade to Pro</span></h1>
+                  {/* <h1 className=" text-xs text-red-600" style={{ fontSize: '10px' }}>Link can’t be edited in free plan. <span style={{ color: '#61A24F' }} className="font-bold text-xs">Upgrade to Pro</span></h1> */}
 
 
                 </span>
 
                 <label
-                  className="flex justify-start block mb-2 pt-2 text-md font-bold text-black"
+                  className="flex justify-start  mb-2 pt-2 text-md font-bold text-black"
                 >
                   Edit User Message
                 </label>
 
                 <label
-                  className="flex justify-start block mb-2 pt-2 text-xs font-medium text-gray-600"
+                  className="flex justify-start  mb-2 pt-2 text-xs font-medium text-gray-600"
                 >
                   User message
                 </label>
@@ -345,8 +350,12 @@ export default function CardMyLinks() {
 
                 <form onSubmit={handleSubmit} className="pb-4 rounded-lg">
                   <div className="mb-6 ">
-                    <textarea id="message" rows={3} className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-gray-500 focus:border-gray-500" placeholder="User message" style={{ backgroundColor: '#F5F5F5' }} onChange={(e) => setMessage(e?.target?.value)}></textarea>
+                    <textarea id="message" rows={3} defaultValue={value?.link_info?.message} className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-gray-500 focus:border-gray-500" placeholder="User message" style={{ backgroundColor: '#F5F5F5' }} onChange={(e) => setMessage(e?.target?.value)}></textarea>
                   </div>
+
+                  {/* <div className="mb-6 ">
+                    <input id="message" type="text" defaultValue={value?.name} className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-gray-500 focus:border-gray-500" placeholder="User message" style={{ backgroundColor: '#F5F5F5' }} onChange={(e) => setName(e?.target?.value)} />
+                  </div> */}
 
                   <span className="flex justify-center pt-4">
                     <button
@@ -454,7 +463,7 @@ export default function CardMyLinks() {
                       style={{ borderRadius: '50px', color: '#F52424' }}
                       className=" text-red-700 bg-red-200 focus:ring-4 focus:outline-none focus:ring-grredeen-300 font-medium rounded-lg text-sm w-full px-2 py-2.5 text-center "
                     >
-                      Delete Search
+                      Delete Link
                     </button>
                   </span>
 

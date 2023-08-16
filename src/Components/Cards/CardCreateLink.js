@@ -225,7 +225,7 @@ export default function CardCreateLink() {
                 <div className="mb-4 mt-4 flex justify-start gap-2">
                 <label for="default-radio-1" class=" text-sm " style={{color:'#616161'}}>Link type:</label>
                   <div class=" flex justify-center ">
-                    <input checked id="default-radio-1" type="radio" value="message" onClick={(e) => setType(e?.target?.value)} name="default-radio" class="w-4 h-4 pt-2 text-green-600 bg-green-100 border-green-700 " />
+                    <input checked={type == 'message'?true : false} id="default-radio-1" type="radio" value="message" onClick={(e) => setType(e?.target?.value)} name="default-radio" class="w-4 h-4 pt-2 text-green-600 bg-green-100 border-green-700 " />
                     {/* <input type="radio" id="default-radio-1" style={{ color: 'green' }} value="message" onClick={(e) => setType(e?.target?.value)} name="default-radio" class="w-4 h-4 pt-2 text-green-600 bg-green-100 border-green-700 " /> */}
                     <label for="default-radio-1" class="ml-2 text-sm  text-gray-400 ">Message</label>
                   </div>
@@ -253,7 +253,7 @@ export default function CardCreateLink() {
                     😊 Add emoji
                   </label>
 
-                  <textarea id="message" rows={3} className="block p-2.5 w-full text-sm text-gray-900 bg-[#F4FBFF] rounded-lg border border-gray-300 focus:ring-gray-500 focus:border-gray-500" placeholder="Add a pre-filled message that users will send to you." style={{ backgroundColor: '#F4FBFF' }} onChange={(e) => setMessage(e?.target?.value)} value={message}></textarea>
+                  <textarea id="message" disabled={type !== 'message'?true : false} rows={3} className="block p-2.5 w-full text-sm text-gray-900 bg-[#F4FBFF] rounded-lg border border-gray-300 focus:ring-gray-500 focus:border-gray-500" placeholder="Add a pre-filled message that users will send to you." style={{ backgroundColor: '#F4FBFF' }} onChange={(e) => setMessage(e?.target?.value)} value={message}></textarea>
 
 
                 </div>
@@ -272,7 +272,7 @@ export default function CardCreateLink() {
                     type="submit"
                     disabled={nameExist === 1 ? true : false}
                     style={{ backgroundColor: (nameExist === 1 ? 'grey' : '#0071BC'), borderRadius: '50px' }}
-                    className=" text-white hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm w-full px-2 py-2.5 text-center "
+                    className=" text-white hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full px-2 py-2.5 text-center "
                   >
                     Create link
                   </button>
