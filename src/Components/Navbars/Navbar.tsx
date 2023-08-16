@@ -29,7 +29,7 @@ function Navbar() {
 
   return (
     <div>
-      <nav className="bg-white sm:px-4 w-full z-20 top-0 left-0 shadow-md">
+      <nav className="bg-white sm:px-4 w-full z-20 top-0 left-0 shadow-md ">
         <div className=" flex justify-between  mx-auto">
           <div className=" md:px-16 px-1">
 

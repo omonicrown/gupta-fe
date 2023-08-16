@@ -13,6 +13,7 @@ import EditUserMessage from './Components/admin/EditUserMessage';
 import EditProfile from './Components/admin/EditProfile';
 import ProPlan from './Components/admin/ProPlans';
 import SideBar from './Components/Sidebar/index';
+import Home from './Components/Pages/Home';
 
 
 function App() {
@@ -22,7 +23,8 @@ function App() {
       {/* <Navbar/> */}
       
       <Routes>
-      <Route  path="/" element={<Index/>}/>
+      {/* <Route  path="/" element={<Index/>}/> */}
+      <Route  path="/" element={<Home/>}/>
            <Route  path="/login" element={<Login/>}/>
            <Route  path="/register" element={<Register/>}/>
            {/* <Route  path="/login" element={<Login/>}/> */}
