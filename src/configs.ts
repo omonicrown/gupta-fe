@@ -35,6 +35,7 @@ const configs = {
   socket: SOCKET_URL,
   type: TYPE_REST,
   // context: "https://wa.Uforo.link/api",
+  imageUrl: "http://127.0.0.1:8000/TieredImages/",
   context: "http://127.0.0.1:8000/api",
   history: createBrowserHistory(),
   requestTimeOut: 30000,

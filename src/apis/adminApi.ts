@@ -6,12 +6,28 @@ import { AdinLiveApis } from "./live/adminLiveApi";
 
 export class AdminApis {
     private static adminApi: AdinLiveApis = new AdinLiveApis();   
-
+    
     static getAllLinks(): AxiosPromise<Array<any>> {
         if (configs.type === "LOCAL") {
             return {} as AxiosPromise;
         } else {
             return this.adminApi.getAllLinks();
+        }
+    } 
+
+    static getlinks(): AxiosPromise<Array<any>> {
+        if (configs.type === "LOCAL") {
+            return {} as AxiosPromise;
+        } else {
+            return this.adminApi.getlinks();
+        }
+    }
+
+    static getMultiLink(data:any): AxiosPromise<Array<any>> {
+        if (configs.type === "LOCAL") {
+            return {} as AxiosPromise;
+        } else {
+            return this.adminApi.getMultiLink(data);
         }
     }
    
@@ -39,13 +55,21 @@ export class AdminApis {
         } else {
             return this.adminApi.createCatalog(data);   
         }
-    }
+    } 
 
     static deleteLink(data:any): AxiosPromise<Array<any>> {  
         if (configs.type === "LOCAL") {
             return {} as AxiosPromise;
         } else {
             return this.adminApi.deleteLink(data);   
+        }
+    }
+
+    static deleteMultiLink(data:any): AxiosPromise<Array<any>> {  
+        if (configs.type === "LOCAL") {
+            return {} as AxiosPromise;
+        } else {
+            return this.adminApi.deleteMultiLink(data);   
         }
     }
 

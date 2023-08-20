@@ -15,6 +15,10 @@ export class AuthLiveApis extends AxiosGlobal{
         return this.axios.post(`${configs.context}/link/create-random-link`, data);
     }
 
+    createRandomUrl(data:any): AxiosPromise<any> {
+        return this.axios.post(`${configs.context}/link/create-random-url`, data);
+    }
+
 
     registerUser(data:any): AxiosPromise<any> {
         return this.axios.post(`${configs.context}/auth/register`, data);

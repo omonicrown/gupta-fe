@@ -17,10 +17,16 @@ export class AdinLiveApis extends AxiosGlobal{
         return this.axios.post(`${configs.context}/links/catalog`,data,{
             headers: { "Content-Type": "aplication/json","Accept":"aplication/json","Authorization":`Bearer ${store.getState().data.login.value.token}`,"Access-Control-Allow-Origin":"*" },
           });
-    }
+    } 
     
     getAllLinks(): AxiosPromise<Array<any>> {
         return this.axios.get(`${configs.context}/session`,{
+            headers: { "Content-Type": "aplication/json","Accept":"aplication/json","Authorization":`Bearer ${store.getState().data.login.value.token}`,"Access-Control-Allow-Origin":"*" },
+          });
+    }
+
+    getlinks(): AxiosPromise<Array<any>> {
+        return this.axios.get(`${configs.context}/getlinks`,{
             headers: { "Content-Type": "aplication/json","Accept":"aplication/json","Authorization":`Bearer ${store.getState().data.login.value.token}`,"Access-Control-Allow-Origin":"*" },
           });
     }
@@ -33,6 +39,18 @@ export class AdinLiveApis extends AxiosGlobal{
 
     deleteLink(data:any): AxiosPromise<Array<any>> {
         return this.axios.delete(`${configs.context}/links/delete/${data}`,{
+            headers: { "Content-Type": "aplication/json","Accept":"aplication/json","Authorization":`Bearer ${store.getState().data.login.value.token}`,"Access-Control-Allow-Origin":"*" },
+          });
+    } 
+
+    deleteMultiLink(data:any): AxiosPromise<Array<any>> {
+        return this.axios.delete(`${configs.context}/links/delete-tiered-link/${data}`,{
+            headers: { "Content-Type": "aplication/json","Accept":"aplication/json","Authorization":`Bearer ${store.getState().data.login.value.token}`,"Access-Control-Allow-Origin":"*" },
+          });
+    }
+
+    getMultiLink(data:any): AxiosPromise<Array<any>> {
+        return this.axios.get(`${configs.context}/links/get-tiered-links/${data}`,{
             headers: { "Content-Type": "aplication/json","Accept":"aplication/json","Authorization":`Bearer ${store.getState().data.login.value.token}`,"Access-Control-Allow-Origin":"*" },
           });
     }

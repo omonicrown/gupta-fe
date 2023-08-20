@@ -29,7 +29,7 @@ function Navbar() {
 
   return (
     <div>
-      <nav className="bg-white sm:px-4 w-full z-20 top-0 left-0 shadow-md ">
+      <nav className="bg-white sm:px-4 w-full z-20 top-0 left-0 shadow-md py-4 md:py-0 px-5" >
         <div className=" flex justify-between  mx-auto">
           <div className=" md:px-16 px-1">
 
@@ -44,17 +44,23 @@ function Navbar() {
               <span className="hidden md:flex justify-center">
                 <NavLink to='/login'>
                   <div
-                    className=" hover:bg-gray-100 focus:outline-none focus:ring-4  focus:ring-gray-200 font-medium rounded-lg text-sm px-5 mt-3 p-2 text-center mr-3 md:mr-3 "
+                    className=" hover:bg-gray-100 focus:outline-none focus:ring-4  focus:ring-gray-200 font-medium rounded-lg text-sm px-1 mt-3 p-2 text-center mr-1 md:mr-1 "
                   >
                     Log in
                   </div>
                 </NavLink>
 
-                <NavLink to="/proplan">
+                <NavLink to="/Register">
                   <div
-                    className="text-white focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-3 md:mr-3 "
+                    className="text-white focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-3 md:mr-3 "
                   >
-                    <SvgElement type={icontypesEnum.PREMIUM} />
+                  <button
+                    type="submit"
+                    style={{ backgroundColor: '#0071BC', borderRadius: '50px' }}
+                    className=" text-white hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm  px-5 py-2.5 text-center "
+                  >
+                    Sign up
+                  </button>
                   </div></NavLink>
               </span>
 

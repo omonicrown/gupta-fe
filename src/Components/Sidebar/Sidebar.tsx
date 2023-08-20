@@ -47,7 +47,7 @@ export default function Sidebar(title:any) {
           </span>
 
           <Link
-            className="hidden text-left md:pb-1 text-blueGray-600 mr-0 md:inline-block whitespace-nowrap text-sm uppercase font-bold px-0 pl-4"
+            className="hidden text-left md:pb-10 mt-10 text-blueGray-600 mr-0 md:inline-block whitespace-nowrap text-sm uppercase font-bold px-0 pl-4"
             to="/"
           >
             <SvgElement type={icontypesEnum.BARS2} />
@@ -119,21 +119,21 @@ export default function Sidebar(title:any) {
                 <Link
                 onClick={() => setCollapseShow("hidden")}
                   style={{
-                    backgroundColor: (window.location.href.indexOf("/tieredlinks") !== -1
-                      ? "rgba(255, 255, 255, 0.1)"
+                    backgroundColor: (window.location.href.indexOf("/multi-links") !== -1
+                      ? "text-white"
                       : "text-black hover:text-blueGray-500")
                   }}
                   className={
                     "text-xs cursor-pointer  block " +
-                    (window.location.href.indexOf("/tieredlinks") !== -1
+                    (window.location.href.indexOf("/multi-links") !== -1
                       ? "text-white"
                       : "text-black hover:text-blueGray-500")
                   }
-                  to="/tieredlinks"
+                  to="/multi-links"
                 >
 
                   <span className="flex justify-between py-2 px-2">
-                    <span style={{fontSize:'16px'}}> Tiered Links</span>
+                    <span style={{fontSize:'16px'}}> Multi Links</span>
                     <span>  <SvgElement type={icontypesEnum.CROWN} /> </span>
                   </span>
 
@@ -147,7 +147,7 @@ export default function Sidebar(title:any) {
                 onClick={() => setCollapseShow("hidden")}
                   style={{
                     backgroundColor: (window.location.href.indexOf("/chatrouting") !== -1
-                      ? "rgba(255, 255, 255, 0.1)"
+                      ? "text-white"
                       : "text-black hover:text-blueGray-500")
                   }}
                   className={
@@ -175,7 +175,7 @@ export default function Sidebar(title:any) {
                 onClick={() => setCollapseShow("hidden")}
                   style={{
                     backgroundColor: (window.location.href.indexOf("/formlinks") !== -1
-                      ? "rgba(255, 255, 255, 0.1)"
+                      ? "text-white"
                       : "text-black hover:text-blueGray-500")
                   }}
                   className={
@@ -202,7 +202,7 @@ export default function Sidebar(title:any) {
                 onClick={() => setCollapseShow("hidden")}
                   style={{
                     backgroundColor: (window.location.href.indexOf("/dashboard2") !== -1
-                      ? "rgba(255, 255, 255, 0.1)"
+                      ? "text-white"
                       : "text-black hover:text-blueGray-500")
                   }}
                   className={

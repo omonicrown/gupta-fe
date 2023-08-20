@@ -1,285 +1,302 @@
-
-import React, { useState } from "react";
+import React from "react";
 import { AdminApis } from "../../apis/adminApi";
-import { NavLink } from "react-router-dom";
-import { SvgElement, icontypesEnum } from "../assets/svgElement";
+import { FaTrash, FaEdit } from "react-icons/fa";
+import CardNavBar from "./CardNavBar";
+import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { ToastContainer, toast } from 'react-toastify';
-import ImageUploading from 'react-images-uploading';
+import { NavLink } from "react-router-dom";
+import Modal from 'react-awesome-modal';
+import CardPageVisits from "./CardPageVisits";
+import { SvgElement, icontypesEnum } from "../assets/svgElement";
+
 
 // components
 
-export default function CardTiredLinks() {
+export default function CardMyLinks() {
 
-  const [images, setImages] = React.useState('');
-  const maxNumber = 69;
 
-  const onChange = (imageList, addUpdateIndex) => {
-    // data for submit
-    // console.log(imageList, addUpdateIndex);
-    setImages(imageList);
-  };
+  let [visible, setVisible] = React.useState(false);
+  let [toggleDeleteModal, setToggleDeleteModal] = React.useState(false);
+  let [value, setvalue] = React.useState('');
+  let [contact, setContact] = React.useState('');
+  let [effect, setEffect] = React.useState('');
 
-  const [nameExist, setNameExist] = useState('');
-  const [name, setName] = useState('');
-  const [title, setTitle] = useState('');
-  const [logo, setlogo] = useState('');
-  const [bio, SetBio] = useState('');
-  const [addlink, setAddLink] = useState('');
-  const [businessSite, setBusinessSite] = useState('');
-  const [businessPolicy, setBusinessPolicy] = useState('');
-  const [data, setLinks] = useState('');
-  const [isAvailable, setIsAvailable] = useState(false);
+console?.log(value)
+
+  function toggleModal(value2, contact) {
+    setvalue(value2)
+    setContact(contact)
+    setVisible(!visible)
+  }
+
+  function toggleDelete(value2) {
+    setvalue(value2)
+
+    setToggleDeleteModal(!visible)
+  }
+  // console.log(contact)
+
+  const [message, setMessage] = React.useState("");
+  const [name, setName] = React.useState("");
+  // console.log(message)
+
+
+  const [loader, setLoader] = React.useState(true);
+  function isCopied() {
+    toast.success("Copied to Clipboard");
+  }
+
+  let [data, setdata] = React.useState([]);
 
   React.useEffect(() => {
+    setLoader(true);
+    setEffect('')
     AdminApis.getAllLinks().then(
       (response) => {
         if (response?.data) {
-          setLinks(response?.data)
+          setdata(response?.data)
+          setLoader(false);
+          //console.log(response?.data)
         }
       }
     );
 
-  }, []);
+  }, [effect]);
 
-  React.useEffect(() => {
-    AdminApis.searchName({ 'name': name }).then(
-      (response) => {
-        if (response?.data) {
-          setNameExist(response?.data?.data)
-        }
-      }
-    );
-
-  }, [name, nameExist]);
 
   const handleSubmit = React.useCallback(
     (e) => {
       e.preventDefault();
-      const formData = new FormData()
-      formData.append('name', name.replace(/ /g, ''))
-      formData.append('title', title)
-      formData.append('bio', bio)
-      formData.append('logo', images[0]?.data_url)
-      formData.append('redirect_link', addlink)
-      formData.append('business_website', businessSite)
-      formData.append('business_policy', businessPolicy)
-      AdminApis.createTieredLink(formData).then(
+      console?.log(message)
+      data = {
+        'message': message,
+        'id': value?.id,
+        'name': value?.name,
+        'phone_number': value?.link_info?.phone_number
+      }
+      AdminApis.editLink(data).then(
         (response) => {
           if (response?.data) {
-            console.log(response?.data)
+            console.log(response.data)
+            setVisible(false)
+            setEffect('v')
             toast.success(response?.data?.message);
-          } else {
-            toast.error('link name already in use');
           }
-
-          // toast.success(response?.data?.message);
         }
       ).catch(function (error) {
         // handle error
-        // console.log(error.response);
+        console.log(error.response.data);
         toast.error("Offfline");
       }).finally(() => {
         //toast.error("No Internet Connection");
 
-      })
+      });
     },
-    [title, bio, name, addlink, businessPolicy, businessSite]
+    [value, message, contact,name]
   );
+
+  const deleteLink = React.useCallback(
+    (e) => {
+      e.preventDefault();
+      AdminApis.deleteMultiLink(value).then(
+        (response) => {
+          if (response?.data) {
+            console.log(response.data)
+            setToggleDeleteModal(false)
+            toast.success("MultiLink Deleted Successfully");
+            setEffect('d')
+          }
+        }
+      ).catch(function (error) {
+        // handle error
+        console.log(error.response.data);
+        toast.error("Offfline");
+      }).finally(() => {
+        //toast.error("No Internet Connection");
+
+      });
+    },
+    [value, message, effect]
+  );
+
+  const [searchTerm, setSearchTerm] = React.useState("");
+  const inputEl = React.useRef("");
+  const [searchResult, setSearchResult] = React.useState([]);
+
+  const getSearchTerm = React.useCallback(
+    () => {
+      console.log(inputEl.current.value);
+      setSearchTerm(inputEl.current.value);
+      if (searchTerm !== "") {
+        const newContactList = data?.link?.filter((data) => {
+          return Object.values(data).join(" ")?.toLowerCase()?.includes(inputEl?.current?.value?.toLowerCase());
+        });
+        setSearchResult(newContactList);
+      } else {
+        setSearchResult(data?.link);
+      }
+    }, [inputEl, searchTerm, searchResult, data]);
+
+
+
+
+
 
   return (
     <>
+
+
       <div className="relative flex flex-col min-w-0 break-words bg-white w-full mb-6  rounded">
-        <div className="rounded-t mb-0  py-3 border-0">
-          <div className=" lg:w-10/12 w-12/12">
-            <div className="w-full px-4 max-w-full pt-4 flex-grow flex-1">
-              <p className="flex justify-center text-sm mb-4"> The Tiered Link service enables a web page that group all the Walinks you want under a single URL. This service is available for users with 2 or more links in their subscription plan.</p>
-              <div className="grid lg:gap-40 sm:gap-2 mb-6 md:grid-cols-2">
+        <div className="rounded-t mb-0  md:py-3 p-1 border-0">
+          <div className="flex flex-wrap items-center">
+            <div className="w-full px-4 max-w-full flex-grow flex-1">
 
-                {/* First Section */}
-                {isAvailable ?
-                  <form onSubmit={null}>
-                    <div className="mb-4">
-                      <span className="mt-20">
-                        <p
-                          className=" text-black font-bold"
-                        >
-                          Editor:
-                        </p>
-                      </span>
-                      <div className="mt-3">
-                        <label for="first_name" class="block mb-2 text-sm  text-gray-900 dark:text-gray-600">Search for your tiered link URL first</label>
-                        <input type="text" defaultValue={name} onChange={(e) => setName(e?.target?.value)} id="first_name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="uforo.link/ username" required />
-                      </div>
-                      {nameExist > 0 ? <span className="text-xs text-red-500">Name already exist</span> : <span className="text-xs text-green-500">Name Available</span>}
+              {data?.link?.length ?
+                <span className="flex justify-between" >
+                  {/* <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-gray-300">Search</label> */}
+                  <div class="relative invisible md:visible">
+                    <input ref={inputEl} onChange={getSearchTerm} type="text" style={{ borderColor: '#0071BC' }} id="default-search" class="block p-4 pl-4 w-full h-4 text-sm text-gray-900 bg-gray-50 rounded-lg border focus:ring-green-500 focus:border-green-500 " placeholder="Search " />
+                    <svg aria-hidden="true" class="w-5 h-5 right-2.5 bottom-3 absolute text-gray-500 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                  </div>
 
+                  <NavLink to='/create-multi-link' className="flex justify-center">
+                    < span className="flex justify-center ">
                       <button
-                        disabled={nameExist === 1 ? true : false}
-                        style={{ backgroundColor: '#61A24F', borderRadius: '50px' }}
-                        className="flex w-7/12 mb-2 px-10 mt-2 py-1.5 text-center text-white hover:bg-green-800  font-xs rounded-lg  "
+                        type="button"
+                        style={{ backgroundColor: '#0071BC', borderRadius: '50px' }}
+                        className=" text-white hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm w-40 px-5 py-2.5 text-center "
                       >
-                        Reserve Tiered Link
+                        + Create New
                       </button>
+                    </span>
+                  </NavLink>
+                </span>
+                :
+                ''
+              }
 
-                      <label for="first_name" class="block mb-2 text-xs text-gray-600 ">The URL wont use links from your subscription plan</label>
+
+
+              <div>
+                {!loader ? (
+                  (data?.link?.length >= 1) ?
+                    <div className="container flex-col md:flex-row md:justify-start mt-1 pt-1 grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-3">
+                      {(inputEl?.current?.value?.length > 1 ? searchResult : data?.link).filter(data => data?.type === 'tiered').map(
+                        (data, index) => (
+
+                          <>
+
+                            <div class="max-w-sm bg-white rounded-lg border border-gray-200 shadow-md">
+                              <span className="flex justify-between gap-3 rounded-t-lg border bg-[#0071BC] px-3 py-1" >
+                                <p class="mb-2 font-medium tracking-tight text-white" style={{ fontSize: '18px' }}>gupta.ink/{data?.name}</p>
+                                < span className="flex justify-center mt-2">
+                                  <CopyToClipboard text={`gupta.ink/${(data?.name)}`}
+                                    onCopy={() => isCopied()}>
+                                    <span
+                                      style={{ color: 'white', borderColor: '#0071BC' }}
+                                      className="ring-1 cursor-pointer outline-none font-xs rounded-lg text-xs px-3 h-4  text-center "
+                                    >
+                                      Copy
+                                    </span>
+                                  </CopyToClipboard>
+
+                                </span>
+                              </span>
+                             
+
+                              <p class="mb-2 tracking-tight m-2 p-2 bg-[#F4FBFF] flex justify-center cursor-pointer" style={{ fontSize: '16px', color: '#595959' }}><span className="py-10 text-xl" style={{fontWeight:'600'}}>View Link Details</span>  </p>
+
+                              <span className="flex justify-between gap-1 pt-4 m-2">
+                                <span className="flex justify-start gap-1">
+                                  <span
+                                    style={{ color: 'white' }}
+                                    className="ring-1 outline-none bg-[#149E49] font-xs rounded-lg text-xs px-4 h-5 pt-[2px] text-center cursor-pointer"
+                                  >
+                                    Active
+                                  </span>
+
+                                  {data?.type === 'catalog' ?
+                                    <span
+                                      style={{ borderColor: '#61A24F' }}
+                                      className=" bg-blue-100 text-blue-800 outline-none font-xs rounded-lg text-xs px-4 h-5 pt-[2px] text-center "
+                                    >
+                                      Catalog
+                                    </span>
+
+                                    :
+
+                                    ''
+                                  }
+                                </span>
+
+
+
+                                < span className="flex justify-end gap-1 ">
+
+                                  <button
+                                    type="button"
+                                    style={{}}
+                                    onClick={(e) => toggleModal(data)}
+                                    className=" outline-none  font-xs rounded-full text-xs px-2 py-2 text-center "
+                                  >
+                                    <FaEdit />
+                                  </button>
+
+
+                                  <button
+                                    type="button"
+                                    onClick={(e) => toggleDelete(data?.id)}
+                                    className=" outline-none  font-xs text-red-500 rounded-full text-xs px-2 py-2 text-center "
+                                  >
+                                    <FaTrash />
+                                  </button>
+                                </span>
+                              </span>
+                            </div>
+                          </>
+
+
+                        )
+                      )}
                     </div>
-                  </form>
+                    :
 
+                    <CardPageVisits />
+                )
 
                   :
 
-                  <form onSubmit={handleSubmit}>
+                  <div className="p-2  shadow animate-pulse md:p-6 dark:border-gray-700" style={{ height: '70vh', width: '78vw' }}>
+                    <div className="flex justify-center items-center mb-4 h-48 bg-gray-300 rounded dark:bg-gray-400">
 
-                    <div className="mb-4">
-                      <span className="mt-20">
-                        <p
-                          className=" text-black font-bold"
-                        >
-                          Editor:
-                        </p>
-                      </span>
-                      <div className="mt-3">
-                        <span className="flex justify-between mb-1">
-                          <label for="first_name" class="block mb-2 text-sm font-bold text-gray-900">Your tiered link</label>
-                          <span className=" cursor-pointer"><SvgElement type={icontypesEnum.MORE} /></span>
-                        </span>
-
-                        <span className=" cursor-pointer">
-                          <ImageUploading
-                            multiple
-                            value={images}
-                            onChange={onChange}
-                            maxNumber={maxNumber}
-                            dataURLKey="data_url"
-                          >
-                            {({
-                              imageList,
-                              onImageUpload,
-                              onImageRemoveAll,
-                              onImageUpdate,
-                              onImageRemove,
-                              isDragging,
-                              dragProps,
-                            }) => (
-                              // write your building UI
-                              <div className="upload__image-wrapper">
-                                <button
-                                  disabled={imageList?.length ? true : false}
-                                  style={isDragging ? { color: 'red' } : undefined}
-                                  onClick={onImageUpload}
-                                  {...dragProps}
-                                >
-                                  <span className=" cursor-pointer"><SvgElement type={icontypesEnum.UPLOADIMAGE} /></span>
-                                </button>
-                                &nbsp;
-                                {/* <button onClick={onImageRemoveAll}>Remove all images</button> */}
-                                {imageList.map((image, index) => (
-                                  <div key={index} className="image-item">
-                                    <img src={image['data_url']} alt="" width="100" />
-                                    <div className="image-item__btn-wrapper">
-                                      <button onClick={() => onImageUpdate(index)}>Update</button> | &nbsp;
-                                      <button onClick={() => onImageRemove(index)}>Remove</button>
-                                    </div>
-                                  </div>
-                                ))}
-                              </div>
-                            )}
-                          </ImageUploading>
-                        </span>
-                        <label for="first_name" class="block mb-2 mt-2 text-sm  text-gray-900 dark:text-gray-600">Your tiered link</label>
-                        <input type="text" defaultValue={name} onChange={(e) => setName(e?.target?.value)} id="first_name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5" placeholder="uforo.link/ username" required />
-                        {nameExist > 0 ? <span className="text-xs text-red-500">Name already exist</span> : <span className="text-xs text-green-500">Name Available</span>}
-                        <label for="first_name" class="block mb-2 mt-2 text-sm  text-gray-900 dark:text-gray-600">Title</label>
-                        <input type="text" defaultValue={title} onChange={(e) => setTitle(e?.target?.value)} id="first_name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5" placeholder="Title" />
-                        <label for="first_name" class="block mb-2 mt-2 text-sm  text-gray-900 dark:text-gray-600">Bio</label>
-                        <textarea id="message" defaultValue={bio} onChange={(e) => SetBio(e?.target?.value)} rows={3} className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-gray-500 focus:border-gray-500" placeholder="Bio" style={{ backgroundColor: '#F5F5F5' }}></textarea>
-                        <label for="first_name" class="block mb-2 mt-2 text-sm  text-gray-900 dark:text-gray-600">Add link</label>
-
-                        <div>
-                          <select onChange={(e) => setAddLink(e?.target?.value)} class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
-                            <option selected>technology</option>
-
-                           
-                                {data?.link?.filter(data => data?.type !== 'tiered').map(
-                                  (data, index) => (
-                                    <option value={data?.name}>{data?.name}</option>
-                                  )
-                                )}
-                            
-                          </select>
-                        </div>
-
-                        <label for="first_name" class="block mb-2 mt-2 text-sm  text-gray-900 dark:text-gray-600">Busines website</label>
-                        <input type="text" defaultValue={businessSite} onChange={(e) => setBusinessSite(e?.target?.value)} id="first_name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5" placeholder="https:// busines website" />
-
-
-                        <label for="first_name" class="block mb-2 mt-2 text-sm  text-gray-900 dark:text-gray-600">Business policy</label>
-                        <input type="text" defaultValue={businessPolicy} onChange={(e) => setBusinessPolicy(e?.target?.value)} id="first_name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5" placeholder="Business policy" />
-
-                      </div>
-                      {/* {nameExist > 0 ? <span className="text-xs text-red-500">Name already exist</span> : <span className="text-xs text-green-500">Name Available</span>} */}
-
-                      <button
-                        disabled={nameExist === 1 ? true : false}
-                        type="submit"
-                        style={{ backgroundColor: '#61A24F', borderRadius: '50px' }}
-                        className="flex w-7/12 mb-2 px-10 mt-2 py-1.5 text-center text-white hover:bg-green-800  font-xs rounded-lg  "
-                      >
-                        Create Tiered Link
-                      </button>
                     </div>
-                  </form>
+                    <div className="h-2.5 bg-gray-200 rounded-full dark:bg-gray-400 w-48 mb-4"></div>
+                    <div className="h-2 bg-gray-200 rounded-full dark:bg-gray-400 mb-2.5"></div>
+                    <div className="h-2 bg-gray-200 rounded-full dark:bg-gray-400 mb-2.5"></div>
+                    <div className="h-2 bg-gray-200 rounded-full dark:bg-gray-400"></div>
+                    <div className="flex items-center mt-4 space-x-3">
+
+                    </div>
+                    <span className="sr-only">Loading...</span>
+                  </div>
+                  //  :
+                  //  <div>
+                  //   <h2>Pending </h2>
+                  //  </div>
                 }
 
 
-                {/* Second Section */}
 
 
 
-                <div className="mb-4">
-                  <p
-                    className=" text-black mb-5 font-bold"
-                  >
-                    Preview:
-                  </p>
-                  <div class="max-w-sm bg-white rounded-lg border border-gray-200 shadow-md ">
-                    <div class="p-5">
-                      <span className="flex justify-center mx-32 p-6 py-10 bg-gray-200 rounded-full"></span>
-
-                      <h5 class=" flex justify-center mb-2 text-md pt-5 font-bold tracking-tight text-gray-900 ">Title</h5>
-                      <p className="flex justify-center mb-2">Bio</p>
 
 
-                      <span
-                        style={{ backgroundColor: '#61A24F', borderRadius: '50px' }}
-                        className="flex mx-5 mb-2 justify-center px-10 py-1.5 text-center text-white hover:bg-green-800  font-medium rounded-lg  "
-                      >
-                        update
-                      </span>
-
-                      <span
-                        style={{ backgroundColor: '#61A24F', borderRadius: '50px' }}
-                        className="flex mx-5 mb-2 justify-center px-10 py-1.5 text-center text-white hover:bg-green-800  font-medium rounded-lg  "
-                      >
-                        update
-                      </span>
-
-                      <span
-                        style={{ backgroundColor: '#61A24F', borderRadius: '50px' }}
-                        className="flex mx-5 mb-2 justify-center px-10 py-1.5 text-center text-white hover:bg-green-800  font-medium rounded-lg  "
-                      >
-                        update
-                      </span>
-
-
-
-                    </div>
-                  </div>
-
-
-
-                </div>
 
               </div>
+
+
+
+
 
             </div>
 
@@ -290,6 +307,181 @@ export default function CardTiredLinks() {
 
         </div>
       </div>
+
+
+      <section>
+        <Modal
+          visible={visible}
+          width="400"
+          height="400"
+          effect="fadeInUp"
+          onClickAway={() => setVisible(false)}
+        >
+          <div className=" " style={{ height: '100%', overflow: 'auto' }}>
+            <span className="flex justify-end p-3">
+              <p className="cursor-pointer font-bold" onClick={(e) => setVisible(false)}><SvgElement type={icontypesEnum.CANCEL} /></p>
+            </span>
+            <div className=" flex flex-row justify-around bg-[#fff]  items-center rounded-lg p-1">
+
+              <div className="">
+
+                <span className="flex justify-around">
+                  {/* <h1 className=" text-xs text-red-600" style={{ fontSize: '10px' }}>Link can’t be edited in free plan. <span style={{ color: '#61A24F' }} className="font-bold text-xs">Upgrade to Pro</span></h1> */}
+
+
+                </span>
+
+                <label
+                  className="flex justify-start  mb-2 pt-2 text-md font-bold text-black"
+                >
+                  Edit User Message
+                </label>
+
+                <label
+                  className="flex justify-start  mb-2 pt-2 text-xs font-medium text-gray-600"
+                >
+                  User message
+                </label>
+
+
+                <form onSubmit={handleSubmit} className="pb-4 rounded-lg">
+                  <div className="mb-6 ">
+                    <textarea id="message" rows={3} defaultValue={value?.link_info?.message} className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-gray-500 focus:border-gray-500" placeholder="User message" style={{ backgroundColor: '#F5F5F5' }} onChange={(e) => setMessage(e?.target?.value)}></textarea>
+                  </div>
+
+                  {/* <div className="mb-6 ">
+                    <input id="message" type="text" defaultValue={value?.name} className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-gray-500 focus:border-gray-500" placeholder="User message" style={{ backgroundColor: '#F5F5F5' }} onChange={(e) => setName(e?.target?.value)} />
+                  </div> */}
+
+                  <span className="flex justify-center pt-4">
+                    <button
+                      type="submit"
+                      style={{ backgroundColor: '#61A24F', borderRadius: '50px' }}
+                      className=" text-white hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm w-full px-2 py-2.5 text-center "
+                    >
+                      Update
+                    </button>
+                  </span>
+
+                  <span className="flex justify-center pt-4">
+                    <button
+                      type="button"
+                      onClick={(e) => setVisible(false)}
+                      style={{ borderRadius: '50px' }}
+                      className=" text-black bg-gray-300 hover:bg-gray-500 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm w-full px-2 py-2.5 text-center "
+                    >
+                      Cancel
+                    </button>
+                  </span>
+
+                </form>
+
+
+
+              </div>
+
+            </div>
+
+          </div>
+        </Modal>
+      </section>
+
+
+
+      <section>
+        <Modal
+          visible={toggleDeleteModal}
+          width="350"
+          height="430"
+          effect="fadeInUp"
+          onClickAway={() => setToggleDeleteModal(false)}
+        >
+          <div className=" " style={{ height: '100%', overflow: 'auto' }}>
+
+            <div className="container flex flex-row justify-around bg-[#fff]  items-center rounded-lg p-2">
+
+              <div className="px-3">
+
+                {/* <span className="flex justify-around">
+                    <h1 className=" text-xs text-red-600" style={{ fontSize: '10px' }}>Link can’t be edited in free plan. <span style={{ color: '#61A24F' }} className="font-bold text-xs">Upgrade to Pro</span></h1>
+                  </span> */}
+                <span className="flex justify-end px-2 pt-3">
+                  <p className="cursor-pointer font-bold" onClick={(e) => setToggleDeleteModal(false)}><SvgElement type={icontypesEnum.CANCEL} /></p>
+                </span>
+
+                <label
+                  className="flex justify-start mb-2 pt-1 text-md font-bold text-black"
+                >
+                  Delete Link
+                </label>
+
+                <label
+                  style={{ fontSize: '14px' }}
+                  className="flex justify-start mb-2 pt-2 text-xs font-medium text-gray-600"
+                >
+                  You are about to delete the link you created.
+
+
+                </label>
+                <label
+                  style={{ fontSize: '14px' }}
+                  className="flex justify-start mb-2 pt-2 text-xs font-medium text-gray-600"
+                >
+
+
+                  Please note that:
+                </label>
+
+                <ul class="space-y-1 max-w-md list-disc list-inside text-gray-500 dark:text-gray-400 pl-2">
+                  <li style={{ color: '#2C2C2C', fontSize: '14px' }}>
+                    The link will stop working.
+                  </li>
+                  <li style={{ color: '#2C2C2C', fontSize: '14px' }} className="text-xs">
+                    All link data will be lost
+                  </li>
+                  <li style={{ color: '#2C2C2C', fontSize: '14px' }} className="text-xs">
+                    The link name will be made available to others
+                  </li>
+                  <li style={{ color: '#2C2C2C', fontSize: '14px' }} className="text-xs">
+                    Anyone who clicks the link will be redirected to gupta.link
+                  </li>
+                  <li style={{ color: '#2C2C2C', fontSize: '14px' }} className="text-xs">
+                    If you used this link in your Tiered links, the button will stop working
+                  </li>
+                </ul>
+
+
+
+                <form onSubmit={deleteLink} className="pb-4 rounded-lg">
+                  <span className="flex justify-center pt-4">
+                    <button
+                      type="submit"
+                      style={{ borderRadius: '50px', color: '#F52424' }}
+                      className=" text-red-700 bg-red-200 focus:ring-4 focus:outline-none focus:ring-grredeen-300 font-medium rounded-lg text-sm w-full px-2 py-2.5 text-center "
+                    >
+                      Delete Multi Link
+                    </button>
+                  </span>
+
+                  <span className="flex justify-center pt-4">
+                    <button
+                      type="button"
+                      onClick={(e) => setToggleDeleteModal(false)}
+                      style={{ borderRadius: '50px' }}
+                      className=" text-black   focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm w-full px-2 py-1.5 text-center "
+                    >
+                      Cancel
+                    </button>
+                  </span>
+
+                </form>
+              </div>
+
+            </div>
+
+          </div>
+        </Modal>
+      </section>
 
       <ToastContainer
         position="bottom-left"

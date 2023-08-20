@@ -1,4 +1,5 @@
 import React from 'react'
+import { NavLink } from 'react-router-dom'
 
 const CTA = () => {
   return (
@@ -9,7 +10,9 @@ const CTA = () => {
             </h1>
             <p className='my-6 text-white md:text-[20px] text-base text-center'>It only takes a few clicks to get started</p>
             <div>
+            <NavLink to='/register'>
             <button type="button" className="text-white bg-[#0071BC] hover:bg-[#DBF2FF] hover:text-[#0071BC] font-medium rounded-[5px] text-[15px] md:px-[40px] md:py-4 px-6  py-2.5 md:mr-4 mr-8">Get Started - It's Free</button>
+            </NavLink>
             </div>
 
           </div>

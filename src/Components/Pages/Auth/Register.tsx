@@ -105,7 +105,7 @@ function Register() {
       <div className="pb-32 md:mt-32 sm:px-10">
         <div className="container flex flex-row justify-center bg-[#fff] mx-auto items-center rounded-lg p-6">
 
-          <div className=" ">
+          <div className="border py-6 rounded-lg px-6">
             <div className=" ">
               <h1 className=" my-4 text-xl font-semibold text-gray-600">Sign up</h1>
 
@@ -193,14 +193,14 @@ function Register() {
 
                   <button
                     type="submit"
-                    style={{ backgroundColor: '#61A24F', borderRadius: '50px' }}
+                    style={{ backgroundColor: '#0071BC', borderRadius: '50px' }}
                     className=" text-white hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm w-96 px-5 py-2.5 text-center "
                   >
                     Sign up
                   </button>
                 </span>
                 <NavLink to='/login' className="flex justify-center">
-                  <p className="ml-2 mt-3 text-sm font-medium text-gray-400 ">Already have an account? <a href="/login" className="text-green-600 hover:underline ">Log in</a></p>
+                  <p className="ml-2 mt-3 text-sm font-medium text-gray-400 ">Already have an account? <a href="/login" className="text-[#0071BC] hover:underline ">Log in</a></p>
                 </NavLink>
                
               </form>
