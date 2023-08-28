@@ -122,7 +122,7 @@ function Home() {
         (response) => {
           if (response?.data) {
             setData(response?.data)
-            setClipad((response?.data?.url).slice(7))
+            setClipad((response?.data?.url))
             toggleModal()
           }
 
@@ -448,7 +448,7 @@ function Home() {
                       <path id="Shape_3" d="M31.7453 63.6972L37.2786 58.627C37.6901 58.25 37.6839 57.6442 37.2648 57.274C36.8456 56.9038 36.1723 56.9094 35.7608 57.2865L29.496 63.0269C29.0899 63.3991 29.0899 63.9953 29.496 64.3675L35.7608 70.1079C36.1723 70.485 36.8456 70.4905 37.2648 70.1204C37.6839 69.7502 37.6901 69.1444 37.2786 68.7674L31.7453 63.6972Z" fill="#007AFF" />
                     </g>
                     <path id="Oval" fill-rule="evenodd" clip-rule="evenodd" d="M80.7457 74.9618C87.7942 74.9618 93.508 69.8216 93.508 63.4809C93.508 57.1402 87.7942 52 80.7457 52C73.6973 52 67.9834 57.1402 67.9834 63.4809C67.9834 69.8216 73.6973 74.9618 80.7457 74.9618Z" fill="url(#pattern4)" />
-                    <text id="Martha Craig" fill="black" xmlSpace="preserve" style={{ whiteSpace: 'pre' }} font-family="Acme" font-size="12" letter-spacing="-0.3px"><tspan x="99.0166" y="64.412">{(phone?.countryCode + " " + phone?.phoneNumber)}</tspan></text>
+                    <text id="Martha Craig" fill="black" xmlSpace="preserve" style={{ whiteSpace: 'pre' }} font-family="Acme" font-size="12" letter-spacing="-0.3px"><tspan x="99.0166" y="64.412">{phone?.phoneNumber ?(phone?.countryCode + " " + phone?.phoneNumber):"+234" }  {}</tspan></text>
                     <text id="tap here for contact" fill="#8E8E93" xmlSpace="preserve" style={{ whiteSpace: 'pre' }} font-family="Acme" font-size="7" letter-spacing="-0.01px"><tspan x="100.125" y="74.282">tap here for contact info</tspan></text>
                     <g id="Send Message">
                       <g id="Rectangle_3" filter="url(#filter0_d_0_1)">
@@ -462,7 +462,7 @@ function Home() {
                         <g id="Stickers">
                           <path id="Shape_5" fill-rule="evenodd" clip-rule="evenodd" d="M202.491 525.286C204.842 525.286 206.747 527.191 206.747 529.542C206.747 530.26 206.695 531.029 206.591 531.85C206.283 533.374 205.73 534.511 204.619 535.622C203.578 536.663 202.432 537.309 200.849 537.822C199.979 538.082 198.235 538.054 198.235 538.054C195.884 538.054 193.979 536.148 193.979 533.798V529.542C193.979 527.191 195.884 525.286 198.235 525.286H202.491ZM202.491 526.137H198.235C196.355 526.137 194.83 527.661 194.83 529.542V533.798C194.83 535.678 196.355 537.202 198.235 537.202L199.555 537.204C200.093 537.174 200.363 536.922 200.363 536.448L200.363 535.282C200.363 533.331 201.939 531.746 203.89 531.735L204.357 531.729L204.649 531.72C204.917 531.709 205.109 531.692 205.227 531.67C205.647 531.59 205.871 531.267 205.897 530.702L205.896 529.542C205.896 527.661 204.371 526.137 202.491 526.137ZM205.386 532.505C205.48 532.488 205.568 532.464 205.658 532.433C205.321 533.402 204.775 534.262 204.017 535.02C203.241 535.796 202.293 536.414 201.168 536.872C201.198 536.741 201.214 536.599 201.214 536.447L201.214 535.281C201.214 533.799 202.411 532.594 203.894 532.586L204.241 532.582C204.783 532.573 205.154 532.55 205.386 532.505Z" fill="#007AFF" />
                         </g>
-                        <text id="hello there" fill="black" xmlSpace="preserve" style={{ whiteSpace: 'pre' }} font-family="Acme" font-size="10" letter-spacing="0em"><tspan x="59" y="532.76">{message}</tspan></text>
+                        <text id="hello there" fill="black" xmlSpace="preserve" style={{ whiteSpace: 'pre' }} font-family="Acme" font-size="10" letter-spacing="0em"><tspan x="59" y="532.76">{message?.substring(0, 30)}{message.length > 30 ? '...' : ''}</tspan></text>
                       </g>
                       <g id="Add">
                         <path id="Shape_6" d="M33.3855 524.722L33.4567 524.718C33.746 524.718 33.9847 524.934 34.0197 525.214L34.0241 525.285V530.747H39.486C39.7753 530.747 40.014 530.964 40.049 531.243L40.0535 531.315C40.0535 531.604 39.837 531.843 39.5572 531.878L39.486 531.882H34.0241V537.344C34.0241 537.633 33.8077 537.872 33.5278 537.907L33.4567 537.911C33.1674 537.911 32.9286 537.695 32.8936 537.415L32.8892 537.344V531.882H27.4273C27.138 531.882 26.8993 531.666 26.8643 531.386L26.8599 531.315C26.8599 531.025 27.0763 530.787 27.3561 530.752L27.4273 530.747H32.8892V525.285C32.8892 524.996 33.1057 524.757 33.3855 524.722L33.4567 524.718L33.3855 524.722Z" fill="#007AFF" />
@@ -618,7 +618,7 @@ function Home() {
                     className="flex justify-center mb-4 pt-2 text-sm font-bold text-gray-600"
                     style={{ fontSize: '18px' }}
                   >
-                    {data?.url?.slice(7)}
+                    {data?.url}
                   </label>
 
                   <span className="flex justify-center pb-2">

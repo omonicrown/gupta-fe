@@ -104,12 +104,14 @@ export default function CardCreateLink() {
               if (response?.data) {
                 setData(response?.data)
                 setSlicedLink((response?.data?.link?.name))
-                if(response?.data?.error  == 1){
-                  toggleModal3()
-                 // toast.error(response?.data?.message);
-                }else{
-                  toggleModal()
-                }
+
+                navigate('/mylinks');
+                // if(response?.data?.error  == 1){
+                //   // toggleModal3()
+                //  // toast.error(response?.data?.message);
+                // }else{
+                //   // toggleModal()
+                // }
 
               } else {
                 toast.error('link name already in use');
@@ -132,11 +134,12 @@ export default function CardCreateLink() {
               if (response?.data) {
                 setData(response?.data)
                 setSlicedLink((response?.data?.link?.name))
-                if(response?.data?.error  == 1){
-                  toast.error(response?.data?.message);
-                }else{
-                  toggleModal()
-                }
+                navigate('/mylinks');
+                // if(response?.data?.error  == 1){
+                //   toast.error(response?.data?.message);
+                // }else{
+                //   // toggleModal()
+                // }
                
 
               } else {

@@ -184,8 +184,7 @@ console?.log(value)
                       {(inputEl?.current?.value?.length > 1 ? searchResult : data?.link).filter(data => data?.type === 'tiered').map(
                         (data, index) => (
 
-                          <>
-
+                          <NavLink to={`/update-multi-link/${data?.id}`}>
                             <div class="max-w-sm bg-white rounded-lg border border-gray-200 shadow-md">
                               <span className="flex justify-between gap-3 rounded-t-lg border bg-[#0071BC] px-3 py-1" >
                                 <p class="mb-2 font-medium tracking-tight text-white" style={{ fontSize: '18px' }}>gupta.ink/{data?.name}</p>
@@ -253,7 +252,7 @@ console?.log(value)
                                 </span>
                               </span>
                             </div>
-                          </>
+                         </NavLink>
 
 
                         )

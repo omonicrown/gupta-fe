@@ -7,6 +7,7 @@ import Index from './Components/Pages/Auth/index';
 import MultiLink from './Components/admin/TiredLink';
 import CreateMultiLink from './Components/admin/CreateMultiLink';
 import UpdateMultiLink from './Components/admin/EditMultiLink';
+import ViewMultiPage from './Components/admin/ViewMultiPage';
 import Mylinks from './Components/admin/MyLinks';
 import CreateLink from './Components/admin/CreateLink';
 import LinkDetails from './Components/admin/LinkDetails';
@@ -40,6 +41,7 @@ function App() {
            <Route  path="/multi-links" element={<MultiLink/>}/>
            <Route  path="/create-multi-link" element={<CreateMultiLink/>}/>
            <Route  path="/update-multi-link/:linkId" element={<UpdateMultiLink/>}/>
+           <Route  path="/:linkId" element={<ViewMultiPage/>}/>
            <Route  path="/chatrouting" element={<Chatrouting/>}/>
            <Route  path='/sidebar' element={<SideBar/>}/>
            <Route  path='/proplan' element={<ProPlan/>}/>
