@@ -98,12 +98,12 @@ console?.log(value)
   const deleteLink = React.useCallback(
     (e) => {
       e.preventDefault();
-      AdminApis.deleteLink(value).then(
+      AdminApis.deleteMultiLink(value).then(
         (response) => {
           if (response?.data) {
             console.log(response.data)
             setToggleDeleteModal(false)
-            toast.success("Link Deleted Successfully");
+            toast.success("MultiLink Deleted Successfully");
             setEffect('d')
           }
         }
@@ -184,11 +184,10 @@ console?.log(value)
                       {(inputEl?.current?.value?.length > 1 ? searchResult : data?.link).filter(data => data?.type === 'tiered').map(
                         (data, index) => (
 
-                          <>
-
+                          <NavLink to={`/update-multi-link/${data?.id}`}>
                             <div class="max-w-sm bg-white rounded-lg border border-gray-200 shadow-md">
                               <span className="flex justify-between gap-3 rounded-t-lg border bg-[#0071BC] px-3 py-1" >
-                                <p class="mb-2 font-medium tracking-tight text-white" style={{ fontSize: '18px' }}>gupta.ink/{data?.name} </p>
+                                <p class="mb-2 font-medium tracking-tight text-white" style={{ fontSize: '18px' }}>gupta.ink/{data?.name}</p>
                                 < span className="flex justify-center mt-2">
                                   <CopyToClipboard text={`gupta.ink/${(data?.name)}`}
                                     onCopy={() => isCopied()}>
@@ -202,13 +201,9 @@ console?.log(value)
 
                                 </span>
                               </span>
-                              <span className="flex justify-start gap-2 m-2 ">
-                                <p class="mb-2 tracking-tight text-gray-900" style={{ fontSize: '16px' }}>{(data?.link_info?.phone_number)?.replace(/ /g, '')}  </p>
-                                <p class=" text-xs tracking-tight font-bold text-gray-900" style={{ fontSize: '16px' }}> .</p>
-                                <p class="tracking-tight font-bold " style={{ color: '#61A24F', fontSize: '16px', paddingTop: '1px' }}> {data?.short_url?.visits?.length ? data?.short_url?.visits?.length : '0'} clicks</p>
-                              </span>
+                             
 
-                              <p class="mb-2 tracking-tight m-2 p-2 bg-[#F4FBFF] h-20" style={{ fontSize: '16px', color: '#595959' }}>{data?.link_info?.message}</p>
+                              <p class="mb-2 tracking-tight m-2 p-2 bg-[#F4FBFF] flex justify-center cursor-pointer" style={{ fontSize: '16px', color: '#595959' }}><span className="py-10 text-xl" style={{fontWeight:'600'}}>View Link Details</span>  </p>
 
                               <span className="flex justify-between gap-1 pt-4 m-2">
                                 <span className="flex justify-start gap-1">
@@ -257,7 +252,7 @@ console?.log(value)
                                 </span>
                               </span>
                             </div>
-                          </>
+                         </NavLink>
 
 
                         )
@@ -447,7 +442,7 @@ console?.log(value)
                     The link name will be made available to others
                   </li>
                   <li style={{ color: '#2C2C2C', fontSize: '14px' }} className="text-xs">
-                    Anyone who clicks the link will be redirected to wa.uforo.link
+                    Anyone who clicks the link will be redirected to gupta.link
                   </li>
                   <li style={{ color: '#2C2C2C', fontSize: '14px' }} className="text-xs">
                     If you used this link in your Tiered links, the button will stop working
@@ -463,7 +458,7 @@ console?.log(value)
                       style={{ borderRadius: '50px', color: '#F52424' }}
                       className=" text-red-700 bg-red-200 focus:ring-4 focus:outline-none focus:ring-grredeen-300 font-medium rounded-lg text-sm w-full px-2 py-2.5 text-center "
                     >
-                      Delete Link
+                      Delete Multi Link
                     </button>
                   </span>
 

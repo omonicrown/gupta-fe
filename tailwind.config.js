@@ -9,6 +9,9 @@ module.exports = {
       ...colors,
     },
     extend: {
+      fontFamily: {
+        poppins: ["Poppins", "sans-serif"],
+      },
       minHeight: {
         "screen-75": "75vh",
       },

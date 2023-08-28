@@ -32,13 +32,21 @@ export class AuthApis {
         } else {
             return this.authApis.loginUser(data);
         }
-    }  
+    }   
 
     static createRandomLink(data: any): AxiosPromise<any> {
         if (configs.type === "LOCAL") {
             return {} as AxiosPromise;
         } else {
             return this.authApis.createRandomLink(data);
+        }
+    }  
+
+    static createRandomUrl(data: any): AxiosPromise<any> {
+        if (configs.type === "LOCAL") {
+            return {} as AxiosPromise;
+        } else {
+            return this.authApis.createRandomUrl(data);
         }
     }  
 

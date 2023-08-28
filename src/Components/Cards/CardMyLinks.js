@@ -447,7 +447,7 @@ console?.log(value)
                     The link name will be made available to others
                   </li>
                   <li style={{ color: '#2C2C2C', fontSize: '14px' }} className="text-xs">
-                    Anyone who clicks the link will be redirected to wa.uforo.link
+                    Anyone who clicks the link will be redirected to gupta.link
                   </li>
                   <li style={{ color: '#2C2C2C', fontSize: '14px' }} className="text-xs">
                     If you used this link in your Tiered links, the button will stop working

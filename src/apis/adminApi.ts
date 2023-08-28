@@ -13,6 +13,38 @@ export class AdminApis {
         } else {
             return this.adminApi.getAllLinks();
         }
+    }  
+
+    // static getlinks(): AxiosPromise<Array<any>> {
+    //     if (configs.type === "LOCAL") {
+    //         return {} as AxiosPromise;
+    //     } else {
+    //         return this.adminApi.getlinks();
+    //     }
+    // } 
+
+    static getlinksByName(data:any): AxiosPromise<Array<any>> {
+        if (configs.type === "LOCAL") {
+            return {} as AxiosPromise;
+        } else {
+            return this.adminApi.getlinksByName(data);
+        }
+    } 
+
+    static getMultiLink(data:any): AxiosPromise<Array<any>> {
+        if (configs.type === "LOCAL") {
+            return {} as AxiosPromise;
+        } else {
+            return this.adminApi.getMultiLink(data);
+        }
+    }
+
+    static getMultiLinkData(data:any): AxiosPromise<Array<any>> {
+        if (configs.type === "LOCAL") {
+            return {} as AxiosPromise;
+        } else {
+            return this.adminApi.getMultiLinkData(data);
+        }
     }
 
     static getlinks(): AxiosPromise<Array<any>> {
@@ -30,7 +62,7 @@ export class AdminApis {
         } else {
             return this.adminApi.editLink(data);
         }
-    } 
+    }  
 
 
     static createLink(data:any): AxiosPromise<Array<any>> {
@@ -41,19 +73,29 @@ export class AdminApis {
         }
     }
 
+   
+
     static createCatalog(data:any): AxiosPromise<Array<any>> {
         if (configs.type === "LOCAL") {
             return {} as AxiosPromise;
         } else {
             return this.adminApi.createCatalog(data);   
         }
-    }
+    } 
 
     static deleteLink(data:any): AxiosPromise<Array<any>> {  
         if (configs.type === "LOCAL") {
             return {} as AxiosPromise;
         } else {
             return this.adminApi.deleteLink(data);   
+        }
+    }
+
+    static deleteMultiLink(data:any): AxiosPromise<Array<any>> {  
+        if (configs.type === "LOCAL") {
+            return {} as AxiosPromise;
+        } else {
+            return this.adminApi.deleteMultiLink(data);   
         }
     }
 
@@ -81,6 +123,14 @@ export class AdminApis {
             return {} as AxiosPromise;
         } else {
             return this.adminApi.createTieredLink(data);
+        }
+    }
+
+    static updateTieredLink(data:any): AxiosPromise<Array<any>> {
+        if (configs.type === "LOCAL") {
+            return {} as AxiosPromise;
+        } else {
+            return this.adminApi.updateTieredLink(data);
         }
     }
     

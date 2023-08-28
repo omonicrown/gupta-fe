@@ -73,18 +73,18 @@ function Login() {
       <div className="pb-32 md:mt-32 sm:px-10">
         <div className="container flex flex-row justify-center bg-[#fff] mx-auto items-center rounded-lg p-6">
 
-          <div className=" ">
+        <div className="border py-6 rounded-lg px-6">
             <div className=" ">
               <h1 className=" my-4 text-xl font-semibold text-gray-600">Log in</h1>
 
             </div>
 
-            <div className="mt-2">
+            <div className="mt-2 ">
               <form onSubmit={handleSubmit} className="">
                 <div className="mb-6 ">
                   <label
                     htmlFor="email"
-                    className="flex justify-start block mb-2 text-sm font-medium text-gray-400 "
+                    className="flex justify-start mb-2 text-sm font-medium text-gray-400 "
                   >
                     Email
                   </label>
@@ -92,7 +92,7 @@ function Login() {
                     type="email"
                     id="email"
                     name="email"
-                    className="flex w-80 justify-center shadow-sm bg-gray-50 block border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 "
+                    className="flex justify-center shadow-sm bg-gray-50  border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 w-full p-2.5 "
                     placeholder="Email"
                     defaultValue={email}
                     onChange={(e) => setEmail(e.target.value)}
@@ -103,7 +103,7 @@ function Login() {
                 <div className="mb-4">
                   <label
                     htmlFor="password"
-                    className="flex justify-start block mb-2 text-sm font-medium text-gray-400"
+                    className="flex justify-start mb-2 text-sm font-medium text-gray-400"
                   >
                     Password
                   </label>
@@ -113,7 +113,7 @@ function Login() {
                       placeholder="Password"
                       id="password"
                       name="password"
-                      className="shadow-sm w-80 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 "
+                      className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 "
                       required={true}
                       defaultValue={password}
                       onChange={(e) => setPassword(e.target.value)}
@@ -136,7 +136,7 @@ function Login() {
                   </div>
 
                   <NavLink to='/resetpassword'>
-                    <p className="ml-2 text-sm font-medium text-gray-400 "> <a href="#" className="text-green-600 hover:underline ">Forgot Password?</a></p>
+                    <p className="ml-2 text-sm font-medium text-gray-400 "> <a href="#" className="text-[#0071BC] hover:underline ">Forgot Password?</a></p>
                   </NavLink>
 
                 </div>
@@ -147,14 +147,14 @@ function Login() {
 
                   <button
                     type="submit"
-                    style={{ backgroundColor: '#61A24F', borderRadius: '50px' }}
+                    style={{ backgroundColor: '#0071BC', borderRadius: '50px' }}
                     className=" text-white hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm w-96 px-5 py-2.5 text-center "
                   >
                     Log In
                   </button>
                 </span>
                 <NavLink to='/register' className="flex justify-center">
-                  <p className="ml-2 mt-3 text-sm font-medium text-gray-400 ">Don't have an account? <a href="#" className="text-green-600 hover:underline ">Create one</a></p>
+                  <p className="ml-2 mt-3 text-sm font-medium text-gray-400 ">Don't have an account? <a href="#" className="text-[#0071BC] hover:underline ">Create one</a></p>
                 </NavLink>
                
               </form>
