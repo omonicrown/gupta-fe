@@ -34,11 +34,11 @@ const configs = {
   tokenStorage: "TOKEN_PERSIST",
   socket: SOCKET_URL,
   type: TYPE_REST,
-  imageUrl: "http://127.0.0.1:8000/TieredImages/",
-  context: "http://127.0.0.1:8000/api",
+  // imageUrl: "http://127.0.0.1:8000/TieredImages/",
+  // context: "http://127.0.0.1:8000/api",
 
-  // imageUrl: "https://be4c-102-89-32-164.ngrok-free.app/TieredImages/",
-  // context: "https://be4c-102-89-32-164.ngrok-free.app/api",
+  imageUrl: "https://5408-197-210-29-65.ngrok-free.app/TieredImages/",
+  context: "https://5408-197-210-29-65.ngrok-free.app/api",
 
   history: createBrowserHistory(),
   requestTimeOut: 30000,
