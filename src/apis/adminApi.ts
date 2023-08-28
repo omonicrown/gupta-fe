@@ -15,13 +15,13 @@ export class AdminApis {
         }
     }  
 
-    static getlinks(): AxiosPromise<Array<any>> {
-        if (configs.type === "LOCAL") {
-            return {} as AxiosPromise;
-        } else {
-            return this.adminApi.getlinks();
-        }
-    } 
+    // static getlinks(): AxiosPromise<Array<any>> {
+    //     if (configs.type === "LOCAL") {
+    //         return {} as AxiosPromise;
+    //     } else {
+    //         return this.adminApi.getlinks();
+    //     }
+    // } 
 
     static getlinksByName(data:any): AxiosPromise<Array<any>> {
         if (configs.type === "LOCAL") {
@@ -44,6 +44,14 @@ export class AdminApis {
             return {} as AxiosPromise;
         } else {
             return this.adminApi.getMultiLinkData(data);
+        }
+    }
+
+    static getlinks(): AxiosPromise<Array<any>> {
+        if (configs.type === "LOCAL") {
+            return {} as AxiosPromise;
+        } else {
+            return this.adminApi.getlinks();
         }
     }
    
