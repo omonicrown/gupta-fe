@@ -51,12 +51,12 @@ console?.log(value)
   React.useEffect(() => {
     setLoader(true);
     setEffect('')
-    AdminApis.getAllLinks().then(
+    AdminApis.getMultiLinks().then(
       (response) => {
         if (response?.data) {
           setdata(response?.data)
           setLoader(false);
-          //console.log(response?.data)
+          console.log(response?.data?.multi_link)
         }
       }
     );
@@ -128,12 +128,12 @@ console?.log(value)
       console.log(inputEl.current.value);
       setSearchTerm(inputEl.current.value);
       if (searchTerm !== "") {
-        const newContactList = data?.link?.filter((data) => {
+        const newContactList = data?.multi_link?.filter((data) => {
           return Object.values(data).join(" ")?.toLowerCase()?.includes(inputEl?.current?.value?.toLowerCase());
         });
         setSearchResult(newContactList);
       } else {
-        setSearchResult(data?.link);
+        setSearchResult(data?.multi_link);
       }
     }, [inputEl, searchTerm, searchResult, data]);
 
@@ -151,7 +151,7 @@ console?.log(value)
           <div className="flex flex-wrap items-center">
             <div className="w-full px-4 max-w-full flex-grow flex-1">
 
-              {data?.link?.length ?
+              {data?.multi_link?.length ?
                 <span className="flex justify-between" >
                   {/* <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-gray-300">Search</label> */}
                   <div class="relative invisible md:visible">
@@ -179,12 +179,12 @@ console?.log(value)
 
               <div>
                 {!loader ? (
-                  (data?.link?.length >= 1) ?
+                  (data?.multi_link?.length >= 1) ?
                     <div className="container flex-col md:flex-row md:justify-start mt-1 pt-1 grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-3">
-                      {(inputEl?.current?.value?.length > 1 ? searchResult : data?.link).filter(data => data?.type === 'tiered').map(
+                      {(inputEl?.current?.value?.length > 1 ? searchResult : data?.multi_link).map(
                         (data, index) => (
 
-                          <NavLink to={`/update-multi-link/${data?.id}`}>
+                          
                             <div class="max-w-sm bg-white rounded-lg border border-gray-200 shadow-md">
                               <span className="flex justify-between gap-3 rounded-t-lg border bg-[#0071BC] px-3 py-1" >
                                 <p class="mb-2 font-medium tracking-tight text-white" style={{ fontSize: '18px' }}>gupta.ink/{data?.name}</p>
@@ -202,9 +202,9 @@ console?.log(value)
                                 </span>
                               </span>
                              
-
+                              <NavLink to={`/update-multi-link/${data?.id}`}>
                               <p class="mb-2 tracking-tight m-2 p-2 bg-[#F4FBFF] flex justify-center cursor-pointer" style={{ fontSize: '16px', color: '#595959' }}><span className="py-10 text-xl" style={{fontWeight:'600'}}>View Link Details</span>  </p>
-
+                              </NavLink>
                               <span className="flex justify-between gap-1 pt-4 m-2">
                                 <span className="flex justify-start gap-1">
                                   <span
@@ -252,7 +252,7 @@ console?.log(value)
                                 </span>
                               </span>
                             </div>
-                         </NavLink>
+                        
 
 
                         )
@@ -260,7 +260,36 @@ console?.log(value)
                     </div>
                     :
 
-                    <CardPageVisits />
+                    <div className="relative flex flex-col min-w-0 break-words bg-white w-full mb-6  rounded">
+                    <div className="rounded-t mb-0  py-3 border-0">
+                      <div className="flex flex-wrap items-center">
+                        <div className="w-full px-4 max-w-full p-52 flex-grow flex-1">
+            
+                          <h3 className="flex justify-center font-bold"> You haven’t created any Link</h3>
+                          <p className="flex text-sm justify-center"> Click on the button below to create a new </p>
+                          <p className="flex text-sm justify-center text-black font-bold"> Link.</p>
+            
+                          <NavLink to='/create-multi-link' className="flex justify-center">
+                          < span className="flex justify-center pt-4">
+                            <button
+                              type="button"
+                              style={{ backgroundColor: '#0071BC', borderRadius: '50px' }}
+                              className=" text-white hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm w-40 px-5 py-2.5 text-center "
+                            >
+                             + Create New
+                            </button>
+                          </span>
+                          </NavLink>
+            
+                        </div>
+            
+                      </div>
+                    </div>
+                    <div className="block w-full overflow-x-auto">
+                      {/* Projects table */}
+            
+                    </div>
+                  </div>
                 )
 
                   :

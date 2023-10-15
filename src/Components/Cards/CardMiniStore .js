@@ -12,7 +12,7 @@ import { SvgElement, icontypesEnum } from "../assets/svgElement";
 
 // components
 
-export default function CardMyLinks() {
+export default function CardMiniStore() {
 
 
   let [visible, setVisible] = React.useState(false);

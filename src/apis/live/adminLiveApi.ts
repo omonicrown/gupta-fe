@@ -25,14 +25,26 @@ export class AdinLiveApis extends AxiosGlobal {
         });
     } 
 
+    getMultiLinks(): AxiosPromise<Array<any>> {
+        return this.axios.get(`${configs.context}/get-multi-links`, {
+            headers: { "Content-Type": "aplication/json", "Accept": "aplication/json", "Authorization": `Bearer ${store.getState().data.login.value.token}`, "Access-Control-Allow-Origin": "*" },
+        });
+    } 
+
     getlinks(): AxiosPromise<Array<any>> {
         return this.axios.get(`${configs.context}/getlinks`, {
             headers: { "Content-Type": "aplication/json", "Accept": "aplication/json", "Authorization": `Bearer ${store.getState().data.login.value.token}`, "Access-Control-Allow-Origin": "*" },
         });
-    }
+    } 
 
     getlinksByName(data: any): AxiosPromise<Array<any>> {
         return this.axios.get(`${configs.context}/getlinksByName/${data}`, {
+            headers: { "Content-Type": "aplication/json", "Accept": "aplication/json", "Authorization": `Bearer ${store.getState().data.login.value.token}`, "Access-Control-Allow-Origin": "*" },
+        });
+    }
+
+    getlinksDetails(data: any): AxiosPromise<Array<any>> {
+        return this.axios.get(`${configs.context}/links/link-details/${data}`, {
             headers: { "Content-Type": "aplication/json", "Accept": "aplication/json", "Authorization": `Bearer ${store.getState().data.login.value.token}`, "Access-Control-Allow-Origin": "*" },
         });
     }

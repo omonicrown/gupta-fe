@@ -5,6 +5,7 @@ import { NavLink } from "react-router-dom";
 import { SvgElement, icontypesEnum } from "../assets/svgElement";
 import { ToastContainer, toast } from 'react-toastify';
 import ImageUploading from 'react-images-uploading';
+import Modal from 'react-awesome-modal';
 
 // components
 
@@ -42,6 +43,8 @@ export default function CardTiredLinks() {
         if (response?.data) {
           setLinks(response?.data?.data)
           setPermissionIdList(response?.data?.data)
+
+          // console?.log(response?.data?.data?.length)
         }
       }
     );
@@ -89,15 +92,19 @@ export default function CardTiredLinks() {
   const handleSubmit = React.useCallback(
     (e) => {
       e.preventDefault();
+
+
       const formData = new FormData()
       formData.append('name', name.replace(/ /g, ''))
       formData.append('title', title)
       formData.append('bio', bio)
       formData.append('attach_links', permissionList?.toString())
-      formData.append('logo', images[0]?.file)
+      formData.append('logo', (images == ''? '1' : images[0]?.file) )
       formData.append('redirect_link', addlink)
       formData.append('business_website', businessSite)
       formData.append('business_policy', businessPolicy)
+
+      permissionList?.length >=2 ?
       AdminApis.createTieredLink(formData).then(
         (response) => {
           if (response?.data) {
@@ -106,16 +113,18 @@ export default function CardTiredLinks() {
           } else {
             toast.error('link name already in use');
           }
-
+          
           // toast.success(response?.data?.message);
         }
       ).catch(function (error) {
         // handle error
         // console.log(error.response);
-        toast.error(error.response.message);
+        toast.error(error.response.data.message);
       })
+      :
+      toast.error('You need to attach at least two links to create Multi-link');
     },
-    [title, bio, name, addlink, businessPolicy, businessSite]
+    [title, bio, name, addlink, businessPolicy, businessSite,permissionList]
   );
 
   const removeButton = React.useCallback(
@@ -150,6 +159,7 @@ export default function CardTiredLinks() {
 
 
       }
+      
 
 
 
@@ -194,7 +204,7 @@ export default function CardTiredLinks() {
     [permissionList, permissionIdList]
   );
 
-  console?.log(permissionList)
+  console?.log((images == ''))
 
   return (
     <>
@@ -272,7 +282,7 @@ export default function CardTiredLinks() {
                               // write your building UI
                               <div className="upload__image-wrapper">
                                 <button
-                                type="button"
+                                  type="button"
                                   disabled={imageList?.length ? true : false}
                                   style={isDragging ? { color: 'red' } : undefined}
                                   onClick={onImageUpload}
@@ -357,9 +367,9 @@ export default function CardTiredLinks() {
 
                       <div className="flex justify-center">
                         <button
-                          disabled={nameExist === 1 ? true : false}
+                          disabled={(nameExist === 1 || data?.length <= 1) ? true : false}
                           type="submit"
-                          style={{ backgroundColor:(nameExist !== 1 ? '#0071BC' : "grey") }}
+                          style={{ backgroundColor: ((nameExist === 1 || data?.length <= 1) ? 'grey' : "#0071BC") }}
                           className="px-4 cursor-pointer mb-2 mt-2 py-1.5 text-center text-white font-xs rounded-lg"
                         >
                           Publish Multilink
@@ -498,6 +508,63 @@ export default function CardTiredLinks() {
 
         </div>
       </div>
+
+
+      {
+        (nameExist === 1 || data?.length <= 1) ?
+
+          <section>
+            <Modal
+              visible={true}
+              width="400"
+              height="210"
+              effect="fadeInUp"
+              onClickAway={() => null}
+            >
+              <div className=" " style={{ overflow: 'auto' }}>
+                <span className="flex justify-end px-3 pt-3">
+                  <p className="cursor-pointer font-bold" onClick={(e) => null}><SvgElement type={icontypesEnum.CANCEL} /></p>
+                </span>
+
+
+                <div className="flex justify-center">
+                  <label
+                    className="flex justify-start  mb-2 pt-1 text-md font-bold text-black"
+                  >
+                    NOTIFICATION !!!
+                  </label>
+                </div>
+
+                <div className="flex justify-center">
+                  <label
+                    className=" px-10 mb-2 pt-2 text-xs text-[13px] text-gray-600"
+                  >
+                    To create a multi link, you need to have 2 or more links created.
+                  </label>
+                </div>
+
+                <div className="flex justify-center my-3">
+                  <NavLink to={'/mylinks'}>
+                <button
+                  type="button"
+                  style={{ backgroundColor: '#0071BC' }}
+                  className=" mb-2 px-10 mt-2 py-1.5 text-center text-white font-xs rounded"
+                >
+                  Create Link
+                </button>
+                </NavLink>
+                </div>
+
+                
+
+
+
+              </div>
+            </Modal>
+          </section>
+          :
+          ""
+      }
 
       <ToastContainer
         position="bottom-left"
