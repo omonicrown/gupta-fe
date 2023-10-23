@@ -84,11 +84,29 @@ export default function Sidebar(title:any) {
 
 
             {/* Divider */}
-            <hr className="md:min-w-full" />
+            {/* <hr className="md:min-w-full" /> */}
 
-            <ul className="md:flex-col min-w-full list-none">
-              <li className="items-center">
-                <Link
+            <ul className="md:flex-col min-w-full list-none flex flex-col md:mt-5 mt-5">
+              <li className="items-center mx-6 mb-2">
+                <NavLink
+                  style={({ isActive }) =>
+                    isActive ? { backgroundColor: '#1DB459', paddingLeft: "12px", borderRadius: "8px" } : { color: '#FFFFFF' }
+                  }
+                  className={
+                    "text-sm py-3  pl-3 font-medium flex " +
+                    (window.location.href.indexOf("/mylinks") !== -1
+                      ? "text-white hover:text-lightBlue-600"
+                      : "text-white hover:text-blueGray-500")
+                  }
+                  to="/mylinks"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" className="mr-3 " viewBox="0 0 24 24"><path fill="white" d="m12 5.69l5 4.5V18h-2v-6H9v6H7v-7.81l5-4.5M12 3L2 12h3v8h6v-6h2v6h6v-8h3L12 3z" /></svg>
+                  My Links
+                </NavLink>
+                
+              </li>
+              <li className="items-center mx-6 mb-2">
+              <NavLink
                 onClick={() => setCollapseShow("hidden")}
                   style={{
                     backgroundColor: (window.location.href.indexOf("/mylinks") !== -1
@@ -96,10 +114,10 @@ export default function Sidebar(title:any) {
                       : "text-black hover:text-blueGray-500")
                   }}
                   className={
-                    "text-xs cursor-pointer py-1 block " +
+                    "text-xs cursor-pointer py-1 pl-3 block " +
                     (window.location.href.indexOf("/mylinks") !== -1
                       ? "text-white"
-                      : "text-black hover:text-blueGray-500")
+                      : "text-white")
                   }
                   to="/mylinks"
                 >
@@ -110,10 +128,10 @@ export default function Sidebar(title:any) {
                       : <SvgElement type={icontypesEnum.ARROW} /> )} </span>
                   </span>
 
-                </Link>
+                </NavLink>
               </li>
 
-              <hr className=" md:min-w-full" />
+              {/* <hr className=" md:min-w-full" /> */}
 
               <li className="items-center">
                 <Link
@@ -140,7 +158,7 @@ export default function Sidebar(title:any) {
                 </Link>
               </li>
 
-              <hr className=" md:min-w-full" />
+              {/* <hr className=" md:min-w-full" /> */}
 
               <li className="items-center">
                 <Link
@@ -168,7 +186,7 @@ export default function Sidebar(title:any) {
               </li>
 
 
-              <hr className=" md:min-w-full" />
+              {/* <hr className=" md:min-w-full" /> */}
 
               <li className="items-center">
                 <Link
@@ -195,7 +213,7 @@ export default function Sidebar(title:any) {
                 </Link>
               </li>
 
-              <hr className=" md:min-w-full" />
+              {/* <hr className=" md:min-w-full" /> */}
 
               <li className="items-center">
                 <span
