@@ -43,7 +43,7 @@ function Login() {
           console.log(response.data)
 
           if (response?.data?.status === true) {
-            dispatch(login({ email: email, token: response.data.token }))
+            dispatch(login({ email: email, token: response.data.token,name:response.data.name }))
             navigate('/mylinks');
           }
 

@@ -1,0 +1,23 @@
+import React from "react";
+
+// components
+
+import CardViewProductDetailsPage from "../Cards/CardViewProductDetailsPage";
+import AdminNavbar from "../Navbars/AdminNavbar.js";
+import Sidebar from "../Sidebar/Sidebar";
+
+export default function ViewProductDetailsPage() {
+  return (
+    <>
+  {/* <Sidebar title="Edit Multi Link"/> */}
+      
+      {/* <AdminNavbar title="Edit Multi Link"/> */}
+      <div className="flex flex-wrap md:mt-4 mt-1">
+        <div className="w-full xl:w-12/12 mb-12 xl:mb-0 px-4">
+          <CardViewProductDetailsPage />
+        </div>
+     
+      </div>
+    </>
+  );
+}

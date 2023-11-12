@@ -164,6 +164,33 @@ export default function Sidebar(title:any) {
                 <Link
                 onClick={() => setCollapseShow("hidden")}
                   style={{
+                    backgroundColor: (window.location.href.indexOf("/mini-store") !== -1
+                      ? "text-white"
+                      : "text-black hover:text-blueGray-500")
+                  }}
+                  className={
+                    "text-xs cursor-pointer block " +
+                    (window.location.href.indexOf("/mini-store") !== -1
+                      ? "text-white"
+                      : "text-black hover:text-blueGray-500")
+                  }
+                  to="/mini-store"
+                >
+
+                  <span className="flex justify-between py-2 px-2">
+                    <span style={{fontSize:'16px'}}>Mini Store</span>
+                    <span>  <SvgElement type={icontypesEnum.CROWN} /> </span>
+                  </span>
+
+                </Link>
+              </li>
+
+              <hr className=" md:min-w-full" />
+
+              <li className="items-center">
+                <Link
+                onClick={() => setCollapseShow("hidden")}
+                  style={{
                     backgroundColor: (window.location.href.indexOf("/chatrouting") !== -1
                       ? "text-white"
                       : "text-black hover:text-blueGray-500")

@@ -12,15 +12,15 @@ export default function Navbar({ title }) {
     <>
     <div className="relative md:pt-12 pb-2 pt-8 md:border md:rounded md:shadow-md md:m-3" style={{backgroundColor:'#FFFFFF'}}>
       {/* Navbar */}
-      <nav className="absolute top-0 left-0 w-full z-10 bg-transparent md:flex-row md:flex-nowrap md:justify-start flex items-center p-2">
-        <div className="w-full mx-autp items-center flex justify-between md:flex-nowrap flex-wrap md:px-4 px-4">
+      <nav className="absolute top-0 left-0 w-full z-10 bg-transparent md:flex-row md:flex-nowrap md:justify-end flex items-center p-2">
+        <div className="flex justify-between px-4 lg:w-full">
           {/* Brand */}
           <a
-            className="text-black font-bold text-md uppercase hidden lg:inline-block"
+            className="text-black font-bold text-md uppercase hidden mt-2 lg:inline-block"
             href=""
             onClick={(e) => e.preventDefault()}
           >
-            {title}
+            {title} 
           </a>
 
        
@@ -32,7 +32,7 @@ export default function Navbar({ title }) {
             </div>
           </span> */}
           <span className="md:flex hidden flex-row flex-wrap items-center lg:ml-auto mr-3">
-            <div className="relative flex w-full flex-wrap items-stretch gap-5">
+            <div className="relative flex justify-end w-full flex-wrap items-stretch gap-5">
 
             <form className="md:flex hidden flex-row flex-wrap items-center lg:ml-auto mr-3">
               <div className="relative flex w-full flex-wrap items-stretch">
