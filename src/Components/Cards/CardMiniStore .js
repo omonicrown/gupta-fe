@@ -1,6 +1,6 @@
 import React from "react";
 import { AdminApis } from "../../apis/adminApi";
-import { FaTrash, FaEdit } from "react-icons/fa";
+import { FaTrash, FaEdit,FaWhatsapp } from "react-icons/fa";
 import CardNavBar from "./CardNavBar";
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { ToastContainer, toast } from 'react-toastify';
@@ -8,11 +8,16 @@ import { NavLink } from "react-router-dom";
 import Modal from 'react-awesome-modal';
 import CardPageVisits from "./CardPageVisits";
 import { SvgElement, icontypesEnum } from "../assets/svgElement";
+import AwesomeSlider from 'react-awesome-slider';
+import 'react-awesome-slider/dist/custom-animations/cube-animation.css';
+// import { url } from "inspector";
+import { store } from "../../store/store";
+import { Oval } from 'react-loader-spinner'
 
 
 // components
 
-export default function CardMyLinks() {
+export default function CardMiniStore() {
 
 
   let [visible, setVisible] = React.useState(false);
@@ -21,7 +26,7 @@ export default function CardMyLinks() {
   let [contact, setContact] = React.useState('');
   let [effect, setEffect] = React.useState('');
 
-console?.log(value)
+  console?.log(value)
 
   function toggleModal(value2, contact) {
     setvalue(value2)
@@ -51,10 +56,11 @@ console?.log(value)
   React.useEffect(() => {
     setLoader(true);
     setEffect('')
-    AdminApis.getAllLinks().then(
+    AdminApis.getAllStore().then(
       (response) => {
         if (response?.data) {
           setdata(response?.data)
+          console?.log(response?.data)
           setLoader(false);
           //console.log(response?.data)
         }
@@ -92,18 +98,20 @@ console?.log(value)
 
       });
     },
-    [value, message, contact,name]
+    [value, message, contact, name]
   );
 
   const deleteLink = React.useCallback(
     (e) => {
       e.preventDefault();
-      AdminApis.deleteLink(value).then(
+      setLoader(true);
+      AdminApis.deleteProduct(value).then(
         (response) => {
           if (response?.data) {
             console.log(response.data)
             setToggleDeleteModal(false)
             toast.success("Link Deleted Successfully");
+            setLoader(false);
             setEffect('d')
           }
         }
@@ -128,12 +136,12 @@ console?.log(value)
       console.log(inputEl.current.value);
       setSearchTerm(inputEl.current.value);
       if (searchTerm !== "") {
-        const newContactList = data?.link?.filter((data) => {
+        const newContactList = data?.data?.filter((data) => {
           return Object.values(data).join(" ")?.toLowerCase()?.includes(inputEl?.current?.value?.toLowerCase());
         });
         setSearchResult(newContactList);
       } else {
-        setSearchResult(data?.link);
+        setSearchResult(data?.data);
       }
     }, [inputEl, searchTerm, searchResult, data]);
 
@@ -151,7 +159,7 @@ console?.log(value)
           <div className="flex flex-wrap items-center">
             <div className="w-full px-4 max-w-full flex-grow flex-1">
 
-              {data?.link?.length ?
+              {data?.data?.length ?
                 <span className="flex justify-between" >
                   {/* <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-gray-300">Search</label> */}
                   <div class="relative invisible md:visible">
@@ -159,14 +167,14 @@ console?.log(value)
                     <svg aria-hidden="true" class="w-5 h-5 right-2.5 bottom-3 absolute text-gray-500 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
                   </div>
 
-                  <NavLink to='/createlink' className="flex justify-center">
+                  <NavLink to='/createproduct' className="flex justify-center">
                     < span className="flex justify-center ">
                       <button
                         type="button"
                         style={{ backgroundColor: '#0071BC', borderRadius: '50px' }}
-                        className=" text-white hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm w-40 px-5 py-2.5 text-center "
+                        className=" text-white hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm w-40 px-5 py-2.5 text-center "
                       >
-                        + Create New
+                        + Add Product
                       </button>
                     </span>
                   </NavLink>
@@ -179,85 +187,74 @@ console?.log(value)
 
               <div>
                 {!loader ? (
-                  (data?.link?.length >= 1) ?
-                    <div className="container flex-col md:flex-row md:justify-start mt-1 pt-1 grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-3">
-                      {(inputEl?.current?.value?.length > 1 ? searchResult : data?.link).map(
+                  (data?.data?.length >= 1) ?
+                    <div className="container  flex-col md:flex-row md:justify-start mt-1 pt-1 grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-3">
+                      {(inputEl?.current?.value?.length > 1 ? searchResult : data?.data).map(
                         (data, index) => (
 
                           <>
                             <div class="max-w-sm bg-white rounded-lg border border-gray-200 shadow-md">
-                              <span className="flex justify-between gap-3 rounded-t-lg border bg-[#0071BC] px-3 py-1" >
-                                <p class="mb-2 font-medium tracking-tight text-white" style={{ fontSize: '18px' }}>gupta.ink/{data?.name} </p>
-                                < span className="flex justify-center mt-2">
-                                  <CopyToClipboard text={`gupta.ink/${(data?.name)}`}
-                                    onCopy={() => isCopied()}>
-                                    <span
-                                      style={{ color: 'white', borderColor: '#0071BC' }}
-                                      className="ring-1 cursor-pointer outline-none font-xs rounded-lg text-xs px-3 h-4  text-center "
-                                    >
-                                      Copy
-                                    </span>
-                                  </CopyToClipboard>
+                              <div className="flex justify-between mx-3 my-2">
+                                <span className="flex justify-start">
+                                  <span className="mt-2"><span className=" rounded-full px-3 py-1.5 bg-[#0071BC] text-white">{(store.getState().data.login.value.name).slice(0, 1).toUpperCase()}</span></span>
+                                  <span className="flex flex-col pl-[16px]">
+                                    <span className="font-[600] text-[16px]">{(data?.link_name)}</span>
+                                    <span className=" text-[14px] font-[400]">{(data?.phone_number)}</span>
+                                  </span>
 
                                 </span>
-                              </span>
-                              <NavLink to={`/link-details/${data?.id}`} className={'cursor-pointer'}>
-                              <span className="flex justify-start gap-2 m-2 ">
-                                <p class="mb-2 tracking-tight text-gray-900" style={{ fontSize: '16px' }}>{(data?.link_info?.phone_number)?.replace(/ /g, '')}  </p>
-                                <p class=" text-xs tracking-tight font-bold text-gray-900" style={{ fontSize: '16px' }}> .</p>
-                                <p class="tracking-tight font-bold " style={{ color: '#61A24F', fontSize: '16px', paddingTop: '1px' }}> {data?.short_url?.visits?.length ? data?.short_url?.visits?.length : '0'} clicks</p>
-                              </span>
-                             
-                              <p class="mb-2 tracking-tight m-2 p-2 bg-[#F4FBFF] h-20" style={{ fontSize: '16px', color: '#595959' }}>{data?.link_info?.message}</p>
+
+                                <span className="mt-2">
+                                  <span className="flex justify-end gap-1 ">
+                                    <button
+                                      type="button"
+                                      style={{}}
+                                      onClick={(e) => toggleModal(data)}
+                                      className=" outline-none  font-xs rounded-full text-xs px-2 py-2 text-center "
+                                    >
+                                      <FaEdit />
+                                    </button>
+
+                                    <button
+                                      type="button"
+                                      onClick={(e) => toggleDelete(data?.id)}
+                                      className=" outline-none  font-xs text-red-500 rounded-full text-xs px-2 py-2 text-center "
+                                    >
+                                      <FaTrash />
+                                    </button>
+                                  </span>
+                                </span>
+
+                              </div>
+                              <hr />
+                              <NavLink to={`/edit-product/${data?.id}`} className={'cursor-pointer'}>
+                                <p class="mb-2 tracking-tight m-2 p-2 bg-[#F4FBFF] h-44" style={{ fontSize: '16px', color: '#595959', backgroundImage: `url(${data?.product_image_1})`, backgroundRepeat: "no-repeat", backgroundSize: 'cover', backgroundPosition: 'center center' }}>{data?.link_info?.message}</p>
                               </NavLink>
-                              <span className="flex justify-between gap-1 pt-4 m-2">
-                                <span className="flex justify-start gap-1">
+                              <hr />
+
+                              <div className="flex flex-col pt-[16px] px-[16px]">
+                                <div className="flex justify-between">
+                                  <span className="text-[16px] font-[600]">{data?.product_name}</span>
                                   <span
                                     style={{ color: 'white' }}
                                     className="ring-1 outline-none bg-[#149E49] font-xs rounded-lg text-xs px-4 h-5 pt-[2px] text-center cursor-pointer"
                                   >
                                     Active
                                   </span>
+                                </div>
 
-                                  {data?.type === 'catalog' ?
-                                    <span
-                                      style={{ borderColor: '#61A24F' }}
-                                      className=" bg-blue-100 text-blue-800 outline-none font-xs rounded-lg text-xs px-4 h-5 pt-[2px] text-center "
-                                    >
-                                      Catalog
-                                    </span>
-
-                                    :
-
-                                    ''
-                                  }
-                                </span>
+                                <span className="text-[#149E49] text-[14px] font-[400]">₦ {data?.product_price}</span>
+                                <span className="text-[14px] font-[400] text-[#808191] h-10 overflow-auto">{data?.product_description}</span>
+                              </div>
 
 
+                              {/* <span className="flex justify-between gap-1 pt-4 m-2">
+                               
 
-                                < span className="flex justify-end gap-1 ">
-
-                                  <button
-                                    type="button"
-                                    style={{}}
-                                    onClick={(e) => toggleModal(data)}
-                                    className=" outline-none  font-xs rounded-full text-xs px-2 py-2 text-center "
-                                  >
-                                    <FaEdit />
-                                  </button>
-
-
-                                  <button
-                                    type="button"
-                                    onClick={(e) => toggleDelete(data?.id)}
-                                    className=" outline-none  font-xs text-red-500 rounded-full text-xs px-2 py-2 text-center "
-                                  >
-                                    <FaTrash />
-                                  </button>
-                                </span>
-                              </span>
+                               
+                              </span> */}
                             </div>
-                            </>
+                          </>
 
 
                         )
@@ -416,14 +413,14 @@ console?.log(value)
                 <label
                   className="flex justify-start mb-2 pt-1 text-md font-bold text-black"
                 >
-                  Delete Link
+                  Delete Product
                 </label>
 
                 <label
                   style={{ fontSize: '14px' }}
                   className="flex justify-start mb-2 pt-2 text-xs font-medium text-gray-600"
                 >
-                  You are about to delete the link you created.
+                  You are about to delete the Product you created.
 
 
                 </label>
@@ -437,21 +434,14 @@ console?.log(value)
                 </label>
 
                 <ul class="space-y-1 max-w-md list-disc list-inside text-gray-500 dark:text-gray-400 pl-2">
-                  <li style={{ color: '#2C2C2C', fontSize: '14px' }}>
-                    The link will stop working.
+
+                  <li style={{ color: '#2C2C2C', fontSize: '14px' }} className="text-xs">
+                    All Product data will be lost
                   </li>
                   <li style={{ color: '#2C2C2C', fontSize: '14px' }} className="text-xs">
-                    All link data will be lost
+                    The product will not be made available to customers again
                   </li>
-                  <li style={{ color: '#2C2C2C', fontSize: '14px' }} className="text-xs">
-                    The link name will be made available to others
-                  </li>
-                  <li style={{ color: '#2C2C2C', fontSize: '14px' }} className="text-xs">
-                    Anyone who clicks the link will be redirected to gupta.link
-                  </li>
-                  <li style={{ color: '#2C2C2C', fontSize: '14px' }} className="text-xs">
-                    If you used this link in your Tiered links, the button will stop working
-                  </li>
+
                 </ul>
 
 
@@ -476,6 +466,21 @@ console?.log(value)
                     >
                       Cancel
                     </button>
+                  </span>
+
+                  <span className="flex justify-center pt-4">
+                  <Oval
+                    height={40}
+                    width={40}
+                    color="#0071BC"
+                    wrapperStyle={{}}
+                    wrapperClass=""
+                    visible={loader}
+                    ariaLabel='oval-loading'
+                    secondaryColor="#96cff6"
+                    strokeWidth={2}
+                    strokeWidthSecondary={2}
+                  />
                   </span>
 
                 </form>

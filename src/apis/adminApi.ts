@@ -5,45 +5,29 @@ import { AdinLiveApis } from "./live/adminLiveApi";
 
 
 export class AdminApis {
-    private static adminApi: AdinLiveApis = new AdinLiveApis();   
-    
+    private static adminApi: AdinLiveApis = new AdinLiveApis();
+
     static getAllLinks(): AxiosPromise<Array<any>> {
         if (configs.type === "LOCAL") {
             return {} as AxiosPromise;
         } else {
             return this.adminApi.getAllLinks();
         }
-    }  
+    }
 
-    // static getlinks(): AxiosPromise<Array<any>> {
-    //     if (configs.type === "LOCAL") {
-    //         return {} as AxiosPromise;
-    //     } else {
-    //         return this.adminApi.getlinks();
-    //     }
-    // } 
-
-    static getlinksByName(data:any): AxiosPromise<Array<any>> {
+    static getlinksByName(data: any): AxiosPromise<Array<any>> {
         if (configs.type === "LOCAL") {
             return {} as AxiosPromise;
         } else {
             return this.adminApi.getlinksByName(data);
         }
-    } 
-
-    static getMultiLink(data:any): AxiosPromise<Array<any>> {
-        if (configs.type === "LOCAL") {
-            return {} as AxiosPromise;
-        } else {
-            return this.adminApi.getMultiLink(data);
-        }
     }
 
-    static getMultiLinkData(data:any): AxiosPromise<Array<any>> {
+    static getlinksDetails(data: any): AxiosPromise<Array<any>> {
         if (configs.type === "LOCAL") {
             return {} as AxiosPromise;
         } else {
-            return this.adminApi.getMultiLinkData(data);
+            return this.adminApi.getlinksDetails(data);
         }
     }
 
@@ -54,18 +38,18 @@ export class AdminApis {
             return this.adminApi.getlinks();
         }
     }
-   
 
-    static editLink(data:any): AxiosPromise<Array<any>> {
+
+    static editLink(data: any): AxiosPromise<Array<any>> {
         if (configs.type === "LOCAL") {
             return {} as AxiosPromise;
         } else {
             return this.adminApi.editLink(data);
         }
-    }  
+    }
 
 
-    static createLink(data:any): AxiosPromise<Array<any>> {
+    static createLink(data: any): AxiosPromise<Array<any>> {
         if (configs.type === "LOCAL") {
             return {} as AxiosPromise;
         } else {
@@ -73,43 +57,36 @@ export class AdminApis {
         }
     }
 
-   
 
-    static createCatalog(data:any): AxiosPromise<Array<any>> {
+
+    static createCatalog(data: any): AxiosPromise<Array<any>> {
         if (configs.type === "LOCAL") {
             return {} as AxiosPromise;
         } else {
-            return this.adminApi.createCatalog(data);   
-        }
-    } 
-
-    static deleteLink(data:any): AxiosPromise<Array<any>> {  
-        if (configs.type === "LOCAL") {
-            return {} as AxiosPromise;
-        } else {
-            return this.adminApi.deleteLink(data);   
+            return this.adminApi.createCatalog(data);
         }
     }
 
-    static deleteMultiLink(data:any): AxiosPromise<Array<any>> {  
+    static deleteLink(data: any): AxiosPromise<Array<any>> {
         if (configs.type === "LOCAL") {
             return {} as AxiosPromise;
         } else {
-            return this.adminApi.deleteMultiLink(data);   
+            return this.adminApi.deleteLink(data);
         }
     }
 
 
-    static updateProfile(data:any): AxiosPromise<Array<any>> {  
+
+    static updateProfile(data: any): AxiosPromise<Array<any>> {
         if (configs.type === "LOCAL") {
             return {} as AxiosPromise;
         } else {
-            return this.adminApi.updateProfile(data);  
+            return this.adminApi.updateProfile(data);
         }
     }
 
 
-    static searchName(data:any): AxiosPromise<Array<any>> {  
+    static searchName(data: any): AxiosPromise<Array<any>> {
         if (configs.type === "LOCAL") {
             return {} as AxiosPromise;
         } else {
@@ -118,7 +95,30 @@ export class AdminApis {
     }
 
 
-    static createTieredLink(data:any): AxiosPromise<Array<any>> {  
+
+
+    static updatePassword(data: any): AxiosPromise<Array<any>> {
+        if (configs.type === "LOCAL") {
+            return {} as AxiosPromise;
+        } else {
+            return this.adminApi.updatePassword(data);
+        }
+    }
+
+
+
+
+    //Multi Links Api
+
+    static getMultiLinks(): AxiosPromise<Array<any>> {
+        if (configs.type === "LOCAL") {
+            return {} as AxiosPromise;
+        } else {
+            return this.adminApi.getMultiLinks();
+        }
+    }
+
+    static createTieredLink(data: any): AxiosPromise<Array<any>> {
         if (configs.type === "LOCAL") {
             return {} as AxiosPromise;
         } else {
@@ -126,28 +126,129 @@ export class AdminApis {
         }
     }
 
-    static updateTieredLink(data:any): AxiosPromise<Array<any>> {
+    static updateTieredLink(data: any): AxiosPromise<Array<any>> {
         if (configs.type === "LOCAL") {
             return {} as AxiosPromise;
         } else {
             return this.adminApi.updateTieredLink(data);
         }
     }
-    
 
-    static updatePassword(data:any): AxiosPromise<Array<any>> {    
+
+    static deleteMultiLink(data: any): AxiosPromise<Array<any>> {
         if (configs.type === "LOCAL") {
             return {} as AxiosPromise;
         } else {
-            return this.adminApi.updatePassword(data);
+            return this.adminApi.deleteMultiLink(data);
+        }
+    }
+
+    static getMultiLink(data: any): AxiosPromise<Array<any>> {
+        if (configs.type === "LOCAL") {
+            return {} as AxiosPromise;
+        } else {
+            return this.adminApi.getMultiLink(data);
+        }
+    }
+
+    static getMultiLinkData(data: any): AxiosPromise<Array<any>> {
+        if (configs.type === "LOCAL") {
+            return {} as AxiosPromise;
+        } else {
+            return this.adminApi.getMultiLinkData(data);
+        }
+    }
+
+
+
+
+
+
+    //Market Link Apis  
+
+    static checkMarketLink(data: any): AxiosPromise<Array<any>> {
+        if (configs.type === "LOCAL") {
+            return {} as AxiosPromise;
+        } else {
+            return this.adminApi.checkMarketLink(data);
+        }
+    }  
+
+    static createProduct(data: any): AxiosPromise<Array<any>> {
+        if (configs.type === "LOCAL") {
+            return {} as AxiosPromise;
+        } else {
+            return this.adminApi.createProduct(data);
+        }
+    }
+
+    static updateProduct(data: any): AxiosPromise<Array<any>> {
+        if (configs.type === "LOCAL") {
+            return {} as AxiosPromise;
+        } else {
+            return this.adminApi.updateProduct(data);
+        }
+    }
+
+    static createMarketLink(data: any): AxiosPromise<Array<any>> {
+        if (configs.type === "LOCAL") {
+            return {} as AxiosPromise;
+        } else {
+            return this.adminApi.createMarketLink(data);
+        }
+    }
+
+    static getMarketLink(): AxiosPromise<Array<any>> {
+        if (configs.type === "LOCAL") {
+            return {} as AxiosPromise;
+        } else {
+            return this.adminApi.getMarketLink();
+        }
+    } 
+
+    static getAllStore(): AxiosPromise<Array<any>> {
+        if (configs.type === "LOCAL") {
+            return {} as AxiosPromise;
+        } else {
+            return this.adminApi.getAllStore();
+        }
+    }   
+
+    static getSingleProduct(id:any): AxiosPromise<Array<any>> {
+        if (configs.type === "LOCAL") {
+            return {} as AxiosPromise;
+        } else {
+            return this.adminApi.getSingleProduct(id);
+        }
+    }
+
+    static getSingleProductOutside(id:any): AxiosPromise<Array<any>> {
+        if (configs.type === "LOCAL") {
+            return {} as AxiosPromise;
+        } else {
+            return this.adminApi.getSingleProductOutside(id);
+        }
+    }
+
+    static getProductByLinkName(id:any): AxiosPromise<Array<any>> {
+        if (configs.type === "LOCAL") {
+            return {} as AxiosPromise;
+        } else {
+            return this.adminApi.getProductByLinkName(id);
+        }
+    }
+
+    static deleteProduct(id:any): AxiosPromise<Array<any>> {
+        if (configs.type === "LOCAL") {
+            return {} as AxiosPromise;
+        } else {
+            return this.adminApi.deleteProduct(id);
         }
     }
     
-
    
 
-    
-    
+
 
 
 }
