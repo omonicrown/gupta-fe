@@ -87,7 +87,7 @@ export default function Sidebar(title:any) {
             {/* <hr className="md:min-w-full" /> */}
 
             <ul className="md:flex-col min-w-full list-none flex flex-col md:mt-5 mt-5">
-              <li className="items-center mx-6 mb-2">
+              {/* <li className="items-center mx-6 mb-2">
                 <NavLink
                   style={({ isActive }) =>
                     isActive ? { backgroundColor: '#1DB459', paddingLeft: "12px", borderRadius: "8px" } : { color: '#FFFFFF' }
@@ -104,8 +104,8 @@ export default function Sidebar(title:any) {
                   My Links
                 </NavLink>
                 
-              </li>
-              <li className="items-center mx-6 mb-2">
+              </li> */}
+              <li className="items-center mx-3 mb-3">
               <NavLink
                 onClick={() => setCollapseShow("hidden")}
                   style={{
@@ -114,147 +114,148 @@ export default function Sidebar(title:any) {
                       : "text-black hover:text-blueGray-500")
                   }}
                   className={
-                    "text-xs cursor-pointer py-1 pl-3 block " +
+                    "text-xs cursor-pointer pl-3 block " +
                     (window.location.href.indexOf("/mylinks") !== -1
-                      ? "text-white"
-                      : "text-white")
+                      ? "text-white rounded-[8px]"
+                      : "text-white border border-white/[0.1] rounded-[8px] hover:bg-white/[0.1]")
                   }
                   to="/mylinks"
                 >
-                  <span className="flex justify-between py-2 px-2">
-                    <span style={{fontSize:'16px'}}> My Links</span>
-                    <span> {(window.location.href.indexOf("/mylinks") !== -1
-                      ? <SvgElement type={icontypesEnum.ARROWWHITE} /> 
-                      : <SvgElement type={icontypesEnum.ARROW} /> )} </span>
+                  <span className="flex  py-2.5 px-2">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" className="mr-3 " viewBox="0 0 24 24"><path fill="white" d="m12 5.69l5 4.5V18h-2v-6H9v6H7v-7.81l5-4.5M12 3L2 12h3v8h6v-6h2v6h6v-8h3L12 3z" /></svg>
+                    <span style={{fontSize:'15px'}} className=" font-normal mt-1"> My Links</span>
                   </span>
 
                 </NavLink>
               </li>
 
-              {/* <hr className=" md:min-w-full" /> */}
-
-              <li className="items-center">
-                <Link
+              <li className="items-center mx-3 mb-3">
+              <NavLink
                 onClick={() => setCollapseShow("hidden")}
                   style={{
                     backgroundColor: (window.location.href.indexOf("/multi-links") !== -1
-                      ? "text-white"
+                      ? "rgba(255, 255, 255, 0.1)"
                       : "text-black hover:text-blueGray-500")
                   }}
                   className={
-                    "text-xs cursor-pointer  block " +
+                    "text-xs cursor-pointer pl-3 block " +
                     (window.location.href.indexOf("/multi-links") !== -1
-                      ? "text-white"
-                      : "text-black hover:text-blueGray-500")
+                      ? "text-white rounded-[8px]"
+                      : "text-white border border-white/[0.1] rounded-[8px] hover:bg-white/[0.1]")
                   }
                   to="/multi-links"
                 >
-
-                  <span className="flex justify-between py-2 px-2">
-                    <span style={{fontSize:'16px'}}> Multi Links</span>
-                    <span>  <SvgElement type={icontypesEnum.CROWN} /> </span>
+                  <span className="flex py-2.5 px-2">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" className="mr-3 " viewBox="0 0 24 24"><path fill="white" d="m12 5.69l5 4.5V18h-2v-6H9v6H7v-7.81l5-4.5M12 3L2 12h3v8h6v-6h2v6h6v-8h3L12 3z" /></svg>
+                    <span style={{fontSize:'15px'}} className=" font-normal mt-1"> Multi Links</span>
+                    {/* <span> {(window.location.href.indexOf("/mylinks") !== -1
+                      ? <SvgElement type={icontypesEnum.ARROWWHITE} /> 
+                      : <SvgElement type={icontypesEnum.ARROW} /> )} </span> */}
                   </span>
 
-                </Link>
+                </NavLink>
               </li>
 
-              {/* <hr className=" md:min-w-full" /> */}
-
-              <li className="items-center">
-                <Link
+              <li className="items-center mx-3 mb-3">
+              <NavLink
                 onClick={() => setCollapseShow("hidden")}
                   style={{
                     backgroundColor: (window.location.href.indexOf("/mini-store") !== -1
-                      ? "text-white"
+                      ? "rgba(255, 255, 255, 0.1)"
                       : "text-black hover:text-blueGray-500")
                   }}
                   className={
-                    "text-xs cursor-pointer block " +
+                    "text-xs cursor-pointer pl-3 block " +
                     (window.location.href.indexOf("/mini-store") !== -1
-                      ? "text-white"
-                      : "text-black hover:text-blueGray-500")
+                      ? "text-white rounded-[8px]"
+                      : "text-white border border-white/[0.1] rounded-[8px] hover:bg-white/[0.1]")
                   }
                   to="/mini-store"
                 >
-
-                  <span className="flex justify-between py-2 px-2">
-                    <span style={{fontSize:'16px'}}>Mini Store</span>
-                    <span>  <SvgElement type={icontypesEnum.CROWN} /> </span>
+                  <span className="flex py-2.5 px-2">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" className="mr-3 " viewBox="0 0 24 24"><path fill="white" d="m12 5.69l5 4.5V18h-2v-6H9v6H7v-7.81l5-4.5M12 3L2 12h3v8h6v-6h2v6h6v-8h3L12 3z" /></svg>
+                    <span style={{fontSize:'15px'}} className=" font-normal mt-1"> Mini Store</span>
+                    {/* <span> {(window.location.href.indexOf("/mylinks") !== -1
+                      ? <SvgElement type={icontypesEnum.ARROWWHITE} /> 
+                      : <SvgElement type={icontypesEnum.ARROW} /> )} </span> */}
                   </span>
 
-                </Link>
+                </NavLink>
               </li>
 
-              <hr className=" md:min-w-full" />
-
-              <li className="items-center">
-                <Link
+              <li className="items-center mx-3 mb-3">
+              <NavLink
                 onClick={() => setCollapseShow("hidden")}
                   style={{
                     backgroundColor: (window.location.href.indexOf("/chatrouting") !== -1
-                      ? "text-white"
+                      ? "rgba(255, 255, 255, 0.1)"
                       : "text-black hover:text-blueGray-500")
                   }}
                   className={
-                    "text-xs cursor-pointer block " +
+                    "text-xs cursor-pointer pl-3 block " +
                     (window.location.href.indexOf("/chatrouting") !== -1
-                      ? "text-white"
-                      : "text-black hover:text-blueGray-500")
+                      ? "text-white rounded-[8px]"
+                      : "text-white border border-white/[0.1] rounded-[8px] hover:bg-white/[0.1]")
                   }
                   to="/chatrouting"
                 >
-
-                  <span className="flex justify-between py-2 px-2">
-                    <span style={{fontSize:'16px'}}>Chat Routing</span>
-                    <span>  <SvgElement type={icontypesEnum.CROWN} /> </span>
+                  <span className="flex py-2.5 px-2">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" className="mr-3 " viewBox="0 0 24 24"><path fill="white" d="m12 5.69l5 4.5V18h-2v-6H9v6H7v-7.81l5-4.5M12 3L2 12h3v8h6v-6h2v6h6v-8h3L12 3z" /></svg>
+                    <span style={{fontSize:'15px'}} className=" font-normal mt-1"> Chat Routing</span>
+                    
                   </span>
 
-                </Link>
+                </NavLink>
               </li>
 
-
-              {/* <hr className=" md:min-w-full" /> */}
-
-              <li className="items-center">
-                <Link
+              
+              <li className="items-center mx-3 mb-3">
+              <NavLink
                 onClick={() => setCollapseShow("hidden")}
                   style={{
                     backgroundColor: (window.location.href.indexOf("/formlinks") !== -1
-                      ? "text-white"
+                      ? "rgba(255, 255, 255, 0.1)"
                       : "text-black hover:text-blueGray-500")
                   }}
                   className={
-                    "text-xs cursor-pointer block " +
+                    "text-xs cursor-pointer pl-3 block " +
                     (window.location.href.indexOf("/formlinks") !== -1
-                      ? "text-white"
-                      : "text-black hover:text-blueGray-500")
+                      ? "text-white rounded-[8px]"
+                      : "text-white border border-white/[0.1] rounded-[8px] hover:bg-white/[0.1]")
                   }
                   to="/formlinks"
                 >
-
-                  <span className="flex justify-between py-2 px-2">
-                    <span style={{fontSize:'16px'}}>Form Links</span>
-                    <span>  <SvgElement type={icontypesEnum.CROWN} /> </span>
+                  <span className="flex py-2.5 px-2">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" className="mr-3 " viewBox="0 0 24 24"><path fill="white" d="m12 5.69l5 4.5V18h-2v-6H9v6H7v-7.81l5-4.5M12 3L2 12h3v8h6v-6h2v6h6v-8h3L12 3z" /></svg>
+                    <span style={{fontSize:'15px'}} className=" font-normal mt-1">Form Links</span>
+                    
                   </span>
 
-                </Link>
+                </NavLink>
               </li>
 
-              {/* <hr className=" md:min-w-full" /> */}
+             
 
-              <li className="items-center">
+              
+
+             
+
+
+            
+
+              <li className="items-center pt-36 mx-3 pl-3 mb-2">
                 <span
                 onClick={() => setCollapseShow("hidden")}
                   style={{
                     backgroundColor: (window.location.href.indexOf("/dashboard2") !== -1
                       ? "text-white"
-                      : "text-black hover:text-blueGray-500")
+                      : "text-white")
                   }}
                   className={
                     "text-xs cursor-pointer block " +
                     (window.location.href.indexOf("/dashboard2") !== -1
                       ? "text-white"
-                      : "text-black hover:text-blueGray-500")
+                      : "text-white hover:bg-white/[0.1] hover:rounded-[5px]")
                   }
                   
                 >
@@ -266,7 +267,8 @@ export default function Sidebar(title:any) {
                 </span>
               </li>
 
-              <li className="items-center pt-80">
+            
+              <li className="items-center mx-3 pl-3">
                 <span
                   //  style={{backgroundColor:'#61A24F'}}
                   className={
@@ -276,9 +278,10 @@ export default function Sidebar(title:any) {
                   onClick={logOut}
                 >
 
-                  <span className="flex justify-between py-2 px-2 cursor-pointer">
-                    <span className=" text-sm text-red-600">Log out</span>
-                    <span style={{ color: 'red' }}>  <SvgElement type={icontypesEnum.REDARROW} /> </span>
+                  <span className="flex py-2  cursor-pointer">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" className="mr-3 " viewBox="0 0 24 24"><path fill="red" d="M16 13v-2H7V8l-5 4l5 4v-3z"/><path fill="red" d="M20 3h-9c-1.103 0-2 .897-2 2v4h2V5h9v14h-9v-4H9v4c0 1.103.897 2 2 2h9c1.103 0 2-.897 2-2V5c0-1.103-.897-2-2-2z"/></svg>
+                    <span className=" text-[15px] mt-1 font-normal text-[#FF0000]">Log out</span>
+                    {/* <span style={{ color: 'red' }}>  <SvgElement type={icontypesEnum.REDARROW} /> </span> */}
                   </span>
 
                 </span>

@@ -168,9 +168,9 @@ export default function CardCreateLink() {
 
           <div className=" ">
           
-            <div className="">
-              <form onSubmit={handleSubmit} className="pb-4 rounded-lg p-3 pt-20">
-              <span className="font-bold" style={{fontSize:'20px'}}>Create a Named gupta.ink</span>
+            <div className="rounded-lg px-6 pb-4 pt-6 border border-[#D9D9D9] shadow-md mt-6">
+              <form onSubmit={handleSubmit} className=" ">
+              <span className="font-bold text-[20px]">Create a Named gupta.ink</span>
                 <div className="mb-4 mt-6">
                   <label
                     htmlFor="name"
@@ -183,7 +183,7 @@ export default function CardCreateLink() {
                       type="text"
                       id="brand"
                       name="name"
-                      className="flex w-80 justify-center shadow-sm bg-[#F4FBFF] border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 p-2.5 "
+                      className="flex w-80 justify-center shadow-sm bg-[#F4FBFF]  text-gray-900 text-sm rounded-lg p-2.5 "
                       placeholder="Name"
                       defaultValue={name}
                       onChange={(e) => setName(e?.target?.value)}
@@ -227,14 +227,14 @@ export default function CardCreateLink() {
 
                 <div className="mb-4 mt-4 flex justify-start gap-2">
                 <label for="default-radio-1" class=" text-sm " style={{color:'#616161'}}>Link type:</label>
-                  <div class=" flex justify-center ">
-                    <input checked={type == 'message'?true : false} id="default-radio-1" type="radio" value="message" onClick={(e) => setType(e?.target?.value)} name="default-radio" class="w-4 h-4 pt-2 text-green-600 bg-green-100 border-green-700 " />
+                  <div class=" flex justify-center">
+                    <input checked={type == 'message'?true : false} id="default-radio-1" type="radio" value="message" onClick={(e) => setType(e?.target?.value)} name="default-radio" class="w-4 h-4 mt-1 text-green-600 bg-green-100 border-green-700 " />
                     {/* <input type="radio" id="default-radio-1" style={{ color: 'green' }} value="message" onClick={(e) => setType(e?.target?.value)} name="default-radio" class="w-4 h-4 pt-2 text-green-600 bg-green-100 border-green-700 " /> */}
                     <label for="default-radio-1" class="ml-2 text-sm  text-gray-400 ">Message</label>
                   </div>
 
                   <div class="flex justify-center ">
-                    <input id="default-radio-2" type="radio" value="catalog" name="default-radio" onClick={(e) => setType(e?.target?.value)} class="w-4 h-4 text-green-600 bg-gray-100 border-green-300  " />
+                    <input id="default-radio-2" type="radio" value="catalog" name="default-radio" onClick={(e) => setType(e?.target?.value)} class="w-4 h-4 mt-1 text-green-600 bg-gray-100 border-green-300  " />
                     <label for="default-radio-2" class="ml-2 text-sm  text-gray-400 ">Catalog</label>
                   </div>
 
@@ -274,8 +274,8 @@ export default function CardCreateLink() {
                   <button
                     type="submit"
                     disabled={nameExist === 1 ? true : false}
-                    style={{ backgroundColor: (nameExist === 1 ? 'grey' : '#0071BC'), borderRadius: '50px' }}
-                    className=" text-white hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full px-2 py-2.5 text-center "
+                    style={{ backgroundColor: (nameExist === 1 ? 'grey' : '#0071BC') }}
+                    className=" text-white hover:bg-blue-800 font-medium rounded-[10px] text-sm w-full px-2 py-2.5 text-center "
                   >
                     Create link
                   </button>

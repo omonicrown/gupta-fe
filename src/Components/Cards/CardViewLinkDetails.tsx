@@ -162,7 +162,7 @@ const data = {
             </div>
 
             <div className="mt-4">
-              <span className="text-[14px] font-bold"> status :</span>
+              <span className="text-[14px] font-bold"> Status :</span>
               <span className="border border-green-600 rounded-md text-[12px] p-1 ml-2">Active</span>
             </div>
 
@@ -172,7 +172,7 @@ const data = {
             </div>
 
             <div className="mt-4">
-              <span className="text-[15px] font-bold p-1 ml-2 flex justify-start gap-1 text-red-600 cursor-pointer">
+              <span className="text-[15px] font-bold p-1 ml-1 flex justify-start gap-1 text-red-600 cursor-pointer">
                 <span className="mt-1"><FaTrash /> </span>
                 <span>Delete Link</span>
               </span>
