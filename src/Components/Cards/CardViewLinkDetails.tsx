@@ -86,6 +86,7 @@ export default function CardViewLinkDetails() {
   const [chrome, setChrome] = React.useState<any>('0');
   const [android, setAndroid] = React.useState<any>('0');
   const [ios, setIos] = React.useState<any>('0');
+  const [macBook, setMacBook] = React.useState<any>('0');
   const [safari, setSafari] = React.useState<any>('0');
   const [dates, setDates] = React.useState<any>([]);
   const [linkData, setLinkData] = React.useState<any>([]);
@@ -99,10 +100,11 @@ export default function CardViewLinkDetails() {
           setTotalClicks((response?.data?.link?.social_traffic?.map((year: any) => year?.visit)))
           setSafari((response?.data?.link?.social_traffic?.map((year: any) => year?.safari)))
           setChrome((response?.data?.link?.social_traffic?.map((year: any) => year?.chrome)))
-          setIos((response?.data?.link?.social_traffic?.map((year: any) => year?.ios)))
+          setIos((response?.data?.link?.social_traffic?.map((year: any) => year?.iphone)))
+          setMacBook((response?.data?.link?.social_traffic?.map((year: any) => year?.macbook)))
           setAndroid((response?.data?.link?.social_traffic?.map((year: any) => year?.android)))
 
-          setDates(response?.data?.link?.graph?.map((year: any) => year?.month_year))
+          setDates(response?.data?.link?.graph?.map((year: any) => year?.month_day))
           setChartData(response?.data?.link?.graph?.map((year: any) => year?.total_click))
         }
       }
@@ -205,8 +207,13 @@ const data = {
 
                   <div className="flex justify-between pt-3">
                     <span className="text-[15px]">IOS Users</span>
-                    <span className="font-bold">{ios} Clicks</span>
+                    <span className="font-bold">{parseInt(ios)+ parseInt(macBook)} Clicks</span>
                   </div>
+
+                  {/* <div className="flex justify-between pt-3">
+                    <span className="text-[15px]">MacBook Users</span>
+                    <span className="font-bold">{macBook} Clicks</span>
+                  </div> */}
 
                   {/* <div className="flex justify-between">
                     <span>Chrom 1</span>

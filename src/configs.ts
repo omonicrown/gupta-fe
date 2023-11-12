@@ -34,8 +34,8 @@ const configs = {
   tokenStorage: "TOKEN_PERSIST",
   socket: SOCKET_URL,
   type: TYPE_REST,
-  imageUrl: "http://127.0.0.1:8000/TieredImages/",
-  context: "http://127.0.0.1:8000/api",
+  imageUrl: "https://gupta-tkwuj.ondigitalocean.app/TieredImages/",
+  context: "https://gupta-tkwuj.ondigitalocean.app/api",
 
   // imageUrl: "https://5408-197-210-29-65.ngrok-free.app/TieredImages/",
   // context: "https://5408-197-210-29-65.ngrok-free.app/api",

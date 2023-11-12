@@ -92,8 +92,6 @@ export default function CardTiredLinks() {
   const handleSubmit = React.useCallback(
     (e) => {
       e.preventDefault();
-
-
       const formData = new FormData()
       formData.append('name', name.replace(/ /g, ''))
       formData.append('title', title)

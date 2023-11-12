@@ -7,9 +7,13 @@ import Index from './Components/Pages/Auth/index';
 import MultiLinks from './Components/admin/TiredLink';
 import Mylinks from './Components/admin/MyLinks';
 import CreateLink from './Components/admin/CreateLink';
+import CreateProduct from './Components/admin/CreateProduct';
+import EditProduct from './Components/admin/EditProduct';
 import LinkDetails from './Components/admin/ViewLinkDetails';
 import EditMultiLink from './Components/admin/EditMultiLink';
 import ViewMultiPage from './Components/admin/ViewMultiPage';
+import ViewProductPage from './Components/admin/ViewProductPage';
+import ViewProductDetailPage from './Components/admin/ViewProductDetailsPage';
 import CreateMultiLink from './Components/admin/CreateMultiLink';
 import Formlink from './Components/admin/FormLinks';
 import MiniStore from './Components/admin/MiniStores';
@@ -36,8 +40,12 @@ function App() {
            {/* <Route  path="/login" element={<Login/>}/> */}
            <Route  path="/mylinks" element={<Mylinks/>}/>
            <Route  path="/createlink" element={<CreateLink/>}/>
+           <Route  path="/createproduct" element={<CreateProduct/>}/>
+           <Route  path="/edit-product/:id" element={<EditProduct/>}/>
            <Route  path="/update-multi-link/:linkId" element={<EditMultiLink/>}/>
            <Route  path="/:linkId" element={<ViewMultiPage/>}/>
+           <Route  path="/store/:storeId" element={<ViewProductPage/>}/>
+           <Route  path="/storedetails/:storeId" element={<ViewProductDetailPage/>}/>
            <Route  path="/create-multi-link" element={<CreateMultiLink/>}/>
            <Route  path="/EditUserMessage" element={<EditUserMessage/>}/>
            <Route  path="/editprofile" element={<EditProfile/>}/>  
