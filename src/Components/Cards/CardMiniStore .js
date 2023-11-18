@@ -1,6 +1,6 @@
 import React from "react";
 import { AdminApis } from "../../apis/adminApi";
-import { FaTrash, FaEdit,FaWhatsapp } from "react-icons/fa";
+import { FaTrash, FaEdit, FaWhatsapp } from "react-icons/fa";
 import CardNavBar from "./CardNavBar";
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { ToastContainer, toast } from 'react-toastify';
@@ -262,7 +262,36 @@ export default function CardMiniStore() {
                     </div>
                     :
 
-                    <CardPageVisits />
+                    <div className="relative flex flex-col min-w-0 break-words bg-white w-full mb-6  rounded">
+                      <div className="rounded-t mb-0  py-3 border-0">
+                        <div className="flex flex-wrap items-center">
+                          <div className="w-full px-4 max-w-full p-52 flex-grow flex-1">
+
+                            <h3 className="flex justify-center font-bold"> You haven’t created any Product Link</h3>
+                            <p className="flex text-sm justify-center"> Click on the button below to create a new </p>
+                            <p className="flex text-sm justify-center text-black font-bold"> Product.</p>
+
+                            <NavLink to='/createproduct' className="flex justify-center">
+                              < span className="flex justify-center pt-4">
+                                <button
+                                  type="submit"
+                                  style={{ backgroundColor: '#0071BC', borderRadius: '50px' }}
+                                  className=" text-white hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm w-40 px-5 py-2.5 text-center "
+                                >
+                                  + Create New
+                                </button>
+                              </span>
+                            </NavLink>
+
+                          </div>
+
+                        </div>
+                      </div>
+                      <div className="block w-full overflow-x-auto">
+                        {/* Projects table */}
+
+                      </div>
+                    </div>
                 )
 
                   :
@@ -469,18 +498,18 @@ export default function CardMiniStore() {
                   </span>
 
                   <span className="flex justify-center pt-4">
-                  <Oval
-                    height={40}
-                    width={40}
-                    color="#0071BC"
-                    wrapperStyle={{}}
-                    wrapperClass=""
-                    visible={loader}
-                    ariaLabel='oval-loading'
-                    secondaryColor="#96cff6"
-                    strokeWidth={2}
-                    strokeWidthSecondary={2}
-                  />
+                    <Oval
+                      height={40}
+                      width={40}
+                      color="#0071BC"
+                      wrapperStyle={{}}
+                      wrapperClass=""
+                      visible={loader}
+                      ariaLabel='oval-loading'
+                      secondaryColor="#96cff6"
+                      strokeWidth={2}
+                      strokeWidthSecondary={2}
+                    />
                   </span>
 
                 </form>

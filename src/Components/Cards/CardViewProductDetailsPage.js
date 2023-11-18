@@ -142,7 +142,7 @@ export default function CardEditProduct() {
             {data?.no_of_items} Items in stock
           </NavLink>
 
-          <a target='_blank' href={`http://localhost:8000/${data?.phone_number}`}
+          <a target='_blank' href={`https://gupta-tkwuj.ondigitalocean.app/${data?.phone_number}`}
             className=" text-[10px] text-white pt-1  flex cursor-pointer bg-[#0071BC] rounded-full px-2"
           >
             <FaWhatsapp className="mt-[2px] mr-1" />  Contact Vendor

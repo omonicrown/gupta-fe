@@ -37,8 +37,9 @@ const configs = {
   imageUrl: "https://gupta-tkwuj.ondigitalocean.app/TieredImages/",
   context: "https://gupta-tkwuj.ondigitalocean.app/api",
 
-  // imageUrl: "https://5408-197-210-29-65.ngrok-free.app/TieredImages/",
-  // context: "https://5408-197-210-29-65.ngrok-free.app/api",
+  baseRedirect:'https://gupta-tkwuj.ondigitalocean.app',
+  // imageUrl: "http://127.0.0.1:8000/TieredImages/",
+  // context: "http://127.0.0.1:8000/api",
 
   history: createBrowserHistory(),
   requestTimeOut: 30000,

@@ -6,6 +6,7 @@ import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { ToastContainer, toast } from 'react-toastify';
 import { NavLink } from "react-router-dom";
 import Modal from 'react-awesome-modal';
+import configs from "../../configs";
 import CardPageVisits from "./CardPageVisits";
 import { SvgElement, icontypesEnum } from "../assets/svgElement";
 
@@ -21,7 +22,7 @@ export default function CardMyLinks() {
   let [contact, setContact] = React.useState('');
   let [effect, setEffect] = React.useState('');
 
-console?.log(value)
+  console?.log(value)
 
   function toggleModal(value2, contact) {
     setvalue(value2)
@@ -92,7 +93,7 @@ console?.log(value)
 
       });
     },
-    [value, message, contact,name]
+    [value, message, contact, name]
   );
 
   const deleteLink = React.useCallback(
@@ -165,7 +166,7 @@ console?.log(value)
                         type="button"
                         className=" text-white font-medium bg-[#0071BC] rounded-[5px] text-sm px-5 py-2.5 text-center "
                       >
-                         Create New +
+                        Create New +
                       </button>
                     </span>
                   </NavLink>
@@ -187,12 +188,12 @@ console?.log(value)
                             <div class="max-w-sm bg-white rounded-lg border border-gray-200 shadow-md">
                               <span className="flex justify-between gap-3 rounded-t-lg border-none bg-[#0071BC] px-3 py-1" >
                                 <p class="mb-2 font-medium tracking-tight text-white" style={{ fontSize: '18px' }}>gupta.ink/{data?.name} </p>
-                               <div>
-                               <CopyToClipboard text={`gupta.ink/${(data?.name)}`}
-                               onCopy={() => isCopied()}>
-                                <h3 className="text-white text-xs mt-1.5 border border-[#fff] py-1 px-3 rounded-full cursor-pointer">Copy</h3>
-                              </CopyToClipboard>
-                               </div>
+                                <div>
+                                  <CopyToClipboard text={`${configs?.baseRedirect}/${(data?.name)}`}
+                                    onCopy={() => isCopied()}>
+                                    <h3 className="text-white text-xs mt-1.5 border border-[#fff] py-1 px-3 rounded-full cursor-pointer">Copy</h3>
+                                  </CopyToClipboard>
+                                </div>
                                 {/* < span className="flex justify-center mt-2">
                                   <CopyToClipboard text={`gupta.ink/${(data?.name)}`}
                                     onCopy={() => isCopied()}>
@@ -206,15 +207,15 @@ console?.log(value)
                                 </span> */}
                               </span>
                               <NavLink to={`/link-details/${data?.id}`} className={'cursor-pointer'}>
-                              <span className="flex justify-between gap-2 m-2 ">
-                                <p class="mb-2 tracking-tight text-gray-900 font-medium" style={{ fontSize: '16px' }}>{(data?.link_info?.phone_number)?.replace(/ /g, '')}  </p>
-                                {/* <p class=" text-xs tracking-tight font-bold text-gray-900" style={{ fontSize: '16px' }}> .</p> */}
-                                <p class="tracking-tight font-bold " style={{ color: '#149E49', fontSize: '16px', paddingTop: '1px' }}> {data?.short_url?.visits?.length ? data?.short_url?.visits?.length : '0'} clicks</p>
-                              </span>
-                             <div className="bg-[#F4FBFF] mx-2 rounded-[5px]">
-                             <p class="mb-2 tracking-tight m-2 py-2 pl-1  h-20 text-[#A9A9A9]">{data?.link_info?.message}</p>
-                             </div>
-                              
+                                <span className="flex justify-between gap-2 m-2 ">
+                                  <p class="mb-2 tracking-tight text-gray-900 font-medium" style={{ fontSize: '16px' }}>{(data?.link_info?.phone_number)?.replace(/ /g, '')}  </p>
+                                  {/* <p class=" text-xs tracking-tight font-bold text-gray-900" style={{ fontSize: '16px' }}> .</p> */}
+                                  <p class="tracking-tight font-bold " style={{ color: '#149E49', fontSize: '16px', paddingTop: '1px' }}> {data?.short_url?.visits?.filter(visit => visit?.operating_system !== '0').length ? data?.short_url?.visits?.filter(visit => visit?.operating_system !== '0').length : '0'} click(s)</p>
+                                </span>
+                                <div className="bg-[#F4FBFF] mx-2 rounded-[5px]">
+                                  <p class="mb-2 tracking-tight m-2 py-2 pl-1  h-20 text-[#A9A9A9]">{data?.link_info?.message}</p>
+                                </div>
+
                               </NavLink>
                               <span className="flex justify-between gap-1  m-2">
                                 <span className="flex justify-start gap-1 pt-3">
@@ -250,7 +251,7 @@ console?.log(value)
                                     className=" outline-none  font-xs rounded-full text-xs px-2  text-center "
                                   >
                                     {/* <FaEdit /> */}
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="#0071bc" d="M6.414 15.89L16.556 5.748l-1.414-1.414L5 14.476v1.414h1.414Zm.829 2H3v-4.243L14.435 2.212a1 1 0 0 1 1.414 0l2.829 2.829a1 1 0 0 1 0 1.414L7.243 17.89ZM3 19.89h18v2H3v-2Z"/></svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="#0071bc" d="M6.414 15.89L16.556 5.748l-1.414-1.414L5 14.476v1.414h1.414Zm.829 2H3v-4.243L14.435 2.212a1 1 0 0 1 1.414 0l2.829 2.829a1 1 0 0 1 0 1.414L7.243 17.89ZM3 19.89h18v2H3v-2Z" /></svg>
                                   </button>
 
 
@@ -260,12 +261,12 @@ console?.log(value)
                                     className=" outline-none  font-xs text-red-500 rounded-full text-xs px-2 py-2 text-center "
                                   >
                                     {/* <FaTrash /> */}
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><g fill="none"><path d="M24 0v24H0V0h24ZM12.593 23.258l-.011.002l-.071.035l-.02.004l-.014-.004l-.071-.035c-.01-.004-.019-.001-.024.005l-.004.01l-.017.428l.005.02l.01.013l.104.074l.015.004l.012-.004l.104-.074l.012-.016l.004-.017l-.017-.427c-.002-.01-.009-.017-.017-.018Zm.265-.113l-.013.002l-.185.093l-.01.01l-.003.011l.018.43l.005.012l.008.007l.201.093c.012.004.023 0 .029-.008l.004-.014l-.034-.614c-.003-.012-.01-.02-.02-.022Zm-.715.002a.023.023 0 0 0-.027.006l-.006.014l-.034.614c0 .012.007.02.017.024l.015-.002l.201-.093l.01-.008l.004-.011l.017-.43l-.003-.012l-.01-.01l-.184-.092Z"/><path fill="#d00000" d="M20 5a1 1 0 1 1 0 2h-1l-.003.071l-.933 13.071A2 2 0 0 1 16.069 22H7.93a2 2 0 0 1-1.995-1.858l-.933-13.07A1.017 1.017 0 0 1 5 7H4a1 1 0 0 1 0-2h16Zm-6-3a1 1 0 1 1 0 2h-4a1 1 0 0 1 0-2h4Z"/></g></svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><g fill="none"><path d="M24 0v24H0V0h24ZM12.593 23.258l-.011.002l-.071.035l-.02.004l-.014-.004l-.071-.035c-.01-.004-.019-.001-.024.005l-.004.01l-.017.428l.005.02l.01.013l.104.074l.015.004l.012-.004l.104-.074l.012-.016l.004-.017l-.017-.427c-.002-.01-.009-.017-.017-.018Zm.265-.113l-.013.002l-.185.093l-.01.01l-.003.011l.018.43l.005.012l.008.007l.201.093c.012.004.023 0 .029-.008l.004-.014l-.034-.614c-.003-.012-.01-.02-.02-.022Zm-.715.002a.023.023 0 0 0-.027.006l-.006.014l-.034.614c0 .012.007.02.017.024l.015-.002l.201-.093l.01-.008l.004-.011l.017-.43l-.003-.012l-.01-.01l-.184-.092Z" /><path fill="#d00000" d="M20 5a1 1 0 1 1 0 2h-1l-.003.071l-.933 13.071A2 2 0 0 1 16.069 22H7.93a2 2 0 0 1-1.995-1.858l-.933-13.07A1.017 1.017 0 0 1 5 7H4a1 1 0 0 1 0-2h16Zm-6-3a1 1 0 1 1 0 2h-4a1 1 0 0 1 0-2h4Z" /></g></svg>
                                   </button>
                                 </span>
                               </span>
                             </div>
-                            </>
+                          </>
 
 
                         )
@@ -330,16 +331,15 @@ console?.log(value)
           onClickAway={() => setVisible(false)}
         >
           <div className=" " style={{ height: '100%', overflow: 'auto' }}>
-            <span className="flex justify-end p-3">
+            <span className="flex justify-end pr-2 pt-2">
               <p className="cursor-pointer font-bold" onClick={(e) => setVisible(false)}><SvgElement type={icontypesEnum.CANCEL} /></p>
             </span>
-            <div className=" flex flex-row justify-around bg-[#fff]  items-center rounded-lg p-1">
+            <div className=" bg-[#fff]  items-center rounded-lg p-1 px-4">
 
               <div className="">
 
                 <span className="flex justify-around">
                   {/* <h1 className=" text-xs text-red-600" style={{ fontSize: '10px' }}>Link can’t be edited in free plan. <span style={{ color: '#61A24F' }} className="font-bold text-xs">Upgrade to Pro</span></h1> */}
-
 
                 </span>
 
@@ -368,8 +368,8 @@ console?.log(value)
                   <span className="flex justify-center pt-4">
                     <button
                       type="submit"
-                      style={{ backgroundColor: '#61A24F', borderRadius: '50px' }}
-                      className=" text-white hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm w-full px-2 py-2.5 text-center "
+                      style={{ backgroundColor: '#0071BC', borderRadius: '50px' }}
+                      className=" text-white hover:bg-[#0071BC] focus:ring-4 focus:outline-none focus:ring-[#0071BC] font-medium rounded-lg text-sm w-full px-2 py-2.5 text-center "
                     >
                       Update
                     </button>

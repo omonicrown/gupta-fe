@@ -1,18 +1,19 @@
 import React from "react";
 import { AdminApis } from "../../apis/adminApi";
-import { FaTrash, FaEye} from "react-icons/fa";
+import { FaTrash, FaEdit } from "react-icons/fa";
 import CardNavBar from "./CardNavBar";
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { ToastContainer, toast } from 'react-toastify';
 import { NavLink } from "react-router-dom";
 import Modal from 'react-awesome-modal';
 import CardPageVisits from "./CardPageVisits";
+import configs from "../../configs";
 import { SvgElement, icontypesEnum } from "../assets/svgElement";
 
 
 // components
 
-export default function CardMyLinks() {
+export default function CardRedirectLink() {
 
 
   let [visible, setVisible] = React.useState(false);
@@ -21,7 +22,6 @@ export default function CardMyLinks() {
   let [contact, setContact] = React.useState('');
   let [effect, setEffect] = React.useState('');
 
-console?.log(value)
 
   function toggleModal(value2, contact) {
     setvalue(value2)
@@ -51,12 +51,12 @@ console?.log(value)
   React.useEffect(() => {
     setLoader(true);
     setEffect('')
-    AdminApis.getMultiLinks().then(
+    AdminApis.getRedirectLinks().then(
       (response) => {
         if (response?.data) {
           setdata(response?.data)
           setLoader(false);
-          console.log(response?.data?.multi_link)
+          console.log(response?.data?.redirect_links)
         }
       }
     );
@@ -92,18 +92,18 @@ console?.log(value)
 
       });
     },
-    [value, message, contact,name]
+    [value, message, contact, name]
   );
 
   const deleteLink = React.useCallback(
     (e) => {
       e.preventDefault();
-      AdminApis.deleteMultiLink(value).then(
+      AdminApis.deleteLink(value).then(
         (response) => {
           if (response?.data) {
             console.log(response.data)
             setToggleDeleteModal(false)
-            toast.success("MultiLink Deleted Successfully");
+            toast.success("Link Deleted Successfully");
             setEffect('d')
           }
         }
@@ -128,12 +128,12 @@ console?.log(value)
       console.log(inputEl.current.value);
       setSearchTerm(inputEl.current.value);
       if (searchTerm !== "") {
-        const newContactList = data?.multi_link?.filter((data) => {
+        const newContactList = data?.redirect_links?.filter((data) => {
           return Object.values(data).join(" ")?.toLowerCase()?.includes(inputEl?.current?.value?.toLowerCase());
         });
         setSearchResult(newContactList);
       } else {
-        setSearchResult(data?.multi_link);
+        setSearchResult(data?.redirect_links);
       }
     }, [inputEl, searchTerm, searchResult, data]);
 
@@ -151,22 +151,21 @@ console?.log(value)
           <div className="flex flex-wrap items-center">
             <div className="w-full px-4 max-w-full flex-grow flex-1">
 
-              {data?.multi_link?.length ?
+              {data?.redirect_links?.length ?
                 <span className="flex justify-between" >
                   {/* <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-gray-300">Search</label> */}
                   <div class="relative invisible md:visible">
-                    <input ref={inputEl} onChange={getSearchTerm} type="text" style={{ borderColor: '#0071BC' }} id="default-search" class="block p-4 pl-4 w-full h-4 text-sm text-gray-900 bg-gray-50 rounded-lg border focus:ring-green-500 focus:border-green-500 " placeholder="Search " />
-                    <svg aria-hidden="true" class="w-5 h-5 right-2.5 bottom-3 absolute text-gray-500 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                    <input ref={inputEl} onChange={getSearchTerm} type="text" id="default-search" class="block p-2.5 pl-4 w-full text-sm text-gray-900 bg-[#F4FBFF] rounded-lg border border-[#D9D9D9] " placeholder="Search Link" />
+                    <svg aria-hidden="true" class="w-5 h-5 right-2.5 bottom-3 absolute text-[#A9A9A9] " fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
                   </div>
 
-                  <NavLink to='/create-multi-link' className="flex justify-center">
+                  <NavLink to='/create-redirect-link' className="flex justify-center">
                     < span className="flex justify-center ">
                       <button
                         type="button"
-                        style={{ backgroundColor: '#0071BC', borderRadius: '50px' }}
-                        className=" text-white hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm w-40 px-5 py-2.5 text-center "
+                        className=" text-white font-medium bg-[#0071BC] rounded-[5px] text-sm px-5 py-2.5 text-center "
                       >
-                        + Create New
+                        Create New +
                       </button>
                     </span>
                   </NavLink>
@@ -175,50 +174,81 @@ console?.log(value)
                 ''
               }
 
-              <div>
+
+
+              <div className="pt-5">
                 {!loader ? (
-                  (data?.multi_link?.length >= 1) ?
+                  (data?.redirect_links?.length >= 1) ?
                     <div className="container flex-col md:flex-row md:justify-start mt-1 pt-1 grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-3">
-                      {(inputEl?.current?.value?.length > 1 ? searchResult : data?.multi_link).map(
+                      {(inputEl?.current?.value?.length > 1 ? searchResult : data?.redirect_links).map(
                         (data, index) => (
+
+                          <>
                             <div class="max-w-sm bg-white rounded-lg border border-gray-200 shadow-md">
-                              <span className="flex justify-between gap-3 rounded-t-lg border bg-[#0071BC] px-3 py-1" >
-                                <p class="mb-2 font-medium tracking-tight text-white" style={{ fontSize: '18px' }}>gupta.ink/{data?.name}</p>
-                                < span className="flex justify-center mt-2">
+                              <span className="flex justify-between gap-3 rounded-t-lg border-none bg-[#0071BC] px-3 py-1" >
+                                <p class="mb-2 font-medium tracking-tight text-white" style={{ fontSize: '18px' }}>gupta.ink/{data?.name} </p>
+                                <div>
+                                  <CopyToClipboard text={`${configs?.baseRedirect}/${(data?.name)}`}
+                                    onCopy={() => isCopied()}>
+                                    <h3 className="text-white text-xs mt-1.5 border border-[#fff] py-1 px-3 rounded-full cursor-pointer">Copy</h3>
+                                  </CopyToClipboard>
+                                </div>
+                                {/* < span className="flex justify-center mt-2">
                                   <CopyToClipboard text={`gupta.ink/${(data?.name)}`}
                                     onCopy={() => isCopied()}>
                                     <span
-                                      style={{ color: 'white', borderColor: '#0071BC' }}
-                                      className="ring-1 cursor-pointer outline-none font-xs rounded-lg text-xs px-3 h-4  text-center "
+                                     
+                                      className="border border-white cursor-pointer font-xs rounded-full text-xs text-white px-3 py-1  text-center "
                                     >
                                       Copy
                                     </span>
                                   </CopyToClipboard>
-                                </span>
+                                </span> */}
                               </span>
-                             
-                              <NavLink to={`/update-multi-link/${data?.id}`}>
-                              <p class="mb-2 tracking-tight m-2 p-2 bg-[#F4FBFF] flex justify-center cursor-pointer" style={{ fontSize: '16px', color: '#595959' }}><span className="py-10 text-xl" style={{fontWeight:'600'}}>View Link Details</span>  </p>
+                              <NavLink to={`/link-details/${data?.id}`} className={'cursor-pointer'}>
+                                <span className="flex justify-between gap-2 m-2 ">
+                                  <p class="mb-2 tracking-tight text-gray-900 font-medium" style={{ fontSize: '16px' }}>{(data?.link_info?.phone_number)?.replace(/ /g, '')}  </p>
+                                  {/* <p class=" text-xs tracking-tight font-bold text-gray-900" style={{ fontSize: '16px' }}> .</p> */}
+                                  <p class="tracking-tight font-bold " style={{ color: '#149E49', fontSize: '16px', paddingTop: '1px' }}> {data?.short_url?.visits?.filter(visit => visit?.operating_system !== '0').length ? data?.short_url?.visits?.filter(visit => visit?.operating_system !== '0').length : '0'} click(s)</p>
+                                </span>
+                                <div className="bg-[#F4FBFF] mx-2 rounded-[5px]">
+                                  <p class="mb-2 tracking-tight m-2 py-2 pl-1  h-20 text-[#A9A9A9]">{data?.link_info?.message}</p>
+                                </div>
+
                               </NavLink>
-                              <span className="flex justify-between gap-1 pt-4 m-2">
-                                <span className="flex justify-start gap-1">
+                              <span className="flex justify-between gap-1  m-2">
+                                <span className="flex justify-start gap-1 pt-3">
                                   <span
                                     style={{ color: 'white' }}
-                                    className="ring-1 outline-none bg-[#149E49] font-xs rounded-lg text-xs px-4 h-5 pt-[2px] text-center cursor-pointer"
+                                    className=" bg-[#149E49] font-xs rounded-full text-xs px-4 h-5 pt-[2px] text-center cursor-pointer"
                                   >
                                     Active
                                   </span>
 
                                  
+                                    <span
+                                      style={{ borderColor: '#61A24F' }}
+                                      className=" bg-blue-100 text-blue-800 outline-none font-xs rounded-lg text-xs px-4 h-5 pt-[2px] text-center "
+                                    >
+                                      Redirect
+                                    </span>
+
+                                   
                                 </span>
 
 
 
                                 < span className="flex justify-end gap-1 ">
 
-                                <NavLink to={`/update-multi-link/${data?.id}`} className='px-2 py-2'>
-                                    <FaEye />
-                                  </NavLink>
+                                  <button
+                                    type="button"
+                                    style={{}}
+                                    onClick={(e) => toggleModal(data)}
+                                    className=" outline-none  font-xs rounded-full text-xs px-2  text-center "
+                                  >
+                                    {/* <FaEdit /> */}
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="#0071bc" d="M6.414 15.89L16.556 5.748l-1.414-1.414L5 14.476v1.414h1.414Zm.829 2H3v-4.243L14.435 2.212a1 1 0 0 1 1.414 0l2.829 2.829a1 1 0 0 1 0 1.414L7.243 17.89ZM3 19.89h18v2H3v-2Z" /></svg>
+                                  </button>
 
 
                                   <button
@@ -226,12 +256,13 @@ console?.log(value)
                                     onClick={(e) => toggleDelete(data?.id)}
                                     className=" outline-none  font-xs text-red-500 rounded-full text-xs px-2 py-2 text-center "
                                   >
-                                    <FaTrash />
+                                    {/* <FaTrash /> */}
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><g fill="none"><path d="M24 0v24H0V0h24ZM12.593 23.258l-.011.002l-.071.035l-.02.004l-.014-.004l-.071-.035c-.01-.004-.019-.001-.024.005l-.004.01l-.017.428l.005.02l.01.013l.104.074l.015.004l.012-.004l.104-.074l.012-.016l.004-.017l-.017-.427c-.002-.01-.009-.017-.017-.018Zm.265-.113l-.013.002l-.185.093l-.01.01l-.003.011l.018.43l.005.012l.008.007l.201.093c.012.004.023 0 .029-.008l.004-.014l-.034-.614c-.003-.012-.01-.02-.02-.022Zm-.715.002a.023.023 0 0 0-.027.006l-.006.014l-.034.614c0 .012.007.02.017.024l.015-.002l.201-.093l.01-.008l.004-.011l.017-.43l-.003-.012l-.01-.01l-.184-.092Z" /><path fill="#d00000" d="M20 5a1 1 0 1 1 0 2h-1l-.003.071l-.933 13.071A2 2 0 0 1 16.069 22H7.93a2 2 0 0 1-1.995-1.858l-.933-13.07A1.017 1.017 0 0 1 5 7H4a1 1 0 0 1 0-2h16Zm-6-3a1 1 0 1 1 0 2h-4a1 1 0 0 1 0-2h4Z" /></g></svg>
                                   </button>
                                 </span>
                               </span>
                             </div>
-                        
+                          </>
 
 
                         )
@@ -240,35 +271,35 @@ console?.log(value)
                     :
 
                     <div className="relative flex flex-col min-w-0 break-words bg-white w-full mb-6  rounded">
-                    <div className="rounded-t mb-0  py-3 border-0">
-                      <div className="flex flex-wrap items-center">
-                        <div className="w-full px-4 max-w-full p-52 flex-grow flex-1">
-            
-                          <h3 className="flex justify-center font-bold"> You haven’t created any Link</h3>
-                          <p className="flex text-sm justify-center"> Click on the button below to create a new </p>
-                          <p className="flex text-sm justify-center text-black font-bold"> Link.</p>
-            
-                          <NavLink to='/create-multi-link' className="flex justify-center">
-                          < span className="flex justify-center pt-4">
-                            <button
-                              type="button"
-                              style={{ backgroundColor: '#0071BC', borderRadius: '50px' }}
-                              className=" text-white hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm w-40 px-5 py-2.5 text-center "
-                            >
-                             + Create New
-                            </button>
-                          </span>
-                          </NavLink>
-            
-                        </div>
-            
-                      </div>
-                    </div>
-                    <div className="block w-full overflow-x-auto">
-                      {/* Projects table */}
-            
-                    </div>
-                  </div>
+        <div className="rounded-t mb-0  py-3 border-0">
+          <div className="flex flex-wrap items-center">
+            <div className="w-full px-4 max-w-full p-52 flex-grow flex-1">
+
+              <h3 className="flex justify-center font-bold"> You haven’t created any Redirect Link</h3>
+              <p className="flex text-sm justify-center"> Click on the button below to create a new </p>
+              <p className="flex text-sm justify-center text-black font-bold"> Link.</p>
+
+              <NavLink to='/create-redirect-link' className="flex justify-center">
+              < span className="flex justify-center pt-4">
+                <button
+                  type="submit"
+                  style={{ backgroundColor: '#0071BC', borderRadius: '50px' }}
+                  className=" text-white hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm w-40 px-5 py-2.5 text-center "
+                >
+                 + Create New
+                </button>
+              </span>
+              </NavLink>
+
+            </div>
+
+          </div>
+        </div>
+        <div className="block w-full overflow-x-auto">
+          {/* Projects table */}
+
+        </div>
+      </div>
                 )
 
                   :
@@ -325,7 +356,7 @@ console?.log(value)
           onClickAway={() => setVisible(false)}
         >
           <div className=" " style={{ height: '100%', overflow: 'auto' }}>
-            <span className="flex justify-end p-3">
+            <span className="flex justify-end pr-2 pt-2">
               <p className="cursor-pointer font-bold" onClick={(e) => setVisible(false)}><SvgElement type={icontypesEnum.CANCEL} /></p>
             </span>
             <div className=" bg-[#fff]  items-center rounded-lg p-1 px-4">
@@ -334,7 +365,6 @@ console?.log(value)
 
                 <span className="flex justify-around">
                   {/* <h1 className=" text-xs text-red-600" style={{ fontSize: '10px' }}>Link can’t be edited in free plan. <span style={{ color: '#61A24F' }} className="font-bold text-xs">Upgrade to Pro</span></h1> */}
-
 
                 </span>
 
@@ -363,8 +393,8 @@ console?.log(value)
                   <span className="flex justify-center pt-4">
                     <button
                       type="submit"
-                      style={{ backgroundColor: '#61A24F', borderRadius: '50px' }}
-                      className=" text-white hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm w-full px-2 py-2.5 text-center "
+                      style={{ backgroundColor: '#0071BC', borderRadius: '50px' }}
+                      className=" text-white hover:bg-[#0071BC] focus:ring-4 focus:outline-none focus:ring-[#0071BC] font-medium rounded-lg text-sm w-full px-2 py-2.5 text-center "
                     >
                       Update
                     </button>
@@ -466,7 +496,7 @@ console?.log(value)
                       style={{ borderRadius: '50px', color: '#F52424' }}
                       className=" text-red-700 bg-red-200 focus:ring-4 focus:outline-none focus:ring-grredeen-300 font-medium rounded-lg text-sm w-full px-2 py-2.5 text-center "
                     >
-                      Delete Multi Link
+                      Delete Link
                     </button>
                   </span>
 

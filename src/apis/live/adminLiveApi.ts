@@ -155,7 +155,7 @@ export class AdinLiveApis extends AxiosGlobal {
         return this.axios.get(`${configs.context}/market-links/get-products`, {
             headers: { "Content-Type": "aplication/json", "Accept": "aplication/json", "Authorization": `Bearer ${store.getState().data.login.value.token}`, "Access-Control-Allow-Origin": "*" },
         });
-    }  
+    }
 
     getSingleProduct(id: any): AxiosPromise<Array<any>> {
         return this.axios.get(`${configs.context}/market-links/get-single-product/${id}`, {
@@ -185,6 +185,19 @@ export class AdinLiveApis extends AxiosGlobal {
 
 
 
+    //Redirect links  
+
+    createRedirectLink(data: any): AxiosPromise<Array<any>> {
+        return this.axios.post(`${configs.context}/links/create-redirect-link`, data, {
+            headers: { "Content-Type": "aplication/json", "Accept": "aplication/json", "Authorization": `Bearer ${store.getState().data.login.value.token}`, "Access-Control-Allow-Origin": "*" },
+        });
+    }
+
+    getRedirectLinks(): AxiosPromise<Array<any>> {
+        return this.axios.get(`${configs.context}/getRedirectLinks`, {
+            headers: { "Content-Type": "aplication/json", "Accept": "aplication/json", "Authorization": `Bearer ${store.getState().data.login.value.token}`, "Access-Control-Allow-Origin": "*" },
+        });
+    }
 
 
 

@@ -10,7 +10,7 @@ import { AiOutlineSetting } from "react-icons/ai";
 import { IoArrowBack } from "react-icons/io5";
 import { NavLink } from "react-router-dom";
 
-export default function Sidebar(title:any) {
+export default function Sidebar(title: any) {
   const navigate = useNavigate();
   const [collapseShow, setCollapseShow] = React.useState("hidden");
   const dispatch: Dispatch = useDispatch();
@@ -37,7 +37,7 @@ export default function Sidebar(title:any) {
           <span className="flex justify-end md:hidden">
             <span className="flex  flex-row flex-wrap items-center lg:ml-auto mr-3">
               <div className="relative flex w-full flex-wrap items-stretch gap-5">
-              <h2 className="pt-2"><SvgElement type={icontypesEnum.SEARCH} /></h2>
+                <h2 className="pt-2"><SvgElement type={icontypesEnum.SEARCH} /></h2>
                 <h2 className="pt-2"><SvgElement type={icontypesEnum.NOTIFICATION} /></h2>
                 <NavLink to='/editprofile'>
                   <h2 className=" pt-2"><SvgElement type={icontypesEnum.SETTINGS} /></h2>
@@ -65,14 +65,14 @@ export default function Sidebar(title:any) {
             <div className="md:min-w-full md:hidden block pb-1 mb-4 ">
               <div className="flex justify-between">
 
-                <span className="flex justify-start gap-1" onClick={() => setCollapseShow("hidden")}><IoArrowBack style={{color:'#333333'}} className="bg-gray-200 text-xs text-gray-500 rounded-full p-1 h-7 w-7" /> <span>Back</span></span>
+                <span className="flex justify-start gap-1" onClick={() => setCollapseShow("hidden")}><IoArrowBack style={{ color: '#333333' }} className="bg-gray-200 text-xs text-gray-500 rounded-full p-1 h-7 w-7" /> <span>Back</span></span>
 
                 <span
                   className="cursor-pointer text-black opacity-50 md:hidden  py-1 text-xl leading-none bg-transparent rounded border border-solid border-transparent"
                   onClick={() => setCollapseShow("hidden")}
                 >
-                   <NavLink to='/editprofile'>
-                  <b className="fas fa-times"> <AiOutlineSetting /> </b>
+                  <NavLink to='/editprofile'>
+                    <b className="fas fa-times"> <AiOutlineSetting /> </b>
                   </NavLink>
                 </span>
 
@@ -106,8 +106,8 @@ export default function Sidebar(title:any) {
                 
               </li> */}
               <li className="items-center mx-3 mb-3">
-              <NavLink
-                onClick={() => setCollapseShow("hidden")}
+                <NavLink
+                  onClick={() => setCollapseShow("hidden")}
                   style={{
                     backgroundColor: (window.location.href.indexOf("/mylinks") !== -1
                       ? "rgba(255, 255, 255, 0.1)"
@@ -122,16 +122,43 @@ export default function Sidebar(title:any) {
                   to="/mylinks"
                 >
                   <span className="flex  py-2.5 px-2">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" className="mr-3 " viewBox="0 0 24 24"><path fill="white" d="m12 5.69l5 4.5V18h-2v-6H9v6H7v-7.81l5-4.5M12 3L2 12h3v8h6v-6h2v6h6v-8h3L12 3z" /></svg>
-                    <span style={{fontSize:'15px'}} className=" font-normal mt-1"> My Links</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" className="mr-3 " viewBox="0 0 24 24"><path fill="white" d="m12 5.69l5 4.5V18h-2v-6H9v6H7v-7.81l5-4.5M12 3L2 12h3v8h6v-6h2v6h6v-8h3L12 3z" /></svg>
+                    <span style={{ fontSize: '15px' }} className=" font-normal mt-1"> My Links</span>
                   </span>
 
                 </NavLink>
               </li>
 
+
               <li className="items-center mx-3 mb-3">
-              <NavLink
-                onClick={() => setCollapseShow("hidden")}
+                <NavLink
+                  onClick={() => setCollapseShow("hidden")}
+                  style={{
+                    backgroundColor: (window.location.href.indexOf("/redirect-links") !== -1
+                      ? "rgba(255, 255, 255, 0.1)"
+                      : "text-black hover:text-blueGray-500")
+                  }}
+                  className={
+                    "text-xs cursor-pointer pl-3 block " +
+                    (window.location.href.indexOf("/redirect-links") !== -1
+                      ? "text-white rounded-[8px]"
+                      : "text-white border border-white/[0.1] rounded-[8px] hover:bg-white/[0.1]")
+                  }
+                  to="/redirect-links"
+                >
+                  <span className="flex py-2.5 px-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" className="mr-3 " viewBox="0 0 24 24"><path fill="white" d="m12 5.69l5 4.5V18h-2v-6H9v6H7v-7.81l5-4.5M12 3L2 12h3v8h6v-6h2v6h6v-8h3L12 3z" /></svg>
+                    <span style={{ fontSize: '15px' }} className=" font-normal mt-1"> Short Links</span>
+                    {/* <span> {(window.location.href.indexOf("/mylinks") !== -1
+                      ? <SvgElement type={icontypesEnum.ARROWWHITE} /> 
+                      : <SvgElement type={icontypesEnum.ARROW} /> )} </span> */}
+                  </span>
+                </NavLink>
+              </li>
+
+              <li className="items-center mx-3 mb-3">
+                <NavLink
+                  onClick={() => setCollapseShow("hidden")}
                   style={{
                     backgroundColor: (window.location.href.indexOf("/multi-links") !== -1
                       ? "rgba(255, 255, 255, 0.1)"
@@ -146,19 +173,18 @@ export default function Sidebar(title:any) {
                   to="/multi-links"
                 >
                   <span className="flex py-2.5 px-2">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" className="mr-3 " viewBox="0 0 24 24"><path fill="white" d="m12 5.69l5 4.5V18h-2v-6H9v6H7v-7.81l5-4.5M12 3L2 12h3v8h6v-6h2v6h6v-8h3L12 3z" /></svg>
-                    <span style={{fontSize:'15px'}} className=" font-normal mt-1"> Multi Links</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" className="mr-3 " viewBox="0 0 24 24"><path fill="white" d="m12 5.69l5 4.5V18h-2v-6H9v6H7v-7.81l5-4.5M12 3L2 12h3v8h6v-6h2v6h6v-8h3L12 3z" /></svg>
+                    <span style={{ fontSize: '15px' }} className=" font-normal mt-1"> Multi Links</span>
                     {/* <span> {(window.location.href.indexOf("/mylinks") !== -1
                       ? <SvgElement type={icontypesEnum.ARROWWHITE} /> 
                       : <SvgElement type={icontypesEnum.ARROW} /> )} </span> */}
                   </span>
-
                 </NavLink>
               </li>
 
               <li className="items-center mx-3 mb-3">
-              <NavLink
-                onClick={() => setCollapseShow("hidden")}
+                <NavLink
+                  onClick={() => setCollapseShow("hidden")}
                   style={{
                     backgroundColor: (window.location.href.indexOf("/mini-store") !== -1
                       ? "rgba(255, 255, 255, 0.1)"
@@ -173,8 +199,8 @@ export default function Sidebar(title:any) {
                   to="/mini-store"
                 >
                   <span className="flex py-2.5 px-2">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" className="mr-3 " viewBox="0 0 24 24"><path fill="white" d="m12 5.69l5 4.5V18h-2v-6H9v6H7v-7.81l5-4.5M12 3L2 12h3v8h6v-6h2v6h6v-8h3L12 3z" /></svg>
-                    <span style={{fontSize:'15px'}} className=" font-normal mt-1"> Mini Store</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" className="mr-3 " viewBox="0 0 24 24"><path fill="white" d="m12 5.69l5 4.5V18h-2v-6H9v6H7v-7.81l5-4.5M12 3L2 12h3v8h6v-6h2v6h6v-8h3L12 3z" /></svg>
+                    <span style={{ fontSize: '15px' }} className=" font-normal mt-1"> Mini Store</span>
                     {/* <span> {(window.location.href.indexOf("/mylinks") !== -1
                       ? <SvgElement type={icontypesEnum.ARROWWHITE} /> 
                       : <SvgElement type={icontypesEnum.ARROW} /> )} </span> */}
@@ -184,8 +210,8 @@ export default function Sidebar(title:any) {
               </li>
 
               <li className="items-center mx-3 mb-3">
-              <NavLink
-                onClick={() => setCollapseShow("hidden")}
+                <NavLink
+                  onClick={() => setCollapseShow("hidden")}
                   style={{
                     backgroundColor: (window.location.href.indexOf("/chatrouting") !== -1
                       ? "rgba(255, 255, 255, 0.1)"
@@ -200,18 +226,18 @@ export default function Sidebar(title:any) {
                   to="/chatrouting"
                 >
                   <span className="flex py-2.5 px-2">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" className="mr-3 " viewBox="0 0 24 24"><path fill="white" d="m12 5.69l5 4.5V18h-2v-6H9v6H7v-7.81l5-4.5M12 3L2 12h3v8h6v-6h2v6h6v-8h3L12 3z" /></svg>
-                    <span style={{fontSize:'15px'}} className=" font-normal mt-1"> Chat Routing</span>
-                    
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" className="mr-3 " viewBox="0 0 24 24"><path fill="white" d="m12 5.69l5 4.5V18h-2v-6H9v6H7v-7.81l5-4.5M12 3L2 12h3v8h6v-6h2v6h6v-8h3L12 3z" /></svg>
+                    <span style={{ fontSize: '15px' }} className=" font-normal mt-1"> Chat Routing</span>
+
                   </span>
 
                 </NavLink>
               </li>
 
-              
+
               <li className="items-center mx-3 mb-3">
-              <NavLink
-                onClick={() => setCollapseShow("hidden")}
+                <NavLink
+                  onClick={() => setCollapseShow("hidden")}
                   style={{
                     backgroundColor: (window.location.href.indexOf("/formlinks") !== -1
                       ? "rgba(255, 255, 255, 0.1)"
@@ -226,26 +252,26 @@ export default function Sidebar(title:any) {
                   to="/formlinks"
                 >
                   <span className="flex py-2.5 px-2">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" className="mr-3 " viewBox="0 0 24 24"><path fill="white" d="m12 5.69l5 4.5V18h-2v-6H9v6H7v-7.81l5-4.5M12 3L2 12h3v8h6v-6h2v6h6v-8h3L12 3z" /></svg>
-                    <span style={{fontSize:'15px'}} className=" font-normal mt-1">Form Links</span>
-                    
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" className="mr-3 " viewBox="0 0 24 24"><path fill="white" d="m12 5.69l5 4.5V18h-2v-6H9v6H7v-7.81l5-4.5M12 3L2 12h3v8h6v-6h2v6h6v-8h3L12 3z" /></svg>
+                    <span style={{ fontSize: '15px' }} className=" font-normal mt-1">Form Links</span>
+
                   </span>
 
                 </NavLink>
               </li>
 
-             
-
-              
-
-             
 
 
-            
+
+
+
+
+
+
 
               <li className="items-center pt-36 mx-3 pl-3 mb-2">
                 <span
-                onClick={() => setCollapseShow("hidden")}
+                  onClick={() => setCollapseShow("hidden")}
                   style={{
                     backgroundColor: (window.location.href.indexOf("/dashboard2") !== -1
                       ? "text-white"
@@ -257,17 +283,17 @@ export default function Sidebar(title:any) {
                       ? "text-white"
                       : "text-white hover:bg-white/[0.1] hover:rounded-[5px]")
                   }
-                  
+
                 >
 
                   <span className="flex justify-between py-2 px-2">
-                    <span style={{fontSize:'16px'}}> <a href="https://www.uforo.co/help"> Help</a></span>
+                    <span style={{ fontSize: '16px' }}> <a href="https://www.uforo.co/help"> Help</a></span>
                   </span>
 
                 </span>
               </li>
 
-            
+
               <li className="items-center mx-3 pl-3">
                 <span
                   //  style={{backgroundColor:'#61A24F'}}
@@ -279,7 +305,7 @@ export default function Sidebar(title:any) {
                 >
 
                   <span className="flex py-2  cursor-pointer">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" className="mr-3 " viewBox="0 0 24 24"><path fill="red" d="M16 13v-2H7V8l-5 4l5 4v-3z"/><path fill="red" d="M20 3h-9c-1.103 0-2 .897-2 2v4h2V5h9v14h-9v-4H9v4c0 1.103.897 2 2 2h9c1.103 0 2-.897 2-2V5c0-1.103-.897-2-2-2z"/></svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" className="mr-3 " viewBox="0 0 24 24"><path fill="red" d="M16 13v-2H7V8l-5 4l5 4v-3z" /><path fill="red" d="M20 3h-9c-1.103 0-2 .897-2 2v4h2V5h9v14h-9v-4H9v4c0 1.103.897 2 2 2h9c1.103 0 2-.897 2-2V5c0-1.103-.897-2-2-2z" /></svg>
                     <span className=" text-[15px] mt-1 font-normal text-[#FF0000]">Log out</span>
                     {/* <span style={{ color: 'red' }}>  <SvgElement type={icontypesEnum.REDARROW} /> </span> */}
                   </span>

@@ -244,11 +244,28 @@ export class AdminApis {
         } else {
             return this.adminApi.deleteProduct(id);
         }
-    }
+    } 
     
    
 
+    //Redirect Link    
 
+
+    static createRedirectLink(data: any): AxiosPromise<Array<any>> {
+        if (configs.type === "LOCAL") {
+            return {} as AxiosPromise;
+        } else {
+            return this.adminApi.createRedirectLink(data);
+        }
+    }
+
+    static getRedirectLinks(): AxiosPromise<Array<any>> {
+        if (configs.type === "LOCAL") {
+            return {} as AxiosPromise;
+        } else {
+            return this.adminApi.getRedirectLinks();
+        }
+    }
 
 
 }

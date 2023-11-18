@@ -6,7 +6,9 @@ import Login from './Components/Pages/Auth/Login';
 import Index from './Components/Pages/Auth/index';
 import MultiLinks from './Components/admin/TiredLink';
 import Mylinks from './Components/admin/MyLinks';
+import RedirectLinks from './Components/admin/RedirectLink';
 import CreateLink from './Components/admin/CreateLink';
+import CreateRedirectLink from './Components/admin/CreateRedirectLink';
 import CreateProduct from './Components/admin/CreateProduct';
 import EditProduct from './Components/admin/EditProduct';
 import LinkDetails from './Components/admin/ViewLinkDetails';
@@ -39,7 +41,9 @@ function App() {
            <Route  path="/register" element={<Register/>}/>
            {/* <Route  path="/login" element={<Login/>}/> */}
            <Route  path="/mylinks" element={<Mylinks/>}/>
+           <Route  path="/redirect-links" element={<RedirectLinks/>}/>
            <Route  path="/createlink" element={<CreateLink/>}/>
+           <Route  path="/create-redirect-link" element={<CreateRedirectLink/>}/>
            <Route  path="/createproduct" element={<CreateProduct/>}/>
            <Route  path="/edit-product/:id" element={<EditProduct/>}/>
            <Route  path="/update-multi-link/:linkId" element={<EditMultiLink/>}/>
