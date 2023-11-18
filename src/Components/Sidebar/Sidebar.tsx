@@ -57,22 +57,22 @@ export default function Sidebar(title: any) {
           {/* Collapse */}
           <div
             className={
-              "md:flex md:flex-col items-stretch md:opacity-100 md:relative md:mt-4 md:shadow-none shadow absolute top-0 left-0 right-0 overflow-y-auto overflow-x-hidden h-auto flex-1 rounded " +
+              "md:flex md:flex-col items-stretch md:opacity-100 md:relative md:mt-4 md:shadow-none shadow bg-[#0071BC] absolute top-4 left-0 right-1  h-auto flex-1 rounded " +
               collapseShow
             }
           >
             {/* Collapse header */}
-            <div className="md:min-w-full md:hidden block pb-1 mb-4 ">
-              <div className="flex justify-between">
+            <div className="md:min-w-full md:hidden block pb-1 mb-4  ">
+              <div className="flex justify-between ">
 
-                <span className="flex justify-start gap-1" onClick={() => setCollapseShow("hidden")}><IoArrowBack style={{ color: '#333333' }} className="bg-gray-200 text-xs text-gray-500 rounded-full p-1 h-7 w-7" /> <span>Back</span></span>
+                <span className="flex justify-start gap-1" onClick={() => setCollapseShow("hidden")}><IoArrowBack style={{ color: '#333333' }} className="bg-gray-200 text-xs text-gray-500 rounded-full p-1 h-6 w-6" /> <span className="text-white ml-2">Back</span></span>
 
                 <span
-                  className="cursor-pointer text-black opacity-50 md:hidden  py-1 text-xl leading-none bg-transparent rounded border border-solid border-transparent"
+                  className="cursor-pointer opacity-50 md:hidden  py-1 text-xl leading-none bg-transparent rounded border border-solid border-transparent"
                   onClick={() => setCollapseShow("hidden")}
                 >
                   <NavLink to='/editprofile'>
-                    <b className="fas fa-times"> <AiOutlineSetting /> </b>
+                    <b className="fas fa-times text-white"> <AiOutlineSetting /> </b>
                   </NavLink>
                 </span>
 
@@ -86,25 +86,8 @@ export default function Sidebar(title: any) {
             {/* Divider */}
             {/* <hr className="md:min-w-full" /> */}
 
-            <ul className="md:flex-col min-w-full list-none flex flex-col md:mt-5 mt-5">
-              {/* <li className="items-center mx-6 mb-2">
-                <NavLink
-                  style={({ isActive }) =>
-                    isActive ? { backgroundColor: '#1DB459', paddingLeft: "12px", borderRadius: "8px" } : { color: '#FFFFFF' }
-                  }
-                  className={
-                    "text-sm py-3  pl-3 font-medium flex " +
-                    (window.location.href.indexOf("/mylinks") !== -1
-                      ? "text-white hover:text-lightBlue-600"
-                      : "text-white hover:text-blueGray-500")
-                  }
-                  to="/mylinks"
-                >
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" className="mr-3 " viewBox="0 0 24 24"><path fill="white" d="m12 5.69l5 4.5V18h-2v-6H9v6H7v-7.81l5-4.5M12 3L2 12h3v8h6v-6h2v6h6v-8h3L12 3z" /></svg>
-                  My Links
-                </NavLink>
-                
-              </li> */}
+            <ul className="flex-col list-none flex bg-[#0071BC]  md:mt-1 mt-2">
+             
               <li className="items-center mx-3 mb-3">
                 <NavLink
                   onClick={() => setCollapseShow("hidden")}

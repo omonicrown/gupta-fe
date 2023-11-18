@@ -37,6 +37,7 @@ const configs = {
   imageUrl: "https://gupta-tkwuj.ondigitalocean.app/TieredImages/",
   context: "https://gupta-tkwuj.ondigitalocean.app/api",
 
+  baseRedirectFront:'https://gupta-fe.netlify.app',
   baseRedirect:'https://gupta-tkwuj.ondigitalocean.app',
   // imageUrl: "http://127.0.0.1:8000/TieredImages/",
   // context: "http://127.0.0.1:8000/api",

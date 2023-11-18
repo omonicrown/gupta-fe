@@ -6,7 +6,8 @@ import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { ToastContainer, toast } from 'react-toastify';
 import { NavLink } from "react-router-dom";
 import Modal from 'react-awesome-modal';
-import CardPageVisits from "./CardPageVisits";
+import CardPageVisits from "./CardPageVisits"
+import configs from "../../configs";
 import { SvgElement, icontypesEnum } from "../assets/svgElement";
 
 
@@ -185,7 +186,7 @@ console?.log(value)
                               <span className="flex justify-between gap-3 rounded-t-lg border bg-[#0071BC] px-3 py-1" >
                                 <p class="mb-2 font-medium tracking-tight text-white" style={{ fontSize: '18px' }}>gupta.ink/{data?.name}</p>
                                 < span className="flex justify-center mt-2">
-                                  <CopyToClipboard text={`gupta.ink/${(data?.name)}`}
+                                  <CopyToClipboard text={`${configs?.baseRedirectFront}/${(data?.name)}`}
                                     onCopy={() => isCopied()}>
                                     <span
                                       style={{ color: 'white', borderColor: '#0071BC' }}
