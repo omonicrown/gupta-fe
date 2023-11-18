@@ -149,7 +149,7 @@ function Home() {
         (response) => {
           if (response?.data) {
             setData(response?.data)
-            setClipad((response?.data?.url).slice(7))
+            setClipad((response?.data?.url))
             toggleModal()
           }
 
@@ -663,7 +663,7 @@ function Home() {
                     <QRCode
                       size={256}
                       style={{ height: "200px", maxWidth: "100%", width: "100%" }}
-                      value={(data?.url) ? (data?.url).slice(7) : "empty"}
+                      value={(data?.url) ? (data?.url) : "empty"}
                       viewBox={`0 0 256 256`}
                     />
 
