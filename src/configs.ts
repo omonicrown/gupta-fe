@@ -34,13 +34,16 @@ const configs = {
   tokenStorage: "TOKEN_PERSIST",
   socket: SOCKET_URL,
   type: TYPE_REST,
+
   imageUrl: "https://gupta-tkwuj.ondigitalocean.app/TieredImages/",
   context: "https://gupta-tkwuj.ondigitalocean.app/api",
-
   baseRedirectFront:'https://gupta-fe.netlify.app',
   baseRedirect:'https://gupta-tkwuj.ondigitalocean.app',
+  
   // imageUrl: "http://127.0.0.1:8000/TieredImages/",
   // context: "http://127.0.0.1:8000/api",
+  // baseRedirectFront:'http://localhost:3000/',
+  // baseRedirect:'http://127.0.0.1:8000',
 
   history: createBrowserHistory(),
   requestTimeOut: 30000,
