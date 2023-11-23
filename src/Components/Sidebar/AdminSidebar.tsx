@@ -2,7 +2,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-export default function Sidebar() {
+export default function AdminSidebar() {
   const [collapseShow, setCollapseShow] = React.useState("hidden");
   return (
     <>

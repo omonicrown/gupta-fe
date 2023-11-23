@@ -4,28 +4,29 @@ import { Routes, Route } from "react-router-dom";
 import Register from './Components/Pages/Auth/Register'
 import Login from './Components/Pages/Auth/Login';
 import Index from './Components/Pages/Auth/index';
-import MultiLinks from './Components/admin/TiredLink';
-import Mylinks from './Components/admin/MyLinks';
-import RedirectLinks from './Components/admin/RedirectLink';
-import CreateLink from './Components/admin/CreateLink';
-import CreateRedirectLink from './Components/admin/CreateRedirectLink';
-import CreateProduct from './Components/admin/CreateProduct';
-import EditProduct from './Components/admin/EditProduct';
-import LinkDetails from './Components/admin/ViewLinkDetails';
-import EditMultiLink from './Components/admin/EditMultiLink';
-import ViewMultiPage from './Components/admin/ViewMultiPage';
-import ViewProductPage from './Components/admin/ViewProductPage';
-import ViewProductDetailPage from './Components/admin/ViewProductDetailsPage';
-import CreateMultiLink from './Components/admin/CreateMultiLink';
-import Formlink from './Components/admin/FormLinks';
-import MiniStore from './Components/admin/MiniStores';
+import MultiLinks from './Components/user/TiredLink';
+import Mylinks from './Components/user/MyLinks';
+import RedirectLinks from './Components/user/RedirectLink';
+import CreateLink from './Components/user/CreateLink';
+import CreateRedirectLink from './Components/user/CreateRedirectLink';
+import CreateProduct from './Components/user/CreateProduct';
+import EditProduct from './Components/user/EditProduct';
+import LinkDetails from './Components/user/ViewLinkDetails';
+import EditMultiLink from './Components/user/EditMultiLink';
+import ViewMultiPage from './Components/user/ViewMultiPage';
+import ViewProductPage from './Components/user/ViewProductPage';
+import ViewProductDetailPage from './Components/user/ViewProductDetailsPage';
+import CreateMultiLink from './Components/user/CreateMultiLink';
+import Formlink from './Components/user/FormLinks';
+import MiniStore from './Components/user/MiniStores';
 // import LinkDetails from './Components/admin/ViewLinkDetails';
-import Chatrouting from './Components/admin/ChatRouting';
-import EditUserMessage from './Components/admin/EditUserMessage';
-import EditProfile from './Components/admin/EditProfile';
-import ProPlan from './Components/admin/ProPlans';
+import Chatrouting from './Components/user/ChatRouting';
+import EditUserMessage from './Components/user/EditUserMessage';
+import EditProfile from './Components/user/EditProfile';
+import ProPlan from './Components/user/ProPlans';
 import SideBar from './Components/Sidebar/index';
 import Home from './Components/Pages/Home';
+import Dashboard from './Components/Admin/Dashboard';
 
 
 function App() {
@@ -60,6 +61,9 @@ function App() {
            <Route  path="/chatrouting" element={<Chatrouting/>}/>
            <Route  path='/sidebar' element={<SideBar/>}/>
            <Route  path='/proplan' element={<ProPlan/>}/>
+
+
+           <Route  path='/admin-dashbord' element={<Dashboard/>}/>
       </Routes>
     </div>
   );
