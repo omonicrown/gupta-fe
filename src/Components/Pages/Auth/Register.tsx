@@ -14,10 +14,13 @@ import { useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Navbar from "../../Navbars/Navbar";
+//@ts-ignore
+import { PhoneInput } from "react-contact-number-input";
 
 function Register() {
 
   const [show, setShow] = useState(false);
+  const [phone, setPhone] = useState<any>("");
 
   // initialValue
   const initialValue = {
@@ -27,6 +30,7 @@ function Register() {
     gender: "",
     password: "",
     comfirmPassword: "",
+    phone_number:"",
     checked: false,
   };
 
@@ -35,6 +39,8 @@ function Register() {
     'fullName': "",
     'email': "",
     'password': "",
+    'confirm_password': "",
+    'phone_number':"",
     'checked': false
   });
 
@@ -61,9 +67,15 @@ function Register() {
   const handleSubmit = React.useCallback(
    (e: React.ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    if(userData?.password !== userData?.confirm_password){
+      return  toast.error("Password does not match");
+    }
+
     const formData = new FormData()
     formData.append('name', userData?.name)
     formData.append('email', userData?.email)
+    formData.append('phone_number', (phone?.countryCode + phone?.phoneNumber).replace(/ /g, ''))
     formData.append('password', userData?.password)
     console.log(formData)
    
@@ -92,7 +104,7 @@ function Register() {
      
     });
   },
-  [userData]
+  [userData,phone]
 );
 
 
@@ -102,7 +114,7 @@ function Register() {
   return (
     <>
       <Navbar />
-      <div className="pb-32 md:mt-32 sm:px-10">
+      <div className="pb-32 md:mt-10 sm:px-10">
         <div className="container flex flex-row justify-center bg-[#fff] mx-auto items-center rounded-lg p-6">
 
           <div className="border py-6 rounded-lg px-6">
@@ -153,6 +165,24 @@ function Register() {
                   />
                 </div>
 
+                <div className="mb-3">
+                  <label
+                    htmlFor="number"
+                    className="flex justify-start mb-2 text-sm font-sm text-gray-500 "
+                  >
+                    Your Whatsapp phone number
+                  </label>
+                  <PhoneInput
+                    style={{ backgroundColor: '#F4FBFF' }}
+                    disabled={false}
+                    // containerClass={"shadow-sm bg-gray-100 block border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 "}
+                    countryCode={'ng'}
+                    onChange={setPhone}
+                    placeholder={'Enter Mobile Number'}
+                  />
+
+                </div>
+
                 <div className="mb-4">
                   <label
                     htmlFor="password"
@@ -181,10 +211,39 @@ function Register() {
                   </div>
                 </div>
 
+
+                <div className="mb-4">
+                  <label
+                    htmlFor="password"
+                    className="flex justify-start mb-2 text-sm font-medium text-gray-400"
+                  >
+                   Confirm Password
+                  </label>
+                  <div className="relative">
+                    <input
+                      type={show ? "text" : "password"}
+                      placeholder="Password"
+                      id="password"
+                      name="confirm_password"
+                      className="shadow-sm  bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 "
+                      required={true}
+                      defaultValue={password}
+                      onChange={handleChange}
+                    />
+                    <button
+                      type="button"
+                      className=" absolute right-2.5 bottom-3"
+                      onClick={() => setShow((prev) => !prev)}
+                    >
+                      {!show ? <FaEyeSlash /> : <FaEye />}
+                    </button>
+                  </div>
+                </div>
+
                 <div className="flex justify-between mb-4 w-80">
 
                   <div className="flex items-center mb-4">
-                    <input  id="green-checkbox" type="checkbox" value="" className="w-4 h-4 text-green-600 bg-gray-100 rounded border-gray-300 focus:ring-green-500 dark:focus:ring-green-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"/>
+                    <input  id="green-checkbox" type="checkbox" value="" className="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"/>
                       <label htmlFor="green-checkbox" className="ml-2 text-xs font-small text-gray-900 dark:text-gray-400">I accept the <b>terms of service</b> and <b>privacy policy</b> </label>
                   </div>
                 </div>
@@ -194,7 +253,7 @@ function Register() {
                   <button
                     type="submit"
                     style={{ backgroundColor: '#0071BC', borderRadius: '50px' }}
-                    className=" text-white hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm w-96 px-5 py-2.5 text-center "
+                    className=" text-white hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-96 px-5 py-2.5 text-center "
                   >
                     Sign up
                   </button>
