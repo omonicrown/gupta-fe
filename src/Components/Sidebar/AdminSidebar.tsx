@@ -21,7 +21,7 @@ export default function AdminSidebar() {
             className="md:block text-left md:pb-2 text-blueGray-600 mr-0 inline-block whitespace-nowrap text-sm uppercase font-bold p-4 px-0 pl-6"
             to="/"
           >
-            Agent - House<span style={{color:'blue'}}>Ng</span>
+            <img src="/images/Dashboard/logo.png" alt="hero" />
           </Link>
           {/* User */}
          
@@ -40,7 +40,7 @@ export default function AdminSidebar() {
                     className="md:block text-left md:pb-2 text-blueGray-600 mr-0 inline-block whitespace-nowrap text-sm uppercase font-bold p-4 px-0"
                     to="/"
                   >
-                    House<span style={{color:'blue'}}>Ng</span>
+                    <img src="/images/Dashboard/logo.png" alt="hero" />
                   </Link>
                 </div>
                 <div className="w-6/12 flex justify-end">
@@ -57,29 +57,25 @@ export default function AdminSidebar() {
             {/* Form */}
            
 
-            {/* Divider */}
-            <hr className="my-4 md:min-w-full" />
-            {/* Heading */}
-            <h6 className="md:min-w-full text-blueGray-500 text-xs uppercase font-bold block pt-1 pb-4 no-underline">
-              Agent Pages
-            </h6>
+           
+            
             {/* Navigation */}
 
             <ul className="md:flex-col md:min-w-full flex flex-col list-none">
               <li className="items-center">
                 <Link
                   className={
-                    "text-xs uppercase py-3 font-bold block " +
-                    (window.location.href.indexOf("/agent") !== -1
-                      ? "text-lightBlue-500 hover:text-lightBlue-600"
-                      : "text-blueGray-700 hover:text-blueGray-500")
+                    "text-xs py-3 font-bold block " +
+                    (window.location.href.indexOf("/admin-dashbord") !== -1
+                      ? "text-[#0071BC] hover:text-lightBlue-600"
+                      : "text-[#8A92A6] hover:text-blueGray-500")
                   }
-                  to="/agent"
+                  to="/admin-dashbord"
                 >
                   <i
                     className={
                       "fas fa-tv mr-2 text-sm " +
-                      (window.location.href.indexOf("/agent") !== -1
+                      (window.location.href.indexOf("/admin-dashbord") !== -1
                         ? "opacity-75"
                         : "text-blueGray-300")
                     }
@@ -87,36 +83,36 @@ export default function AdminSidebar() {
                   Dashboard
                 </Link>
               </li>
-
+              <hr className="mb-1 md:min-w-full" />
               <li className="items-center">
                 <Link
                   className={
-                    "text-xs uppercase py-3 font-bold block " +
-                    (window.location.href.indexOf("/add-new-house") !== -1
-                      ? "text-lightBlue-500 hover:text-lightBlue-600"
-                      : "text-blueGray-700 hover:text-blueGray-500")
+                    "text-xs  py-3 font-bold block " +
+                    (window.location.href.indexOf("/admin-users") !== -1
+                      ? "text-[#0071BC] hover:text-lightBlue-600"
+                      : "text-[#8A92A6] hover:text-blueGray-500")
                   }
-                  to="/add-new-house"
+                  to="/admin-users"
                 >
                   <i
                     className={
                       "fas fa-tools mr-2 text-sm " +
-                      (window.location.href.indexOf("/add-new-house") !== -1
+                      (window.location.href.indexOf("/admin-users") !== -1
                         ? "opacity-75"
                         : "text-blueGray-300")
                     }
                   ></i>{" "}
-                  Add new House
+                  Users
                 </Link>
               </li>
-
+              <hr className="mb-1 md:min-w-full" />
               <li className="items-center">
                 <Link
                   className={
-                    "text-xs uppercase py-3 font-bold block " +
+                    "text-xs py-3 font-bold block " +
                     (window.location.href.indexOf("/view-agent-houses") !== -1
-                      ? "text-lightBlue-500 hover:text-lightBlue-600"
-                      : "text-blueGray-700 hover:text-blueGray-500")
+                      ? "text-[#0071BC] hover:text-lightBlue-600"
+                      : "text-[#8A92A6] hover:text-blueGray-500")
                   }
                   to="/view-agent-houses"
                 >
@@ -128,17 +124,17 @@ export default function AdminSidebar() {
                         : "text-blueGray-300")
                     }
                   ></i>{" "}
-                   View all Houses
+                   Subcriptions
                 </Link>
               </li>
-
+              <hr className="mb-1 md:min-w-full" />
               <li className="items-center">
                 <Link
                   className={
-                    "text-xs uppercase py-3 font-bold block " +
+                    "text-xs  py-3 font-bold block " +
                     (window.location.href.indexOf("/edit-house") !== -1
-                      ? "text-lightBlue-500 hover:text-lightBlue-600"
-                      : "text-blueGray-700 hover:text-blueGray-500")
+                      ? "text-[#0071BC] hover:text-lightBlue-600"
+                      : "text-[#8A92A6] hover:text-blueGray-500")
                   }
                   to="/edit-house"
                 >
@@ -150,84 +146,14 @@ export default function AdminSidebar() {
                         : "text-blueGray-300")
                     }
                   ></i>{" "}
-                   Edit House
+                   Subscriptions
                 </Link>
               </li>
-
-              <li className="items-center">
-                <Link
-                  className={
-                    "text-xs uppercase py-3 font-bold block " +
-                    (window.location.href.indexOf("/table") !== -1
-                      ? "text-lightBlue-500 hover:text-lightBlue-600"
-                      : "text-blueGray-700 hover:text-blueGray-500")
-                  }
-                  to="/table"
-                >
-                  <i
-                    className={
-                      "fas fa-table mr-2 text-sm " +
-                      (window.location.href.indexOf("/table") !== -1
-                        ? "opacity-75"
-                        : "text-blueGray-300")
-                    }
-                  ></i>{" "}
-                  Tables
-                </Link>
-              </li>
-
              
+              
             </ul>
 
-            {/* Divider */}
-            <hr className="my-4 md:min-w-full" />
-            {/* Heading */}
-            <h6 className="md:min-w-full text-blueGray-500 text-xs uppercase font-bold block pt-1 pb-4 no-underline">
-              Agent Profile
-            </h6>
-            {/* Navigation */}
-
-            <ul className="md:flex-col md:min-w-full flex flex-col list-none md:mb-4">
-              <li className="items-center">
-                <Link
-                  className="text-blueGray-700 hover:text-blueGray-500 text-xs uppercase py-3 font-bold block"
-                  to="/agent-profile"
-                >
-                  <i className="fas fa-fingerprint text-blueGray-400 mr-2 text-sm"></i>{" "}
-                  View Profile
-                </Link>
-              </li>
-
-              <li className="items-center">
-                <Link
-                  className="text-blueGray-700 hover:text-blueGray-500 text-xs uppercase py-3 font-bold block"
-                  to="/users"
-                >
-                  <i className="fas fa-fingerprint text-blueGray-400 mr-2 text-sm"></i>{" "}
-                  View Users Comment
-                </Link>
-              </li>
-
-              <li className="items-center">
-                <Link
-                  className="text-blueGray-700 hover:text-blueGray-500 text-xs uppercase py-3 font-bold block"
-                  to="/auth/register"
-                >
-                  <i className="fas fa-clipboard-list text-blueGray-300 mr-2 text-sm"></i>{" "}
-                  Register
-                </Link>
-              </li>
-            </ul>
-
-            {/* Divider */}
-            <hr className="my-4 md:min-w-full" />
-            {/* Heading */}
-            <h6 className="md:min-w-full text-blueGray-500 text-xs uppercase font-bold block pt-1 pb-4 no-underline">
-              Auth Links
-            </h6>
-            {/* Navigation */}
-
-            <ul className="md:flex-col md:min-w-full flex flex-col list-none md:mb-4">
+            {/* <ul className="md:flex-col md:min-w-full flex flex-col list-none md:mb-4">
               <li className="items-center">
                 <Link
                   className="text-blueGray-700 hover:text-blueGray-500 text-xs uppercase py-3 font-bold block"
@@ -238,22 +164,10 @@ export default function AdminSidebar() {
                 </Link>
               </li>
 
-              <li className="items-center">
-                <Link
-                  className="text-blueGray-700 hover:text-blueGray-500 text-xs uppercase py-3 font-bold block"
-                  to="/profile"
-                >
-                  <i className="fas fa-user-circle text-blueGray-400 mr-2 text-sm"></i>{" "}
-                  Profile Page
-                </Link>
-              </li>
-            </ul>
+              
+            </ul> */}
 
-            {/* Divider */}
-            <hr className="my-4 md:min-w-full" />
-            
-            {/* Navigation */}
-            
+           
           </div>
         </div>
       </nav>

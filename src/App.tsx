@@ -27,6 +27,8 @@ import ProPlan from './Components/user/ProPlans';
 import SideBar from './Components/Sidebar/index';
 import Home from './Components/Pages/Home';
 import Dashboard from './Components/Admin/Dashboard';
+import UsersList from './Components/Admin/UsersList';
+import UserDetails from './Components/Admin/UserDetails';
 
 
 function App() {
@@ -64,6 +66,8 @@ function App() {
 
 
            <Route  path='/admin-dashbord' element={<Dashboard/>}/>
+           <Route  path='/admin-users' element={<UsersList/>}/>
+           <Route  path='/user-details' element={<UserDetails/>}/>
       </Routes>
     </div>
   );
