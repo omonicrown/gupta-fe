@@ -40,14 +40,11 @@ function Login() {
     AuthApis.login(formData).then(
       (response: AxiosResponse<any>) => {
         if (response?.data) {
-          console.log(response.data)
-
           if (response?.data?.status === true) {
             dispatch(login({ email: email, token: response.data.token,name:response.data.name }))
             navigate('/mylinks');
             window.location.reload();
           }
-
         } else {
           toast.warn('Invalid Login Credentials');
         }

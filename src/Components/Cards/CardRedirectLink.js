@@ -186,7 +186,7 @@ export default function CardRedirectLink() {
                           <>
                             <div class="max-w-sm bg-white rounded-lg border border-gray-200 shadow-md">
                               <span className="flex justify-between gap-3 rounded-t-lg border-none bg-[#0071BC] px-3 py-1" >
-                                <p class="mb-2 font-medium tracking-tight text-white" style={{ fontSize: '18px' }}>gupta.ink/{data?.name} </p>
+                                <p class="mb-2 font-medium tracking-tight text-white" style={{ fontSize: '18px' }}>link.mygupta.co/{data?.name} </p>
                                 <div>
                                   <CopyToClipboard text={`${configs?.baseRedirect}/${(data?.name)}`}
                                     onCopy={() => isCopied()}>
