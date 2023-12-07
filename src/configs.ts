@@ -38,7 +38,7 @@ const configs = {
   imageUrl: "https://link.mygupta.co/TieredImages/",
   context: "https://link.mygupta.co/api",
   baseRedirectFront:'https://gupta-fe.netlify.app',
-  baseRedirect:'https://link.mygupta.co',
+  baseRedirect:'link.mygupta.co',
   
   // imageUrl: "http://127.0.0.1:8000/TieredImages/",
   // context: "http://127.0.0.1:8000/api",
