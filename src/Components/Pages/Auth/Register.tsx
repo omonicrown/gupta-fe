@@ -88,6 +88,7 @@ function Register() {
             dispatch(login({ email: userData?.email, token: response.data.token,name:response.data.name}))
             toast.success("Login Successful");
             navigate('/mylinks');
+            window.location.reload();
           }
 
         } else {

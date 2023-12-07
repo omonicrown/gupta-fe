@@ -35,10 +35,10 @@ const configs = {
   socket: SOCKET_URL,
   type: TYPE_REST,
 
-  imageUrl: "https://gupta-tkwuj.ondigitalocean.app/TieredImages/",
-  context: "https://gupta-tkwuj.ondigitalocean.app/api",
+  imageUrl: "https://link.mygupta.co/TieredImages/",
+  context: "https://link.mygupta.co/api",
   baseRedirectFront:'https://gupta-fe.netlify.app',
-  baseRedirect:'https://gupta-tkwuj.ondigitalocean.app',
+  baseRedirect:'https://link.mygupta.co',
   
   // imageUrl: "http://127.0.0.1:8000/TieredImages/",
   // context: "http://127.0.0.1:8000/api",

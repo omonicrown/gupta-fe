@@ -141,7 +141,7 @@ export default function CardTiredLinks() {
 
               {permissionList?.map(
                 (data, index) => (
-                  <a href={`https://gupta-tkwuj.ondigitalocean.app/${data?.attach_links}`} target="_blank" key={index}>
+                  <a href={`https://link.mygupta.co/${data?.attach_links}`} target="_blank" key={index}>
                     <span
                       style={{ backgroundColor: '#0071BC' }}
                       className="flex mx-1 mb-2 justify-center px-10 py-1.5 cursor-pointer text-white hover:bg-blue-800  font-medium rounded-lg  "
