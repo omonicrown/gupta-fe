@@ -57,6 +57,7 @@ export default function CardMyLinks() {
         if (response?.data) {
           setdata(response?.data)
           setLoader(false);
+          // window.location.reload();
           //console.log(response?.data)
         }
       }

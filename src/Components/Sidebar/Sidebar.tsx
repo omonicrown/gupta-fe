@@ -14,6 +14,10 @@ export default function Sidebar(title: any) {
   const navigate = useNavigate();
   const [collapseShow, setCollapseShow] = React.useState("hidden");
   const dispatch: Dispatch = useDispatch();
+
+
+
+
   function logOut() {
     dispatch(login([]))
     navigate('/login');
@@ -87,7 +91,7 @@ export default function Sidebar(title: any) {
             {/* <hr className="md:min-w-full" /> */}
 
             <ul className="flex-col list-none flex bg-[#0071BC]  md:mt-1 mt-2">
-             
+
               <li className="items-center mx-3 mb-3">
                 <NavLink
                   onClick={() => setCollapseShow("hidden")}
