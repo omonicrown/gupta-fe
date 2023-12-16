@@ -2,6 +2,7 @@ import React from "react";
 import { AdminApis } from "../../apis/adminApi";
 import { FaTrash, FaEdit } from "react-icons/fa";
 import CardNavBar from "./CardNavBar";
+import { useSelector, useDispatch } from 'react-redux';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { ToastContainer, toast } from 'react-toastify';
 import { NavLink } from "react-router-dom";
@@ -9,20 +10,20 @@ import Modal from 'react-awesome-modal';
 import configs from "../../configs";
 import CardPageVisits from "./CardPageVisits";
 import { SvgElement, icontypesEnum } from "../assets/svgElement";
+import CardRenewSubscription from "./CardRenewSubscription";
 
 
 // components
 
 export default function CardMyLinks() {
 
-
+  const userLoginData = useSelector((state) => state.data.login.value);
   let [visible, setVisible] = React.useState(false);
   let [toggleDeleteModal, setToggleDeleteModal] = React.useState(false);
   let [value, setvalue] = React.useState('');
   let [contact, setContact] = React.useState('');
   let [effect, setEffect] = React.useState('');
 
-  console?.log(value)
 
   function toggleModal(value2, contact) {
     setvalue(value2)
@@ -64,6 +65,8 @@ export default function CardMyLinks() {
     );
 
   }, [effect]);
+
+  console?.log(userLoginData?.data?.no_of_wlink)
 
 
   const handleSubmit = React.useCallback(
@@ -139,15 +142,8 @@ export default function CardMyLinks() {
       }
     }, [inputEl, searchTerm, searchResult, data]);
 
-
-
-
-
-
   return (
     <>
-
-
       <div className="relative flex flex-col min-w-0 break-words bg-white w-full mb-6  rounded">
         <div className="rounded-t mb-0  md:py-3 p-1 border-0">
           <div className="flex flex-wrap items-center">
@@ -188,7 +184,7 @@ export default function CardMyLinks() {
                           <>
                             <div class="max-w-sm bg-white rounded-lg border border-gray-200 shadow-md">
                               <span className="flex justify-between gap-3 rounded-t-lg border-none bg-[#0071BC] px-3 py-1" >
-                                <p class="mb-2 font-medium tracking-tight text-white" style={{ fontSize: '18px' }}>gupta.ink/{data?.name} </p>
+                                <p class="mb-2 font-medium tracking-tight text-white" style={{ fontSize: '18px' }}>link.mygupta.co/{data?.name} </p>
                                 <div>
                                   <CopyToClipboard text={`${configs?.baseRedirect}/${(data?.name)}`}
                                     onCopy={() => isCopied()}>
@@ -275,6 +271,9 @@ export default function CardMyLinks() {
                     </div>
                     :
 
+                    data?.data == 'sub_expired'?
+                    <CardRenewSubscription />
+                    :
                     <CardPageVisits />
                 )
 

@@ -30,38 +30,45 @@ function Login() {
   const dispatch: Dispatch = useDispatch();
 
   const handleSubmit = React.useCallback(
-  (e: React.ChangeEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const formData = new FormData()
+    (e: React.ChangeEvent<HTMLFormElement>) => {
+      e.preventDefault();
+      const formData = new FormData()
 
-    formData.append('email', email)
-    formData.append('password', password)
-   
-    AuthApis.login(formData).then(
-      (response: AxiosResponse<any>) => {
-        if (response?.data) {
-          if (response?.data?.status === true) {
-            dispatch(login({ email: email, token: response.data.token,name:response.data.name }))
-            navigate('/mylinks');
-            window.location.reload();
+      formData.append('email', email)
+      formData.append('password', password)
+
+      AuthApis.login(formData).then(
+        (response: AxiosResponse<any>) => {
+          if (response?.data) {
+            if (response?.data?.status === true) {
+              dispatch(login({ email: email, token: response.data.token, name: response.data.name, data: response.data?.data }))
+                // navigate('/mylinks');
+                {response.data?.data?.role == 'admin'
+                  ? navigate('/admin-dashboard')
+                  :
+                  navigate('/mylinks')}
+                
+
+              console?.log(response.data?.data?.role)
+              // window.location.reload();
+            }
+          } else {
+            toast.warn('Invalid Login Credentials');
           }
-        } else {
-          toast.warn('Invalid Login Credentials');
+
+          toast.success(response?.data?.message);
         }
+      ).catch(function (error) {
+        // handle error
+        console.log(error.response.data);
+        toast.error("Offfline");
+      }).finally(() => {
+        // toast.error("No Internet Connection");
 
-        toast.success(response?.data?.message);
-      }
-    ).catch(function (error) {
-      // handle error
-      console.log(error.response.data);
-      toast.error("Offfline");
-    }).finally(() => {
-      // toast.error("No Internet Connection");
-
-    });
-  },
-  [email,password]
-);
+      });
+    },
+    [email, password]
+  );
 
 
 
@@ -71,7 +78,7 @@ function Login() {
       <div className="pb-32 md:mt-32 sm:px-10">
         <div className="container flex flex-row justify-center bg-[#fff] mx-auto items-center rounded-lg p-6">
 
-        <div className="border py-6 rounded-lg px-6">
+          <div className="border py-6 rounded-lg px-6">
             <div className=" ">
               <h1 className=" my-4 text-xl font-semibold text-gray-600">Log in</h1>
 
@@ -129,8 +136,8 @@ function Login() {
                 <div className="flex justify-between mb-4 w-80">
 
                   <div className="flex items-center mb-4">
-                    <input  id="green-checkbox" type="checkbox" value="" className="w-4 h-4 text-green-600 bg-gray-100 rounded border-gray-300 focus:ring-green-500 dark:focus:ring-green-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"/>
-                      <label htmlFor="green-checkbox" className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-400">Remember me</label>
+                    <input id="green-checkbox" type="checkbox" value="" className="w-4 h-4 text-green-600 bg-gray-100 rounded border-gray-300 focus:ring-green-500 dark:focus:ring-green-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+                    <label htmlFor="green-checkbox" className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-400">Remember me</label>
                   </div>
 
                   <NavLink to='/resetpassword'>
@@ -154,7 +161,7 @@ function Login() {
                 <NavLink to='/register' className="flex justify-center">
                   <p className="ml-2 mt-3 text-sm font-medium text-gray-400 ">Don't have an account? <a href="#" className="text-[#0071BC] hover:underline ">Create one</a></p>
                 </NavLink>
-               
+
               </form>
 
 

@@ -117,7 +117,7 @@ export class AxiosGlobal {
 
                 return Promise.reject(error);
             } else if (error && error.response && error.response.status === 500) {
-                return 'internal server error';
+                return error;
                 // store.dispatch(toggleNotification(notification));
 
                 return Promise.reject(error);

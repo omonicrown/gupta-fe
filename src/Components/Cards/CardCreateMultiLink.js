@@ -6,12 +6,14 @@ import { SvgElement, icontypesEnum } from "../assets/svgElement";
 import { ToastContainer, toast } from 'react-toastify';
 import ImageUploading from 'react-images-uploading';
 import Modal from 'react-awesome-modal';
+import { useNavigate } from 'react-router-dom';
 
 // components
 
 export default function CardTiredLinks() {
 
   const [images, setImages] = React.useState('');
+  const navigate = useNavigate();
   const maxNumber = 69;
 
   const onChange = (imageList, addUpdateIndex) => {
@@ -41,10 +43,10 @@ export default function CardTiredLinks() {
     AdminApis.getlinks().then(
       (response) => {
         if (response?.data) {
-          setLinks(response?.data?.data)
-          setPermissionIdList(response?.data?.data)
+          setLinks(response?.data?.link)
+          setPermissionIdList(response?.data?.link)
 
-          // console?.log(response?.data?.data?.length)
+          //  console?.log(response?.data?.link)
         }
       }
     );
@@ -108,8 +110,9 @@ export default function CardTiredLinks() {
           if (response?.data) {
             console.log(response?.data)
             toast.success(response?.data?.message);
+            navigate('/multi-links')
           } else {
-            toast.error('link name already in use');
+            toast.error(response?.response?.data?.message);
           }
           
           // toast.success(response?.data?.message);
@@ -201,8 +204,6 @@ export default function CardTiredLinks() {
     },
     [permissionList, permissionIdList]
   );
-
-  console?.log((images == ''))
 
   return (
     <>
@@ -509,7 +510,7 @@ export default function CardTiredLinks() {
 
 
       {
-        (nameExist === 1 || data?.length <= 1) ?
+        (data?.length <= 1) ?
 
           <section>
             <Modal

@@ -87,7 +87,7 @@ function Register() {
           if (response?.data?.status === true) {
             dispatch(login({ email: userData?.email, token: response.data.token,name:response.data.name}))
             toast.success("Login Successful");
-            navigate('/mylinks');
+            navigate('/email-verify');
            
           }
 
@@ -197,7 +197,7 @@ function Register() {
                       placeholder="Password"
                       id="password"
                       name="password"
-                      className="shadow-sm  bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 "
+                      className="shadow-sm  bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
                       required={true}
                       defaultValue={password}
                       onChange={handleChange}
@@ -226,7 +226,7 @@ function Register() {
                       placeholder="Password"
                       id="password"
                       name="confirm_password"
-                      className="shadow-sm  bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 "
+                      className="shadow-sm  bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
                       required={true}
                       defaultValue={password}
                       onChange={handleChange}

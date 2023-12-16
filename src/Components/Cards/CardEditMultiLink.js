@@ -47,8 +47,8 @@ export default function CardTiredLinks() {
     AdminApis.getlinks().then(
       (response) => {
         if (response?.data) {
-          setLinks(response?.data?.data)
-          setPermissionIdList(response?.data?.data)
+          setLinks(response?.data?.link)
+          setPermissionIdList(response?.data?.link)
         }
       }
     );

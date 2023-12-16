@@ -1,6 +1,8 @@
 import './App.css';
 import React from 'react'
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";  
+import EmailVerify from './Components/Pages/Auth/EmailVerify'
+import EmailVerifyComplete from './Components/Pages/Auth/EmailVerifyComplete'
 import Register from './Components/Pages/Auth/Register'
 import Login from './Components/Pages/Auth/Login';
 import Index from './Components/Pages/Auth/index';
@@ -42,6 +44,8 @@ function App() {
       <Route  path="/" element={<Home/>}/>
            <Route  path="/login" element={<Login/>}/>
            <Route  path="/register" element={<Register/>}/>
+           <Route  path="/email-verify" element={<EmailVerify/>}/>
+           <Route  path="/email-verify/:email" element={<EmailVerifyComplete/>}/>
            {/* <Route  path="/login" element={<Login/>}/> */}
            <Route  path="/mylinks" element={<Mylinks/>}/>
            <Route  path="/redirect-links" element={<RedirectLinks/>}/>
@@ -65,7 +69,7 @@ function App() {
            <Route  path='/proplan' element={<ProPlan/>}/>
 
 
-           <Route  path='/admin-dashbord' element={<Dashboard/>}/>
+           <Route  path='/admin-dashboard' element={<Dashboard/>}/>
            <Route  path='/admin-users' element={<UsersList/>}/>
            <Route  path='/user-details' element={<UserDetails/>}/>
       </Routes>

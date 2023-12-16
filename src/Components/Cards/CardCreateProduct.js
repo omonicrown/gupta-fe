@@ -39,7 +39,7 @@ export default function CardCreateProduct() {
     AdminApis.getlinks().then(
       (response) => {
         if (response?.data) {
-          setAddContact(response?.data?.data)
+          setAddContact(response?.data?.link)
           // setPermissionIdList(response?.data?.data)
 
           // console?.log(response?.data?.data?.length)
@@ -168,7 +168,7 @@ export default function CardCreateProduct() {
             toast.success(response?.data?.message);
           } else {
             toggleModal()
-            toast.error('link name already in use');
+            toast.error(response?.response?.data?.message);
 
           }
 
@@ -217,8 +217,7 @@ export default function CardCreateProduct() {
               navigate('/mini-store');
             } else {
               // toggleModal()
-              toast.error('link name already in use');
-
+              toast.error(response?.response?.data?.message);
             }
 
             // toast.success(response?.data?.message);

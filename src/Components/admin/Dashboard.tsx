@@ -1,8 +1,31 @@
 import React from 'react'
 
 import AdminSidebar from "../Sidebar/AdminSidebar";
+import { SuperAdminApis } from '../../apis/superAdminApi';
+import { AxiosResponse } from 'axios';
+import { Dispatch } from "redux";
+import { useSelector, useDispatch } from 'react-redux';
 
 function Dashboard() {
+
+  const dispatch: Dispatch = useDispatch();
+  const [userCount, setUserCount] = React.useState<any>([]);
+
+  React.useEffect(() => {
+    SuperAdminApis.getlinksCount().then(
+      (response: AxiosResponse<any>) => {
+        if (response?.data) {
+          setUserCount(response?.data?.data)
+          console?.log(response?.data?.data)
+        }
+      }
+    ).catch(function (error:any) {
+      // handle error
+      console.log(error);
+      console.log("new error");
+    })
+  }, []);
+
   return (
     <div>
       <AdminSidebar />
@@ -11,27 +34,32 @@ function Dashboard() {
           <div className="space-y-2 lg:grid lg:grid-cols-3 sm:gap-5  lg:space-y-0  ">
           <div className="bg-gradient-to-r from-cyan-500 to-blue-500  text-white border border-[#D8D8D8] rounded-lg shadow-md px-4 py-4">
             <h3 className='text-[22px] font-normal'>Total Users</h3>
-            <h5 className='text-[30px] font-bold'>2055</h5>
+            <h5 className='text-[30px] font-bold'>{userCount?.total_users}</h5>
           </div>
           <div className="bg-gradient-to-br from-green-400 to-blue-600 text-white border border-[#D8D8D8] rounded-lg shadow-md px-4 py-4">
             <h3 className='text-[22px] font-normal'>Total Clicks</h3>
-            <h5 className='text-[30px] font-bold'>3055</h5>
+            <h5 className='text-[30px] font-bold'>{userCount?.total_Clicks}</h5>
           </div>
           <div className="bg-gradient-to-r from-purple-500 to-pink-500 text-white border border-[#D8D8D8] rounded-lg shadow-md px-4 py-4">
             <h3>Total Whatsapp Link</h3>
-            <h5 className='text-[30px] font-bold'>1055</h5>
+            <h5 className='text-[30px] font-bold'>{userCount?.total_whatsapp_link}</h5>
           </div>
           <div className="text-white bg-gradient-to-br from-purple-600 to-blue-500 border border-[#D8D8D8] rounded-lg shadow-md px-4 py-4">
             <h3>Total Redirect Link</h3>
-            <h5 className='text-[30px] font-bold'>205</h5>
+            <h5 className='text-[30px] font-bold'>{userCount?.total_redirect_link}</h5>
           </div>
           <div className="bg-gradient-to-r from-teal-200 to-lime-200 text-white border border-[#D8D8D8] rounded-lg shadow-md px-4 py-4">
             <h3>Total Multi Link</h3>
-            <h5 className='text-[30px] font-bold'>255</h5>
+            <h5 className='text-[30px] font-bold'>{userCount?.total_multi_link}</h5>
           </div>
           <div className="bg-gradient-to-r from-cyan-500 to-blue-500 text-white border border-[#D8D8D8] rounded-lg shadow-md px-4 py-4">
             <h3>Total Market Link</h3>
-            <h5 className='text-[30px] font-bold'>200</h5>
+            <h5 className='text-[30px] font-bold'>{userCount?.total_market_link}</h5>
+          </div>
+
+          <div className="bg-gradient-to-r from-cyan-500 to-blue-500 text-white border border-[#D8D8D8] rounded-lg shadow-md px-4 py-4">
+            <h3>Total Products</h3>
+            <h5 className='text-[30px] font-bold'>{userCount?.total_products}</h5>
           </div>
 
           </div>

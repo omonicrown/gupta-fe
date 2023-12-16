@@ -105,10 +105,12 @@ export default function CardCreateRedirectLink() {
         (response) => {
           if (response?.data) {
             setData2(response?.data)
-            console.log(response?.data);
             toast.success(response?.data?.message);
+            navigate('/create-redirect-link');
             // setClipad((response?.data?.url).slice(7))
             // toggleModal()
+          }else{
+            toast.error(response?.response?.data?.message)
           }
 
           // toast.success(response?.data?.message);
@@ -125,7 +127,6 @@ export default function CardCreateRedirectLink() {
     [url,name]
   );
 
-  console.log(name)
 
   // console.log((data?.url).slice(8))
   return (
@@ -138,7 +139,7 @@ export default function CardCreateRedirectLink() {
           
             <div className="rounded-lg px-6 pb-4 pt-6 border border-[#D9D9D9] shadow-md mt-6">
             
-              <span className="font-bold text-[20px]">Create a Redirect gupta.ink</span>
+              <span className="font-bold text-[20px]">Create a Redirect &nbsp;&nbsp; mygupta.co</span>
               
                 {/* <CountryDropdown  id="UNIQUE_ID" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" preferredCountries={['gb', 'us']}  value="" handleChange={e => console.log(e.target.value)}></CountryDropdown>    */}
 
@@ -175,7 +176,7 @@ export default function CardCreateRedirectLink() {
                     className="flex justify-start text-sm font-medium pt-2 text-gray-700 "
                   >
                    
-                   <b>gupta.ink/{name.replace(/ /g, '')}</b> 
+                   <b>link.mygupta.co/{name.replace(/ /g, '')}</b> 
                   </label>
                 </div>
 

@@ -1,9 +1,73 @@
 /*eslint-disable*/
 import React from "react";
 import { Link } from "react-router-dom";
+import { Dispatch } from "redux";
+import { useSelector, useDispatch } from 'react-redux';
+import { login } from '../../reducer/loginSlice'
+import { useNavigate } from 'react-router-dom';
+import { AiOutlineSetting } from "react-icons/ai";
+import { IoArrowBack } from "react-icons/io5";
+import { NavLink } from "react-router-dom";
+import { AuthApis } from "../../apis/authApis";
+import { AxiosResponse } from "axios";
+import { AdminApis } from "../../apis/adminApi";
 
 export default function AdminSidebar() {
+
+  const userLoginData = useSelector((state:any) => state.data.login.value);
   const [collapseShow, setCollapseShow] = React.useState("hidden");
+  const navigate = useNavigate();
+  const dispatch: Dispatch = useDispatch();
+
+
+ 
+
+  React.useEffect(() => {
+    AdminApis.searchName('').then(
+      (response: AxiosResponse<any>) => {
+        if (!response?.data) {
+          dispatch(login([]))
+          navigate('/login');
+        }
+      }
+    ).catch(function (error:any) {
+      // handle error
+      console.log(error);
+      console.log("new error");
+    })
+  }, []);
+
+
+
+
+  const logOut = () => {
+    AuthApis.logout('').then(
+      (response: AxiosResponse<any>) => {
+        if (response?.data) {
+          dispatch(login([]))
+          navigate('/login');
+
+        }
+      }
+    ).catch(function (error:any) {
+      // handle error
+      console.log(error.response.data);
+      console.log("new error");
+    })
+
+  };
+
+  {
+    userLoginData?.data?.role !=='admin'?
+    logOut()
+    :
+    ''
+  }
+
+
+
+
+
   return (
     <>
       <nav className="md:left-0 md:block md:fixed md:top-0 md:bottom-0 md:overflow-y-auto md:flex-row md:flex-nowrap md:overflow-hidden shadow-xl bg-white flex flex-wrap items-center justify-between relative md:w-64 z-10 py-4 px-6">
@@ -66,11 +130,11 @@ export default function AdminSidebar() {
                 <Link
                   className={
                     "text-xs py-3 font-bold block " +
-                    (window.location.href.indexOf("/admin-dashbord") !== -1
+                    (window.location.href.indexOf("/admin-dashboard") !== -1
                       ? "text-[#0071BC] hover:text-lightBlue-600"
                       : "text-[#8A92A6] hover:text-blueGray-500")
                   }
-                  to="/admin-dashbord"
+                  to="/admin-dashboard"
                 >
                   <i
                     className={
@@ -148,6 +212,26 @@ export default function AdminSidebar() {
                   ></i>{" "}
                    Subscriptions
                 </Link>
+              </li>
+
+
+              <li className="items-center mt-[45vh]">
+                <span
+                  //  style={{backgroundColor:'#61A24F'}}
+                  className={
+                    "text-xs cursor-pointer block "
+                  }
+
+                  onClick={logOut}
+                >
+
+                  <span className="flex py-2  cursor-pointer">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" className="mr-3 " viewBox="0 0 24 24"><path fill="red" d="M16 13v-2H7V8l-5 4l5 4v-3z" /><path fill="red" d="M20 3h-9c-1.103 0-2 .897-2 2v4h2V5h9v14h-9v-4H9v4c0 1.103.897 2 2 2h9c1.103 0 2-.897 2-2V5c0-1.103-.897-2-2-2z" /></svg>
+                    <span className=" text-[15px] mt-1 font-normal text-[#FF0000]">Log out</span>
+                    {/* <span style={{ color: 'red' }}>  <SvgElement type={icontypesEnum.REDARROW} /> </span> */}
+                  </span>
+
+                </span>
               </li>
              
               

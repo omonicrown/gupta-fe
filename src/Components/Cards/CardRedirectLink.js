@@ -212,7 +212,7 @@ export default function CardRedirectLink() {
                                   <p class="tracking-tight font-bold " style={{ color: '#149E49', fontSize: '16px', paddingTop: '1px' }}> {data?.short_url?.visits?.filter(visit => visit?.operating_system !== '0').length ? data?.short_url?.visits?.filter(visit => visit?.operating_system !== '0').length : '0'} click(s)</p>
                                 </span>
                                 <div className="bg-[#F4FBFF] mx-2 rounded-[5px]">
-                                  <p class="mb-2 tracking-tight m-2 py-2 pl-1  h-20 text-[#A9A9A9]">{data?.link_info?.message}</p>
+                                  <p class="mb-2 tracking-tight m-2 py-2 pl-1  h-20 overflow-auto text-[#A9A9A9]">{data?.link_info?.message}</p>
                                 </div>
 
                               </NavLink>

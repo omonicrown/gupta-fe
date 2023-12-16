@@ -101,31 +101,29 @@ export default function CardCreateLink() {
         type === 'message' ?
           AdminApis.createLink(formData).then(
             (response) => {
+              // console?.log(response)
               if (response?.data) {
                 setData(response?.data)
                 setSlicedLink((response?.data?.link?.name))
 
                 navigate('/mylinks');
-                // if(response?.data?.error  == 1){
+                // if(response?.data?.errors){
                 //   // toggleModal3()
                 //  // toast.error(response?.data?.message);
                 // }else{
                 //   // toggleModal()
                 // }
 
-              } else {
-                toast.error('link name already in use');
+              } else{
+                toast.error(response?.response?.data?.message)
               }
 
               // toast.success(response?.data?.message);
             }
           ).catch(function (error) {
             // handle error
-            // console.log(error.response);
-            toast.error("Offfline");
-          }).finally(() => {
-            //toast.error("No Internet Connection");
-
+            console.log(error);
+            toast.error(error?.data?.message);
           })
           :
 

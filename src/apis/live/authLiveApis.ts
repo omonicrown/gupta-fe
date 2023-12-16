@@ -19,6 +19,10 @@ export class AuthLiveApis extends AxiosGlobal{
         return this.axios.post(`${configs.context}/link/create-random-url`, data);
     }
 
+    verifyMail(data: any): AxiosPromise<any> {
+        return this.axios.post(`${configs.context}/auth/verify-mail`, data);
+    }
+
 
     registerUser(data:any): AxiosPromise<any> {
         return this.axios.post(`${configs.context}/auth/register`, data);
@@ -26,6 +30,12 @@ export class AuthLiveApis extends AxiosGlobal{
 
     forgotPassword(data:any): AxiosPromise<any> {
         return this.axios.post(`${configs.context}/forgot`, data);
+    }
+
+    logout(data: any): AxiosPromise<any> {
+        return this.axios.post(`${configs.context}/logout`, data, {
+            headers: { "Content-Type": "aplication/json", "Accept": "aplication/json", "Authorization": `Bearer ${store.getState().data.login.value.token}`, "Access-Control-Allow-Origin": "*" },
+        });
     }
     
    

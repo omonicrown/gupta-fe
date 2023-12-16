@@ -16,14 +16,21 @@ export class AuthApis {
     //     }
     // }
     
-    // static getAllUsers(pageNo:any): AxiosPromise<Array<any>> {
-    //     if (configs.type === "LOCAL") {
-    //         return {} as AxiosPromise;
-    //     } else {
-    //         return this.authApis.getAllUsers(pageNo);
-    //     }
-    // } 
-    
+    static verifyMail(pageNo:any): AxiosPromise<Array<any>> {
+        if (configs.type === "LOCAL") {
+            return {} as AxiosPromise;
+        } else {
+            return this.authApis.verifyMail(pageNo);
+        }
+    } 
+
+    static logout(data: any): AxiosPromise<any> {
+        if (configs.type === "LOCAL") {
+            return {} as AxiosPromise;
+        } else {
+            return this.authApis.logout(data);
+        }
+    }
     
 
     static login(data: any): AxiosPromise<any> {

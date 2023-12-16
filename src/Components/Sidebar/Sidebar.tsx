@@ -9,6 +9,9 @@ import { useNavigate } from 'react-router-dom';
 import { AiOutlineSetting } from "react-icons/ai";
 import { IoArrowBack } from "react-icons/io5";
 import { NavLink } from "react-router-dom";
+import { AuthApis } from "../../apis/authApis";
+import { AxiosResponse } from "axios";
+import { AdminApis } from "../../apis/adminApi";
 
 export default function Sidebar(title: any) {
   const navigate = useNavigate();
@@ -16,13 +19,38 @@ export default function Sidebar(title: any) {
   const dispatch: Dispatch = useDispatch();
 
 
+  React.useEffect(() => {
+    AdminApis.searchName('').then(
+      (response: AxiosResponse<any>) => {
+        if (!response?.data) {
+          dispatch(login([]))
+          navigate('/login');
+        }
+      }
+    ).catch(function (error:any) {
+      // handle error
+      console.log(error);
+      console.log("new error");
+    })
+  }, []);
 
 
-  function logOut() {
-    dispatch(login([]))
-    navigate('/login');
-  }
+  const logOut = () => {
+    AuthApis.logout('').then(
+      (response: AxiosResponse<any>) => {
+        if (response?.data) {
+          dispatch(login([]))
+          navigate('/login');
 
+        }
+      }
+    ).catch(function (error:any) {
+      // handle error
+      console.log(error.response.data);
+      console.log("new error");
+    })
+
+  };
 
   return (
     <>
