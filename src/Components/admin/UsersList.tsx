@@ -147,7 +147,7 @@ function UsersList() {
                                                 </td>
 
                                                 <td className="px-6 py-4 flex space-x-3 mt-1">
-                                                    <NavLink to="/user-details">
+                                                    <NavLink to={`/user-details/${datas?.id}`}>
                                                         <a href="#" className="font-medium text-blue-600 hover:underline">Edit</a>
                                                     </NavLink>
 

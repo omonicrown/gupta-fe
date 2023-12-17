@@ -43,6 +43,7 @@ function Login() {
             if (response?.data?.status === true) {
               dispatch(login({ email: email, token: response.data.token, name: response.data.name, data: response.data?.data }))
                 // navigate('/mylinks');
+                console?.log(response.data?.data?.role)
                 {response.data?.data?.role == 'admin'
                   ? navigate('/admin-dashboard')
                   :

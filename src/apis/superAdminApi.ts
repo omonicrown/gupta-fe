@@ -14,7 +14,7 @@ export class SuperAdminApis {
         } else {
             return this.adminApi.getlinksCount();
         }
-    }
+    } 
 
 
     static getAllUsers(pageNo:any,query:any): AxiosPromise<Array<any>> {
@@ -22,6 +22,14 @@ export class SuperAdminApis {
             return {} as AxiosPromise;
         } else {
             return this.adminApi.getAllUsers(pageNo,query);
+        }
+    }
+
+    static getsingleUserData(id:any): AxiosPromise<Array<any>> {
+        if (configs.type === "LOCAL") {
+            return {} as AxiosPromise;
+        } else {
+            return this.adminApi.getsingleUserData(id);
         }
     }
 

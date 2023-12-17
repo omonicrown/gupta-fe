@@ -71,7 +71,7 @@ function App() {
 
            <Route  path='/admin-dashboard' element={<Dashboard/>}/>
            <Route  path='/admin-users' element={<UsersList/>}/>
-           <Route  path='/user-details' element={<UserDetails/>}/>
+           <Route  path='/user-details/:id' element={<UserDetails/>}/>
       </Routes>
     </div>
   );
