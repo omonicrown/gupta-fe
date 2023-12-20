@@ -26,9 +26,9 @@ import EditProfile from './Components/user/EditProfile';
 import ProPlan from './Components/user/ProPlans';
 import SideBar from './Components/Sidebar/index';
 import Home from './Components/Pages/Home';
-import Dashboard from './Components/Admin/Dashboard';
-import UsersList from './Components/Admin/UsersList';
-import UserDetails from './Components/Admin/UserDetails';
+import Dashboard from './Components/admin/Dashboard';
+import UsersList from './Components/admin/UsersList';
+import UserDetails from './Components/admin/UserDetails';
 
 
 function App() {
