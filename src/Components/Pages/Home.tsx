@@ -277,7 +277,7 @@ function Home() {
       {/* End Section */}
 
       {/* Start Section */}
-      <div className='bg-[#F4FBFF] sm:px-16 px-6 flex justify-center items-start' >
+      <div className='bg-[#F4FBFF] sm:px-16 px-6 flex justify-center items-start pb-10' >
         <div className='xl:max-w-[1280px] w-full'>
           <div className='flex justify-center items-center'>
             <h1 className="text-center font-bold font-poppins md:text-[40px] text-[27px] text-black md:leading-[50px] leading-[38px]">
@@ -331,7 +331,11 @@ function Home() {
       {/* Start Section */}
       <div className='bg-[#F4FBFF] sm:px-16 px-6 flex justify-center items-start' >
         <div className='xl:max-w-[1280px] w-full'>
-
+          <div className='flex justify-center items-center pt-6'>
+            <h1 className="text-center font-bold font-poppins md:text-[36px] text-[27px] text-black md:leading-[50px] leading-[38px]">
+              Create your free link here
+            </h1>
+          </div>
           <section className='flex md:flex-row flex-col sm:py-16 py-6'>
             <div className='flex-1 flex justify-center items-start flex-col'>
 
@@ -448,7 +452,7 @@ function Home() {
                       <path id="Shape_3" d="M31.7453 63.6972L37.2786 58.627C37.6901 58.25 37.6839 57.6442 37.2648 57.274C36.8456 56.9038 36.1723 56.9094 35.7608 57.2865L29.496 63.0269C29.0899 63.3991 29.0899 63.9953 29.496 64.3675L35.7608 70.1079C36.1723 70.485 36.8456 70.4905 37.2648 70.1204C37.6839 69.7502 37.6901 69.1444 37.2786 68.7674L31.7453 63.6972Z" fill="#007AFF" />
                     </g>
                     <path id="Oval" fill-rule="evenodd" clip-rule="evenodd" d="M80.7457 74.9618C87.7942 74.9618 93.508 69.8216 93.508 63.4809C93.508 57.1402 87.7942 52 80.7457 52C73.6973 52 67.9834 57.1402 67.9834 63.4809C67.9834 69.8216 73.6973 74.9618 80.7457 74.9618Z" fill="url(#pattern4)" />
-                    <text id="Martha Craig" fill="black" xmlSpace="preserve" style={{ whiteSpace: 'pre' }} font-family="Acme" font-size="12" letter-spacing="-0.3px"><tspan x="99.0166" y="64.412">{phone?.phoneNumber ?(phone?.countryCode + " " + phone?.phoneNumber):"+234" }  {}</tspan></text>
+                    <text id="Martha Craig" fill="black" xmlSpace="preserve" style={{ whiteSpace: 'pre' }} font-family="Acme" font-size="12" letter-spacing="-0.3px"><tspan x="99.0166" y="64.412">{phone?.phoneNumber ? (phone?.countryCode + " " + phone?.phoneNumber) : "+234"}  { }</tspan></text>
                     <text id="tap here for contact" fill="#8E8E93" xmlSpace="preserve" style={{ whiteSpace: 'pre' }} font-family="Acme" font-size="7" letter-spacing="-0.01px"><tspan x="100.125" y="74.282">tap here for contact info</tspan></text>
                     <g id="Send Message">
                       <g id="Rectangle_3" filter="url(#filter0_d_0_1)">
@@ -529,7 +533,7 @@ function Home() {
             <div className='flex-1 flex justify-center items-start flex-col'>
               <div className="md:flex flex-row justify-between items-center w-full">
                 <h1 className="flex-1 font-poppins font-[900] md:text-[40px] text-[27px] text-black md:leading-[50px] leading-[38px]">
-                 Generate Short Links <br className="sm:block hidden" /> {" "}
+                  Generate Short Links <br className="sm:block hidden" /> {" "}
                   <div className='flex'>
                     <h1 className="">For your Long Urls </h1>
 
@@ -538,7 +542,7 @@ function Home() {
               </div>
 
               <p className={`font-poppins font-normal text-[#6C757D] md:text-[15px] text-[13px] md:leading-[23.85px] leading-[20px] max-w-[530px] mt-[30px] `}>
-              In today's fast-paced digital world, convenience and efficiency are key. Long, unwieldy URLs can be cumbersome to share and remember, especially in the era of character limits on social media platforms. That's where short links come to the rescue! Short links condense lengthy URLs into manageable snippets, making sharing and accessing content a breeze. In this guide, we'll explore the ins and outs of short links, how to create them, and why they're essential for simplifying your online presence.
+                In today's fast-paced digital world, convenience and efficiency are key. Long, unwieldy URLs can be cumbersome to share and remember, especially in the era of character limits on social media platforms. That's where short links come to the rescue! Short links condense lengthy URLs into manageable snippets, making sharing and accessing content a breeze. In this guide, we'll explore the ins and outs of short links, how to create them, and why they're essential for simplifying your online presence.
               </p>
             </div>
             <div className='flex-1 flex justify-center items-center'>
@@ -586,7 +590,202 @@ function Home() {
       {/* End Section */}
 
       {/* Start Section */}
-      <div className='bg-[#F4FBFF] sm:px-16 px-6 flex justify-center items-start' >
+      <div className='bg-[#F5F5FA] sm:px-16 px-6 flex justify-center items-start py-16' >
+        <div className='xl:max-w-[1200px] w-full'>
+          <div className='flex flex-col justify-center items-center'>
+            <h1 className="text-center font-bold font-poppins md:text-[40px] text-[25px] text-[#231D4F] md:leading-[50px] leading-[38px]">
+              Simple, transparent pricing
+            </h1>
+            <p className="text-[#848199] text-[20px] mt-5">No contract, no surprice fee</p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-4 mt-10">
+            <div className="bg-white py-6 px-8 md:rounded-l-[26px] rounded-[15px] mt-8">
+              <h2 className="text-[33px] text-[#231D4F] font-semibold">$20 <span className="text-[14px] text-[#848199]">/ month</span></h2>
+              <h3 className="mt-2 text-[#231D4F] text-[26px]">Intro</h3>
+              <p className="mt-1 text-[14px] text-[#848199]">For most businesses that want to otpimize web queries</p>
+              <div className="mt-3">
+                <div className="flex space-x-2 mt-3">
+                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M10 0C4.47715 0 0 4.47715 0 10C0 15.5228 4.47715 20 10 20C15.5228 20 20 15.5228 20 10C19.9936 4.47982 15.5202 0.00642897 10 0Z" fill="#5243C2" fill-opacity="0.103693" />
+                    <path d="M15.7727 6.83313L10.0685 14.574C9.93246 14.7545 9.7296 14.8727 9.50552 14.9022C9.28143 14.9316 9.0549 14.8698 8.87683 14.7306L4.8035 11.474C4.44405 11.1863 4.38585 10.6617 4.6735 10.3023C4.96115 9.94285 5.48572 9.88465 5.84516 10.1723L9.24183 12.8898L14.431 5.8473C14.6012 5.59195 14.8979 5.45078 15.2033 5.47983C15.5088 5.50887 15.7736 5.70344 15.8926 5.98627C16.0116 6.26911 15.9655 6.59445 15.7727 6.83313Z" fill="#0071BC" />
+                  </svg>
+                  <h3 className="text-[14px] text-[#848199] font-normal">All limited links</h3>
+                </div>
+                <div className="flex space-x-2 mt-3">
+                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M10 0C4.47715 0 0 4.47715 0 10C0 15.5228 4.47715 20 10 20C15.5228 20 20 15.5228 20 10C19.9936 4.47982 15.5202 0.00642897 10 0Z" fill="#5243C2" fill-opacity="0.103693" />
+                    <path d="M15.7727 6.83313L10.0685 14.574C9.93246 14.7545 9.7296 14.8727 9.50552 14.9022C9.28143 14.9316 9.0549 14.8698 8.87683 14.7306L4.8035 11.474C4.44405 11.1863 4.38585 10.6617 4.6735 10.3023C4.96115 9.94285 5.48572 9.88465 5.84516 10.1723L9.24183 12.8898L14.431 5.8473C14.6012 5.59195 14.8979 5.45078 15.2033 5.47983C15.5088 5.50887 15.7736 5.70344 15.8926 5.98627C16.0116 6.26911 15.9655 6.59445 15.7727 6.83313Z" fill="#0071BC" />
+                  </svg>
+                  <h3 className="text-[14px] text-[#848199] font-normal">Own analytics platform</h3>
+                </div>
+                <div className="flex space-x-2 mt-3">
+                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M10 0C4.47715 0 0 4.47715 0 10C0 15.5228 4.47715 20 10 20C15.5228 20 20 15.5228 20 10C19.9936 4.47982 15.5202 0.00642897 10 0Z" fill="#5243C2" fill-opacity="0.103693" />
+                    <path d="M15.7727 6.83313L10.0685 14.574C9.93246 14.7545 9.7296 14.8727 9.50552 14.9022C9.28143 14.9316 9.0549 14.8698 8.87683 14.7306L4.8035 11.474C4.44405 11.1863 4.38585 10.6617 4.6735 10.3023C4.96115 9.94285 5.48572 9.88465 5.84516 10.1723L9.24183 12.8898L14.431 5.8473C14.6012 5.59195 14.8979 5.45078 15.2033 5.47983C15.5088 5.50887 15.7736 5.70344 15.8926 5.98627C16.0116 6.26911 15.9655 6.59445 15.7727 6.83313Z" fill="#0071BC" />
+                  </svg>
+                  <h3 className="text-[14px] text-[#848199] font-normal">Chat support</h3>
+                </div>
+                <div className="flex space-x-2 mt-3">
+                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M10 0C4.47715 0 0 4.47715 0 10C0 15.5228 4.47715 20 10 20C15.5228 20 20 15.5228 20 10C19.9936 4.47982 15.5202 0.00642897 10 0Z" fill="#5243C2" fill-opacity="0.103693" />
+                    <path d="M15.7727 6.83313L10.0685 14.574C9.93246 14.7545 9.7296 14.8727 9.50552 14.9022C9.28143 14.9316 9.0549 14.8698 8.87683 14.7306L4.8035 11.474C4.44405 11.1863 4.38585 10.6617 4.6735 10.3023C4.96115 9.94285 5.48572 9.88465 5.84516 10.1723L9.24183 12.8898L14.431 5.8473C14.6012 5.59195 14.8979 5.45078 15.2033 5.47983C15.5088 5.50887 15.7736 5.70344 15.8926 5.98627C16.0116 6.26911 15.9655 6.59445 15.7727 6.83313Z" fill="#0071BC" />
+                  </svg>
+                  <h3 className="text-[14px] text-[#848199] font-normal">Optimize hashtags</h3>
+                </div>
+                <div className="flex space-x-2 mt-3">
+                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M10 0C4.47715 0 0 4.47715 0 10C0 15.5228 4.47715 20 10 20C15.5228 20 20 15.5228 20 10C19.9936 4.47982 15.5202 0.00642897 10 0Z" fill="#5243C2" fill-opacity="0.103693" />
+                    <path d="M15.7727 6.83313L10.0685 14.574C9.93246 14.7545 9.7296 14.8727 9.50552 14.9022C9.28143 14.9316 9.0549 14.8698 8.87683 14.7306L4.8035 11.474C4.44405 11.1863 4.38585 10.6617 4.6735 10.3023C4.96115 9.94285 5.48572 9.88465 5.84516 10.1723L9.24183 12.8898L14.431 5.8473C14.6012 5.59195 14.8979 5.45078 15.2033 5.47983C15.5088 5.50887 15.7736 5.70344 15.8926 5.98627C16.0116 6.26911 15.9655 6.59445 15.7727 6.83313Z" fill="#0071BC" />
+                  </svg>
+                  <h3 className="text-[14px] text-[#848199] font-normal">Unlimited users</h3>
+                </div>
+
+              </div>
+            </div>
+            <div className="bg-white py-6 px-8 mt-8 md:rounded-l-[26px] rounded-[15px]">
+              <h2 className="text-[33px] text-[#231D4F] font-semibold">$50 <span className="text-[14px] text-[#848199]">/ month</span></h2>
+              <h3 className="mt-2 text-[#231D4F] text-[26px]">Base</h3>
+              <p className="mt-1 text-[14px] text-[#848199]">For most businesses that want to otpimize web queries</p>
+              <div className="mt-3">
+                <div className="flex space-x-2 mt-3">
+                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M10 0C4.47715 0 0 4.47715 0 10C0 15.5228 4.47715 20 10 20C15.5228 20 20 15.5228 20 10C19.9936 4.47982 15.5202 0.00642897 10 0Z" fill="#5243C2" fill-opacity="0.103693" />
+                    <path d="M15.7727 6.83313L10.0685 14.574C9.93246 14.7545 9.7296 14.8727 9.50552 14.9022C9.28143 14.9316 9.0549 14.8698 8.87683 14.7306L4.8035 11.474C4.44405 11.1863 4.38585 10.6617 4.6735 10.3023C4.96115 9.94285 5.48572 9.88465 5.84516 10.1723L9.24183 12.8898L14.431 5.8473C14.6012 5.59195 14.8979 5.45078 15.2033 5.47983C15.5088 5.50887 15.7736 5.70344 15.8926 5.98627C16.0116 6.26911 15.9655 6.59445 15.7727 6.83313Z" fill="#0071BC" />
+                  </svg>
+                  <h3 className="text-[14px] text-[#848199] font-normal">All limited links</h3>
+                </div>
+                <div className="flex space-x-2 mt-3">
+                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M10 0C4.47715 0 0 4.47715 0 10C0 15.5228 4.47715 20 10 20C15.5228 20 20 15.5228 20 10C19.9936 4.47982 15.5202 0.00642897 10 0Z" fill="#5243C2" fill-opacity="0.103693" />
+                    <path d="M15.7727 6.83313L10.0685 14.574C9.93246 14.7545 9.7296 14.8727 9.50552 14.9022C9.28143 14.9316 9.0549 14.8698 8.87683 14.7306L4.8035 11.474C4.44405 11.1863 4.38585 10.6617 4.6735 10.3023C4.96115 9.94285 5.48572 9.88465 5.84516 10.1723L9.24183 12.8898L14.431 5.8473C14.6012 5.59195 14.8979 5.45078 15.2033 5.47983C15.5088 5.50887 15.7736 5.70344 15.8926 5.98627C16.0116 6.26911 15.9655 6.59445 15.7727 6.83313Z" fill="#0071BC" />
+                  </svg>
+                  <h3 className="text-[14px] text-[#848199] font-normal">Own analytics platform</h3>
+                </div>
+                <div className="flex space-x-2 mt-3">
+                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M10 0C4.47715 0 0 4.47715 0 10C0 15.5228 4.47715 20 10 20C15.5228 20 20 15.5228 20 10C19.9936 4.47982 15.5202 0.00642897 10 0Z" fill="#5243C2" fill-opacity="0.103693" />
+                    <path d="M15.7727 6.83313L10.0685 14.574C9.93246 14.7545 9.7296 14.8727 9.50552 14.9022C9.28143 14.9316 9.0549 14.8698 8.87683 14.7306L4.8035 11.474C4.44405 11.1863 4.38585 10.6617 4.6735 10.3023C4.96115 9.94285 5.48572 9.88465 5.84516 10.1723L9.24183 12.8898L14.431 5.8473C14.6012 5.59195 14.8979 5.45078 15.2033 5.47983C15.5088 5.50887 15.7736 5.70344 15.8926 5.98627C16.0116 6.26911 15.9655 6.59445 15.7727 6.83313Z" fill="#0071BC" />
+                  </svg>
+                  <h3 className="text-[14px] text-[#848199] font-normal">Chat support</h3>
+                </div>
+                <div className="flex space-x-2 mt-3">
+                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M10 0C4.47715 0 0 4.47715 0 10C0 15.5228 4.47715 20 10 20C15.5228 20 20 15.5228 20 10C19.9936 4.47982 15.5202 0.00642897 10 0Z" fill="#5243C2" fill-opacity="0.103693" />
+                    <path d="M15.7727 6.83313L10.0685 14.574C9.93246 14.7545 9.7296 14.8727 9.50552 14.9022C9.28143 14.9316 9.0549 14.8698 8.87683 14.7306L4.8035 11.474C4.44405 11.1863 4.38585 10.6617 4.6735 10.3023C4.96115 9.94285 5.48572 9.88465 5.84516 10.1723L9.24183 12.8898L14.431 5.8473C14.6012 5.59195 14.8979 5.45078 15.2033 5.47983C15.5088 5.50887 15.7736 5.70344 15.8926 5.98627C16.0116 6.26911 15.9655 6.59445 15.7727 6.83313Z" fill="#0071BC" />
+                  </svg>
+                  <h3 className="text-[14px] text-[#848199] font-normal">Optimize hashtags</h3>
+                </div>
+                <div className="flex space-x-2 mt-3">
+                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M10 0C4.47715 0 0 4.47715 0 10C0 15.5228 4.47715 20 10 20C15.5228 20 20 15.5228 20 10C19.9936 4.47982 15.5202 0.00642897 10 0Z" fill="#5243C2" fill-opacity="0.103693" />
+                    <path d="M15.7727 6.83313L10.0685 14.574C9.93246 14.7545 9.7296 14.8727 9.50552 14.9022C9.28143 14.9316 9.0549 14.8698 8.87683 14.7306L4.8035 11.474C4.44405 11.1863 4.38585 10.6617 4.6735 10.3023C4.96115 9.94285 5.48572 9.88465 5.84516 10.1723L9.24183 12.8898L14.431 5.8473C14.6012 5.59195 14.8979 5.45078 15.2033 5.47983C15.5088 5.50887 15.7736 5.70344 15.8926 5.98627C16.0116 6.26911 15.9655 6.59445 15.7727 6.83313Z" fill="#0071BC" />
+                  </svg>
+                  <h3 className="text-[14px] text-[#848199] font-normal">Unlimited users</h3>
+                </div>
+
+              </div>
+            </div>
+            <div className="bg-[#0071BC] py-6 px-8 md:mb-8 mb-0 mt-8 md:mt-0 rounded-[20px] shadow-2xl shadow-[#0071BC]">
+              <div className="flex justify-end">
+                <h3 className="text-[10px] text-white">MOST POPULAR</h3>
+              </div>
+              <h2 className="text-[33px] text-[#ffffff] font-semibold">$100 <span className="text-[14px] text-[#ffffff]">/ month</span></h2>
+              <h3 className="mt-2 text-[#ffffff]  text-[26px]">Pro</h3>
+              <p className="mt-1 text-[14px] text-white ">For most businesses that want to otpimize web queries</p>
+              <div className="mt-3">
+                <div className="flex space-x-2 mt-3">
+                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path opacity="0.1" d="M10 0C4.47715 0 0 4.47715 0 10C0 15.5228 4.47715 20 10 20C15.5228 20 20 15.5228 20 10C19.9936 4.47982 15.5202 0.00642897 10 0Z" fill="white" />
+                    <path d="M15.7727 6.83313L10.0685 14.574C9.93246 14.7545 9.7296 14.8727 9.50552 14.9022C9.28143 14.9316 9.0549 14.8698 8.87683 14.7306L4.8035 11.474C4.44405 11.1863 4.38585 10.6617 4.6735 10.3023C4.96115 9.94285 5.48572 9.88465 5.84516 10.1723L9.24183 12.8898L14.431 5.8473C14.6012 5.59195 14.8979 5.45078 15.2033 5.47983C15.5088 5.50887 15.7736 5.70344 15.8926 5.98627C16.0116 6.26911 15.9655 6.59445 15.7727 6.83313Z" fill="white" />
+                  </svg>
+
+                  <h3 className="text-[14px] text-[#ffffff]  font-normal">All limited links</h3>
+                </div>
+                <div className="flex space-x-2 mt-3">
+                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path opacity="0.1" d="M10 0C4.47715 0 0 4.47715 0 10C0 15.5228 4.47715 20 10 20C15.5228 20 20 15.5228 20 10C19.9936 4.47982 15.5202 0.00642897 10 0Z" fill="white" />
+                    <path d="M15.7727 6.83313L10.0685 14.574C9.93246 14.7545 9.7296 14.8727 9.50552 14.9022C9.28143 14.9316 9.0549 14.8698 8.87683 14.7306L4.8035 11.474C4.44405 11.1863 4.38585 10.6617 4.6735 10.3023C4.96115 9.94285 5.48572 9.88465 5.84516 10.1723L9.24183 12.8898L14.431 5.8473C14.6012 5.59195 14.8979 5.45078 15.2033 5.47983C15.5088 5.50887 15.7736 5.70344 15.8926 5.98627C16.0116 6.26911 15.9655 6.59445 15.7727 6.83313Z" fill="white" />
+                  </svg>
+
+                  <h3 className="text-[14px] text-[#ffffff]  font-normal">Own analytics platform</h3>
+                </div>
+                <div className="flex space-x-2 mt-3">
+                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path opacity="0.1" d="M10 0C4.47715 0 0 4.47715 0 10C0 15.5228 4.47715 20 10 20C15.5228 20 20 15.5228 20 10C19.9936 4.47982 15.5202 0.00642897 10 0Z" fill="white" />
+                    <path d="M15.7727 6.83313L10.0685 14.574C9.93246 14.7545 9.7296 14.8727 9.50552 14.9022C9.28143 14.9316 9.0549 14.8698 8.87683 14.7306L4.8035 11.474C4.44405 11.1863 4.38585 10.6617 4.6735 10.3023C4.96115 9.94285 5.48572 9.88465 5.84516 10.1723L9.24183 12.8898L14.431 5.8473C14.6012 5.59195 14.8979 5.45078 15.2033 5.47983C15.5088 5.50887 15.7736 5.70344 15.8926 5.98627C16.0116 6.26911 15.9655 6.59445 15.7727 6.83313Z" fill="white" />
+                  </svg>
+
+                  <h3 className="text-[14px] text-[#ffffff] font-normal">Chat support</h3>
+                </div>
+                <div className="flex space-x-2 mt-3">
+                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path opacity="0.1" d="M10 0C4.47715 0 0 4.47715 0 10C0 15.5228 4.47715 20 10 20C15.5228 20 20 15.5228 20 10C19.9936 4.47982 15.5202 0.00642897 10 0Z" fill="white" />
+                    <path d="M15.7727 6.83313L10.0685 14.574C9.93246 14.7545 9.7296 14.8727 9.50552 14.9022C9.28143 14.9316 9.0549 14.8698 8.87683 14.7306L4.8035 11.474C4.44405 11.1863 4.38585 10.6617 4.6735 10.3023C4.96115 9.94285 5.48572 9.88465 5.84516 10.1723L9.24183 12.8898L14.431 5.8473C14.6012 5.59195 14.8979 5.45078 15.2033 5.47983C15.5088 5.50887 15.7736 5.70344 15.8926 5.98627C16.0116 6.26911 15.9655 6.59445 15.7727 6.83313Z" fill="white" />
+                  </svg>
+
+                  <h3 className="text-[14px] text-[#ffffff]  font-normal">Optimize hashtags</h3>
+                </div>
+                <div className="flex space-x-2 mt-3">
+                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path opacity="0.1" d="M10 0C4.47715 0 0 4.47715 0 10C0 15.5228 4.47715 20 10 20C15.5228 20 20 15.5228 20 10C19.9936 4.47982 15.5202 0.00642897 10 0Z" fill="white" />
+                    <path d="M15.7727 6.83313L10.0685 14.574C9.93246 14.7545 9.7296 14.8727 9.50552 14.9022C9.28143 14.9316 9.0549 14.8698 8.87683 14.7306L4.8035 11.474C4.44405 11.1863 4.38585 10.6617 4.6735 10.3023C4.96115 9.94285 5.48572 9.88465 5.84516 10.1723L9.24183 12.8898L14.431 5.8473C14.6012 5.59195 14.8979 5.45078 15.2033 5.47983C15.5088 5.50887 15.7736 5.70344 15.8926 5.98627C16.0116 6.26911 15.9655 6.59445 15.7727 6.83313Z" fill="white" />
+                  </svg>
+
+                  <h3 className="text-[14px] text-[#ffffff]  font-normal">Unlimited users</h3>
+                </div>
+
+              </div>
+            </div>
+            <div className="bg-white py-6 px-8 mt-8 md:rounded-r-[26px] rounded-[15px]">
+              <h2 className="text-[33px] text-[#231D4F] font-semibold">$200 <span className="text-[14px] text-[#848199]">/ month</span></h2>
+              <h3 className="mt-2 text-[#231D4F] text-[26px]">Enterprice</h3>
+              <p className="mt-1 text-[14px] text-[#848199]">For most businesses that want to otpimize web queries</p>
+              <div className="mt-3">
+                <div className="flex space-x-2 mt-3">
+                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M10 0C4.47715 0 0 4.47715 0 10C0 15.5228 4.47715 20 10 20C15.5228 20 20 15.5228 20 10C19.9936 4.47982 15.5202 0.00642897 10 0Z" fill="#5243C2" fill-opacity="0.103693" />
+                    <path d="M15.7727 6.83313L10.0685 14.574C9.93246 14.7545 9.7296 14.8727 9.50552 14.9022C9.28143 14.9316 9.0549 14.8698 8.87683 14.7306L4.8035 11.474C4.44405 11.1863 4.38585 10.6617 4.6735 10.3023C4.96115 9.94285 5.48572 9.88465 5.84516 10.1723L9.24183 12.8898L14.431 5.8473C14.6012 5.59195 14.8979 5.45078 15.2033 5.47983C15.5088 5.50887 15.7736 5.70344 15.8926 5.98627C16.0116 6.26911 15.9655 6.59445 15.7727 6.83313Z" fill="#0071BC" />
+                  </svg>
+                  <h3 className="text-[14px] text-[#848199] font-normal">All limited links</h3>
+                </div>
+                <div className="flex space-x-2 mt-3">
+                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M10 0C4.47715 0 0 4.47715 0 10C0 15.5228 4.47715 20 10 20C15.5228 20 20 15.5228 20 10C19.9936 4.47982 15.5202 0.00642897 10 0Z" fill="#5243C2" fill-opacity="0.103693" />
+                    <path d="M15.7727 6.83313L10.0685 14.574C9.93246 14.7545 9.7296 14.8727 9.50552 14.9022C9.28143 14.9316 9.0549 14.8698 8.87683 14.7306L4.8035 11.474C4.44405 11.1863 4.38585 10.6617 4.6735 10.3023C4.96115 9.94285 5.48572 9.88465 5.84516 10.1723L9.24183 12.8898L14.431 5.8473C14.6012 5.59195 14.8979 5.45078 15.2033 5.47983C15.5088 5.50887 15.7736 5.70344 15.8926 5.98627C16.0116 6.26911 15.9655 6.59445 15.7727 6.83313Z" fill="#0071BC" />
+                  </svg>
+                  <h3 className="text-[14px] text-[#848199] font-normal">Own analytics platform</h3>
+                </div>
+                <div className="flex space-x-2 mt-3">
+                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M10 0C4.47715 0 0 4.47715 0 10C0 15.5228 4.47715 20 10 20C15.5228 20 20 15.5228 20 10C19.9936 4.47982 15.5202 0.00642897 10 0Z" fill="#5243C2" fill-opacity="0.103693" />
+                    <path d="M15.7727 6.83313L10.0685 14.574C9.93246 14.7545 9.7296 14.8727 9.50552 14.9022C9.28143 14.9316 9.0549 14.8698 8.87683 14.7306L4.8035 11.474C4.44405 11.1863 4.38585 10.6617 4.6735 10.3023C4.96115 9.94285 5.48572 9.88465 5.84516 10.1723L9.24183 12.8898L14.431 5.8473C14.6012 5.59195 14.8979 5.45078 15.2033 5.47983C15.5088 5.50887 15.7736 5.70344 15.8926 5.98627C16.0116 6.26911 15.9655 6.59445 15.7727 6.83313Z" fill="#0071BC" />
+                  </svg>
+                  <h3 className="text-[14px] text-[#848199] font-normal">Chat support</h3>
+                </div>
+                <div className="flex space-x-2 mt-3">
+                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M10 0C4.47715 0 0 4.47715 0 10C0 15.5228 4.47715 20 10 20C15.5228 20 20 15.5228 20 10C19.9936 4.47982 15.5202 0.00642897 10 0Z" fill="#5243C2" fill-opacity="0.103693" />
+                    <path d="M15.7727 6.83313L10.0685 14.574C9.93246 14.7545 9.7296 14.8727 9.50552 14.9022C9.28143 14.9316 9.0549 14.8698 8.87683 14.7306L4.8035 11.474C4.44405 11.1863 4.38585 10.6617 4.6735 10.3023C4.96115 9.94285 5.48572 9.88465 5.84516 10.1723L9.24183 12.8898L14.431 5.8473C14.6012 5.59195 14.8979 5.45078 15.2033 5.47983C15.5088 5.50887 15.7736 5.70344 15.8926 5.98627C16.0116 6.26911 15.9655 6.59445 15.7727 6.83313Z" fill="#0071BC" />
+                  </svg>
+                  <h3 className="text-[14px] text-[#848199] font-normal">Optimize hashtags</h3>
+                </div>
+                <div className="flex space-x-2 mt-3">
+                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M10 0C4.47715 0 0 4.47715 0 10C0 15.5228 4.47715 20 10 20C15.5228 20 20 15.5228 20 10C19.9936 4.47982 15.5202 0.00642897 10 0Z" fill="#5243C2" fill-opacity="0.103693" />
+                    <path d="M15.7727 6.83313L10.0685 14.574C9.93246 14.7545 9.7296 14.8727 9.50552 14.9022C9.28143 14.9316 9.0549 14.8698 8.87683 14.7306L4.8035 11.474C4.44405 11.1863 4.38585 10.6617 4.6735 10.3023C4.96115 9.94285 5.48572 9.88465 5.84516 10.1723L9.24183 12.8898L14.431 5.8473C14.6012 5.59195 14.8979 5.45078 15.2033 5.47983C15.5088 5.50887 15.7736 5.70344 15.8926 5.98627C16.0116 6.26911 15.9655 6.59445 15.7727 6.83313Z" fill="#0071BC" />
+                  </svg>
+                  <h3 className="text-[14px] text-[#848199] font-normal">Unlimited users</h3>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {/* End Section */}
+
+      {/* Start Section */}
+      <div className='bg-[#F4FBFF] sm:px-16 px-6 flex justify-center items-start py-16' >
         <div className='xl:max-w-[1200px] w-full'>
           <CTA />
         </div>
