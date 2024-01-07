@@ -87,7 +87,7 @@ export default function CardSubscription() {
 
             
             <div className="bg-white py-6 px-8 md:rounded-l-[26px] rounded-[15px] mt-8">
-              <h2 className="text-[33px] text-[#231D4F] font-semibold">$20 <span className="text-[14px] text-[#848199]">/ month</span></h2>
+              <h2 className="text-[33px] text-[#231D4F] font-semibold">$2 <span className="text-[14px] text-[#848199]">/ month</span></h2>
               <h3 className="mt-2 text-[#231D4F] text-[26px]">Basic</h3>
               <p className="mt-1 text-[14px] text-[#848199]">For most businesses that want to otpimize web queries</p>
               <div className="mt-3">
@@ -193,7 +193,7 @@ export default function CardSubscription() {
               <div className="flex justify-end">
                 <h3 className="text-[10px] text-white">POPULAR</h3>
               </div>
-              <h2 className="text-[33px] text-[#ffffff] font-semibold">$100 <span className="text-[14px] text-[#ffffff]">/ month</span></h2>
+              <h2 className="text-[33px] text-[#ffffff] font-semibold">$5 <span className="text-[14px] text-[#ffffff]">/ month</span></h2>
               <h3 className="mt-2 text-[#ffffff]  text-[26px]">Pro</h3>
               <p className="mt-1 text-[14px] text-white ">For most businesses that want to otpimize web queries</p>
               <div className="mt-3">
@@ -243,7 +243,7 @@ export default function CardSubscription() {
 
 
             <div className="bg-white py-6 px-8 mt-8 md:rounded-r-[26px] rounded-[15px]">
-              <h2 className="text-[33px] text-[#231D4F] font-semibold">$200 <span className="text-[14px] text-[#848199]">/ month</span></h2>
+              <h2 className="text-[33px] text-[#231D4F] font-semibold">$10 <span className="text-[14px] text-[#848199]">/ month</span></h2>
               <h3 className="mt-2 text-[#231D4F] text-[26px]">Premium</h3>
               <p className="mt-1 text-[14px] text-[#848199]">For most businesses that want to otpimize web queries</p>
               <div className="mt-3">
