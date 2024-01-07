@@ -13,6 +13,8 @@ import 'react-awesome-slider/dist/custom-animations/cube-animation.css';
 // import { url } from "inspector";
 import { store } from "../../store/store";
 import { Oval } from 'react-loader-spinner'
+import CardRenewSubscription from "./CardRenewSubscription";
+import configs from "../../configs";
 
 
 // components
@@ -26,7 +28,7 @@ export default function CardMiniStore() {
   let [contact, setContact] = React.useState('');
   let [effect, setEffect] = React.useState('');
 
-  console?.log(value)
+  // console?.log(value)
 
   function toggleModal(value2, contact) {
     setvalue(value2)
@@ -43,7 +45,7 @@ export default function CardMiniStore() {
 
   const [message, setMessage] = React.useState("");
   const [name, setName] = React.useState("");
-  // console.log(message)
+
 
 
   const [loader, setLoader] = React.useState(true);
@@ -60,7 +62,6 @@ export default function CardMiniStore() {
       (response) => {
         if (response?.data) {
           setdata(response?.data)
-          console?.log(response?.data)
           setLoader(false);
           //console.log(response?.data)
         }
@@ -68,6 +69,8 @@ export default function CardMiniStore() {
     );
 
   }, [effect]);
+
+
 
 
   const handleSubmit = React.useCallback(
@@ -85,7 +88,7 @@ export default function CardMiniStore() {
           if (response?.data) {
             console.log(response.data)
             setVisible(false)
-            setEffect('v')
+            setEffect('')
             toast.success(response?.data?.message);
           }
         }
@@ -129,7 +132,7 @@ export default function CardMiniStore() {
 
   const [searchTerm, setSearchTerm] = React.useState("");
   const inputEl = React.useRef("");
-  const [searchResult, setSearchResult] = React.useState([]);
+  const [searchResult, setSearchResult] = React.useState({sa:'32'});
 
   const getSearchTerm = React.useCallback(
     () => {
@@ -146,7 +149,7 @@ export default function CardMiniStore() {
     }, [inputEl, searchTerm, searchResult, data]);
 
 
-
+  console.log(searchResult?.length)
 
 
 
@@ -162,7 +165,7 @@ export default function CardMiniStore() {
               {data?.data?.length ?
                 <span className="flex justify-between" >
                   {/* <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-gray-300">Search</label> */}
-                  <div class="relative invisible md:visible">
+                  <div class="relative  visible">
                     <input ref={inputEl} onChange={getSearchTerm} type="text" style={{ borderColor: '#0071BC' }} id="default-search" class="block p-4 pl-4 w-full h-4 text-sm text-gray-900 bg-gray-50 rounded-lg border focus:ring-green-500 focus:border-green-500 " placeholder="Search " />
                     <svg aria-hidden="true" class="w-5 h-5 right-2.5 bottom-3 absolute text-gray-500 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
                   </div>
@@ -172,9 +175,9 @@ export default function CardMiniStore() {
                       <button
                         type="button"
                         style={{ backgroundColor: '#0071BC', borderRadius: '50px' }}
-                        className=" text-white hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm w-40 px-5 py-2.5 text-center "
+                        className=" text-white hover:bg-blue-800 focus:ring-4 focus:outline-none font-medium rounded-lg text-sm w-28 px-5 py-2.5 text-center "
                       >
-                        + Add Product
+                        + Add 
                       </button>
                     </span>
                   </NavLink>
@@ -187,111 +190,127 @@ export default function CardMiniStore() {
 
               <div>
                 {!loader ? (
-                  (data?.data?.length >= 1) ?
-                    <div className="container  flex-col md:flex-row md:justify-start mt-1 pt-1 grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-3">
-                      {(inputEl?.current?.value?.length > 1 ? searchResult : data?.data).map(
-                        (data, index) => (
+                  (searchResult?.length == 0 ?
+                    <div className="p-2  shadow animate-pulse md:p-6 dark:border-gray-700" style={{ height: '70vh', width: '78vw' }}>
+                      <div className="flex justify-center items-center mb-4 h-48 bg-gray-300 rounded dark:bg-gray-400">
+                        <span>Empty Record</span>
+                      </div>
+                     
+                    </div>
+                    :
+                    (data?.data?.length >= 1 && data?.data !== 'sub_expired') ?
+                      <div className="container  flex-col md:flex-row md:justify-start mt-1 pt-1 grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-3">
+                        {(inputEl?.current?.value?.length > 1 ? searchResult : data?.data)?.map(
+                          (data, index) => (
 
-                          <>
-                            <div class="max-w-sm bg-white rounded-lg border border-gray-200 shadow-md">
-                              <div className="flex justify-between mx-3 my-2">
-                                <span className="flex justify-start">
-                                  <span className="mt-2"><span className=" rounded-full px-3 py-1.5 bg-[#0071BC] text-white">{(store.getState().data.login.value.name).slice(0, 1).toUpperCase()}</span></span>
-                                  <span className="flex flex-col pl-[16px]">
-                                    <span className="font-[600] text-[16px]">{(data?.link_name)}</span>
-                                    <span className=" text-[14px] font-[400]">{(data?.phone_number)}</span>
+                            <>
+                              <div class="max-w-sm bg-white rounded-lg border border-gray-200 shadow-md">
+                                <div className="flex justify-between mx-3 my-2">
+                                  <span className="flex justify-start">
+                                    <span className="mt-2"><span className=" rounded-full px-3 py-1.5 bg-[#0071BC] text-white">{(store.getState().data.login.value.name).slice(0, 1).toUpperCase()}</span></span>
+                                    <span className="flex flex-col pl-[16px]">
+                                      <span className="font-[600] text-[10px]">{configs?.baseRedirectFront}{(data?.link_name)}</span>
+                                      {/* <span className=" text-[14px] font-[400]">{(data?.phone_number)}</span> */}
+                                    </span>
+
                                   </span>
 
-                                </span>
+                                  <span className="mt-2">
+                                    <span className="flex justify-end gap-1 ">
 
-                                <span className="mt-2">
-                                  <span className="flex justify-end gap-1 ">
-                                    <button
-                                      type="button"
-                                      style={{}}
-                                      onClick={(e) => toggleModal(data)}
-                                      className=" outline-none  font-xs rounded-full text-xs px-2 py-2 text-center "
+                                      {/* <NavLink to={`/storedetails/${data?.id}`}
+                                      className=" text-[10px] text-[#0071BC] py-1  flex cursor-pointer bg-[#DBF2FF] rounded-full px-2"
                                     >
-                                      <FaEdit />
-                                    </button>
+                                      {data?.no_of_items} Items in stock
+                                    </NavLink> */}
 
-                                    <button
-                                      type="button"
-                                      onClick={(e) => toggleDelete(data?.id)}
-                                      className=" outline-none  font-xs text-red-500 rounded-full text-xs px-2 py-2 text-center "
+                                      <NavLink to={`/edit-product/${data?.id}`} className={'cursor-pointer mt-1.5'}>
+                                        <FaEdit />
+                                      </NavLink>
+
+
+
+                                      <button
+                                        type="button"
+                                        onClick={(e) => toggleDelete(data?.id)}
+                                        className=" outline-none  font-xs text-red-500 rounded-full text-xs px-2 py-2 text-center "
+                                      >
+                                        <FaTrash />
+                                      </button>
+                                    </span>
+                                  </span>
+
+                                </div>
+                                <hr />
+                                <NavLink to={`/edit-product/${data?.id}`} className={'cursor-pointer'}>
+                                  <p class="mb-2 tracking-tight m-2 p-2 bg-[#F4FBFF] h-44" style={{ fontSize: '16px', color: '#595959', backgroundImage: `url(${data?.product_image_1})`, backgroundRepeat: "no-repeat", backgroundSize: 'cover', backgroundPosition: 'center center' }}>{data?.link_info?.message}</p>
+                                </NavLink>
+                                <hr />
+
+                                <div className="flex flex-col pt-[16px] px-[16px]">
+                                  <div className="flex justify-between">
+                                    <span className="text-[16px] font-[600]">{data?.product_name}</span>
+                                    <span
+                                      style={{ color: 'white' }}
+                                      className="ring-1 outline-none bg-[#149E49] font-xs rounded-lg text-xs px-4 h-5 pt-[2px] text-center cursor-pointer"
                                     >
-                                      <FaTrash />
-                                    </button>
-                                  </span>
-                                </span>
+                                      Active
+                                    </span>
+                                  </div>
 
-                              </div>
-                              <hr />
-                              <NavLink to={`/edit-product/${data?.id}`} className={'cursor-pointer'}>
-                                <p class="mb-2 tracking-tight m-2 p-2 bg-[#F4FBFF] h-44" style={{ fontSize: '16px', color: '#595959', backgroundImage: `url(${data?.product_image_1})`, backgroundRepeat: "no-repeat", backgroundSize: 'cover', backgroundPosition: 'center center' }}>{data?.link_info?.message}</p>
-                              </NavLink>
-                              <hr />
-
-                              <div className="flex flex-col pt-[16px] px-[16px]">
-                                <div className="flex justify-between">
-                                  <span className="text-[16px] font-[600]">{data?.product_name}</span>
-                                  <span
-                                    style={{ color: 'white' }}
-                                    className="ring-1 outline-none bg-[#149E49] font-xs rounded-lg text-xs px-4 h-5 pt-[2px] text-center cursor-pointer"
-                                  >
-                                    Active
-                                  </span>
+                                  <span className="text-[#149E49] text-[14px] font-[400]">₦ {data?.product_price}</span>
+                                  <span className="text-[14px] font-[400] text-[#808191] h-10 overflow-auto">{data?.product_description}</span>
                                 </div>
 
-                                <span className="text-[#149E49] text-[14px] font-[400]">₦ {data?.product_price}</span>
-                                <span className="text-[14px] font-[400] text-[#808191] h-10 overflow-auto">{data?.product_description}</span>
-                              </div>
 
-
-                              {/* <span className="flex justify-between gap-1 pt-4 m-2">
+                                {/* <span className="flex justify-between gap-1 pt-4 m-2">
                                
 
                                
                               </span> */}
+                              </div>
+                            </>
+
+
+
+                          )
+                        )}
+                      </div>
+                      :
+                      (data?.data == 'sub_expired' ?
+                        <CardRenewSubscription />
+                        :
+                        <div className="relative flex flex-col min-w-0 break-words bg-white w-full mb-6  rounded">
+                          <div className="rounded-t mb-0  py-3 border-0">
+                            <div className="flex flex-wrap items-center">
+                              <div className="w-full px-4 max-w-full p-52 flex-grow flex-1">
+
+                                <h3 className="flex justify-center font-bold"> You haven’t created any Product Link</h3>
+                                <p className="flex text-sm justify-center"> Click on the button below to create a new </p>
+                                <p className="flex text-sm justify-center text-black font-bold"> Product.</p>
+
+                                <NavLink to='/createproduct' className="flex justify-center">
+                                  < span className="flex justify-center pt-4">
+                                    <button
+                                      type="submit"
+                                      style={{ backgroundColor: '#0071BC', borderRadius: '50px' }}
+                                      className=" text-white hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm w-40 px-5 py-2.5 text-center "
+                                    >
+                                      + Create New
+                                    </button>
+                                  </span>
+                                </NavLink>
+
+                              </div>
+
                             </div>
-                          </>
-
-
-                        )
-                      )}
-                    </div>
-                    :
-
-                    <div className="relative flex flex-col min-w-0 break-words bg-white w-full mb-6  rounded">
-                      <div className="rounded-t mb-0  py-3 border-0">
-                        <div className="flex flex-wrap items-center">
-                          <div className="w-full px-4 max-w-full p-52 flex-grow flex-1">
-
-                            <h3 className="flex justify-center font-bold"> You haven’t created any Product Link</h3>
-                            <p className="flex text-sm justify-center"> Click on the button below to create a new </p>
-                            <p className="flex text-sm justify-center text-black font-bold"> Product.</p>
-
-                            <NavLink to='/createproduct' className="flex justify-center">
-                              < span className="flex justify-center pt-4">
-                                <button
-                                  type="submit"
-                                  style={{ backgroundColor: '#0071BC', borderRadius: '50px' }}
-                                  className=" text-white hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm w-40 px-5 py-2.5 text-center "
-                                >
-                                  + Create New
-                                </button>
-                              </span>
-                            </NavLink>
+                          </div>
+                          <div className="block w-full overflow-x-auto">
+                            {/* Projects table */}
 
                           </div>
-
-                        </div>
-                      </div>
-                      <div className="block w-full overflow-x-auto">
-                        {/* Projects table */}
-
-                      </div>
-                    </div>
+                        </div>)
+                  )
                 )
 
                   :

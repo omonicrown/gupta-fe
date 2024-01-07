@@ -9,6 +9,7 @@ import Modal from 'react-awesome-modal';
 import CardPageVisits from "./CardPageVisits";
 import configs from "../../configs";
 import { SvgElement, icontypesEnum } from "../assets/svgElement";
+import CardRenewSubscription from "./CardRenewSubscription";
 
 
 // components
@@ -225,15 +226,15 @@ export default function CardRedirectLink() {
                                     Active
                                   </span>
 
-                                 
-                                    <span
-                                      style={{ borderColor: '#61A24F' }}
-                                      className=" bg-blue-100 text-blue-800 outline-none font-xs rounded-lg text-xs px-4 h-5 pt-[2px] text-center "
-                                    >
-                                      Redirect
-                                    </span>
 
-                                   
+                                  <span
+                                    style={{ borderColor: '#61A24F' }}
+                                    className=" bg-blue-100 text-blue-800 outline-none font-xs rounded-lg text-xs px-4 h-5 pt-[2px] text-center "
+                                  >
+                                    Redirect
+                                  </span>
+
+
                                 </span>
 
 
@@ -270,36 +271,41 @@ export default function CardRedirectLink() {
                     </div>
                     :
 
+                    data?.data == 'sub_expired'?
+                    <CardRenewSubscription />
+                    :
                     <div className="relative flex flex-col min-w-0 break-words bg-white w-full mb-6  rounded">
-        <div className="rounded-t mb-0  py-3 border-0">
-          <div className="flex flex-wrap items-center">
-            <div className="w-full px-4 max-w-full p-52 flex-grow flex-1">
+                    <div className="rounded-t mb-0  py-3 border-0">
+                      <div className="flex flex-wrap items-center">
+                        <div className="w-full px-4 max-w-full p-52 flex-grow flex-1">
 
-              <h3 className="flex justify-center font-bold"> You haven’t created any Redirect Link</h3>
-              <p className="flex text-sm justify-center"> Click on the button below to create a new </p>
-              <p className="flex text-sm justify-center text-black font-bold"> Link.</p>
+                          <h3 className="flex justify-center font-bold"> You haven’t created any Redirect Link</h3>
+                          <p className="flex text-sm justify-center"> Click on the button below to create a new </p>
+                          <p className="flex text-sm justify-center text-black font-bold"> Link.</p>
 
-              <NavLink to='/create-redirect-link' className="flex justify-center">
-              < span className="flex justify-center pt-4">
-                <button
-                  type="submit"
-                  style={{ backgroundColor: '#0071BC', borderRadius: '50px' }}
-                  className=" text-white hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm w-40 px-5 py-2.5 text-center "
-                >
-                 + Create New
-                </button>
-              </span>
-              </NavLink>
+                          <NavLink to='/create-redirect-link' className="flex justify-center">
+                            < span className="flex justify-center pt-4">
+                              <button
+                                type="submit"
+                                style={{ backgroundColor: '#0071BC', borderRadius: '50px' }}
+                                className=" text-white hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm w-40 px-5 py-2.5 text-center "
+                              >
+                                + Create New
+                              </button>
+                            </span>
+                          </NavLink>
 
-            </div>
+                        </div>
 
-          </div>
-        </div>
-        <div className="block w-full overflow-x-auto">
-          {/* Projects table */}
+                      </div>
+                    </div>
+                    <div className="block w-full overflow-x-auto">
+                      {/* Projects table */}
 
-        </div>
-      </div>
+                    </div>
+                  </div>
+
+                   
                 )
 
                   :

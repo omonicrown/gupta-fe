@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { Dispatch } from "redux";
 import { useSelector, useDispatch } from 'react-redux';
-import { NavLink,useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Modal from 'react-awesome-modal';
@@ -192,7 +192,7 @@ export default function CardCreateProduct() {
       if (img1 == 'No selected file' || img2 == 'No selected file' || img3 == 'No selected file') {
         toast.error("Upload Product Images");
       } else {
-       
+
         setLoader(true)
         const formData = new FormData()
         formData.append('link_name', (addLink.split(" "))[0])
@@ -269,45 +269,45 @@ export default function CardCreateProduct() {
 
         <div className="md:flex md:justify-between">
           <div className="bg-blue-100 md:w-2/5 rounded-lg m-1 p-2">
-          <span className=" bg-blue-100  rounded-lg  text-gray-500 text-[12px]"><span className=" text-red-500 bg-red-200 p-1 px-3 rounded-full text-[15px]">!</span><br/>  ATTENTION : Please kindly note that the market market link is the link where your customers will see the list of your products</span>
+            <span className=" bg-blue-100  rounded-lg  text-gray-500 text-[12px]"><span className=" text-red-500 bg-red-200 p-1 px-3 rounded-full text-[15px]">!</span><br />  ATTENTION : Please kindly note that the market market link is the link where your customers will see the list of your products</span>
           </div>
-         
-         
-        <div className="flex justify-end gap-2 mt-5">
-          <button
-            type="button"
-            onClick={toggleModal}
-            className=" text-gray-900 h-10 bg-[#8ed2ff] hover:bg-[#167bbe] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm  px-5 py-2.5 text-center "
-          >
-            Add Market Link
-          </button>
 
-          <button
-            type="submit"
-            className=" text-white h-10 bg-[#0071BC] hover:bg-[#103f5e] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm  px-5 py-2.5 text-center "
-          >
-            Add Product
-          </button>
 
-          <Oval
-            height={40}
-            width={40}
-            color="#0071BC"
-            wrapperStyle={{}}
-            wrapperClass=""
-            visible={loader}
-            ariaLabel='oval-loading'
-            secondaryColor="#96cff6"
-            strokeWidth={2}
-            strokeWidthSecondary={2}
-          />
+          <div className="flex justify-end gap-2 mt-5">
+            <button
+              type="button"
+              onClick={toggleModal}
+              className=" text-gray-900 h-10 bg-[#8ed2ff] hover:bg-[#167bbe] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm  px-5 py-2.5 text-center "
+            >
+              Add Market Link
+            </button>
+
+            <button
+              type="submit"
+              className=" text-white h-10 bg-[#0071BC] hover:bg-[#103f5e] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm  px-5 py-2.5 text-center "
+            >
+              Add Product
+            </button>
+
+            <Oval
+              height={40}
+              width={40}
+              color="#0071BC"
+              wrapperStyle={{}}
+              wrapperClass=""
+              visible={loader}
+              ariaLabel='oval-loading'
+              secondaryColor="#96cff6"
+              strokeWidth={2}
+              strokeWidthSecondary={2}
+            />
+
+          </div>
 
         </div>
 
-        </div>
-        
 
-        <div className={"lg:grid lg:grid-cols-2 gap-2 mt-10 "+(loader?'shadow animate-pulse ':'')}>
+        <div className={"lg:grid lg:grid-cols-2 gap-2 mt-10 " + (loader ? 'shadow animate-pulse ' : '')}>
           <div className="mb-10">
             <div className=" lg:w-4/5">
               <label for="first_name" class="block mb-2 mt-6 text-sm  text-gray-900 dark:text-gray-600">Product Name</label>
@@ -336,7 +336,7 @@ export default function CardCreateProduct() {
                     <option value={''}>Select link</option>
                     {productLink.map(
                       (data, index) => (
-                        <option value={`${data?.link_name} ${data?.id}`}>{data?.link_name}</option>
+                        <option value={`${data?.link_name} ${data?.id}`}>{data?.link_name}  </option>
                       )
                     )}
 
@@ -363,7 +363,23 @@ export default function CardCreateProduct() {
 
             </div>
 
+
+           
+            {/* <div className=" max-w-200-px mt-10">
+              <div className=" font-[600] underline mb-3">Market Links</div>
+            {productLink.map(
+            (data, index) => (
+             <span className="flex justify-between mb-4">
+               <span><span>({index+1}) </span>  {data?.link_name}</span>   <span className=" text-red-500 cursor-pointer"><FaTrash /></span>    
+                </span> 
+            )
+          )}
+            </div> */}
+            
           </div>
+
+         
+
 
           {/* second Div */}
           <div className="grid grid-cols-2 gap-2">
@@ -427,7 +443,7 @@ export default function CardCreateProduct() {
                     <input type="text" defaultValue={checkLink} onChange={(e) => setCheckLink(e?.target?.value)} id="first_name" class="bg-[#F4FBFF] border border-gray-300 text-gray-900 text-sm rounded-lg  p-2.5 w-4/5 " required placeholder="Business Link Name" />
                     {(checkLink?.length !== 0 && data == 0) ? <span className="pl-4 w-1/5 text-[30px]">👌</span> : (data != 1 ? '' : <span className="pl-4 w-1/5 text-[30px] "> 😭 </span>)}
                   </div>
-                  <span className="text-[10px]">{`https://www.gupta.link/market-place/${checkLink.replace(/ /g, '-')}`} </span> <br />{(checkLink?.length !== 0 && data == 0) ? <span className=" w-1/5 text-[10px] text-green-500">Available</span> : (data != 1 ? '' : <span className=" w-1/5 text-[10px] text-red-500"> Link is taken </span>)}
+                  <span className="text-[10px]">{`https://www.mygupta.co/store/${checkLink.replace(/ /g, '-')}`} </span> <br />{(checkLink?.length !== 0 && data == 0) ? <span className=" w-1/5 text-[10px] text-green-500">Available</span> : (data != 1 ? '' : <span className=" w-1/5 text-[10px] text-red-500"> Link is taken </span>)}
 
 
                 </div>

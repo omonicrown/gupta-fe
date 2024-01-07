@@ -29,10 +29,10 @@ export default function CardRenewSubscription() {
               <p className="flex text-sm justify-center"> Click on the button below to renew your  </p>
               <p className="flex text-sm justify-center text-black font-bold"> plan.</p>
 
-              <NavLink to='/createlink' className="flex justify-center">
+              <NavLink to='/subscription' className="flex justify-center">
               < span className="flex justify-center pt-4">
                 <button
-                  type="submit"
+                  type="button"
                   style={{ backgroundColor: '#0071BC', borderRadius: '50px' }}
                   className=" text-white hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm w-40 px-5 py-2.5 text-center "
                 >

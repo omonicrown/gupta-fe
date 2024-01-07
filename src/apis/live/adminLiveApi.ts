@@ -43,12 +43,25 @@ export class AdinLiveApis extends AxiosGlobal {
             headers: { "Content-Type": "aplication/json", "Accept": "aplication/json", "Authorization": `Bearer ${store.getState().data.login.value.token}`, "Access-Control-Allow-Origin": "*" },
         });
     }
+    
 
     editLink(data: any): AxiosPromise<Array<any>> {
         return this.axios.put(`${configs.context}/links/update-link-info/${data?.id}`, data, {
             headers: { "Content-Type": "aplication/json", "Accept": "aplication/json", "Authorization": `Bearer ${store.getState().data.login.value.token}`, "Access-Control-Allow-Origin": "*" },
         });
     }
+
+    makePayment(amount: any): AxiosPromise<Array<any>> {
+        return this.axios.post(`${configs.context}/payment/make-payment`, amount, {
+            headers: { "Content-Type": "aplication/json", "Accept": "aplication/json", "Authorization": `Bearer ${store.getState().data.login.value.token}`, "Access-Control-Allow-Origin": "*" },
+        });
+    } 
+
+    getCallback(reference: any): AxiosPromise<Array<any>> {
+        return this.axios.get(`${configs.context}/payment/callback?reference=${reference}`, {
+            headers: { "Content-Type": "aplication/json", 'mode': 'no-cors', "Accept": "aplication/json", "Authorization": `Bearer ${store.getState().data.login.value.token}`, "Access-Control-Allow-Origin": "*" },
+        });
+    }  
 
     deleteLink(data: any): AxiosPromise<Array<any>> {
         return this.axios.delete(`${configs.context}/links/delete/${data}`, {

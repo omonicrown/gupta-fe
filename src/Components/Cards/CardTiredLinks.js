@@ -9,6 +9,7 @@ import Modal from 'react-awesome-modal';
 import CardPageVisits from "./CardPageVisits"
 import configs from "../../configs";
 import { SvgElement, icontypesEnum } from "../assets/svgElement";
+import CardRenewSubscription from "./CardRenewSubscription";
 
 
 // components
@@ -240,6 +241,9 @@ console?.log(value)
                     </div>
                     :
 
+                    (data?.data == 'sub_expired'?
+                    <CardRenewSubscription />
+                    :
                     <div className="relative flex flex-col min-w-0 break-words bg-white w-full mb-6  rounded">
                     <div className="rounded-t mb-0  py-3 border-0">
                       <div className="flex flex-wrap items-center">
@@ -269,7 +273,7 @@ console?.log(value)
                       {/* Projects table */}
             
                     </div>
-                  </div>
+                  </div>)
                 )
 
                   :

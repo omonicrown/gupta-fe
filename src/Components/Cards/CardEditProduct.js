@@ -376,7 +376,7 @@ export default function CardEditProduct() {
                   <label for="first_name" class="block mb-2 mt-6 text-sm  text-gray-900 dark:text-gray-600">Whatsapp Link : ({phoneNumber})</label>
                   <select onChange={(e) => { setPhoneNumber(e?.target?.value); }} class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
                     <option value={''}>Select whatsapp url</option>
-                    {addContact.map(
+                    {addContact?.map(
                       (data, index) => (
                         <option value={`${data?.name}`}>{data?.name}</option>
                       )

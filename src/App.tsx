@@ -11,6 +11,7 @@ import Mylinks from './Components/user/MyLinks';
 import RedirectLinks from './Components/user/RedirectLink';
 import CreateLink from './Components/user/CreateLink';
 import CreateRedirectLink from './Components/user/CreateRedirectLink';
+import Subscription from './Components/user/Subscription';
 import CreateProduct from './Components/user/CreateProduct';
 import EditProduct from './Components/user/EditProduct';
 import LinkDetails from './Components/user/ViewLinkDetails';
@@ -49,7 +50,8 @@ function App() {
            {/* <Route  path="/login" element={<Login/>}/> */}
            <Route  path="/mylinks" element={<Mylinks/>}/>
            <Route  path="/redirect-links" element={<RedirectLinks/>}/>
-           <Route  path="/createlink" element={<CreateLink/>}/>
+           <Route  path="/createlink" element={<CreateLink/>}/> 
+           <Route  path="/subscription" element={<Subscription/>}/>
            <Route  path="/create-redirect-link" element={<CreateRedirectLink/>}/>
            <Route  path="/createproduct" element={<CreateProduct/>}/>
            <Route  path="/edit-product/:id" element={<EditProduct/>}/>

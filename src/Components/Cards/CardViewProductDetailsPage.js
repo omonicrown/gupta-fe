@@ -20,6 +20,9 @@ import { TailSpin } from 'react-loader-spinner'
 import { Oval } from 'react-loader-spinner'
 import { Swiper, SwiperSlide } from "swiper/react";
 import { FaWhatsapp, FaEye } from "react-icons/fa";
+import configs from "../../configs";
+
+
 
 // Import Swiper styles
 import "swiper/css";
@@ -41,6 +44,7 @@ export default function CardEditProduct() {
   const [pro3, setPro3] = React.useState([]);
   const [data, setData] = React.useState([]);
   const delay = 2500;
+  
 
   const [index, setIndex] = React.useState(0);
   const timeoutRef = React.useRef(null);
@@ -92,7 +96,7 @@ export default function CardEditProduct() {
     <>
 
       <div className="flex justify-between md:px-20">
-        <span><img src="/images/image.png" /> </span>
+        <span onClick={() => navigate(-1)} className="cursor-pointer"><img src="/images/image.png" /> </span>
         {/* <span>djdjks</span> */}
         <span><img src="/images/los.png" style={{ height: '30px' }} /></span>
       </div>
@@ -142,7 +146,7 @@ export default function CardEditProduct() {
             {data?.no_of_items} Items in stock
           </NavLink>
 
-          <a target='_blank' href={`https://gupta-tkwuj.ondigitalocean.app/${data?.phone_number}`}
+          <a target='_blank' href={`${configs?.baseRedirect}/${data?.phone_number}`}
             className=" text-[10px] text-white pt-1  flex cursor-pointer bg-[#0071BC] rounded-full px-2"
           >
             <FaWhatsapp className="mt-[2px] mr-1" />  Contact Vendor

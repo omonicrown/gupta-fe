@@ -39,6 +39,21 @@ export class AdminApis {
         }
     }
 
+    static makePayment(amount: any): AxiosPromise<Array<any>> {
+        if (configs.type === "LOCAL") {
+            return {} as AxiosPromise;
+        } else {
+            return this.adminApi.makePayment(amount);
+        }
+    }
+
+    static getCallback(reference:any): AxiosPromise<Array<any>> {
+        if (configs.type === "LOCAL") {
+            return {} as AxiosPromise;
+        } else {
+            return this.adminApi.getCallback(reference);
+        }
+    }
 
     static editLink(data: any): AxiosPromise<Array<any>> {
         if (configs.type === "LOCAL") {
@@ -172,7 +187,7 @@ export class AdminApis {
         } else {
             return this.adminApi.checkMarketLink(data);
         }
-    }  
+    }
 
     static createProduct(data: any): AxiosPromise<Array<any>> {
         if (configs.type === "LOCAL") {
@@ -204,7 +219,7 @@ export class AdminApis {
         } else {
             return this.adminApi.getMarketLink();
         }
-    } 
+    }
 
     static getAllStore(): AxiosPromise<Array<any>> {
         if (configs.type === "LOCAL") {
@@ -212,9 +227,9 @@ export class AdminApis {
         } else {
             return this.adminApi.getAllStore();
         }
-    }   
+    }
 
-    static getSingleProduct(id:any): AxiosPromise<Array<any>> {
+    static getSingleProduct(id: any): AxiosPromise<Array<any>> {
         if (configs.type === "LOCAL") {
             return {} as AxiosPromise;
         } else {
@@ -222,7 +237,7 @@ export class AdminApis {
         }
     }
 
-    static getSingleProductOutside(id:any): AxiosPromise<Array<any>> {
+    static getSingleProductOutside(id: any): AxiosPromise<Array<any>> {
         if (configs.type === "LOCAL") {
             return {} as AxiosPromise;
         } else {
@@ -230,7 +245,7 @@ export class AdminApis {
         }
     }
 
-    static getProductByLinkName(id:any): AxiosPromise<Array<any>> {
+    static getProductByLinkName(id: any): AxiosPromise<Array<any>> {
         if (configs.type === "LOCAL") {
             return {} as AxiosPromise;
         } else {
@@ -238,15 +253,15 @@ export class AdminApis {
         }
     }
 
-    static deleteProduct(id:any): AxiosPromise<Array<any>> {
+    static deleteProduct(id: any): AxiosPromise<Array<any>> {
         if (configs.type === "LOCAL") {
             return {} as AxiosPromise;
         } else {
             return this.adminApi.deleteProduct(id);
         }
-    } 
-    
-   
+    }
+
+
 
     //Redirect Link    
 
