@@ -1,5 +1,6 @@
 import React from 'react'
 import { SvgElement, icontypesEnum } from "../assets/svgElement";
+import { NavLink } from 'react-router-dom';
 
 const Hero = () => {
   return (
@@ -26,7 +27,9 @@ const Hero = () => {
           </div>
           <p className={`font-poppins font-normal text-black md:text-[15px] text-[13px] md:leading-[23.85px] leading-[20px] max-w-[530px] mt-5 `}>Gupta empowers businesses to streamline their WhatsApp interactions with customers through a suite of powerful features designed to enhance customer engagement, simplify link sharing, and automate messaging.</p>
           <div className='flex flex-row mt-[36px]'>
+            <NavLink to='/register'>
             <button type="button" className="text-white bg-[#0071BC] hover:bg-[#DBF2FF] hover:text-[#0071BC] font-medium rounded-[5px] text-[15px] md:px-[40px] md:py-4 px-6  py-2.5 md:mr-4 mr-8">Get Started</button>
+            </NavLink>
             <button type="button" className="text-[#0071BC] bg-[#DBF2FF] hover:bg-[#0071BC] hover:text-white font-medium rounded-[5px] text-[15px] md:px-[40px] md:py-4 px-6  py-2.5 inline-flex">
               Request Demo
               <svg className='ml-[10px]' width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">

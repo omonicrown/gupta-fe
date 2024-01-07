@@ -83,6 +83,8 @@ export default function CardSubscription() {
             <p className="text-[#848199] text-[20px] mt-5">No contract, no surprice fee</p>
           </div>
           <div className="grid grid-cols-1 gap-2 lg:grid-cols-4 md:grid-cols-2 mt-10">
+         
+         
             <div>
 
             
@@ -285,6 +287,8 @@ export default function CardSubscription() {
 
               </div>
             </div>
+
+
           </div>
         </div>
       </div>
