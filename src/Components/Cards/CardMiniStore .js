@@ -209,7 +209,7 @@ export default function CardMiniStore() {
                                   <span className="flex justify-start">
                                     <span className="mt-2"><span className=" rounded-full px-3 py-1.5 bg-[#0071BC] text-white">{(store.getState().data.login.value.name).slice(0, 1).toUpperCase()}</span></span>
                                     <span className="flex flex-col pl-[16px]">
-                                      <span className="font-[600] text-[10px]">{configs?.baseRedirectFront}{(data?.link_name)}</span>
+                                      <span className="font-[600] text-[10px]">{configs?.baseRedirectFront}store/{(data?.link_name)}</span>
                                       {/* <span className=" text-[14px] font-[400]">{(data?.phone_number)}</span> */}
                                     </span>
 

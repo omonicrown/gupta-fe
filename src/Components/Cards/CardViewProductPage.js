@@ -18,6 +18,18 @@ export default function CardViewProductPage() {
   const maxNumber = 69;
 
   const params = useParams();
+//   var CryptoJS = require("crypto-js");
+
+//   var ciphertext = CryptoJS.AES.encrypt('my message','secret key 123').toString();
+// var test = CryptoJS.SHA256("Message");
+
+// var str = window.btoa('002');
+//  console.log('Encrypted:', str);
+
+//  var str2 = window.atob(str);
+//  console.log('Decrypted:', str2);
+
+// console?.log(ciphertext);
 
 
 
@@ -68,10 +80,10 @@ export default function CardViewProductPage() {
       <div className="flex justify-between md:px-20">
         <span><img src="/images/image.png" /> </span>
         {/* <span>djdjks</span> */}
-        <span><img src="/images/los.png" style={{ height: '30px' }} /></span>
+        {/* <span><img src="/images/los.png" style={{ height: '30px' }} /></span> */}
       </div>
 
-      <div className="border border-[#D9D9D9] rounded md:mx-20 py-8 mt-5 px-10 flex gap-6">
+      {/* <div className="border border-[#D9D9D9] rounded md:mx-20 py-8 mt-5 px-10 flex gap-6">
         <span><img src="/images/los.png" /></span>
         <div className="flex flex-col ">
           <span className="text-[20px] font-[600]">Samodex Store</span>
@@ -81,7 +93,7 @@ export default function CardViewProductPage() {
           </div>
           <span className="text-[#A9A9A9] text-[14px]">A few descriptions of the product appears her just say anything but you know just say yada yada A few descriptions of the product appears her just say anything but you know just say yada yada .......</span>
         </div>
-      </div>
+      </div> */}
 
       <div className=" mt-10 md:px-16">
 
@@ -98,7 +110,7 @@ export default function CardViewProductPage() {
                   <>
                     <div class="max-w-sm bg-white rounded-lg border border-gray-200 shadow-md">
 
-                      <NavLink to={`/storedetails/${data?.id}`} className={'cursor-pointer'}>
+                      <NavLink to={`/storedetails/${(data?.id)}`} className={'cursor-pointer'}>
                         <p class="mb-2 tracking-tight m-2 p-2 bg-[#F4FBFF] h-44" style={{ fontSize: '16px', color: '#595959', backgroundImage: `url(${data?.product_image_1})`, backgroundRepeat: "no-repeat", backgroundSize: 'cover', backgroundPosition: 'center center' }}>{data?.link_info?.message}</p>
                       </NavLink>
                       <hr />

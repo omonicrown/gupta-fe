@@ -70,7 +70,6 @@ export default function CardEditProduct() {
     };
   }, [index]);
 
-  console?.log(data)
 
   React.useEffect(() => {
     AdminApis.getSingleProductOutside(params?.storeId).then(
@@ -89,18 +88,21 @@ export default function CardEditProduct() {
 
   let colors = [pro1, pro2, pro3];
 
-  console?.log(colors)
+
 
 
   return (
     <>
 
       <div className="flex justify-between md:px-20">
-        <span onClick={() => navigate(-1)} className="cursor-pointer"><img src="/images/image.png" /> </span>
+        <span  className=""><img src="/images/image.png" /> </span>
         {/* <span>djdjks</span> */}
-        <span><img src="/images/los.png" style={{ height: '30px' }} /></span>
+        {/* <span><img src="/images/los.png" style={{ height: '30px' }} /></span> */}
       </div>
 
+      <div className="md:pl-20 mt-4 cursor-pointer">
+      <span onClick={() => navigate(-1)}><img src="/images/backarrow.png" style={{ height: '30px' }} /></span>
+      </div>
 
       <div className="flex md:pl-24 md:pr-24 pt-10">
         <Swiper
