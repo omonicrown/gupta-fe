@@ -71,7 +71,7 @@ export default function CardViewProductPage() {
 
   }, []);
 
-  console?.log(data)
+  
 
 
   return (
