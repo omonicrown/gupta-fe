@@ -63,13 +63,21 @@ export class AuthApis {
         } else {
             return this.authApis.registerUser(data);
         }
-    }
+    } 
 
     static forgotPassword(data: any): AxiosPromise<any> {
         if (configs.type === "LOCAL") {
             return {} as AxiosPromise;
         } else {
             return this.authApis.forgotPassword(data);
+        }
+    }
+
+    static resetPassword(data: any): AxiosPromise<any> {
+        if (configs.type === "LOCAL") {
+            return {} as AxiosPromise;
+        } else {
+            return this.authApis.resetPassword(data);
         }
     }
 

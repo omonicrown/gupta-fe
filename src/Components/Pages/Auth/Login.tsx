@@ -141,7 +141,7 @@ function Login() {
                     <label htmlFor="green-checkbox" className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-400">Remember me</label>
                   </div>
 
-                  <NavLink to='/resetpassword'>
+                  <NavLink to='/forgot-password'>
                     <p className="ml-2 text-sm font-medium text-gray-400 "> <a href="#" className="text-[#0071BC] hover:underline ">Forgot Password?</a></p>
                   </NavLink>
 
@@ -154,7 +154,7 @@ function Login() {
                   <button
                     type="submit"
                     style={{ backgroundColor: '#0071BC', borderRadius: '50px' }}
-                    className=" text-white hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm w-96 px-5 py-2.5 text-center "
+                    className=" text-white hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm w-96 px-5 py-2.5 text-center "
                   >
                     Log In
                   </button>

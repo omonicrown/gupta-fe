@@ -29,7 +29,11 @@ export class AuthLiveApis extends AxiosGlobal{
     }
 
     forgotPassword(data:any): AxiosPromise<any> {
-        return this.axios.post(`${configs.context}/forgot`, data);
+        return this.axios.post(`${configs.context}/auth/forgot`, data);
+    }
+
+    resetPassword(data:any): AxiosPromise<any> {
+        return this.axios.post(`${configs.context}/auth/reset`, data);
     }
 
     logout(data: any): AxiosPromise<any> {

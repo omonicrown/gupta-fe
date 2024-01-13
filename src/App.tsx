@@ -2,6 +2,9 @@ import './App.css';
 import React from 'react'
 import { Routes, Route } from "react-router-dom";  
 import EmailVerify from './Components/Pages/Auth/EmailVerify'
+import ForgotPassword from './Components/Pages/Auth/ForgotPword'
+import ResetPassword from './Components/Pages/Auth/ResetPassword'
+import PasswordSuccess from './Components/Pages/Auth/PwordResetSucces'
 import EmailVerifyComplete from './Components/Pages/Auth/EmailVerifyComplete'
 import Register from './Components/Pages/Auth/Register'
 import Login from './Components/Pages/Auth/Login';
@@ -46,6 +49,9 @@ function App() {
            <Route  path="/login" element={<Login/>}/>
            <Route  path="/register" element={<Register/>}/>
            <Route  path="/email-verify" element={<EmailVerify/>}/>
+           <Route  path="/forgot-password" element={<ForgotPassword/>}/>
+           <Route  path="/reset-password" element={<ResetPassword/>}/>
+           <Route  path="/password-success" element={<PasswordSuccess/>}/>
            <Route  path="/email-verify/:email" element={<EmailVerifyComplete/>}/>
            {/* <Route  path="/login" element={<Login/>}/> */}
            <Route  path="/mylinks" element={<Mylinks/>}/>

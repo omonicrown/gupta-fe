@@ -21,7 +21,6 @@ import configs from "../../configs";
 
 export default function CardMiniStore() {
 
-
   let [visible, setVisible] = React.useState(false);
   let [toggleDeleteModal, setToggleDeleteModal] = React.useState(false);
   let [value, setvalue] = React.useState('');
