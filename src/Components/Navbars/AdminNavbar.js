@@ -22,6 +22,7 @@ export default function Navbar({ title }) {
           >
             {title} 
           </a>
+          <h2 className="mt-2 flex md:hidden "><span className="text-[14px]">Total Amount </span>: <b> 2000 NGN</b></h2>
 
        
           {/* Form */}
@@ -43,6 +44,7 @@ export default function Navbar({ title }) {
 
               </div>
             </form> */}
+            <h2 className="mt-2"><span className="text-[14px]">Total Amount </span>: <b> 2000 NGN</b></h2>
             {/* <NavLink to='/proplan'>
             <h2 className=""><SvgElement type={icontypesEnum.UPGRADE} /></h2>
             </NavLink> */}

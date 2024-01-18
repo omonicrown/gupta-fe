@@ -13,6 +13,7 @@ import { FaTrash, FaEdit } from "react-icons/fa";
 import { AiOutlineWarning } from "react-icons/ai";
 import EmojiPicker from 'emoji-picker-react';
 import { Oval } from 'react-loader-spinner'
+import InputColor from 'react-input-color';
 
 // components
 
@@ -24,6 +25,7 @@ export default function CardCreateProduct() {
   const [addLink, setAddLink] = React.useState([]);
 
   const [addContact, setAddContact] = React.useState([]);
+  const [color, setColor] = React.useState({});
 
   const [productLink, setProductLink] = React.useState([]);
 
@@ -32,7 +34,15 @@ export default function CardCreateProduct() {
   const [phoneNumber, setPhoneNumber] = useState('');
   const [noOfItems, setNoOfItems] = useState('');
   const [price, setPrice] = useState('');
-  const [productId, setProductId] = useState('');
+  const [facebookUrl, setFacebookUrl] = useState('');
+  const [instagramUrl, setInstagramUrl] = useState('');
+  const [tiktokUrl, setTiktokUrl] = useState('');
+  const [brandDescription, setBrandDescription] = useState('');
+
+  console?.log(brandDescription)
+
+
+  const [refresh, setRefresh] = useState(false);
 
 
   React.useEffect(() => {
@@ -76,7 +86,30 @@ export default function CardCreateProduct() {
       }
     );
 
-  }, []);
+  }, [refresh]);
+
+
+  const [logoImg, setLogoImg] = React.useState('No selected file');
+  const [logoImgPrev, setLogoImgPrev] = React.useState('empty');
+  function uploadLogoImg(e) {
+    let size = (e.target.files[0].size / 1048576.0)
+    setLogoImgPrev(URL.createObjectURL(e.target.files[0]))
+    if (e.target.files && e.target.files[0]) {
+      if (size > 1) {
+        if (e.target.name == 'uploadImg1') {
+          e.target.value = ''
+          toast.warn('Image too large')
+        }
+      }
+      if (size <= 1) {
+        if (e.target.name == 'uploadImg1') {
+          setLogoImg(e.target.files[0]);
+        }
+      }
+    }
+  };
+
+
 
   const [img1, setImg1] = React.useState('No selected file');
   const [img12, setImg12] = React.useState('empty');
@@ -84,12 +117,13 @@ export default function CardCreateProduct() {
     let size = (e.target.files[0].size / 1048576.0)
     setImg12(URL.createObjectURL(e.target.files[0]))
     if (e.target.files && e.target.files[0]) {
-      if (size > 3) {
+      if (size > 1) {
         if (e.target.name == 'uploadImg1') {
           e.target.value = ''
+          toast.warn('Image too large')
         }
       }
-      if (size <= 3) {
+      if (size <= 1) {
         if (e.target.name == 'uploadImg1') {
           setImg1(e.target.files[0]);
         }
@@ -104,12 +138,13 @@ export default function CardCreateProduct() {
     let size = (e.target.files[0].size / 1048576.0)
     setImg22(URL.createObjectURL(e.target.files[0]))
     if (e.target.files && e.target.files[0]) {
-      if (size > 3) {
+      if (size > 1) {
         if (e.target.name == 'uploadImg2') {
           e.target.value = ''
+          toast.warn('Image too large')
         }
       }
-      if (size <= 3) {
+      if (size <= 1) {
         if (e.target.name == 'uploadImg2') {
           setImg2(e.target.files[0]);
         }
@@ -123,12 +158,13 @@ export default function CardCreateProduct() {
     let size = (e.target.files[0].size / 1048576.0)
     setImg32(URL.createObjectURL(e.target.files[0]))
     if (e.target.files && e.target.files[0]) {
-      if (size > 3) {
+      if (size > 1) {
         if (e.target.name == 'uploadImg3') {
           e.target.value = ''
+          toast.warn('Image too large')
         }
       }
-      if (size <= 3) {
+      if (size <= 1) {
         if (e.target.name == 'uploadImg3') {
           setImg3(e.target.files[0]);
         }
@@ -159,12 +195,19 @@ export default function CardCreateProduct() {
       e.preventDefault();
       const formData = new FormData()
       formData.append('link_name', checkLink.replace(/ /g, '-'))
+      formData.append('brand_primary_color', color.hex)
+      formData.append('brand_description', brandDescription)
+      formData.append('facebook_url', facebookUrl)
+      formData.append('instagram_url', instagramUrl)  
+      formData.append('tiktok_url', tiktokUrl)
+      formData.append('brand_logo', logoImg)
 
       AdminApis.createMarketLink(formData).then(
         (response) => {
           if (response?.data) {
             // console.log(response?.data)
-            toggleModal()
+            setRefresh(!refresh)
+            setVisible(false);
             toast.success(response?.data?.message);
           } else {
             toggleModal()
@@ -180,16 +223,14 @@ export default function CardCreateProduct() {
         toast.error(error.response.data.message);
       })
     },
-    [checkLink]
+    [checkLink,color,brandDescription,facebookUrl,instagramUrl,tiktokUrl,refresh,logoImg]
   );
-
-  console?.log(img1)
 
 
   const createProduct = React.useCallback(
     (e) => {
       e.preventDefault();
-      if (img1 == 'No selected file' || img2 == 'No selected file' || img3 == 'No selected file') {
+      if (img1 == 'No selected file') {
         toast.error("Upload Product Images");
       } else {
 
@@ -319,12 +360,12 @@ export default function CardCreateProduct() {
               <div className="grid md:grid-cols-2 gap-2">
                 <div>
                   <label for="first_name" class="block mb-2 mt-6 text-sm  text-gray-900 dark:text-gray-600">Sales Price</label>
-                  <input required type="number" defaultValue={title} onChange={(e) => setPrice(e?.target?.value)} id="first_name" class="bg-[#F4FBFF] border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" placeholder="Title of business here" />
+                  <input required type="number" defaultValue={title} onChange={(e) => setPrice(e?.target?.value)} id="first_name" class="bg-[#F4FBFF] border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" placeholder="Eg.3500" />
                 </div>
 
                 <div>
                   <label for="first_name" class="block mb-2 mt-6 text-sm  text-gray-900 dark:text-gray-600">No of Items in Stock</label>
-                  <input required type="text" defaultValue={title} onChange={(e) => setNoOfItems(e?.target?.value)} id="first_name" class="bg-[#F4FBFF] border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" placeholder="No of Items" />
+                  <input required type="number" defaultValue={title} onChange={(e) => setNoOfItems(e?.target?.value)} id="first_name" class="bg-[#F4FBFF] border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" placeholder="No of Items" />
                 </div>
 
               </div>
@@ -356,7 +397,15 @@ export default function CardCreateProduct() {
 
                   </select>
                 </div>
+
+                
+
+
+
               </div>
+
+
+
 
 
 
@@ -364,7 +413,7 @@ export default function CardCreateProduct() {
             </div>
 
 
-           
+
             {/* <div className=" max-w-200-px mt-10">
               <div className=" font-[600] underline mb-3">Market Links</div>
             {productLink.map(
@@ -375,10 +424,10 @@ export default function CardCreateProduct() {
             )
           )}
             </div> */}
-            
+
           </div>
 
-         
+
 
 
           {/* second Div */}
@@ -386,27 +435,27 @@ export default function CardCreateProduct() {
             <div className="">
               <label className="flex flex-col items-center justify-center w-full  rounded-[5px] cursor-pointer ">
                 <div className="flex flex-col items-center justify-center  ">
-                  {img12 == 'empty' ? <img src="images/img1.png" style={{ minHeight: '200px', maxHeight: "200px" }} /> : <img src={img12} style={{ minHeight: '200px', maxHeight: "200px" }} />}
+                  {img12 == 'empty' ? <img src="/images/img1.png" style={{ minHeight: '200px', maxHeight: "200px" }} /> : <img src={img12} style={{ minHeight: '200px', maxHeight: "200px" }} />}
                 </div>
-                <input id="dropzone-file" onChange={uploadImg1} name='uploadImg1' type="file" className={"hidden mb-2 text-sm text-[#6C757D] font-medium"} />
+                <input id="dropzone-file" onChange={uploadImg1} accept="image/x-png,image/gif,image/jpeg" name='uploadImg1' type="file" className={"hidden mb-2 text-sm text-[#6C757D] font-medium"} />
               </label>
             </div>
 
             <div className="">
               <label className="flex flex-col items-center justify-center w-full  rounded-[5px] cursor-pointer ">
                 <div className="flex flex-col items-center justify-center ">
-                  {img22 == 'empty' ? <img src="images/img2.png" style={{ minHeight: '200px', maxHeight: "200px" }} /> : <img src={img22} style={{ minHeight: '200px', maxHeight: "200px" }} />}
+                  {img22 == 'empty' ? <img src="/images/img2.png" style={{ minHeight: '200px', maxHeight: "200px" }} /> : <img src={img22} style={{ minHeight: '200px', maxHeight: "200px" }} />}
                 </div>
-                <input id="dropzone-file" name='uploadImg2' onChange={uploadImg2} type="file" className={"hidden mb-2 text-sm text-[#6C757D] font-medium"} />
+                <input id="dropzone-file" name='uploadImg2' accept="image/x-png,image/gif,image/jpeg" onChange={uploadImg2} type="file" className={"hidden mb-2 text-sm text-[#6C757D] font-medium"} />
               </label>
             </div>
 
             <div className="">
               <label className="flex flex-col items-center justify-center w-full  rounded-[5px] cursor-pointer ">
                 <div className="flex flex-col items-center justify-center ">
-                  {img32 == 'empty' ? <img src="images/img3.png" style={{ minHeight: '200px', maxHeight: "200px" }} /> : <img src={img32} style={{ minHeight: '200px', maxHeight: "200px" }} />}
+                  {img32 == 'empty' ? <img src="/images/img3.png" style={{ minHeight: '200px', maxHeight: "200px" }} /> : <img src={img32} style={{ minHeight: '200px', maxHeight: "200px" }} />}
                 </div>
-                <input id="dropzone-file" name='uploadImg3' onChange={uploadImg3} type="file" className={"hidden mb-2 text-sm text-[#6C757D] font-medium"} />
+                <input id="dropzone-file" name='uploadImg3' accept="image/x-png,image/gif,image/jpeg" onChange={uploadImg3} type="file" className={"hidden mb-2 text-sm text-[#6C757D] font-medium"} />
               </label>
             </div>
 
@@ -423,15 +472,15 @@ export default function CardCreateProduct() {
       <section>
         <Modal
           visible={visible}
-          width="400"
-          height="450"
+          width="380"
+          height="700"
           effect="fadeInUp"
           onClickAway={() => toggleModal}
         >
           <div className="px-2 bg-[#fff]  items-center rounded-lg p-2">
             <span className="flex justify-between px-1 pt-1">
               <p className="cursor-pointer font-bold mt-2" >Create Market Link</p>
-              <p className="cursor-pointer font-bold" onClick={toggleModal}><SvgElement type={icontypesEnum.CANCEL} /></p>
+              <p className="cursor-pointer font-bold" onClick={(e)=>setVisible(false)}><SvgElement type={icontypesEnum.CANCEL} /></p>
             </span>
 
 
@@ -447,6 +496,69 @@ export default function CardCreateProduct() {
 
 
                 </div>
+
+                <div>
+
+<label for="first_name" class="block mt-4 text-xs  text-gray-900 dark:text-gray-600">Select Brand Primary Color</label>
+
+<span className="flex justify-between">
+  <span className="mt-3 mr-2">
+    <InputColor
+      initialValue="#0071BC"
+      className=""
+      onChange={setColor}
+      placement="right"
+    />
+  </span>
+
+  <div
+    className="w-full  rounded-lg"
+    style={{
+
+      height: 30,
+      marginTop: 10,
+      border: "2px solid #777",
+      backgroundColor: color.hex,
+    }}
+  >
+    <span className="flex justify-center text-white"> {color.hex}</span>
+  </div>
+</span>
+
+
+</div>
+
+                <div>
+                  <label for="first_name" class="block mb-2 mt-2 text-xs  text-gray-900 dark:text-gray-600">Facebook Url</label>
+                  <input required type="text" defaultValue={facebookUrl} onChange={(e) => setFacebookUrl(e?.target?.value)} id="first_name" class="bg-[#F4FBFF] border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" placeholder="https://www.facebook.com/..." />
+                </div>
+
+                <div>
+                  <label for="first_name" class="block mb-2 mt-2 text-xs  text-gray-900 dark:text-gray-600">Instagram Url</label>
+                  <input required type="text" defaultValue={instagramUrl} onChange={(e) => setInstagramUrl(e?.target?.value)} id="first_name" class="bg-[#F4FBFF] border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" placeholder="https://www.instagram.com/..." />
+                </div>
+
+                <div>
+                  <label for="first_name" class="block mb-2 mt-2 text-xs  text-gray-900 dark:text-gray-600">TikTok Url</label>
+                  <input required type="text" defaultValue={tiktokUrl} onChange={(e) => setTiktokUrl(e?.target?.value)} id="first_name" class="bg-[#F4FBFF] border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" placeholder="https://www.tiktok.com/..." />
+                </div>
+
+                <div>
+                  <label for="first_name" class="block mb-2 mt-2 text-xs  text-gray-900 dark:text-gray-600">Brand Description</label>
+                  <textarea  type="text"  onChange={(e) => setBrandDescription(e?.target?.value)} id="first_name" class="bg-[#F4FBFF] border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" placeholder="Brief description of your brand" > </textarea>
+                </div>
+
+
+
+            
+
+                <div>
+                  <label for="first_name" class="block mb-2 mt-3 text-xs  text-gray-900 dark:text-gray-600">Upload Brand Logo</label>
+                  <input id="dropzone-file" accept="image/x-png,image/gif,image/jpeg" onChange={uploadLogoImg} placeholder="upload brand logo" name='uploadImg1' type="file" className={" mb-2 text-sm text-[#6C757D] font-medium"} />
+                </div>
+
+
+                
 
                 <button
                   type="submit"

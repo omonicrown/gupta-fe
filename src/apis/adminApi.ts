@@ -221,11 +221,11 @@ export class AdminApis {
         }
     }
 
-    static getAllStore(): AxiosPromise<Array<any>> {
+    static getAllStore(pageNo:any): AxiosPromise<Array<any>> {
         if (configs.type === "LOCAL") {
             return {} as AxiosPromise;
         } else {
-            return this.adminApi.getAllStore();
+            return this.adminApi.getAllStore(pageNo);
         }
     }
 

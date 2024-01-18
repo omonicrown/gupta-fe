@@ -29,7 +29,7 @@ export default function CardSubscription() {
             if (response?.data) {
                 // navigate('/wallet');
                 if (response?.data?.success === true) {
-                    //navigate(response?.data?.data);
+                    navigate('/mylinks');
                 }
             } else {
                 // toast.warn('Invalid Login Credentials');

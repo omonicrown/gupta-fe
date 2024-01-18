@@ -6,6 +6,7 @@ import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { ToastContainer, toast } from 'react-toastify';
 import { NavLink } from "react-router-dom";
 import Modal from 'react-awesome-modal';
+import { useSelector, useDispatch } from 'react-redux';
 import CardPageVisits from "./CardPageVisits";
 import { SvgElement, icontypesEnum } from "../assets/svgElement";
 import AwesomeSlider from 'react-awesome-slider';
@@ -21,8 +22,10 @@ import configs from "../../configs";
 
 export default function CardMiniStore() {
 
+  const userLoginData = useSelector((state) => state.data.login.value);
   let [visible, setVisible] = React.useState(false);
   let [toggleDeleteModal, setToggleDeleteModal] = React.useState(false);
+  let [toggleExceedModal, setToggleExceedModal] = React.useState(false);
   let [value, setvalue] = React.useState('');
   let [contact, setContact] = React.useState('');
   let [effect, setEffect] = React.useState('');
@@ -57,7 +60,7 @@ export default function CardMiniStore() {
   React.useEffect(() => {
     setLoader(true);
     setEffect('')
-    AdminApis.getAllStore().then(
+    AdminApis.getAllStore('').then(
       (response) => {
         if (response?.data) {
           setdata(response?.data)
@@ -68,6 +71,29 @@ export default function CardMiniStore() {
     );
 
   }, [effect]);
+
+  const paginator = React.useCallback(
+    (value) => {
+        //   setLoader(true);
+        let value2 = '';
+        if (value !== null) {
+            value2 = value;
+        } else {
+            value2 = ''
+        }
+        setLoader(true)
+        AdminApis.getAllStore(value2).then(
+            (response) => {
+                if (response?.data) {
+                  setdata(response?.data)
+                  setLoader(false);
+                }
+            }
+        ).catch(function (error) {
+            console.log(error.response.data);
+        })
+
+    }, [data, loader]);
 
 
 
@@ -131,24 +157,22 @@ export default function CardMiniStore() {
 
   const [searchTerm, setSearchTerm] = React.useState("");
   const inputEl = React.useRef("");
-  const [searchResult, setSearchResult] = React.useState({sa:'32'});
+  const [searchResult, setSearchResult] = React.useState({ sa: '32' });
 
   const getSearchTerm = React.useCallback(
     () => {
       console.log(inputEl.current.value);
       setSearchTerm(inputEl.current.value);
       if (searchTerm !== "") {
-        const newContactList = data?.data?.filter((data) => {
+        const newContactList = data?.data?.data?.filter((data) => {
           return Object.values(data).join(" ")?.toLowerCase()?.includes(inputEl?.current?.value?.toLowerCase());
         });
         setSearchResult(newContactList);
       } else {
-        setSearchResult(data?.data);
+        setSearchResult(data?.data?.data);
       }
     }, [inputEl, searchTerm, searchResult, data]);
 
-
-  console.log(searchResult?.length)
 
 
 
@@ -161,7 +185,7 @@ export default function CardMiniStore() {
           <div className="flex flex-wrap items-center">
             <div className="w-full px-4 max-w-full flex-grow flex-1">
 
-              {data?.data?.length ?
+              {data?.data?.data?.length ?
                 <span className="flex justify-between" >
                   {/* <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-gray-300">Search</label> */}
                   <div class="relative  visible">
@@ -169,14 +193,14 @@ export default function CardMiniStore() {
                     <svg aria-hidden="true" class="w-5 h-5 right-2.5 bottom-3 absolute text-gray-500 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
                   </div>
 
-                  <NavLink to='/createproduct' className="flex justify-center">
+                  <NavLink onClick={(userLoginData?.data?.no_of_mstore <= data?.data?.length) ? (() => setToggleExceedModal(true)) : null} to={(userLoginData?.data?.no_of_mstore <= data?.data?.length) ? '' : `/createproduct`} className="flex justify-center">
                     < span className="flex justify-center ">
                       <button
                         type="button"
                         style={{ backgroundColor: '#0071BC', borderRadius: '50px' }}
                         className=" text-white hover:bg-blue-800 focus:ring-4 focus:outline-none font-medium rounded-lg text-sm w-28 px-5 py-2.5 text-center "
                       >
-                        + Add 
+                        + Add
                       </button>
                     </span>
                   </NavLink>
@@ -194,12 +218,12 @@ export default function CardMiniStore() {
                       <div className="flex justify-center items-center mb-4 h-48 bg-gray-300 rounded dark:bg-gray-400">
                         <span>Empty Record</span>
                       </div>
-                     
+
                     </div>
                     :
-                    (data?.data?.length >= 1 && data?.data !== 'sub_expired') ?
+                    (data?.data?.data?.length >= 1 && data?.data?.data !== 'sub_expired') ?
                       <div className="container  flex-col md:flex-row md:justify-start mt-1 pt-1 grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-3">
-                        {(inputEl?.current?.value?.length > 1 ? searchResult : data?.data)?.map(
+                        {(inputEl?.current?.value?.length > 1 ? searchResult : data?.data?.data)?.map(
                           (data, index) => (
 
                             <>
@@ -274,6 +298,9 @@ export default function CardMiniStore() {
 
                           )
                         )}
+
+
+                       
                       </div>
                       :
                       (data?.data == 'sub_expired' ?
@@ -342,6 +369,19 @@ export default function CardMiniStore() {
 
               </div>
 
+              <div className='m-4 mt-10 flex justify-end'>
+                          {
+                            data?.data?.links?.filter(((item, idx) => idx < 1000)).map(
+                              (datas, index) => (
+                                <button onClick={() => paginator(datas?.label == 'Next &raquo;' ? datas?.url.charAt(datas?.url.length - 1) : (datas?.label === '&laquo; Previous') ? datas?.url.charAt(datas?.url.length - 1) : datas?.label)} disabled={datas?.active} className={'mx-1 py-1 px-2 ' + (datas?.active == false ? 'bg-gray-300 text-black ' : 'bg-[#0071BC] text-white')}>
+                                  {datas?.label == '&laquo; Previous' ? '< Previous' : (datas?.label === 'Next &raquo;') ? 'Next  >' : datas?.label}
+                                </button>
+                              )
+                            )
+                          }
+
+                        </div>
+
 
 
 
@@ -405,7 +445,7 @@ export default function CardMiniStore() {
                     <button
                       type="submit"
                       style={{ backgroundColor: '#61A24F', borderRadius: '50px' }}
-                      className=" text-white hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm w-full px-2 py-2.5 text-center "
+                      className=" text-white hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm w-full px-2 py-2.5 text-center "
                     >
                       Update
                     </button>
@@ -531,6 +571,77 @@ export default function CardMiniStore() {
                   </span>
 
                 </form>
+              </div>
+
+            </div>
+
+          </div>
+        </Modal>
+      </section>
+
+
+      <section>
+        <Modal
+          visible={toggleExceedModal}
+          width="350"
+          height="260"
+          effect="fadeInUp"
+          onClickAway={() => setToggleExceedModal(false)}
+        >
+          <div className=" " style={{ height: 'auto', overflow: 'auto' }}>
+
+            <div className="container flex flex-row justify-around bg-[#fff]  items-center rounded-lg p-2">
+
+              <div className="px-3">
+
+                {/* <span className="flex justify-around">
+                    <h1 className=" text-xs text-red-600" style={{ fontSize: '10px' }}>Link can’t be edited in free plan. <span style={{ color: '#61A24F' }} className="font-bold text-xs">Upgrade to Pro</span></h1>
+                  </span> */}
+                <span className="flex justify-end px-2 pt-3">
+                  <p className="cursor-pointer font-bold" onClick={(e) => setToggleExceedModal(false)}><SvgElement type={icontypesEnum.CANCEL} /></p>
+                </span>
+
+                <label
+                  className="flex justify-start mb-2 pt-1 text-md font-bold text-black"
+                >
+                  Maximum Link Exceeded
+                </label>
+
+                <label
+                  style={{ fontSize: '14px' }}
+                  className="flex justify-start mb-2 pt-4 pb-4 text-xs font-medium text-gray-600"
+                >
+                  You have exceeded the number of product links you can create.
+
+
+                </label>
+
+
+                <span className="flex justify-center pt-4 pb-4">
+
+                  <NavLink to={`/subscription`} className="  bg-[#0071BC] text-white focus:ring-4 font-medium rounded-lg text-sm w-full px-2 py-2.5 text-center ">
+                    Proceed
+                  </NavLink>
+                </span>
+
+
+
+                {/* <span className="flex justify-center pt-4">
+                    <Oval
+                      height={40}
+                      width={40}
+                      color="#0071BC"
+                      wrapperStyle={{}}
+                      wrapperClass=""
+                      visible={loader}
+                      ariaLabel='oval-loading'
+                      secondaryColor="#96cff6"
+                      strokeWidth={2}
+                      strokeWidthSecondary={2}
+                    />
+                  </span> */}
+
+
               </div>
 
             </div>

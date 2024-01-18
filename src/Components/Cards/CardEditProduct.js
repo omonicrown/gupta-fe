@@ -126,6 +126,8 @@ export default function CardEditProduct() {
     }
   };
 
+  console?.log(img22)
+
   const [img3, setImg3] = React.useState('No selected file');
   const [img32, setImg32] = React.useState('empty');
   function uploadImg3(e) {
@@ -183,7 +185,7 @@ export default function CardEditProduct() {
           setImgId1(response?.data?.data?.product_image_id_1)
           setImgId2(response?.data?.data?.product_image_id_2)
           setImgId3(response?.data?.data?.product_image_id_3)
-          console?.log(response?.data?.data)
+         
         }
       }
     );
@@ -346,12 +348,12 @@ export default function CardEditProduct() {
               <div className="grid md:grid-cols-2 gap-2">
                 <div>
                   <label for="first_name" class="block mb-2 mt-6 text-sm  text-gray-900 dark:text-gray-600">Sales Price</label>
-                  <input type="text" defaultValue={price} onChange={(e) => setPrice(e?.target?.value)} id="first_name" class="bg-[#F4FBFF] border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" placeholder="Title of business here" />
+                  <input type="number" defaultValue={price} onChange={(e) => setPrice(e?.target?.value)} id="first_name" class="bg-[#F4FBFF] border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" placeholder="Eg. 3500" />
                 </div>
 
                 <div>
                   <label for="first_name" class="block mb-2 mt-6 text-sm  text-gray-900 dark:text-gray-600">No of Items in Stock</label>
-                  <input type="text" defaultValue={noOfItems} onChange={(e) => setNoOfItems(e?.target?.value)} id="first_name" class="bg-[#F4FBFF] border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" placeholder="No of Items" />
+                  <input type="number" defaultValue={noOfItems} onChange={(e) => setNoOfItems(e?.target?.value)} id="first_name" class="bg-[#F4FBFF] border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" placeholder="No of Items" />
                 </div>
 
               </div>
@@ -398,7 +400,7 @@ export default function CardEditProduct() {
             <div className="">
               <label className="flex flex-col items-center justify-center w-full  rounded-[5px] cursor-pointer ">
                 <div className="flex flex-col items-center justify-center  ">
-                  {img12 == 'empty' ? <img src="images/img1.png" style={{ minHeight: '200px', maxHeight: "200px" }} /> : <img src={img12} style={{ minHeight: '200px', maxHeight: "200px" }} />}
+                  {img12 == 'no image' ? <img src="/images/img1.png" style={{ minHeight: '200px', maxHeight: "200px" }} /> : <img src={img12} style={{ minHeight: '200px', maxHeight: "200px" }} />}
                 </div>
                 <input id="dropzone-file" onChange={uploadImg1} name='uploadImg1' type="file" className={"hidden mb-2 text-sm text-[#6C757D] font-medium"} />
               </label>
@@ -407,7 +409,7 @@ export default function CardEditProduct() {
             <div className="">
               <label className="flex flex-col items-center justify-center w-full  rounded-[5px] cursor-pointer ">
                 <div className="flex flex-col items-center justify-center ">
-                  {img22 == 'empty' ? <img src="images/img2.png" style={{ minHeight: '200px', maxHeight: "200px" }} /> : <img src={img22} style={{ minHeight: '200px', maxHeight: "200px" }} />}
+                  {img22 == 'no image' ?  <img src={`/images/img2.png`} alt={img22} style={{ minHeight: '200px', maxHeight: "200px" }} /> : <img src={img22} style={{ minHeight: '200px', maxHeight: "200px" }} />}
                 </div>
                 <input id="dropzone-file" name='uploadImg2' onChange={uploadImg2} type="file" className={"hidden mb-2 text-sm text-[#6C757D] font-medium"} />
               </label>
@@ -416,7 +418,7 @@ export default function CardEditProduct() {
             <div className="">
               <label className="flex flex-col items-center justify-center w-full  rounded-[5px] cursor-pointer ">
                 <div className="flex flex-col items-center justify-center ">
-                  {img32 == 'empty' ? <img src="images/img3.png" style={{ minHeight: '200px', maxHeight: "200px" }} /> : <img src={img32} style={{ minHeight: '200px', maxHeight: "200px" }} />}
+                  {img32 == 'no image' ? <img src="/images/img3.png" style={{ minHeight: '200px', maxHeight: "200px" }} /> : <img src={img32} style={{ minHeight: '200px', maxHeight: "200px" }} />}
                 </div>
                 <input id="dropzone-file" name='uploadImg3' onChange={uploadImg3} type="file" className={"hidden mb-2 text-sm text-[#6C757D] font-medium"} />
               </label>
