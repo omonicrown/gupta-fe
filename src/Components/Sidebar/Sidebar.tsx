@@ -258,6 +258,33 @@ export default function Sidebar(title: any) {
                 </NavLink>
               </li>
 
+              <li className="items-center mx-3 mb-3">
+                <NavLink
+                  onClick={() => setCollapseShow("hidden")}
+                  style={{
+                    backgroundColor: (window.location.href.indexOf("/mini-store") !== -1
+                      ? "rgba(255, 255, 255, 0.1)"
+                      : "text-black hover:text-blueGray-500")
+                  }}
+                  className={
+                    "text-xs cursor-pointer pl-3 block " +
+                    (window.location.href.indexOf("/mini-store") !== -1
+                      ? "text-white rounded-[8px]"
+                      : "text-white border border-white/[0.1] rounded-[8px] hover:bg-white/[0.1]")
+                  }
+                  to="/mini-store"
+                >
+                  <span className="flex py-2.5 px-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" className="mr-3 " viewBox="0 0 24 24"><path fill="white" d="m12 5.69l5 4.5V18h-2v-6H9v6H7v-7.81l5-4.5M12 3L2 12h3v8h6v-6h2v6h6v-8h3L12 3z" /></svg>
+                    <span style={{ fontSize: '15px' }} className=" font-normal mt-1"> Pay with Gupta</span>
+                    {/* <span> {(window.location.href.indexOf("/mylinks") !== -1
+                      ? <SvgElement type={icontypesEnum.ARROWWHITE} /> 
+                      : <SvgElement type={icontypesEnum.ARROW} /> )} </span> */}
+                  </span>
+
+                </NavLink>
+              </li>
+
               
 
               <li className="items-center mx-3 mb-3">
