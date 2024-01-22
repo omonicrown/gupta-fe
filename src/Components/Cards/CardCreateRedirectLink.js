@@ -106,7 +106,7 @@ export default function CardCreateRedirectLink() {
           if (response?.data) {
             setData2(response?.data)
             toast.success(response?.data?.message);
-            navigate('/create-redirect-link');
+            navigate('/redirect-links');
             // setClipad((response?.data?.url).slice(7))
             // toggleModal()
           }else{

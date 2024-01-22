@@ -51,6 +51,8 @@ export class AdinLiveApis extends AxiosGlobal {
         });
     }
 
+    //payment
+
     makePayment(amount: any): AxiosPromise<Array<any>> {
         return this.axios.post(`${configs.context}/payment/make-payment`, amount, {
             headers: { "Content-Type": "aplication/json", "Accept": "aplication/json", "Authorization": `Bearer ${store.getState().data.login.value.token}`, "Access-Control-Allow-Origin": "*" },
@@ -131,11 +133,17 @@ export class AdinLiveApis extends AxiosGlobal {
 
 
 
-
+   
 
     //Market apis
     checkMarketLink(data: any): AxiosPromise<Array<any>> {
         return this.axios.post(`${configs.context}/market-links/check-market-link`, data, {
+            headers: { "Content-Type": "aplication/json", "Accept": "aplication/json", "Authorization": `Bearer ${store.getState().data.login.value.token}`, "Access-Control-Allow-Origin": "*" },
+        });
+    }
+
+    updateMarketLink(data: any): AxiosPromise<Array<any>> {
+        return this.axios.post(`${configs.context}/market-links/update-market-link`, data, {
             headers: { "Content-Type": "aplication/json", "Accept": "aplication/json", "Authorization": `Bearer ${store.getState().data.login.value.token}`, "Access-Control-Allow-Origin": "*" },
         });
     }
@@ -192,6 +200,12 @@ export class AdinLiveApis extends AxiosGlobal {
 
     deleteProduct(id: any): AxiosPromise<Array<any>> {
         return this.axios.delete(`${configs.context}/market-links/delete-product/${id}`, {
+            headers: { "Content-Type": "aplication/json", "Accept": "aplication/json", "Authorization": `Bearer ${store.getState().data.login.value.token}`, "Access-Control-Allow-Origin": "*" },
+        });
+    }
+
+    deleteMarketLink(id: any): AxiosPromise<Array<any>> {
+        return this.axios.delete(`${configs.context}/market-links/delete-market-link/${id}`, {
             headers: { "Content-Type": "aplication/json", "Accept": "aplication/json", "Authorization": `Bearer ${store.getState().data.login.value.token}`, "Access-Control-Allow-Origin": "*" },
         });
     }

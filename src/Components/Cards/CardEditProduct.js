@@ -49,10 +49,8 @@ export default function CardEditProduct() {
     AdminApis.getlinks().then(
       (response) => {
         if (response?.data) {
-          setAddContact(response?.data?.data)
+          setAddContact(response?.data?.link)
           // setPermissionIdList(response?.data?.data)
-
-          // console?.log(response?.data?.data?.length)
         }
       }
     );
@@ -126,8 +124,6 @@ export default function CardEditProduct() {
     }
   };
 
-  console?.log(img22)
-
   const [img3, setImg3] = React.useState('No selected file');
   const [img32, setImg32] = React.useState('empty');
   function uploadImg3(e) {
@@ -168,23 +164,23 @@ export default function CardEditProduct() {
     AdminApis.getSingleProduct(params?.id).then(
       (response) => {
         if (response?.data) {
-          setProductName(response?.data?.data?.product_name);
-          setProductDescription(response?.data?.data?.product_description);
-          setPrice(response?.data?.data?.product_price)
-          setNoOfItems(response?.data?.data?.no_of_items)
-          setAddLink(response?.data?.data?.link_name)
-          setPhoneNumber(response?.data?.data?.phone_number)
-          setPhoneNumber(response?.data?.data?.phone_number)
-          setImg12(response?.data?.data?.product_image_1)
-          setImg1(response?.data?.data?.product_image_1)
-          setImg22(response?.data?.data?.product_image_2)
-          setImg2(response?.data?.data?.product_image_2)
-          setImg32(response?.data?.data?.product_image_3)
-          setImg3(response?.data?.data?.product_image_3)
-          setProductId(response?.data?.data?.id)
-          setImgId1(response?.data?.data?.product_image_id_1)
-          setImgId2(response?.data?.data?.product_image_id_2)
-          setImgId3(response?.data?.data?.product_image_id_3)
+          setProductName(response?.data?.data?.product?.product_name);
+          setProductDescription(response?.data?.data?.product?.product_description);
+          setPrice(response?.data?.data?.product?.product_price)
+          setNoOfItems(response?.data?.data?.product?.no_of_items)
+          setAddLink(response?.data?.data?.product?.link_name)
+          setPhoneNumber(response?.data?.data?.product?.phone_number)
+          setPhoneNumber(response?.data?.data?.product?.phone_number)
+          setImg12(response?.data?.data?.product?.product_image_1)
+          setImg1(response?.data?.data?.product?.product_image_1)
+          setImg22(response?.data?.data?.product?.product_image_2)
+          setImg2(response?.data?.data?.product?.product_image_2)
+          setImg32(response?.data?.data?.product?.product_image_3)
+          setImg3(response?.data?.data?.product?.product_image_3)
+          setProductId(response?.data?.data?.product?.id)
+          setImgId1(response?.data?.data?.product?.product_image_id_1)
+          setImgId2(response?.data?.data?.product?.product_image_id_2)
+          setImgId3(response?.data?.data?.product?.product_image_id_3)
          
         }
       }
@@ -352,8 +348,8 @@ export default function CardEditProduct() {
                 </div>
 
                 <div>
-                  <label for="first_name" class="block mb-2 mt-6 text-sm  text-gray-900 dark:text-gray-600">No of Items in Stock</label>
-                  <input type="number" defaultValue={noOfItems} onChange={(e) => setNoOfItems(e?.target?.value)} id="first_name" class="bg-[#F4FBFF] border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" placeholder="No of Items" />
+                  <label for="first_name" class="block mb-2 mt-6 text-sm  text-gray-900 dark:text-gray-600">Discount Price</label>
+                  <input type="number" defaultValue={noOfItems} onChange={(e) => setNoOfItems(e?.target?.value)} id="first_name" class="bg-[#F4FBFF] border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" placeholder="Discount Price" />
                 </div>
 
               </div>

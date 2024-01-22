@@ -31,6 +31,7 @@ export default function CardViewProductPage() {
   let [fullName, setFullName] = React.useState('');
   let [email, setEmail] = React.useState('');
   let [phoneNumber, setPhoneNumber] = React.useState('');
+  let [productQty, setProductQty] = React.useState('');
 
   let [marketInfo, setMarketInfo] = React.useState('');
 
@@ -39,14 +40,26 @@ export default function CardViewProductPage() {
     setVisible(true)
   }
 
+  if (searchParams.get('status') == 'cancelled') {
+    navigate(`/store/${params?.storeId}`);
+  }
+
+
   if (searchParams.get('tx_ref')) {
-    AdminApis.getCallback(searchParams.get('tx_ref')).then(
+    PaymentApis.getProdutCallback(searchParams.get('tx_ref')).then(
       (response) => {
         if (response?.data) {
           // navigate('/wallet');
           if (response?.data?.success === true) {
-            // navigate('/mylinks');
-            console?.log(response?.data)
+            if (response?.data?.data?.status == 'successful') {
+              navigate(`/store/${params?.storeId}`);
+              toast.success(response?.data?.data?.status);
+            } else {
+              // navigate('/mylinks');
+              toast.error(response?.data?.data?.status);
+              console?.log(response?.data)
+            }
+
           }
         } else {
           // toast.warn('Invalid Login Credentials');
@@ -69,10 +82,11 @@ export default function CardViewProductPage() {
       console?.log('hello2')
       let data = {
         'user_id': value?.user_id,
-        'amount': value?.product_price,
+        'amount': ((value?.product_price) * productQty),
         'customer_full_name': fullName,
+        'product_qty': productQty,
         'pay_for': value?.product_name,
-        'pay_for': value?.product_name,
+        'store_id': params?.storeId,
         'customer_email': email,
         'customer_phone_number': phoneNumber?.countryCode + phoneNumber?.phoneNumber
       }
@@ -94,7 +108,7 @@ export default function CardViewProductPage() {
 
       });
     },
-    [value, fullName, email, phoneNumber]
+    [value, fullName, email, phoneNumber, params, productQty]
   );
 
 
@@ -156,8 +170,6 @@ export default function CardViewProductPage() {
 
   }, []);
 
-  console?.log(marketInfo?.brand_primary_color)
-
 
   return (
     <>
@@ -211,7 +223,13 @@ export default function CardViewProductPage() {
                       <div className="flex flex-col pt-[16px] px-[16px]">
                         <div className="flex justify-between">
                           <span className="text-[16px] font-[600] mt-1">{data?.product_name}</span>
-                          <span style={{ color: marketInfo?.brand_primary_color }} className={`text-[20px] font-[700]`}>NGN {data?.product_price}</span>
+                          <span className="flex gap-2">
+                            <span style={{ color: marketInfo?.brand_primary_color, textDecorationLine: 'line-through' }} className={`text-[15px] font-[700]`}>{new Intl.NumberFormat('en-US', { style: 'currency', currency: 'NGN' }).format(data?.product_price)} </span>
+                            <span style={{ color: marketInfo?.brand_primary_color }} className={`text-[15px] font-[400]`}>{new Intl.NumberFormat('en-US', { style: 'currency', currency: 'NGN' }).format(data?.no_of_items)} </span>
+
+                          </span>
+                          {/* <span className="text-[#149E49] text-[14px] font-[600]"> {new Intl.NumberFormat('en-US', { style: 'currency', currency: 'NGN' }).format(data?.no_of_items)}</span> */}
+
                         </div>
 
 
@@ -237,7 +255,7 @@ export default function CardViewProductPage() {
                             style={{ backgroundColor: marketInfo?.brand_primary_color }}
                             className={"text-[8px] text-white pt-1  flex cursor-pointer bg-[" + (marketInfo?.brand_primary_color) + "] rounded-full px-2"}
                           >
-                            <FaWhatsapp className="mt-[2px] mr-1" />  buy Now
+                              Pay with gupta
                           </span>
                         </div>
 
@@ -291,7 +309,7 @@ export default function CardViewProductPage() {
         <Modal
           visible={visible}
           width="340"
-          height="450"
+          height="550"
           effect="fadeInUp"
           onClickAway={() => setVisible(false)}
         >
@@ -332,6 +350,10 @@ export default function CardViewProductPage() {
 
                   <label class="block mb-2 mt-2 text-sm  text-gray-900 dark:text-gray-600">Email</label>
                   <input required type="email" name="email" onChange={(e) => setEmail(e.target.value)} class="bg-[#F4FBFF] border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" placeholder="Your Email" />
+
+
+                  <label class="block mb-2 mt-2 text-sm  text-gray-900 dark:text-gray-600">Quantity</label>
+                  <input required type="number" name="productQty" onChange={(e) => setProductQty(e.target.value)} class="bg-[#F4FBFF] border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" placeholder="Paying for how many?" />
 
                   <label class="block mb-2 mt-2 text-sm  text-gray-900 dark:text-gray-600">Phone Number</label>
                   <PhoneInput

@@ -1,6 +1,6 @@
 import React from "react";
 import { AdminApis } from "../../apis/adminApi";
-import { FaTrash, FaEye} from "react-icons/fa";
+import { FaTrash, FaEye } from "react-icons/fa";
 import CardNavBar from "./CardNavBar";
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { ToastContainer, toast } from 'react-toastify';
@@ -10,6 +10,7 @@ import CardPageVisits from "./CardPageVisits"
 import configs from "../../configs";
 import { SvgElement, icontypesEnum } from "../assets/svgElement";
 import CardRenewSubscription from "./CardRenewSubscription";
+
 
 
 // components
@@ -23,7 +24,7 @@ export default function CardMyLinks() {
   let [contact, setContact] = React.useState('');
   let [effect, setEffect] = React.useState('');
 
-console?.log(value)
+  console?.log(value)
 
   function toggleModal(value2, contact) {
     setvalue(value2)
@@ -94,7 +95,7 @@ console?.log(value)
 
       });
     },
-    [value, message, contact,name]
+    [value, message, contact, name]
   );
 
   const deleteLink = React.useCallback(
@@ -143,7 +144,6 @@ console?.log(value)
 
 
 
-
   return (
     <>
 
@@ -183,57 +183,61 @@ console?.log(value)
                     <div className="container flex-col md:flex-row md:justify-start mt-1 pt-1 grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-3">
                       {(inputEl?.current?.value?.length > 1 ? searchResult : data?.multi_link).map(
                         (data, index) => (
-                            <div class="max-w-sm bg-white rounded-lg border border-gray-200 shadow-md">
-                              <span className="flex justify-between gap-3 rounded-t-lg border bg-[#0071BC] px-3 py-1" >
-                                <p class="mb-2 font-medium tracking-tight text-white" style={{ fontSize: '18px' }}>gupta.ink/{data?.name}</p>
-                                < span className="flex justify-center mt-2">
-                                  <CopyToClipboard text={`${configs?.baseRedirectFront}/${(data?.name)}`}
-                                    onCopy={() => isCopied()}>
-                                    <span
-                                      style={{ color: 'white', borderColor: '#0071BC' }}
-                                      className="ring-1 cursor-pointer outline-none font-xs rounded-lg text-xs px-3 h-4  text-center "
-                                    >
-                                      Copy
-                                    </span>
-                                  </CopyToClipboard>
-                                </span>
-                              </span>
-                             
-                              <NavLink to={`/update-multi-link/${data?.id}`}>
-                              <p class="mb-2 tracking-tight m-2 p-2 bg-[#F4FBFF] flex justify-center cursor-pointer" style={{ fontSize: '16px', color: '#595959' }}><span className="py-10 text-xl" style={{fontWeight:'600'}}>View Link Details</span>  </p>
-                              </NavLink>
-                              <span className="flex justify-between gap-1 pt-4 m-2">
-                                <span className="flex justify-start gap-1">
+                          <div class="max-w-sm bg-white rounded-lg border border-gray-200 shadow-md">
+                            <span className="flex justify-between gap-3 rounded-t-lg border bg-[#0071BC] px-3 py-1" >
+                              <p class="mb-2 font-medium tracking-tight text-white" style={{ fontSize: '18px' }}>mygupta.co/{data?.name}</p>
+                              < span className="flex justify-center mt-2">
+                                <CopyToClipboard text={`${configs?.baseRedirectFront}/${(data?.name)}`}
+                                  onCopy={() => isCopied()}>
                                   <span
-                                    style={{ color: 'white' }}
-                                    className="ring-1 outline-none bg-[#149E49] font-xs rounded-lg text-xs px-4 h-5 pt-[2px] text-center cursor-pointer"
+                                    style={{ color: 'white', borderColor: '#0071BC' }}
+                                    className="ring-1 cursor-pointer outline-none font-xs rounded-lg text-xs px-3 h-4  text-center "
                                   >
-                                    Active
+                                    Copy
                                   </span>
+                                </CopyToClipboard>
+                              </span>
+                            </span>
 
-                                 
+                            <NavLink to={`/update-multi-link/${data?.id}`}>
+                              <p class="mb-2 tracking-tight m-2 p-2 bg-[#F4FBFF] flex justify-center cursor-pointer" style={{ fontSize: '16px', color: '#595959' }}><span className="py-10 text-xl" style={{ fontWeight: '600' }}>View Link Details</span>  </p>
+                            </NavLink>
+                            <span className="flex justify-between gap-1 pt-4 m-2">
+                              <span className="flex justify-start gap-1">
+                                <span
+                                  style={{ color: 'white' }}
+                                  className="ring-1 outline-none bg-[#149E49] font-xs rounded-lg text-xs px-4 h-5 pt-[2px] text-center cursor-pointer"
+                                >
+                                  Active
                                 </span>
 
 
+                              </span>
 
-                                < span className="flex justify-end gap-1 ">
+
+
+                              < span className="flex justify-end gap-1 ">
+
+                                
+
+                               
 
                                 <NavLink to={`/update-multi-link/${data?.id}`} className='px-2 py-2'>
-                                    <FaEye />
-                                  </NavLink>
+                                  <FaEye />
+                                </NavLink>
 
 
-                                  <button
-                                    type="button"
-                                    onClick={(e) => toggleDelete(data?.id)}
-                                    className=" outline-none  font-xs text-red-500 rounded-full text-xs px-2 py-2 text-center "
-                                  >
-                                    <FaTrash />
-                                  </button>
-                                </span>
+                                <button
+                                  type="button"
+                                  onClick={(e) => toggleDelete(data?.id)}
+                                  className=" outline-none  font-xs text-red-500 rounded-full text-xs px-2 py-2 text-center "
+                                >
+                                  <FaTrash />
+                                </button>
                               </span>
-                            </div>
-                        
+                            </span>
+                          </div>
+
 
 
                         )
@@ -241,39 +245,39 @@ console?.log(value)
                     </div>
                     :
 
-                    (data?.data == 'sub_expired'?
-                    <CardRenewSubscription />
-                    :
-                    <div className="relative flex flex-col min-w-0 break-words bg-white w-full mb-6  rounded">
-                    <div className="rounded-t mb-0  py-3 border-0">
-                      <div className="flex flex-wrap items-center">
-                        <div className="w-full px-4 max-w-full p-52 flex-grow flex-1">
-            
-                          <h3 className="flex justify-center font-bold"> You haven’t created any Link</h3>
-                          <p className="flex text-sm justify-center"> Click on the button below to create a new </p>
-                          <p className="flex text-sm justify-center text-black font-bold"> Link.</p>
-            
-                          <NavLink to='/create-multi-link' className="flex justify-center">
-                          < span className="flex justify-center pt-4">
-                            <button
-                              type="button"
-                              style={{ backgroundColor: '#0071BC', borderRadius: '50px' }}
-                              className=" text-white hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm w-40 px-5 py-2.5 text-center "
-                            >
-                             + Create New
-                            </button>
-                          </span>
-                          </NavLink>
-            
+                    (data?.data == 'sub_expired' ?
+                      <CardRenewSubscription />
+                      :
+                      <div className="relative flex flex-col min-w-0 break-words bg-white w-full mb-6  rounded">
+                        <div className="rounded-t mb-0  py-3 border-0">
+                          <div className="flex flex-wrap items-center">
+                            <div className="w-full px-4 max-w-full p-52 flex-grow flex-1">
+
+                              <h3 className="flex justify-center font-bold"> You haven’t created any Link</h3>
+                              <p className="flex text-sm justify-center"> Click on the button below to create a new </p>
+                              <p className="flex text-sm justify-center text-black font-bold"> Link.</p>
+
+                              <NavLink to='/create-multi-link' className="flex justify-center">
+                                < span className="flex justify-center pt-4">
+                                  <button
+                                    type="button"
+                                    style={{ backgroundColor: '#0071BC', borderRadius: '50px' }}
+                                    className=" text-white hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm w-40 px-5 py-2.5 text-center "
+                                  >
+                                    + Create New
+                                  </button>
+                                </span>
+                              </NavLink>
+
+                            </div>
+
+                          </div>
                         </div>
-            
-                      </div>
-                    </div>
-                    <div className="block w-full overflow-x-auto">
-                      {/* Projects table */}
-            
-                    </div>
-                  </div>)
+                        <div className="block w-full overflow-x-auto">
+                          {/* Projects table */}
+
+                        </div>
+                      </div>)
                 )
 
                   :

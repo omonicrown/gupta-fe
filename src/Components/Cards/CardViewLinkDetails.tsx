@@ -8,6 +8,8 @@ import ImageUploading from 'react-images-uploading';
 import { useParams } from 'react-router-dom';
 import configs from "../../configs";
 import { FaTrash, FaEdit } from "react-icons/fa";
+import html2canvas from 'html2canvas';
+import downloadjs from 'downloadjs';
 
 import {
   Chart as ChartJS,
@@ -22,6 +24,7 @@ import {
 import { Line } from 'react-chartjs-2';
 //@ts-ignore
 import faker from 'faker';
+import QRCode from "react-qr-code";
 
 // components
 
@@ -65,7 +68,7 @@ export default function CardViewLinkDetails() {
   // console.log(currentDate.getFullYear());
 
   function ConvertMonth(value: any) {
-    if (value == '0') {return "Jan"} 
+    if (value == '0') { return "Jan" }
     else if (value == '1') { return "Feb" }
     else if (value == '2') { return "Mar" }
     else if (value == '3') { return "Apr" }
@@ -78,6 +81,15 @@ export default function CardViewLinkDetails() {
     else if (value == '10') { return "Nov" }
     else if (value == '11') { return "Dec" }
   }
+
+  const handleCaptureClick = React.useCallback(async () => {
+    const pricingTableElmt =
+      document.querySelector('#container') as HTMLElement;
+    // if (!pricingTableElmt) return;
+    const canvas = await html2canvas(pricingTableElmt);
+    const dataURL = canvas.toDataURL('image/png');
+    downloadjs(dataURL, 'download.png', 'image/png');
+  }, []);
 
 
 
@@ -104,7 +116,7 @@ export default function CardViewLinkDetails() {
           setMacBook((response?.data?.link?.social_traffic?.map((year: any) => year?.macbook)))
           setAndroid((response?.data?.link?.social_traffic?.map((year: any) => year?.android)))
 
-          setDates(response?.data?.link?.graph?.map((year: any) => year?.month_day))
+          setDates(response?.data?.link?.graph?.map((year: any) => year?.month_year))
           setChartData(response?.data?.link?.graph?.map((year: any) => year?.total_click))
         }
       }
@@ -113,19 +125,19 @@ export default function CardViewLinkDetails() {
 
 
 
-const labels = dates;
+  const labels = dates;
 
-const data = {
-  labels,
-  datasets: [
-    {
-      label: 'Clicks',
-      data: chartData,
-      borderColor: 'rgb(53, 162, 235)',
-      backgroundColor: 'rgba(53, 162, 235, 0.5)',
-    },
-  ],
-};
+  const data = {
+    labels,
+    datasets: [
+      {
+        label: 'Clicks',
+        data: chartData,
+        borderColor: 'rgb(53, 162, 235)',
+        backgroundColor: 'rgba(53, 162, 235, 0.5)',
+      },
+    ],
+  };
 
 
 
@@ -138,35 +150,34 @@ const data = {
         <div className=" mb-0 py-1 border-0 lg:flex md:gap-2">
           <div className="lg:w-4/12  px-2 md:border-r-2 lg:min-h-[70vh] md:min-h-[50vh] ">
 
-          <div className="flex flex-col bg-[#0071BC] text-white md:w-12/12 rounded-lg p-4 mt-3 mr-2">
+            <div className="flex flex-col bg-[#0071BC] text-white md:w-12/12 rounded-lg p-4 mt-3 mr-2">
               <span className="flex justify-center text-[14px]">Total Clicks</span>
               <span className="flex justify-center text-[48px] font-bold">{totalClicks}</span>
             </div>
             <div className="flex justify-between mt-10">
               <div className="flex flex-col">
-                <span className=" text-[20px] font-bold">Gupta.link/{linkData?.link_data?.name}</span>
+                <span className=" text-[20px] font-bold">link.mygupta.co/{linkData?.link_data?.name}</span>
                 <span className=" text-[12px] font-normal mt-2">{linkData?.link_info?.phone_number}</span>
               </div>
               <span className="mt-3"><SvgElement type={icontypesEnum.EDITPEN} /></span>
             </div>
 
             <p className=" bg-[#F4FBFF] min-h-[10vh] text-[#A9A9A9] text-[15px] p-1 px-2 mt-[14px]">
-            {linkData?.link_info?.message}
+              {linkData?.link_info?.message}
             </p>
 
-            <div className="flex justify-start gap-2 mt-3">
-              <SvgElement type={icontypesEnum.QRCODE} />
+            {/* <div className="flex justify-start gap-2 mt-3">
+              
               <SvgElement type={icontypesEnum.COPY} />
               <SvgElement type={icontypesEnum.UPARROW} />
               <SvgElement type={icontypesEnum.DELETE} />
-            </div>
-
+            </div> */}
             <div className="mt-4">
               <span className="text-[14px] font-bold"> Status :</span>
               <span className="border border-green-600 rounded-md text-[12px] p-1 ml-2">Active</span>
             </div>
 
-            <div className="mt-4">
+            {/* <div className="mt-4">
               <span className="text-[14px] font-bold"> Created :</span>
               <span className="text-[12px] p-1 ml-1">{linkData?.short_url_data?.created_at}</span>
             </div>
@@ -176,23 +187,55 @@ const data = {
                 <span className="mt-1"><FaTrash /> </span>
                 <span>Delete Link</span>
               </span>
-            </div>
+            </div> */}
+
+            <span className="flex justify-start mt-4">
+              <button
+                type="submit"
+                onClick={handleCaptureClick}
+                style={{ backgroundColor: '#0071BC', borderRadius: '50px' }}
+                className=" text-white inline-flex hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm  px-4 py-0.5 text-center "
+              >
+                <span className="mt-2">Download</span>  <SvgElement type={icontypesEnum.QRCODE} />
+              </button>
+            </span>
+
+            <span id="container">
+              <label
+                className="flex justify-start mb-8 pt-4 text-xs font-xs text-gray-600"
+                style={{ fontSize: '14px' }}
+              >
+                Your WhatsApp QR Code
+              </label>
+
+              <QRCode
+                size={226}
+                value={(linkData?.link_data?.name) ? `link.mygupta.co/${linkData?.link_data?.name}` : "empty"}
+                viewBox={`0 0 256 256`}
+              />
+
+              {/* <span className=" text-white"> _</span> */}
+            </span>
+
+
+
+
 
 
 
           </div>
 
           <div className="lg:w-8/12">
-           
+
 
             <div className="md:grid md:grid-cols-2 gap-3">
               <div className="border border-gray-200 rounded-lg mt-3 min-h-[25vh]">
                 <div className="p-3">
                   <span className="text-[16px] font-bold">Traffic By country</span>
                   <span >
-                  <SvgElement type={icontypesEnum.MAP} />
+                    <SvgElement type={icontypesEnum.MAP} />
                   </span>
-                 
+
                 </div>
               </div>
 
@@ -207,7 +250,7 @@ const data = {
 
                   <div className="flex justify-between pt-3">
                     <span className="text-[15px]">IOS Users</span>
-                    <span className="font-bold">{parseInt(ios)+ parseInt(macBook)} Clicks</span>
+                    <span className="font-bold">{parseInt(ios) + parseInt(macBook)} Clicks</span>
                   </div>
 
                   {/* <div className="flex justify-between pt-3">

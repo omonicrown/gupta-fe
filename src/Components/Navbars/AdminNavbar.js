@@ -4,10 +4,32 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Dispatch } from "redux";
 import { SvgElement, icontypesEnum } from "../assets/svgElement";
 import { NavLink } from "react-router-dom";
+import { PaymentApis } from "../../apis/paymentApis";
 
 export default function Navbar({ title }) {
   const dispatch = useDispatch();
   const userLoginData = useSelector((state) => state.data.login.value);
+
+ 
+
+  let [data, setdata] = React.useState([]);
+
+  React.useEffect(() => {
+    PaymentApis.getWalletDetails().then(
+      (response) => {
+        if (response?.data) {
+          // setdata(response?.data)
+          setdata(new Intl.NumberFormat('en-US', { style: 'currency', currency: 'NGN' }).format(response?.data?.data?.total_amount))
+          // window.location.reload();
+        }
+      }
+    );
+
+  }, []);
+
+  // $currency = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(100000000)
+
+
   return (
     <>
     <div className="relative md:pt-12 pb-2 pt-8 md:border md:rounded md:shadow-md md:m-3" style={{backgroundColor:'#FFFFFF'}}>
@@ -22,7 +44,7 @@ export default function Navbar({ title }) {
           >
             {title} 
           </a>
-          <h2 className="mt-2 flex md:hidden "><span className="text-[14px]">Total Amount </span>: <b> 2000 NGN</b></h2>
+          <h2 className="mt-2 flex md:hidden "><span className="text-[14px]">Total Amount </span>: <b> {data}</b></h2>
 
        
           {/* Form */}
@@ -44,7 +66,7 @@ export default function Navbar({ title }) {
 
               </div>
             </form> */}
-            <h2 className="mt-2"><span className="text-[14px]">Total Amount </span>: <b> 2000 NGN</b></h2>
+            <h2 className="mt-2"><span className="text-[14px]">Total Amount </span>: <b> {data}</b></h2>
             {/* <NavLink to='/proplan'>
             <h2 className=""><SvgElement type={icontypesEnum.UPGRADE} /></h2>
             </NavLink> */}

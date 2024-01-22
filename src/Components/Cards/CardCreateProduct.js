@@ -28,6 +28,7 @@ export default function CardCreateProduct() {
   const [color, setColor] = React.useState({});
 
   const [productLink, setProductLink] = React.useState([]);
+  let [toggleDeleteModal, setToggleDeleteModal] = React.useState(false);
 
   const [productName, setProductName] = useState('');
   const [productDescription, setProductDescription] = useState('');
@@ -39,7 +40,18 @@ export default function CardCreateProduct() {
   const [tiktokUrl, setTiktokUrl] = useState('');
   const [brandDescription, setBrandDescription] = useState('');
 
-  console?.log(brandDescription)
+  const [linkId, setLinkId] = useState('');
+  function toggleDeleteMarketLink(id) {
+    setLinkId(id)
+    setToggleDeleteModal(true)
+  }
+
+  let [toggleEditMarketLink, setToggleEditMarketLink] = React.useState(false);
+  const [marketLinkData, setMarketLinkData] = useState([]);
+  function toggleMarketLinkData(data) {
+    setMarketLinkData(data)
+    setToggleEditMarketLink(true)
+  }
 
 
   const [refresh, setRefresh] = useState(false);
@@ -63,8 +75,31 @@ export default function CardCreateProduct() {
   const [logo, setlogo] = useState('');
   const [bio, SetBio] = useState('');
 
-  function toggleModal() {
-    setVisible(!visible)
+
+
+  function deleteMarketLink() {
+    setLoader(true)
+    AdminApis.deleteMarketLink(linkId).then(
+      (response) => {
+        if (response?.data) {
+          console.log(response?.data)
+          setRefresh(!refresh)
+          setLoader(false)
+          setToggleDeleteModal(false)
+          toast.success(response?.data?.message);
+        } else {
+          setLoader(false)
+          toast.error(response?.response?.data?.message);
+
+        }
+
+        // toast.success(response?.data?.message);
+      }
+    ).catch(function (error) {
+      // handle error
+      // console.log(error.response);
+      toast.error(error.response.data.message);
+    })
   }
 
   // setLinkName(addLink.split(" "))
@@ -73,20 +108,29 @@ export default function CardCreateProduct() {
 
 
 
-
+  const [userData, setUserData] = useState([]);
   React.useEffect(() => {
     AdminApis.getMarketLink().then(
       (response) => {
         if (response?.data) {
           setProductLink(response?.data?.link)
           // setPermissionIdList(response?.data?.data)
+          setUserData(response?.data?.user_data)
 
-          // console?.log(response?.data?.data?.length)
         }
       }
     );
 
   }, [refresh]);
+
+  function toggleModal() {
+    if (parseInt(userData?.no_of_malink) > ((productLink?.length))) {
+      setVisible(!visible)
+    } else {
+      toast.error("Market Link limit exceeded");
+    }
+
+  }
 
 
   const [logoImg, setLogoImg] = React.useState('No selected file');
@@ -198,7 +242,7 @@ export default function CardCreateProduct() {
       formData.append('brand_primary_color', color.hex)
       formData.append('brand_description', brandDescription)
       formData.append('facebook_url', facebookUrl)
-      formData.append('instagram_url', instagramUrl)  
+      formData.append('instagram_url', instagramUrl)
       formData.append('tiktok_url', tiktokUrl)
       formData.append('brand_logo', logoImg)
 
@@ -208,6 +252,12 @@ export default function CardCreateProduct() {
             // console.log(response?.data)
             setRefresh(!refresh)
             setVisible(false);
+            setBrandDescription('')
+            setFacebookUrl('')
+            setInstagramUrl('')
+            setTiktokUrl('')
+            setLogoImg("No selected file")
+            setColor('');
             toast.success(response?.data?.message);
           } else {
             toggleModal()
@@ -223,7 +273,53 @@ export default function CardCreateProduct() {
         toast.error(error.response.data.message);
       })
     },
-    [checkLink,color,brandDescription,facebookUrl,instagramUrl,tiktokUrl,refresh,logoImg]
+    [checkLink, color, brandDescription, facebookUrl, instagramUrl, tiktokUrl, refresh, logoImg]
+  );
+
+
+  const UpdateMarketLink = React.useCallback(
+    (e) => {
+      // console?.log(color.hex)
+      e.preventDefault();
+      const formData = new FormData()
+      formData.append('link_name', marketLinkData?.link_name)
+      formData.append('brand_primary_color', (color?.hex) ? color?.hex : marketLinkData?.brand_primary_color)
+      formData.append('brand_description', brandDescription == '' ? marketLinkData?.brand_description : brandDescription)
+      formData.append('facebook_url', facebookUrl == '' ? marketLinkData?.facebook_url : facebookUrl)
+      formData.append('instagram_url', instagramUrl == '' ? marketLinkData?.instagram_url : instagramUrl)
+      formData.append('tiktok_url', tiktokUrl == '' ? marketLinkData?.tiktok_url : tiktokUrl)
+      formData.append('brand_logo', logoImg)
+      formData.append('brand_logo_id', logoImg)
+      formData.append('id', marketLinkData?.id)
+
+      AdminApis.updateMarketLink(formData).then(
+        (response) => {
+          if (response?.data) {
+            // console.log(response?.data)
+            setRefresh(!refresh)
+            setToggleEditMarketLink(false);
+            setBrandDescription('')
+            setFacebookUrl('')
+            setInstagramUrl('')
+            setTiktokUrl('')
+            setLogoImg("No selected file")
+            setColor('');
+            toast.success(response?.data?.message);
+          } else {
+            toggleModal()
+            toast.error(response?.response?.data?.message);
+
+          }
+
+          // toast.success(response?.data?.message);
+        }
+      ).catch(function (error) {
+        // handle error
+        // console.log(error.response);
+        toast.error(error.response.data.message);
+      })
+    },
+    [checkLink, color, brandDescription, facebookUrl, instagramUrl, tiktokUrl, refresh, logoImg]
   );
 
 
@@ -364,8 +460,8 @@ export default function CardCreateProduct() {
                 </div>
 
                 <div>
-                  <label for="first_name" class="block mb-2 mt-6 text-sm  text-gray-900 dark:text-gray-600">No of Items in Stock</label>
-                  <input required type="number" defaultValue={title} onChange={(e) => setNoOfItems(e?.target?.value)} id="first_name" class="bg-[#F4FBFF] border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" placeholder="No of Items" />
+                  <label for="first_name" class="block mb-2 mt-6 text-sm  text-gray-900 dark:text-gray-600">Discounted Price</label>
+                  <input required type="number" defaultValue={title} onChange={(e) => setNoOfItems(e?.target?.value)} id="first_name" class="bg-[#F4FBFF] border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" placeholder="Discount Price" />
                 </div>
 
               </div>
@@ -398,7 +494,7 @@ export default function CardCreateProduct() {
                   </select>
                 </div>
 
-                
+
 
 
 
@@ -414,16 +510,34 @@ export default function CardCreateProduct() {
 
 
 
-            {/* <div className=" max-w-200-px mt-10">
+            <div className=" max-w-200-px mt-10">
               <div className=" font-[600] underline mb-3">Market Links</div>
-            {productLink.map(
-            (data, index) => (
-             <span className="flex justify-between mb-4">
-               <span><span>({index+1}) </span>  {data?.link_name}</span>   <span className=" text-red-500 cursor-pointer"><FaTrash /></span>    
-                </span> 
-            )
-          )}
-            </div> */}
+
+              {productLink?.length > 0 ?
+                productLink.map(
+                  (data, index) => (
+                    <span className="flex justify-between mb-4">
+                      <span><span>({index + 1}) </span>  {data?.link_name}</span>
+
+                      <span className="flex space-x-2">
+
+                        {userData?.sub_type == 'premium' ? <span className=" text-blue-500 cursor-pointer" onClick={() => toggleMarketLinkData(data)}><FaEdit /></span> : ''}
+
+
+                        <span className=" text-red-500 cursor-pointer" onClick={() => toggleDeleteMarketLink(data?.id)}><FaTrash /></span>
+
+                      </span>
+
+
+                    </span>
+                  )
+                )
+                :
+                "No Market Link Created"
+              }
+
+
+            </div>
 
           </div>
 
@@ -468,6 +582,7 @@ export default function CardCreateProduct() {
       </form>
 
 
+      {/* CREATE MARKET LINK */}
 
       <section>
         <Modal
@@ -480,7 +595,7 @@ export default function CardCreateProduct() {
           <div className="px-2 bg-[#fff]  items-center rounded-lg p-2">
             <span className="flex justify-between px-1 pt-1">
               <p className="cursor-pointer font-bold mt-2" >Create Market Link</p>
-              <p className="cursor-pointer font-bold" onClick={(e)=>setVisible(false)}><SvgElement type={icontypesEnum.CANCEL} /></p>
+              <p className="cursor-pointer font-bold" onClick={(e) => setVisible(false)}><SvgElement type={icontypesEnum.CANCEL} /></p>
             </span>
 
 
@@ -497,68 +612,78 @@ export default function CardCreateProduct() {
 
                 </div>
 
-                <div>
 
-<label for="first_name" class="block mt-4 text-xs  text-gray-900 dark:text-gray-600">Select Brand Primary Color</label>
+                {userData?.sub_type == 'premium' ?
+                  <div>
+                    <div>
 
-<span className="flex justify-between">
-  <span className="mt-3 mr-2">
-    <InputColor
-      initialValue="#0071BC"
-      className=""
-      onChange={setColor}
-      placement="right"
-    />
-  </span>
+                      <label for="first_name" class="block mt-4 text-xs  text-gray-900 dark:text-gray-600">Select Brand Primary Color</label>
 
-  <div
-    className="w-full  rounded-lg"
-    style={{
+                      <span className="flex justify-between">
+                        <span className="mt-3 mr-2">
+                          <InputColor
+                            initialValue="#0071BC"
+                            className=""
+                            onChange={setColor}
+                            placement="right"
+                          />
+                        </span>
 
-      height: 30,
-      marginTop: 10,
-      border: "2px solid #777",
-      backgroundColor: color.hex,
-    }}
-  >
-    <span className="flex justify-center text-white"> {color.hex}</span>
-  </div>
-</span>
+                        <div
+                          className="w-full  rounded-lg"
+                          style={{
 
-
-</div>
-
-                <div>
-                  <label for="first_name" class="block mb-2 mt-2 text-xs  text-gray-900 dark:text-gray-600">Facebook Url</label>
-                  <input required type="text" defaultValue={facebookUrl} onChange={(e) => setFacebookUrl(e?.target?.value)} id="first_name" class="bg-[#F4FBFF] border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" placeholder="https://www.facebook.com/..." />
-                </div>
-
-                <div>
-                  <label for="first_name" class="block mb-2 mt-2 text-xs  text-gray-900 dark:text-gray-600">Instagram Url</label>
-                  <input required type="text" defaultValue={instagramUrl} onChange={(e) => setInstagramUrl(e?.target?.value)} id="first_name" class="bg-[#F4FBFF] border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" placeholder="https://www.instagram.com/..." />
-                </div>
-
-                <div>
-                  <label for="first_name" class="block mb-2 mt-2 text-xs  text-gray-900 dark:text-gray-600">TikTok Url</label>
-                  <input required type="text" defaultValue={tiktokUrl} onChange={(e) => setTiktokUrl(e?.target?.value)} id="first_name" class="bg-[#F4FBFF] border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" placeholder="https://www.tiktok.com/..." />
-                </div>
-
-                <div>
-                  <label for="first_name" class="block mb-2 mt-2 text-xs  text-gray-900 dark:text-gray-600">Brand Description</label>
-                  <textarea  type="text"  onChange={(e) => setBrandDescription(e?.target?.value)} id="first_name" class="bg-[#F4FBFF] border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" placeholder="Brief description of your brand" > </textarea>
-                </div>
+                            height: 30,
+                            marginTop: 10,
+                            border: "2px solid #777",
+                            backgroundColor: color.hex,
+                          }}
+                        >
+                          <span className="flex justify-center text-white"> {color.hex}</span>
+                        </div>
+                      </span>
 
 
+                    </div>
 
-            
+                    <div>
+                      <label for="first_name" class="block mb-2 mt-2 text-xs  text-gray-900 dark:text-gray-600">Facebook Url</label>
+                      <input type="text" defaultValue={facebookUrl} onChange={(e) => setFacebookUrl(e?.target?.value)} id="first_name" class="bg-[#F4FBFF] border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" placeholder="https://www.facebook.com/..." />
+                    </div>
 
-                <div>
-                  <label for="first_name" class="block mb-2 mt-3 text-xs  text-gray-900 dark:text-gray-600">Upload Brand Logo</label>
-                  <input id="dropzone-file" accept="image/x-png,image/gif,image/jpeg" onChange={uploadLogoImg} placeholder="upload brand logo" name='uploadImg1' type="file" className={" mb-2 text-sm text-[#6C757D] font-medium"} />
-                </div>
+                    <div>
+                      <label for="first_name" class="block mb-2 mt-2 text-xs  text-gray-900 dark:text-gray-600">Instagram Url</label>
+                      <input type="text" defaultValue={instagramUrl} onChange={(e) => setInstagramUrl(e?.target?.value)} id="first_name" class="bg-[#F4FBFF] border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" placeholder="https://www.instagram.com/..." />
+                    </div>
+
+                    <div>
+                      <label for="first_name" class="block mb-2 mt-2 text-xs  text-gray-900 dark:text-gray-600">TikTok Url</label>
+                      <input type="text" defaultValue={tiktokUrl} onChange={(e) => setTiktokUrl(e?.target?.value)} id="first_name" class="bg-[#F4FBFF] border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" placeholder="https://www.tiktok.com/..." />
+                    </div>
+
+                    <div>
+                      <label for="first_name" class="block mb-2 mt-2 text-xs  text-gray-900 dark:text-gray-600">Brand Description</label>
+                      <textarea type="text" onChange={(e) => setBrandDescription(e?.target?.value)} id="first_name" class="bg-[#F4FBFF] border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" placeholder="Brief description of your brand" > </textarea>
+                    </div>
+
+                    <div>
+                      <label for="first_name" class="block mb-2 mt-3 text-xs  text-gray-900 dark:text-gray-600">Upload Brand Logo</label>
+                      <input id="dropzone-file" accept="image/x-png,image/gif,image/jpeg" onChange={uploadLogoImg} placeholder="upload brand logo" name='uploadImg1' type="file" className={" mb-2 text-sm text-[#6C757D] font-medium"} />
+                    </div>
+                  </div>
+
+                  :
+                  ''
+                }
 
 
-                
+
+
+
+
+
+
+
 
                 <button
                   type="submit"
@@ -571,6 +696,221 @@ export default function CardCreateProduct() {
             </div>
           </div>
 
+        </Modal>
+      </section>
+
+
+      <section>
+        <Modal
+          visible={toggleEditMarketLink}
+          width="380"
+          height="700"
+          effect="fadeInUp"
+          onClickAway={() => setToggleEditMarketLink}
+        >
+          <div className="px-2 bg-[#fff]  items-center rounded-lg p-2">
+            <span className="flex justify-between px-1 pt-1">
+              <p className="cursor-pointer font-bold mt-2" >Edit Market Link</p>
+              <p className="cursor-pointer font-bold" onClick={(e) => setToggleEditMarketLink(false)}><SvgElement type={icontypesEnum.CANCEL} /></p>
+            </span>
+
+
+            <div>
+              <form onSubmit={UpdateMarketLink}>
+                <div className="">
+                  <label for="first_name" class="block mb-2 mt-6 text-sm  text-gray-900 dark:text-gray-600">Market Link Name</label>
+                  <div className="gap-4">
+                    <input type="text" disabled defaultValue={marketLinkData?.link_name} onChange={(e) => setCheckLink(e?.target?.value)} id="first_name" class="bg-[#F4FBFF] border border-gray-300 text-gray-900 text-sm rounded-lg  p-2.5 w-4/5 " placeholder="Business Link Name" />
+                    {/* {(checkLink?.length !== 0 && data == 0) ? <span className="pl-4 w-1/5 text-[30px]">👌</span> : (data != 1 ? '' : <span className="pl-4 w-1/5 text-[30px] "> 😭 </span>)} */}
+                  </div>
+                  {/* <span className="text-[10px]">{`https://www.mygupta.co/store/${checkLink.replace(/ /g, '-')}`} </span> <br />{(checkLink?.length !== 0 && data == 0) ? <span className=" w-1/5 text-[10px] text-green-500">Available</span> : (data != 1 ? '' : <span className=" w-1/5 text-[10px] text-red-500"> Link is taken </span>)} */}
+
+
+                </div>
+                {userData?.sub_type == 'premium' ?
+                  <div>
+                    <div>
+
+                      <label for="first_name" class="block mt-4 text-xs  text-gray-900 dark:text-gray-600">Select Brand Primary Color</label>
+
+                      <span className="flex justify-between">
+                        <span className="mt-3 mr-2">
+                          <InputColor
+                            initialValue={marketLinkData?.brand_primary_color ? marketLinkData?.brand_primary_color : '#0071BC'}
+                            className=""
+                            onChange={setColor}
+                            placement="right"
+                          />
+                        </span>
+
+                        <div
+                          className="w-full  rounded-lg"
+                          style={{
+
+                            height: 30,
+                            marginTop: 10,
+                            border: "2px solid #777",
+                            backgroundColor: color?.hex,
+                          }}
+                        >
+                          <span className="flex justify-center text-white"> {color?.hex}</span>
+                        </div>
+                      </span>
+
+
+                    </div>
+
+                    <div>
+                      <label for="first_name" class="block mb-2 mt-2 text-xs  text-gray-900 dark:text-gray-600">Facebook Url</label>
+                      <input type="text" defaultValue={marketLinkData?.facebook_url} onChange={(e) => setFacebookUrl(e?.target?.value)} id="first_name" class="bg-[#F4FBFF] border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" placeholder="https://www.facebook.com/..." />
+                    </div>
+
+                    <div>
+                      <label for="first_name" class="block mb-2 mt-2 text-xs  text-gray-900 dark:text-gray-600">Instagram Url</label>
+                      <input type="text" defaultValue={marketLinkData?.instagram_url} onChange={(e) => setInstagramUrl(e?.target?.value)} id="first_name" class="bg-[#F4FBFF] border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" placeholder="https://www.instagram.com/..." />
+                    </div>
+
+                    <div>
+                      <label for="first_name" class="block mb-2 mt-2 text-xs  text-gray-900 dark:text-gray-600">TikTok Url</label>
+                      <input type="text" defaultValue={marketLinkData?.tiktok_url} onChange={(e) => setTiktokUrl(e?.target?.value)} id="first_name" class="bg-[#F4FBFF] border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" placeholder="https://www.tiktok.com/..." />
+                    </div>
+
+                    <div>
+                      <label for="first_name" class="block mb-2 mt-2 text-xs  text-gray-900 dark:text-gray-600">Brand Description</label>
+                      <textarea type="text" defaultValue={marketLinkData?.brand_description} onChange={(e) => setBrandDescription(e?.target?.value)} id="first_name" class="bg-[#F4FBFF] border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" placeholder="Brief description of your brand" > </textarea>
+                    </div>
+
+                    <div className="flex justify-between">
+
+                      <span>
+                        <label for="first_name" class="block mb-2 mt-3 text-xs  text-gray-900 dark:text-gray-600">Upload Brand Logo</label>
+                        <input id="dropzone-file" accept="image/x-png,image/gif,image/jpeg" onChange={uploadLogoImg} placeholder="upload brand logo" name='uploadImg1' type="file" className={" mb-2 text-sm text-[#6C757D] font-medium"} />
+                      </span>
+
+                      <span className="mt-2">
+                        <img src={marketLinkData?.brand_logo} />
+                      </span>
+
+                    </div>
+                  </div>
+                  :
+                  ''
+                }
+
+
+
+
+                <button
+                  type="submit"
+
+                  className={"text-white mt-10" + (data == 0 ? ' bg-[#0071BC]' : ' bg-[#E03130] ') + " " + (data == 0 ? 'hover:bg-[#103f5e] ' : '') + " focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm  px-5 py-2.5 text-center"}
+                >
+                  {data == 0 ? 'Update Link' : 'Taken'}
+                </button>
+              </form>
+            </div>
+          </div>
+
+        </Modal>
+      </section>
+
+
+
+      {/* DELETE MARKET LINK */}
+
+      <section>
+        <Modal
+          visible={toggleDeleteModal}
+          width="350"
+          height="430"
+          effect="fadeInUp"
+          onClickAway={() => setToggleDeleteModal(false)}
+        >
+          <div className=" " style={{ height: '100%', overflow: 'auto' }}>
+
+            <div className="container flex flex-row justify-around bg-[#fff]  items-center rounded-lg p-2">
+
+              <div className="px-3">
+
+                {/* <span className="flex justify-around">
+                    <h1 className=" text-xs text-red-600" style={{ fontSize: '10px' }}>Link can’t be edited in free plan. <span style={{ color: '#61A24F' }} className="font-bold text-xs">Upgrade to Pro</span></h1>
+                  </span> */}
+                <span className="flex justify-end px-2 pt-3">
+                  <p className="cursor-pointer font-bold" onClick={(e) => setToggleDeleteModal(false)}><SvgElement type={icontypesEnum.CANCEL} /></p>
+                </span>
+
+                <label
+                  className="flex justify-start mb-2 pt-1 text-md font-bold text-black"
+                >
+                  Delete Market Link
+                </label>
+
+                <label
+                  style={{ fontSize: '14px' }}
+                  className="flex justify-start mb-2 pt-2 text-xs font-medium text-gray-600"
+                >
+                  You are about to delete the market link you created.
+
+
+                </label>
+                <label
+                  style={{ fontSize: '14px' }}
+                  className="flex justify-start mb-2 pt-2 text-xs font-medium text-gray-600"
+                >
+
+
+                  Please note that:
+                </label>
+
+                <ul class="space-y-1 max-w-md list-disc list-inside text-gray-500 dark:text-gray-400 pl-2">
+                  <li style={{ color: '#2C2C2C', fontSize: '14px' }}>
+                    The link will stop working.
+                  </li>
+                  <li style={{ color: '#2C2C2C', fontSize: '14px' }} className="text-xs">
+                    All link data will be lost.
+                  </li>
+                  <li style={{ color: '#2C2C2C', fontSize: '14px' }} className="text-xs">
+                    The link name will be made available to others.
+                  </li>
+                  <li style={{ color: '#2C2C2C', fontSize: '14px' }} className="text-xs font-bold">
+                    All products attached to the market link will be lost.
+                  </li>
+                  {/* <li style={{ color: '#2C2C2C', fontSize: '14px' }} className="text-xs">
+                    If you used this link in your Tiered links, the button will stop working
+                  </li> */}
+                </ul>
+
+
+
+
+                <span className="flex justify-center pt-4">
+                  <button
+                    type="button"
+                    onClick={deleteMarketLink}
+                    style={{ borderRadius: '50px', color: '#F52424' }}
+                    className=" text-red-700 bg-red-200 focus:ring-4 focus:outline-none focus:ring-grredeen-300 font-medium rounded-lg text-sm w-full px-2 py-2.5 text-center "
+                  >
+                    Delete Link
+                  </button>
+                </span>
+
+                <span className="flex justify-center pt-4">
+                  <button
+                    type="button"
+                    onClick={(e) => setToggleDeleteModal(false)}
+                    style={{ borderRadius: '50px' }}
+                    className=" text-black   focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm w-full px-2 py-1.5 text-center "
+                  >
+                    Cancel
+                  </button>
+                </span>
+
+
+              </div>
+
+            </div>
+
+          </div>
         </Modal>
       </section>
 

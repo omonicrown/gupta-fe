@@ -281,7 +281,13 @@ export default function CardMiniStore() {
                                     </span>
                                   </div>
 
-                                  <span className="text-[#149E49] text-[14px] font-[400]">₦ {data?.product_price}</span>
+                                  <div className="flex justify-start gap-2">
+                                  <span className="text-[#149E49] text-[14px] font-[400]" style={{textDecorationLine:'line-through'}}> {new Intl.NumberFormat('en-US', { style: 'currency', currency: 'NGN' }).format(data?.product_price)}</span>
+
+                                  <span className="text-[#149E49] text-[14px] font-[600]"> {new Intl.NumberFormat('en-US', { style: 'currency', currency: 'NGN' }).format(data?.no_of_items)}</span>
+
+                                    </div>
+                                  
                                   <span className="text-[14px] font-[400] text-[#808191] h-10 overflow-auto">{data?.product_description}</span>
                                 </div>
 

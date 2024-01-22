@@ -203,13 +203,21 @@ export class AdminApis {
         } else {
             return this.adminApi.updateProduct(data);
         }
-    }
+    }  
 
     static createMarketLink(data: any): AxiosPromise<Array<any>> {
         if (configs.type === "LOCAL") {
             return {} as AxiosPromise;
         } else {
             return this.adminApi.createMarketLink(data);
+        }
+    }
+
+    static updateMarketLink(data: any): AxiosPromise<Array<any>> {
+        if (configs.type === "LOCAL") {
+            return {} as AxiosPromise;
+        } else {
+            return this.adminApi.updateMarketLink(data);
         }
     }
 
@@ -251,13 +259,21 @@ export class AdminApis {
         } else {
             return this.adminApi.getProductByLinkName(id);
         }
-    }
+    } 
 
     static deleteProduct(id: any): AxiosPromise<Array<any>> {
         if (configs.type === "LOCAL") {
             return {} as AxiosPromise;
         } else {
             return this.adminApi.deleteProduct(id);
+        }
+    }
+
+    static deleteMarketLink(id: any): AxiosPromise<Array<any>> {
+        if (configs.type === "LOCAL") {
+            return {} as AxiosPromise;
+        } else {
+            return this.adminApi.deleteMarketLink(id);
         }
     }
 

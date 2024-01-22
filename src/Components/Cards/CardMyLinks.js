@@ -66,8 +66,6 @@ export default function CardMyLinks() {
 
   }, [effect]);
 
-  console?.log(userLoginData?.data?.no_of_wlink)
-
 
   const handleSubmit = React.useCallback(
     (e) => {
@@ -241,6 +239,8 @@ export default function CardMyLinks() {
 
                                 < span className="flex justify-end gap-1 ">
 
+                                  
+
                                   <button
                                     type="button"
                                     style={{}}
@@ -271,10 +271,10 @@ export default function CardMyLinks() {
                     </div>
                     :
 
-                    data?.data == 'sub_expired'?
-                    <CardRenewSubscription />
-                    :
-                    <CardPageVisits />
+                    data?.data == 'sub_expired' ?
+                      <CardRenewSubscription />
+                      :
+                      <CardPageVisits />
                 )
 
                   :
