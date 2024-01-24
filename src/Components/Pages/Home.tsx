@@ -590,7 +590,296 @@ function Home() {
       {/* End Section */}
 
       {/* Start Section */}
+      {/* <!-- Pricing Section --> */}
       <div className='bg-[#F5F5FA] sm:px-16 px-6 flex justify-center items-start py-16' >
+        <div className='xl:max-w-[1200px] w-full'>
+          <div className='flex flex-col justify-center items-center'>
+            <h1 className="text-center font-bold font-poppins lg:text-[40px] text-[25px] text-[#231D4F] md:leading-[50px] leading-[38px]">
+              Pricing for brands and businesses of all sizes
+            </h1>
+            <p className="text-[#56575B] text-[20px] mt-5">Connect to your audience with branded links, QR Codes, and a Link-in-bio that will get their attention.</p>
+          </div>
+
+          <div className="mt-6">
+            <h3>Save up to 34% when you pay annually</h3>
+          </div>
+
+          <div className="grid grid-cols-1 gap-2 lg:grid-cols-4 md:grid-cols-2 mt-10">
+
+            <div className="border border-[#0071BC] rounded-[8px] p-4 bg-white pt-4 pb-8">
+              <h3 className="text-center text-[#56575B] uppercase text-[14px]">FREE</h3>
+              <h1 className="text-center mt-5 text-[34px] text-[#56575B]">N0<sup className="text-[16px]">/month</sup> </h1>
+              <div className="flex-col justify-center mt-5">
+                <h3 className="text-center text-[#56575B] text-[14px]">2 QR Codes/month</h3>
+                <h3 className="text-center text-[#56575B] text-[14px] ">10 links/month</h3>
+                <h3 className="text-center text-[#56575B] text-[14px]">1 Link-in-bio page</h3>
+                <div className="mt-4">
+                  <button className=" w-full py-[14px] bg-[#EDF2FE] text-[#0071BC] text-[15px] rounded-[6px]">Get Started</button>
+                </div>
+                <div className="mt-4">
+                  <h3 className="text-[#56575B] text-[15px]">Includes:</h3>
+                  <div className=" flex space-x-3 mt-4">
+                    <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M13.1283 6.80001V2.8C13.1283 2.35817 12.7405 2 12.262 2H1.86631C1.38786 2 1 2.35817 1 2.8V11.6C1 12.0419 1.38786 12.4 1.86631 12.4H5.33155" stroke="#0071BC" stroke-linecap="round" stroke-linejoin="round" />
+                      <path d="M1 4.40002H13.1283" stroke="#0071BC" stroke-linecap="round" stroke-linejoin="round" />
+                      <path fill-rule="evenodd" clip-rule="evenodd" d="M10.9381 7.8299L11.8264 10H13.559C13.738 9.99391 13.9019 10.0921 13.969 10.2454C14.036 10.3988 13.9917 10.5746 13.8582 10.6848L12.3566 11.6528L13.1888 13.4198C13.2639 13.5856 13.216 13.7773 13.0698 13.8959C12.9235 14.0145 12.7115 14.0337 12.5431 13.9435L10.5327 12.8982L8.52288 13.9435C8.35447 14.0337 8.14251 14.0145 7.99625 13.8959C7.84998 13.7773 7.80206 13.5856 7.87719 13.4198L8.70423 11.6528L7.20262 10.6848C7.06882 10.5751 7.02396 10.3996 7.09048 10.2461C7.157 10.0927 7.3206 9.99423 7.49948 10H9.2321L10.1221 7.8299C10.2023 7.69052 10.3592 7.60339 10.5301 7.60339C10.701 7.60339 10.858 7.69052 10.9381 7.8299Z" stroke="#0071BC" stroke-linecap="round" stroke-linejoin="round" />
+                      <path d="M3.46924 10.2796L7.06417 6.68469" stroke="#0071BC" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                    <h3 className="text-[13px] text-[#56575B]">5 custom back-halves</h3>
+                  </div>
+                  <div className="flex space-x-3 mt-2">
+                    <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M13.1283 6.80001V2.8C13.1283 2.35817 12.7405 2 12.262 2H1.86631C1.38786 2 1 2.35817 1 2.8V11.6C1 12.0419 1.38786 12.4 1.86631 12.4H5.33155" stroke="#0071BC" stroke-linecap="round" stroke-linejoin="round" />
+                      <path d="M1 4.40002H13.1283" stroke="#0071BC" stroke-linecap="round" stroke-linejoin="round" />
+                      <path fill-rule="evenodd" clip-rule="evenodd" d="M10.9381 7.8299L11.8264 10H13.559C13.738 9.99391 13.9019 10.0921 13.969 10.2454C14.036 10.3988 13.9917 10.5746 13.8582 10.6848L12.3566 11.6528L13.1888 13.4198C13.2639 13.5856 13.216 13.7773 13.0698 13.8959C12.9235 14.0145 12.7115 14.0337 12.5431 13.9435L10.5327 12.8982L8.52288 13.9435C8.35447 14.0337 8.14251 14.0145 7.99625 13.8959C7.84998 13.7773 7.80206 13.5856 7.87719 13.4198L8.70423 11.6528L7.20262 10.6848C7.06882 10.5751 7.02396 10.3996 7.09048 10.2461C7.157 10.0927 7.3206 9.99423 7.49948 10H9.2321L10.1221 7.8299C10.2023 7.69052 10.3592 7.60339 10.5301 7.60339C10.701 7.60339 10.858 7.69052 10.9381 7.8299Z" stroke="#0071BC" stroke-linecap="round" stroke-linejoin="round" />
+                      <path d="M3.46924 10.2796L7.06417 6.68469" stroke="#0071BC" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                    <h3 className="text-[13px] text-[#56575B]">PNG & JPEG QR Code download formats</h3></div>
+                  <div className="flex space-x-3 mt-2">
+                    <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M13.1283 6.80001V2.8C13.1283 2.35817 12.7405 2 12.262 2H1.86631C1.38786 2 1 2.35817 1 2.8V11.6C1 12.0419 1.38786 12.4 1.86631 12.4H5.33155" stroke="#0071BC" stroke-linecap="round" stroke-linejoin="round" />
+                      <path d="M1 4.40002H13.1283" stroke="#0071BC" stroke-linecap="round" stroke-linejoin="round" />
+                      <path fill-rule="evenodd" clip-rule="evenodd" d="M10.9381 7.8299L11.8264 10H13.559C13.738 9.99391 13.9019 10.0921 13.969 10.2454C14.036 10.3988 13.9917 10.5746 13.8582 10.6848L12.3566 11.6528L13.1888 13.4198C13.2639 13.5856 13.216 13.7773 13.0698 13.8959C12.9235 14.0145 12.7115 14.0337 12.5431 13.9435L10.5327 12.8982L8.52288 13.9435C8.35447 14.0337 8.14251 14.0145 7.99625 13.8959C7.84998 13.7773 7.80206 13.5856 7.87719 13.4198L8.70423 11.6528L7.20262 10.6848C7.06882 10.5751 7.02396 10.3996 7.09048 10.2461C7.157 10.0927 7.3206 9.99423 7.49948 10H9.2321L10.1221 7.8299C10.2023 7.69052 10.3592 7.60339 10.5301 7.60339C10.701 7.60339 10.858 7.69052 10.9381 7.8299Z" stroke="#0071BC" stroke-linecap="round" stroke-linejoin="round" />
+                      <path d="M3.46924 10.2796L7.06417 6.68469" stroke="#0071BC" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                    <h3 className="text-[13px] text-[#56575B]">QR Code customizations</h3></div>
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <div className="uppercase text-center bg-[#0071BC] py-2 rounded-t-[8px] text-white ">Most popular</div>
+              <div className="border-2 border-[#0071BC] rounded-b-[8px] p-4 bg-white pt-4 pb-8">
+                <h3 className="text-center text-[#56575B] uppercase text-[14px]">Basic</h3>
+                <h1 className="text-center mt-5 text-[34px] text-[#56575B]">N3,500<sup className="text-[16px]">/month</sup> </h1>
+                <div className="flex-col justify-center mt-5">
+                  <h3 className="text-center text-[#56575B] text-[14px]">2 QR Codes/month</h3>
+                  <h3 className="text-center text-[#56575B] text-[14px] ">10 links/month</h3>
+                  <h3 className="text-center text-[#56575B] text-[14px]">1 Link-in-bio page</h3>
+                  <div className="mt-4">
+                    <button className=" w-full py-[14px] bg-[#0071BC] text-[#ffffff] text-[15px] rounded-[6px]">Get Started</button>
+                  </div>
+                  <div className="mt-4">
+                    <h3 className="text-[#56575B] text-[15px]">Everything in Free, plus:</h3>
+                    <div className=" flex space-x-3 mt-4">
+                      <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M13.1283 6.80001V2.8C13.1283 2.35817 12.7405 2 12.262 2H1.86631C1.38786 2 1 2.35817 1 2.8V11.6C1 12.0419 1.38786 12.4 1.86631 12.4H5.33155" stroke="#0071BC" stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M1 4.40002H13.1283" stroke="#0071BC" stroke-linecap="round" stroke-linejoin="round" />
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M10.9381 7.8299L11.8264 10H13.559C13.738 9.99391 13.9019 10.0921 13.969 10.2454C14.036 10.3988 13.9917 10.5746 13.8582 10.6848L12.3566 11.6528L13.1888 13.4198C13.2639 13.5856 13.216 13.7773 13.0698 13.8959C12.9235 14.0145 12.7115 14.0337 12.5431 13.9435L10.5327 12.8982L8.52288 13.9435C8.35447 14.0337 8.14251 14.0145 7.99625 13.8959C7.84998 13.7773 7.80206 13.5856 7.87719 13.4198L8.70423 11.6528L7.20262 10.6848C7.06882 10.5751 7.02396 10.3996 7.09048 10.2461C7.157 10.0927 7.3206 9.99423 7.49948 10H9.2321L10.1221 7.8299C10.2023 7.69052 10.3592 7.60339 10.5301 7.60339C10.701 7.60339 10.858 7.69052 10.9381 7.8299Z" stroke="#0071BC" stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M3.46924 10.2796L7.06417 6.68469" stroke="#0071BC" stroke-linecap="round" stroke-linejoin="round" />
+                      </svg>
+                      <h3 className="text-[13px] text-[#56575B]">30 days of click & scan data</h3>
+                    </div>
+                    <div className="flex space-x-3 mt-2">
+                      <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M13.1283 6.80001V2.8C13.1283 2.35817 12.7405 2 12.262 2H1.86631C1.38786 2 1 2.35817 1 2.8V11.6C1 12.0419 1.38786 12.4 1.86631 12.4H5.33155" stroke="#0071BC" stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M1 4.40002H13.1283" stroke="#0071BC" stroke-linecap="round" stroke-linejoin="round" />
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M10.9381 7.8299L11.8264 10H13.559C13.738 9.99391 13.9019 10.0921 13.969 10.2454C14.036 10.3988 13.9917 10.5746 13.8582 10.6848L12.3566 11.6528L13.1888 13.4198C13.2639 13.5856 13.216 13.7773 13.0698 13.8959C12.9235 14.0145 12.7115 14.0337 12.5431 13.9435L10.5327 12.8982L8.52288 13.9435C8.35447 14.0337 8.14251 14.0145 7.99625 13.8959C7.84998 13.7773 7.80206 13.5856 7.87719 13.4198L8.70423 11.6528L7.20262 10.6848C7.06882 10.5751 7.02396 10.3996 7.09048 10.2461C7.157 10.0927 7.3206 9.99423 7.49948 10H9.2321L10.1221 7.8299C10.2023 7.69052 10.3592 7.60339 10.5301 7.60339C10.701 7.60339 10.858 7.69052 10.9381 7.8299Z" stroke="#0071BC" stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M3.46924 10.2796L7.06417 6.68469" stroke="#0071BC" stroke-linecap="round" stroke-linejoin="round" />
+                      </svg>
+                      <h3 className="text-[13px] text-[#56575B]">UTM Builder</h3></div>
+                    <div className="flex space-x-3 mt-2">
+                      <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M13.1283 6.80001V2.8C13.1283 2.35817 12.7405 2 12.262 2H1.86631C1.38786 2 1 2.35817 1 2.8V11.6C1 12.0419 1.38786 12.4 1.86631 12.4H5.33155" stroke="#0071BC" stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M1 4.40002H13.1283" stroke="#0071BC" stroke-linecap="round" stroke-linejoin="round" />
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M10.9381 7.8299L11.8264 10H13.559C13.738 9.99391 13.9019 10.0921 13.969 10.2454C14.036 10.3988 13.9917 10.5746 13.8582 10.6848L12.3566 11.6528L13.1888 13.4198C13.2639 13.5856 13.216 13.7773 13.0698 13.8959C12.9235 14.0145 12.7115 14.0337 12.5431 13.9435L10.5327 12.8982L8.52288 13.9435C8.35447 14.0337 8.14251 14.0145 7.99625 13.8959C7.84998 13.7773 7.80206 13.5856 7.87719 13.4198L8.70423 11.6528L7.20262 10.6848C7.06882 10.5751 7.02396 10.3996 7.09048 10.2461C7.157 10.0927 7.3206 9.99423 7.49948 10H9.2321L10.1221 7.8299C10.2023 7.69052 10.3592 7.60339 10.5301 7.60339C10.701 7.60339 10.858 7.69052 10.9381 7.8299Z" stroke="#0071BC" stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M3.46924 10.2796L7.06417 6.68469" stroke="#0071BC" stroke-linecap="round" stroke-linejoin="round" />
+                      </svg>
+                      <h3 className="text-[13px] text-[#56575B]">Advanced QR Code customizations</h3></div>
+                    <div className="flex space-x-3 mt-3">
+                      <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M13.1283 6.80001V2.8C13.1283 2.35817 12.7405 2 12.262 2H1.86631C1.38786 2 1 2.35817 1 2.8V11.6C1 12.0419 1.38786 12.4 1.86631 12.4H5.33155" stroke="#0071BC" stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M1 4.40002H13.1283" stroke="#0071BC" stroke-linecap="round" stroke-linejoin="round" />
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M10.9381 7.8299L11.8264 10H13.559C13.738 9.99391 13.9019 10.0921 13.969 10.2454C14.036 10.3988 13.9917 10.5746 13.8582 10.6848L12.3566 11.6528L13.1888 13.4198C13.2639 13.5856 13.216 13.7773 13.0698 13.8959C12.9235 14.0145 12.7115 14.0337 12.5431 13.9435L10.5327 12.8982L8.52288 13.9435C8.35447 14.0337 8.14251 14.0145 7.99625 13.8959C7.84998 13.7773 7.80206 13.5856 7.87719 13.4198L8.70423 11.6528L7.20262 10.6848C7.06882 10.5751 7.02396 10.3996 7.09048 10.2461C7.157 10.0927 7.3206 9.99423 7.49948 10H9.2321L10.1221 7.8299C10.2023 7.69052 10.3592 7.60339 10.5301 7.60339C10.701 7.60339 10.858 7.69052 10.9381 7.8299Z" stroke="#0071BC" stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M3.46924 10.2796L7.06417 6.68469" stroke="#0071BC" stroke-linecap="round" stroke-linejoin="round" />
+                      </svg>
+                      <h3 className="text-[13px] text-[#56575B]">Link & QR Code redirects</h3></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+            <div className="border border-[#0071BC] rounded-[8px] p-4 bg-white pt-4 pb-8">
+              <h3 className="text-center text-[#56575B] uppercase text-[14px]">POPULAR</h3>
+              <h1 className="text-center mt-5 text-[34px] text-[#56575B]">N7,500<sup className="text-[16px]">/month</sup> </h1>
+              <div className="flex-col justify-center mt-5">
+                <h3 className="text-center text-[#56575B] text-[14px]">2 QR Codes/month</h3>
+                <h3 className="text-center text-[#56575B] text-[14px] ">10 links/month</h3>
+                <h3 className="text-center text-[#56575B] text-[14px]">1 Link-in-bio page</h3>
+                <div className="mt-4">
+                  <button className=" w-full py-[14px] bg-[#EDF2FE] text-[#0071BC] text-[15px] rounded-[6px]">Get Started</button>
+                </div>
+                <div className="mt-4">
+                  <h3 className="text-[#56575B] text-[15px]">Includes:</h3>
+                  <div className=" flex space-x-3 mt-4">
+                    <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M13.1283 6.80001V2.8C13.1283 2.35817 12.7405 2 12.262 2H1.86631C1.38786 2 1 2.35817 1 2.8V11.6C1 12.0419 1.38786 12.4 1.86631 12.4H5.33155" stroke="#0071BC" stroke-linecap="round" stroke-linejoin="round" />
+                      <path d="M1 4.40002H13.1283" stroke="#0071BC" stroke-linecap="round" stroke-linejoin="round" />
+                      <path fill-rule="evenodd" clip-rule="evenodd" d="M10.9381 7.8299L11.8264 10H13.559C13.738 9.99391 13.9019 10.0921 13.969 10.2454C14.036 10.3988 13.9917 10.5746 13.8582 10.6848L12.3566 11.6528L13.1888 13.4198C13.2639 13.5856 13.216 13.7773 13.0698 13.8959C12.9235 14.0145 12.7115 14.0337 12.5431 13.9435L10.5327 12.8982L8.52288 13.9435C8.35447 14.0337 8.14251 14.0145 7.99625 13.8959C7.84998 13.7773 7.80206 13.5856 7.87719 13.4198L8.70423 11.6528L7.20262 10.6848C7.06882 10.5751 7.02396 10.3996 7.09048 10.2461C7.157 10.0927 7.3206 9.99423 7.49948 10H9.2321L10.1221 7.8299C10.2023 7.69052 10.3592 7.60339 10.5301 7.60339C10.701 7.60339 10.858 7.69052 10.9381 7.8299Z" stroke="#0071BC" stroke-linecap="round" stroke-linejoin="round" />
+                      <path d="M3.46924 10.2796L7.06417 6.68469" stroke="#0071BC" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                    <h3 className="text-[13px] text-[#56575B]">5 custom back-halves</h3>
+                  </div>
+                  <div className="flex space-x-3 mt-2">
+                    <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M13.1283 6.80001V2.8C13.1283 2.35817 12.7405 2 12.262 2H1.86631C1.38786 2 1 2.35817 1 2.8V11.6C1 12.0419 1.38786 12.4 1.86631 12.4H5.33155" stroke="#0071BC" stroke-linecap="round" stroke-linejoin="round" />
+                      <path d="M1 4.40002H13.1283" stroke="#0071BC" stroke-linecap="round" stroke-linejoin="round" />
+                      <path fill-rule="evenodd" clip-rule="evenodd" d="M10.9381 7.8299L11.8264 10H13.559C13.738 9.99391 13.9019 10.0921 13.969 10.2454C14.036 10.3988 13.9917 10.5746 13.8582 10.6848L12.3566 11.6528L13.1888 13.4198C13.2639 13.5856 13.216 13.7773 13.0698 13.8959C12.9235 14.0145 12.7115 14.0337 12.5431 13.9435L10.5327 12.8982L8.52288 13.9435C8.35447 14.0337 8.14251 14.0145 7.99625 13.8959C7.84998 13.7773 7.80206 13.5856 7.87719 13.4198L8.70423 11.6528L7.20262 10.6848C7.06882 10.5751 7.02396 10.3996 7.09048 10.2461C7.157 10.0927 7.3206 9.99423 7.49948 10H9.2321L10.1221 7.8299C10.2023 7.69052 10.3592 7.60339 10.5301 7.60339C10.701 7.60339 10.858 7.69052 10.9381 7.8299Z" stroke="#0071BC" stroke-linecap="round" stroke-linejoin="round" />
+                      <path d="M3.46924 10.2796L7.06417 6.68469" stroke="#0071BC" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                    <h3 className="text-[13px] text-[#56575B]">PNG & JPEG QR Code download formats</h3></div>
+                  <div className="flex space-x-3 mt-2">
+                    <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M13.1283 6.80001V2.8C13.1283 2.35817 12.7405 2 12.262 2H1.86631C1.38786 2 1 2.35817 1 2.8V11.6C1 12.0419 1.38786 12.4 1.86631 12.4H5.33155" stroke="#0071BC" stroke-linecap="round" stroke-linejoin="round" />
+                      <path d="M1 4.40002H13.1283" stroke="#0071BC" stroke-linecap="round" stroke-linejoin="round" />
+                      <path fill-rule="evenodd" clip-rule="evenodd" d="M10.9381 7.8299L11.8264 10H13.559C13.738 9.99391 13.9019 10.0921 13.969 10.2454C14.036 10.3988 13.9917 10.5746 13.8582 10.6848L12.3566 11.6528L13.1888 13.4198C13.2639 13.5856 13.216 13.7773 13.0698 13.8959C12.9235 14.0145 12.7115 14.0337 12.5431 13.9435L10.5327 12.8982L8.52288 13.9435C8.35447 14.0337 8.14251 14.0145 7.99625 13.8959C7.84998 13.7773 7.80206 13.5856 7.87719 13.4198L8.70423 11.6528L7.20262 10.6848C7.06882 10.5751 7.02396 10.3996 7.09048 10.2461C7.157 10.0927 7.3206 9.99423 7.49948 10H9.2321L10.1221 7.8299C10.2023 7.69052 10.3592 7.60339 10.5301 7.60339C10.701 7.60339 10.858 7.69052 10.9381 7.8299Z" stroke="#0071BC" stroke-linecap="round" stroke-linejoin="round" />
+                      <path d="M3.46924 10.2796L7.06417 6.68469" stroke="#0071BC" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                    <h3 className="text-[13px] text-[#56575B]">QR Code customizations</h3></div>
+                </div>
+              </div>
+            </div>
+
+            <div className="border border-[#0071BC] rounded-[8px] p-4 bg-white pt-4 pb-8">
+              <h3 className="text-center text-[#56575B] uppercase text-[14px]">PREMIUM</h3>
+              <h1 className="text-center mt-5 text-[34px] text-[#56575B]">N16,500<sup className="text-[16px]">/month</sup> </h1>
+              <div className="flex-col justify-center mt-5">
+                <h3 className="text-center text-[#56575B] text-[14px]">2 QR Codes/month</h3>
+                <h3 className="text-center text-[#56575B] text-[14px] ">10 links/month</h3>
+                <h3 className="text-center text-[#56575B] text-[14px]">1 Link-in-bio page</h3>
+                <div className="mt-4">
+                  <button className=" w-full py-[14px] bg-[#EDF2FE] text-[#0071BC] text-[15px] rounded-[6px]">Get Started</button>
+                </div>
+                <div className="mt-4">
+                  <h3 className="text-[#56575B] text-[15px]">Includes:</h3>
+                  <div className=" flex space-x-3 mt-4">
+                    <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M13.1283 6.80001V2.8C13.1283 2.35817 12.7405 2 12.262 2H1.86631C1.38786 2 1 2.35817 1 2.8V11.6C1 12.0419 1.38786 12.4 1.86631 12.4H5.33155" stroke="#0071BC" stroke-linecap="round" stroke-linejoin="round" />
+                      <path d="M1 4.40002H13.1283" stroke="#0071BC" stroke-linecap="round" stroke-linejoin="round" />
+                      <path fill-rule="evenodd" clip-rule="evenodd" d="M10.9381 7.8299L11.8264 10H13.559C13.738 9.99391 13.9019 10.0921 13.969 10.2454C14.036 10.3988 13.9917 10.5746 13.8582 10.6848L12.3566 11.6528L13.1888 13.4198C13.2639 13.5856 13.216 13.7773 13.0698 13.8959C12.9235 14.0145 12.7115 14.0337 12.5431 13.9435L10.5327 12.8982L8.52288 13.9435C8.35447 14.0337 8.14251 14.0145 7.99625 13.8959C7.84998 13.7773 7.80206 13.5856 7.87719 13.4198L8.70423 11.6528L7.20262 10.6848C7.06882 10.5751 7.02396 10.3996 7.09048 10.2461C7.157 10.0927 7.3206 9.99423 7.49948 10H9.2321L10.1221 7.8299C10.2023 7.69052 10.3592 7.60339 10.5301 7.60339C10.701 7.60339 10.858 7.69052 10.9381 7.8299Z" stroke="#0071BC" stroke-linecap="round" stroke-linejoin="round" />
+                      <path d="M3.46924 10.2796L7.06417 6.68469" stroke="#0071BC" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                    <h3 className="text-[13px] text-[#56575B]">5 custom back-halves</h3>
+                  </div>
+                  <div className="flex space-x-3 mt-2">
+                    <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M13.1283 6.80001V2.8C13.1283 2.35817 12.7405 2 12.262 2H1.86631C1.38786 2 1 2.35817 1 2.8V11.6C1 12.0419 1.38786 12.4 1.86631 12.4H5.33155" stroke="#0071BC" stroke-linecap="round" stroke-linejoin="round" />
+                      <path d="M1 4.40002H13.1283" stroke="#0071BC" stroke-linecap="round" stroke-linejoin="round" />
+                      <path fill-rule="evenodd" clip-rule="evenodd" d="M10.9381 7.8299L11.8264 10H13.559C13.738 9.99391 13.9019 10.0921 13.969 10.2454C14.036 10.3988 13.9917 10.5746 13.8582 10.6848L12.3566 11.6528L13.1888 13.4198C13.2639 13.5856 13.216 13.7773 13.0698 13.8959C12.9235 14.0145 12.7115 14.0337 12.5431 13.9435L10.5327 12.8982L8.52288 13.9435C8.35447 14.0337 8.14251 14.0145 7.99625 13.8959C7.84998 13.7773 7.80206 13.5856 7.87719 13.4198L8.70423 11.6528L7.20262 10.6848C7.06882 10.5751 7.02396 10.3996 7.09048 10.2461C7.157 10.0927 7.3206 9.99423 7.49948 10H9.2321L10.1221 7.8299C10.2023 7.69052 10.3592 7.60339 10.5301 7.60339C10.701 7.60339 10.858 7.69052 10.9381 7.8299Z" stroke="#0071BC" stroke-linecap="round" stroke-linejoin="round" />
+                      <path d="M3.46924 10.2796L7.06417 6.68469" stroke="#0071BC" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                    <h3 className="text-[13px] text-[#56575B]">PNG & JPEG QR Code download formats</h3></div>
+                  <div className="flex space-x-3 mt-2">
+                    <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M13.1283 6.80001V2.8C13.1283 2.35817 12.7405 2 12.262 2H1.86631C1.38786 2 1 2.35817 1 2.8V11.6C1 12.0419 1.38786 12.4 1.86631 12.4H5.33155" stroke="#0071BC" stroke-linecap="round" stroke-linejoin="round" />
+                      <path d="M1 4.40002H13.1283" stroke="#0071BC" stroke-linecap="round" stroke-linejoin="round" />
+                      <path fill-rule="evenodd" clip-rule="evenodd" d="M10.9381 7.8299L11.8264 10H13.559C13.738 9.99391 13.9019 10.0921 13.969 10.2454C14.036 10.3988 13.9917 10.5746 13.8582 10.6848L12.3566 11.6528L13.1888 13.4198C13.2639 13.5856 13.216 13.7773 13.0698 13.8959C12.9235 14.0145 12.7115 14.0337 12.5431 13.9435L10.5327 12.8982L8.52288 13.9435C8.35447 14.0337 8.14251 14.0145 7.99625 13.8959C7.84998 13.7773 7.80206 13.5856 7.87719 13.4198L8.70423 11.6528L7.20262 10.6848C7.06882 10.5751 7.02396 10.3996 7.09048 10.2461C7.157 10.0927 7.3206 9.99423 7.49948 10H9.2321L10.1221 7.8299C10.2023 7.69052 10.3592 7.60339 10.5301 7.60339C10.701 7.60339 10.858 7.69052 10.9381 7.8299Z" stroke="#0071BC" stroke-linecap="round" stroke-linejoin="round" />
+                      <path d="M3.46924 10.2796L7.06417 6.68469" stroke="#0071BC" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                    <h3 className="text-[13px] text-[#56575B]">QR Code customizations</h3></div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+      {/* End Section */}
+
+      {/* Start Section */}
+      <div className='bg-[#F5F5FA] sm:px-16 px-6 flex justify-center items-start pb-16' >
+        <div className='xl:max-w-[1200px] w-full'>
+          <div className='flex flex-col justify-center items-center'>
+            <h1 className="text-center font-bold font-poppins md:text-[35px] text-[20px] text-[#231D4F] md:leading-[50px] leading-[38px]">
+              Detailed Feature Comparison
+            </h1>
+            {/* <p className="text-[#848199] text-[20px] mt-5">No contract, no surprice fee</p> */}
+          </div>
+
+          <div className="flex flex-row gap-10 mt-8 ">
+            <div className="basis-2/12 mt-10">
+              <div>
+                <div>Pay annually Pay monthly</div>
+                <div className="mt-24 mb-4">
+                  <h3 className="text-[#0071BC] text-[20px] font-bold">Link Management</h3>
+                  <h5 className="mt-2">Short Links</h5>
+                  <h5>Redirects</h5>
+                  <h5>Link Clicks</h5>
+                </div>
+                <div className="">
+                  <h3 className="text-[#0071BC] text-[20px] font-bold">QR Codes</h3>
+                  <h5>Short Links</h5>
+                  <h5>Redirects</h5>
+                  <h5>Link Clicks</h5>
+                </div>
+              </div>
+            </div>
+            <div className="basis-1/12"></div>
+            <div className="basis-7/12">
+              <div className="grid grid-cols-1 lg:grid-cols-4 md:grid-cols-2  ">
+                <div className="bg-[#ffffff] pt-3 px-3 pb-6">
+                  <h3 className="text-center uppercase text-[#464C50]">Free</h3>
+                  <h1 className="text-[#56575B] text-[30px] text-center">N0<span className="text-[16px]">/mo</span></h1>
+                <div className="mt-3">
+                  <button className="w-full bg-[#0071BC] text-white rounded-[34px] py-[10px]">Get Started</button>
+                </div>
+                <div className="mt-12">
+                  <h3 className="text-center mt-1">10/mo</h3>
+                  <h3 className="text-center mt-1">10/mo</h3>
+                  <h3 className="text-center mt-1">10/mo</h3>
+                </div>
+                </div>
+                <div className="bg-[#f5f6f7] pt-3 px-3">
+                  
+                  <h3 className="text-center uppercase text-[#464C50]">Basic</h3>
+                  <h1 className="text-[#56575B] text-[30px] text-center">N3500<span className="text-[16px]">/mo</span></h1>
+                <div className="mt-3">
+                  <button className="w-full bg-[#0071BC] text-white rounded-[34px] py-[10px]">Get Started</button>
+                </div>
+                <div className="mt-12">
+                  <h3 className="text-center mt-1">10/mo</h3>
+                  <h3 className="text-center mt-1">10/mo</h3>
+                  <h3 className="text-center mt-1">10/mo</h3>
+                </div>
+                </div>
+                <div className="bg-[#ffffff] pt-3 px-3">
+                 
+                  <h3 className="text-center uppercase text-[#464C50]">Popular</h3>
+                  <h1 className="text-[#56575B] text-[30px] text-center">N7500<span className="text-[16px]">/mo</span></h1>
+                <div className="mt-3">
+                  <button className="w-full bg-[#0071BC] text-white rounded-[34px] py-[10px]">Get Started</button>
+                </div>
+                <div className="mt-12">
+                  <h3 className="text-center mt-1">10/mo</h3>
+                  <h3 className="text-center mt-1">10/mo</h3>
+                  <h3 className="text-center mt-1">10/mo</h3>
+                </div>
+                </div>
+                <div className="bg-[#f5f6f7] pt-3 px-3">
+                 
+                  <h3 className="text-center uppercase text-[#464C50]">Premium</h3>
+                  <h1 className="text-[#56575B] text-[30px] text-center">N16000<span className="text-[16px]">/mo</span></h1>
+                <div className="mt-3">
+                  <button className="w-full bg-[#0071BC] text-white rounded-[34px] py-[10px]">Get Started</button>
+                </div>
+                <div className="mt-12">
+                  <h3 className="text-center mt-1">10/mo</h3>
+                  <h3 className="text-center mt-1">10/mo</h3>
+                  <h3 className="text-center mt-1">10/mo</h3>
+                </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {/* End Section */}
+
+
+      {/* Start Section */} 
+      {/* FORMAL PRICING */}
+      {/* <div className='bg-[#F5F5FA] sm:px-16 px-6 flex justify-center items-start py-16' >
         <div className='xl:max-w-[1200px] w-full'>
           <div className='flex flex-col justify-center items-center'>
             <h1 className="text-center font-bold font-poppins md:text-[40px] text-[25px] text-[#231D4F] md:leading-[50px] leading-[38px]">
@@ -598,7 +887,7 @@ function Home() {
             </h1>
             <p className="text-[#848199] text-[20px] mt-5">No contract, no surprice fee</p>
           </div>
-          
+
           <div className="grid grid-cols-1 gap-2 lg:grid-cols-3 md:grid-cols-2 mt-10">
 
             <div className="bg-white py-6 px-8 md:rounded-l-[26px] rounded-[15px] mt-8">
@@ -629,7 +918,7 @@ function Home() {
                   <h3 className="text-[14px] text-[#848199] font-normal">Detailed analytics page</h3>
                 </div>
 
-               
+
                 <div className="flex space-x-2 mt-3">
                   <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M10 0C4.47715 0 0 4.47715 0 10C0 15.5228 4.47715 20 10 20C15.5228 20 20 15.5228 20 10C19.9936 4.47982 15.5202 0.00642897 10 0Z" fill="#5243C2" fill-opacity="0.103693" />
@@ -652,7 +941,7 @@ function Home() {
                   <h3 className="text-[14px] text-[#848199] font-normal">24/7 customer support</h3>
                 </div>
 
-              
+
 
 
 
@@ -660,90 +949,90 @@ function Home() {
             </div>
 
 
-          <div className="bg-[#0071BC] py-6 px-8 md:mb-8 mb-0 mt-8 md:mt-0 rounded-[20px] shadow-2xl shadow-[#0071BC]">
-            <div className="flex justify-end">
-              <h3 className="text-[10px] text-white">RECOMMENDED</h3>
+            <div className="bg-[#0071BC] py-6 px-8 md:mb-8 mb-0 mt-8 md:mt-0 rounded-[20px] shadow-2xl shadow-[#0071BC]">
+              <div className="flex justify-end">
+                <h3 className="text-[10px] text-white">RECOMMENDED</h3>
+              </div>
+              <h2 className="text-[33px] text-[#ffffff] font-semibold">$5 <span className="text-[14px] text-[#ffffff]">/ month</span></h2>
+              <h3 className="mt-2 text-[#ffffff]  text-[26px]">Popular</h3>
+              <p className="mt-1 text-[14px] text-white ">You will have access to:</p>
+              <div className="mt-3">
+                <div className="flex space-x-2 mt-3">
+                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path opacity="0.1" d="M10 0C4.47715 0 0 4.47715 0 10C0 15.5228 4.47715 20 10 20C15.5228 20 20 15.5228 20 10C19.9936 4.47982 15.5202 0.00642897 10 0Z" fill="white" />
+                    <path d="M15.7727 6.83313L10.0685 14.574C9.93246 14.7545 9.7296 14.8727 9.50552 14.9022C9.28143 14.9316 9.0549 14.8698 8.87683 14.7306L4.8035 11.474C4.44405 11.1863 4.38585 10.6617 4.6735 10.3023C4.96115 9.94285 5.48572 9.88465 5.84516 10.1723L9.24183 12.8898L14.431 5.8473C14.6012 5.59195 14.8979 5.45078 15.2033 5.47983C15.5088 5.50887 15.7736 5.70344 15.8926 5.98627C16.0116 6.26911 15.9655 6.59445 15.7727 6.83313Z" fill="white" />
+                  </svg>
+
+                  <h3 className="text-[14px] text-[#ffffff]  font-normal">30 whatsapp links(message/catalog)</h3>
+                </div>
+                <div className="flex space-x-2 mt-3">
+                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path opacity="0.1" d="M10 0C4.47715 0 0 4.47715 0 10C0 15.5228 4.47715 20 10 20C15.5228 20 20 15.5228 20 10C19.9936 4.47982 15.5202 0.00642897 10 0Z" fill="white" />
+                    <path d="M15.7727 6.83313L10.0685 14.574C9.93246 14.7545 9.7296 14.8727 9.50552 14.9022C9.28143 14.9316 9.0549 14.8698 8.87683 14.7306L4.8035 11.474C4.44405 11.1863 4.38585 10.6617 4.6735 10.3023C4.96115 9.94285 5.48572 9.88465 5.84516 10.1723L9.24183 12.8898L14.431 5.8473C14.6012 5.59195 14.8979 5.45078 15.2033 5.47983C15.5088 5.50887 15.7736 5.70344 15.8926 5.98627C16.0116 6.26911 15.9655 6.59445 15.7727 6.83313Z" fill="white" />
+                  </svg>
+
+                  <h3 className="text-[14px] text-[#ffffff]  font-normal">30 redirect links</h3>
+                </div>
+
+                <div className="flex space-x-2 mt-3">
+                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path opacity="0.1" d="M10 0C4.47715 0 0 4.47715 0 10C0 15.5228 4.47715 20 10 20C15.5228 20 20 15.5228 20 10C19.9936 4.47982 15.5202 0.00642897 10 0Z" fill="white" />
+                    <path d="M15.7727 6.83313L10.0685 14.574C9.93246 14.7545 9.7296 14.8727 9.50552 14.9022C9.28143 14.9316 9.0549 14.8698 8.87683 14.7306L4.8035 11.474C4.44405 11.1863 4.38585 10.6617 4.6735 10.3023C4.96115 9.94285 5.48572 9.88465 5.84516 10.1723L9.24183 12.8898L14.431 5.8473C14.6012 5.59195 14.8979 5.45078 15.2033 5.47983C15.5088 5.50887 15.7736 5.70344 15.8926 5.98627C16.0116 6.26911 15.9655 6.59445 15.7727 6.83313Z" fill="white" />
+                  </svg>
+
+                  <h3 className="text-[14px] text-[#ffffff]  font-normal">Detailed analytics page</h3>
+                </div>
+
+                <div className="flex space-x-2 mt-3">
+                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path opacity="0.1" d="M10 0C4.47715 0 0 4.47715 0 10C0 15.5228 4.47715 20 10 20C15.5228 20 20 15.5228 20 10C19.9936 4.47982 15.5202 0.00642897 10 0Z" fill="white" />
+                    <path d="M15.7727 6.83313L10.0685 14.574C9.93246 14.7545 9.7296 14.8727 9.50552 14.9022C9.28143 14.9316 9.0549 14.8698 8.87683 14.7306L4.8035 11.474C4.44405 11.1863 4.38585 10.6617 4.6735 10.3023C4.96115 9.94285 5.48572 9.88465 5.84516 10.1723L9.24183 12.8898L14.431 5.8473C14.6012 5.59195 14.8979 5.45078 15.2033 5.47983C15.5088 5.50887 15.7736 5.70344 15.8926 5.98627C16.0116 6.26911 15.9655 6.59445 15.7727 6.83313Z" fill="white" />
+                  </svg>
+
+                  <h3 className="text-[14px] text-[#ffffff] font-normal">20 multi links</h3>
+                </div>
+                <div className="flex space-x-2 mt-3">
+                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path opacity="0.1" d="M10 0C4.47715 0 0 4.47715 0 10C0 15.5228 4.47715 20 10 20C15.5228 20 20 15.5228 20 10C19.9936 4.47982 15.5202 0.00642897 10 0Z" fill="white" />
+                    <path d="M15.7727 6.83313L10.0685 14.574C9.93246 14.7545 9.7296 14.8727 9.50552 14.9022C9.28143 14.9316 9.0549 14.8698 8.87683 14.7306L4.8035 11.474C4.44405 11.1863 4.38585 10.6617 4.6735 10.3023C4.96115 9.94285 5.48572 9.88465 5.84516 10.1723L9.24183 12.8898L14.431 5.8473C14.6012 5.59195 14.8979 5.45078 15.2033 5.47983C15.5088 5.50887 15.7736 5.70344 15.8926 5.98627C16.0116 6.26911 15.9655 6.59445 15.7727 6.83313Z" fill="white" />
+                  </svg>
+
+                  <h3 className="text-[14px] text-[#ffffff]  font-normal">10 mini store</h3>
+                </div>
+                <div className="flex space-x-2 mt-3">
+                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path opacity="0.1" d="M10 0C4.47715 0 0 4.47715 0 10C0 15.5228 4.47715 20 10 20C15.5228 20 20 15.5228 20 10C19.9936 4.47982 15.5202 0.00642897 10 0Z" fill="white" />
+                    <path d="M15.7727 6.83313L10.0685 14.574C9.93246 14.7545 9.7296 14.8727 9.50552 14.9022C9.28143 14.9316 9.0549 14.8698 8.87683 14.7306L4.8035 11.474C4.44405 11.1863 4.38585 10.6617 4.6735 10.3023C4.96115 9.94285 5.48572 9.88465 5.84516 10.1723L9.24183 12.8898L14.431 5.8473C14.6012 5.59195 14.8979 5.45078 15.2033 5.47983C15.5088 5.50887 15.7736 5.70344 15.8926 5.98627C16.0116 6.26911 15.9655 6.59445 15.7727 6.83313Z" fill="white" />
+                  </svg>
+
+                  <h3 className="text-[14px] text-[#ffffff]  font-normal">24/7 customer support</h3>
+                </div>
+
+              </div>
             </div>
-            <h2 className="text-[33px] text-[#ffffff] font-semibold">$5 <span className="text-[14px] text-[#ffffff]">/ month</span></h2>
-            <h3 className="mt-2 text-[#ffffff]  text-[26px]">Popular</h3>
-            <p className="mt-1 text-[14px] text-white ">You will have access to:</p>
-            <div className="mt-3">
-              <div className="flex space-x-2 mt-3">
-                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path opacity="0.1" d="M10 0C4.47715 0 0 4.47715 0 10C0 15.5228 4.47715 20 10 20C15.5228 20 20 15.5228 20 10C19.9936 4.47982 15.5202 0.00642897 10 0Z" fill="white" />
-                  <path d="M15.7727 6.83313L10.0685 14.574C9.93246 14.7545 9.7296 14.8727 9.50552 14.9022C9.28143 14.9316 9.0549 14.8698 8.87683 14.7306L4.8035 11.474C4.44405 11.1863 4.38585 10.6617 4.6735 10.3023C4.96115 9.94285 5.48572 9.88465 5.84516 10.1723L9.24183 12.8898L14.431 5.8473C14.6012 5.59195 14.8979 5.45078 15.2033 5.47983C15.5088 5.50887 15.7736 5.70344 15.8926 5.98627C16.0116 6.26911 15.9655 6.59445 15.7727 6.83313Z" fill="white" />
-                </svg>
-
-                <h3 className="text-[14px] text-[#ffffff]  font-normal">30 whatsapp links(message/catalog)</h3>
-              </div>
-              <div className="flex space-x-2 mt-3">
-                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path opacity="0.1" d="M10 0C4.47715 0 0 4.47715 0 10C0 15.5228 4.47715 20 10 20C15.5228 20 20 15.5228 20 10C19.9936 4.47982 15.5202 0.00642897 10 0Z" fill="white" />
-                  <path d="M15.7727 6.83313L10.0685 14.574C9.93246 14.7545 9.7296 14.8727 9.50552 14.9022C9.28143 14.9316 9.0549 14.8698 8.87683 14.7306L4.8035 11.474C4.44405 11.1863 4.38585 10.6617 4.6735 10.3023C4.96115 9.94285 5.48572 9.88465 5.84516 10.1723L9.24183 12.8898L14.431 5.8473C14.6012 5.59195 14.8979 5.45078 15.2033 5.47983C15.5088 5.50887 15.7736 5.70344 15.8926 5.98627C16.0116 6.26911 15.9655 6.59445 15.7727 6.83313Z" fill="white" />
-                </svg>
-
-                <h3 className="text-[14px] text-[#ffffff]  font-normal">30 redirect links</h3>
-              </div>
-
-              <div className="flex space-x-2 mt-3">
-                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path opacity="0.1" d="M10 0C4.47715 0 0 4.47715 0 10C0 15.5228 4.47715 20 10 20C15.5228 20 20 15.5228 20 10C19.9936 4.47982 15.5202 0.00642897 10 0Z" fill="white" />
-                  <path d="M15.7727 6.83313L10.0685 14.574C9.93246 14.7545 9.7296 14.8727 9.50552 14.9022C9.28143 14.9316 9.0549 14.8698 8.87683 14.7306L4.8035 11.474C4.44405 11.1863 4.38585 10.6617 4.6735 10.3023C4.96115 9.94285 5.48572 9.88465 5.84516 10.1723L9.24183 12.8898L14.431 5.8473C14.6012 5.59195 14.8979 5.45078 15.2033 5.47983C15.5088 5.50887 15.7736 5.70344 15.8926 5.98627C16.0116 6.26911 15.9655 6.59445 15.7727 6.83313Z" fill="white" />
-                </svg>
-
-                <h3 className="text-[14px] text-[#ffffff]  font-normal">Detailed analytics page</h3>
-              </div>
-
-              <div className="flex space-x-2 mt-3">
-                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path opacity="0.1" d="M10 0C4.47715 0 0 4.47715 0 10C0 15.5228 4.47715 20 10 20C15.5228 20 20 15.5228 20 10C19.9936 4.47982 15.5202 0.00642897 10 0Z" fill="white" />
-                  <path d="M15.7727 6.83313L10.0685 14.574C9.93246 14.7545 9.7296 14.8727 9.50552 14.9022C9.28143 14.9316 9.0549 14.8698 8.87683 14.7306L4.8035 11.474C4.44405 11.1863 4.38585 10.6617 4.6735 10.3023C4.96115 9.94285 5.48572 9.88465 5.84516 10.1723L9.24183 12.8898L14.431 5.8473C14.6012 5.59195 14.8979 5.45078 15.2033 5.47983C15.5088 5.50887 15.7736 5.70344 15.8926 5.98627C16.0116 6.26911 15.9655 6.59445 15.7727 6.83313Z" fill="white" />
-                </svg>
-
-                <h3 className="text-[14px] text-[#ffffff] font-normal">20 multi links</h3>
-              </div>
-              <div className="flex space-x-2 mt-3">
-                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path opacity="0.1" d="M10 0C4.47715 0 0 4.47715 0 10C0 15.5228 4.47715 20 10 20C15.5228 20 20 15.5228 20 10C19.9936 4.47982 15.5202 0.00642897 10 0Z" fill="white" />
-                  <path d="M15.7727 6.83313L10.0685 14.574C9.93246 14.7545 9.7296 14.8727 9.50552 14.9022C9.28143 14.9316 9.0549 14.8698 8.87683 14.7306L4.8035 11.474C4.44405 11.1863 4.38585 10.6617 4.6735 10.3023C4.96115 9.94285 5.48572 9.88465 5.84516 10.1723L9.24183 12.8898L14.431 5.8473C14.6012 5.59195 14.8979 5.45078 15.2033 5.47983C15.5088 5.50887 15.7736 5.70344 15.8926 5.98627C16.0116 6.26911 15.9655 6.59445 15.7727 6.83313Z" fill="white" />
-                </svg>
-
-                <h3 className="text-[14px] text-[#ffffff]  font-normal">10 mini store</h3>
-              </div>
-              <div className="flex space-x-2 mt-3">
-                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path opacity="0.1" d="M10 0C4.47715 0 0 4.47715 0 10C0 15.5228 4.47715 20 10 20C15.5228 20 20 15.5228 20 10C19.9936 4.47982 15.5202 0.00642897 10 0Z" fill="white" />
-                  <path d="M15.7727 6.83313L10.0685 14.574C9.93246 14.7545 9.7296 14.8727 9.50552 14.9022C9.28143 14.9316 9.0549 14.8698 8.87683 14.7306L4.8035 11.474C4.44405 11.1863 4.38585 10.6617 4.6735 10.3023C4.96115 9.94285 5.48572 9.88465 5.84516 10.1723L9.24183 12.8898L14.431 5.8473C14.6012 5.59195 14.8979 5.45078 15.2033 5.47983C15.5088 5.50887 15.7736 5.70344 15.8926 5.98627C16.0116 6.26911 15.9655 6.59445 15.7727 6.83313Z" fill="white" />
-                </svg>
-
-                <h3 className="text-[14px] text-[#ffffff]  font-normal">24/7 customer support</h3>
-              </div>
-
-            </div>
-          </div>
 
 
-          <div className="bg-white py-6 px-8 mt-8 md:rounded-r-[26px] rounded-[15px]">
-            <h2 className="text-[33px] text-[#231D4F] font-semibold">$10 <span className="text-[14px] text-[#848199]">/ month</span></h2>
-            <h3 className="mt-2 text-[#231D4F] text-[26px]">Premium</h3>
-            <p className="mt-1 text-[14px] text-[#848199]">You will have access to:</p>
-            <div className="mt-3">
-              <div className="flex space-x-2 mt-3">
-                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M10 0C4.47715 0 0 4.47715 0 10C0 15.5228 4.47715 20 10 20C15.5228 20 20 15.5228 20 10C19.9936 4.47982 15.5202 0.00642897 10 0Z" fill="#5243C2" fill-opacity="0.103693" />
-                  <path d="M15.7727 6.83313L10.0685 14.574C9.93246 14.7545 9.7296 14.8727 9.50552 14.9022C9.28143 14.9316 9.0549 14.8698 8.87683 14.7306L4.8035 11.474C4.44405 11.1863 4.38585 10.6617 4.6735 10.3023C4.96115 9.94285 5.48572 9.88465 5.84516 10.1723L9.24183 12.8898L14.431 5.8473C14.6012 5.59195 14.8979 5.45078 15.2033 5.47983C15.5088 5.50887 15.7736 5.70344 15.8926 5.98627C16.0116 6.26911 15.9655 6.59445 15.7727 6.83313Z" fill="#0071BC" />
-                </svg>
-                <h3 className="text-[14px] text-[#848199] font-normal">100 whatsapp links(whatsapp/catalog)</h3>
-              </div>
-              <div className="flex space-x-2 mt-3">
-                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M10 0C4.47715 0 0 4.47715 0 10C0 15.5228 4.47715 20 10 20C15.5228 20 20 15.5228 20 10C19.9936 4.47982 15.5202 0.00642897 10 0Z" fill="#5243C2" fill-opacity="0.103693" />
-                  <path d="M15.7727 6.83313L10.0685 14.574C9.93246 14.7545 9.7296 14.8727 9.50552 14.9022C9.28143 14.9316 9.0549 14.8698 8.87683 14.7306L4.8035 11.474C4.44405 11.1863 4.38585 10.6617 4.6735 10.3023C4.96115 9.94285 5.48572 9.88465 5.84516 10.1723L9.24183 12.8898L14.431 5.8473C14.6012 5.59195 14.8979 5.45078 15.2033 5.47983C15.5088 5.50887 15.7736 5.70344 15.8926 5.98627C16.0116 6.26911 15.9655 6.59445 15.7727 6.83313Z" fill="#0071BC" />
-                </svg>
-                <h3 className="text-[14px] text-[#848199] font-normal">100 redirect links</h3>
-              </div>
+            <div className="bg-white py-6 px-8 mt-8 md:rounded-r-[26px] rounded-[15px]">
+              <h2 className="text-[33px] text-[#231D4F] font-semibold">$10 <span className="text-[14px] text-[#848199]">/ month</span></h2>
+              <h3 className="mt-2 text-[#231D4F] text-[26px]">Premium</h3>
+              <p className="mt-1 text-[14px] text-[#848199]">You will have access to:</p>
+              <div className="mt-3">
+                <div className="flex space-x-2 mt-3">
+                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M10 0C4.47715 0 0 4.47715 0 10C0 15.5228 4.47715 20 10 20C15.5228 20 20 15.5228 20 10C19.9936 4.47982 15.5202 0.00642897 10 0Z" fill="#5243C2" fill-opacity="0.103693" />
+                    <path d="M15.7727 6.83313L10.0685 14.574C9.93246 14.7545 9.7296 14.8727 9.50552 14.9022C9.28143 14.9316 9.0549 14.8698 8.87683 14.7306L4.8035 11.474C4.44405 11.1863 4.38585 10.6617 4.6735 10.3023C4.96115 9.94285 5.48572 9.88465 5.84516 10.1723L9.24183 12.8898L14.431 5.8473C14.6012 5.59195 14.8979 5.45078 15.2033 5.47983C15.5088 5.50887 15.7736 5.70344 15.8926 5.98627C16.0116 6.26911 15.9655 6.59445 15.7727 6.83313Z" fill="#0071BC" />
+                  </svg>
+                  <h3 className="text-[14px] text-[#848199] font-normal">100 whatsapp links(whatsapp/catalog)</h3>
+                </div>
+                <div className="flex space-x-2 mt-3">
+                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M10 0C4.47715 0 0 4.47715 0 10C0 15.5228 4.47715 20 10 20C15.5228 20 20 15.5228 20 10C19.9936 4.47982 15.5202 0.00642897 10 0Z" fill="#5243C2" fill-opacity="0.103693" />
+                    <path d="M15.7727 6.83313L10.0685 14.574C9.93246 14.7545 9.7296 14.8727 9.50552 14.9022C9.28143 14.9316 9.0549 14.8698 8.87683 14.7306L4.8035 11.474C4.44405 11.1863 4.38585 10.6617 4.6735 10.3023C4.96115 9.94285 5.48572 9.88465 5.84516 10.1723L9.24183 12.8898L14.431 5.8473C14.6012 5.59195 14.8979 5.45078 15.2033 5.47983C15.5088 5.50887 15.7736 5.70344 15.8926 5.98627C16.0116 6.26911 15.9655 6.59445 15.7727 6.83313Z" fill="#0071BC" />
+                  </svg>
+                  <h3 className="text-[14px] text-[#848199] font-normal">100 redirect links</h3>
+                </div>
 
-              <div className="flex space-x-2 mt-3">
+                <div className="flex space-x-2 mt-3">
                   <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M10 0C4.47715 0 0 4.47715 0 10C0 15.5228 4.47715 20 10 20C15.5228 20 20 15.5228 20 10C19.9936 4.47982 15.5202 0.00642897 10 0Z" fill="#5243C2" fill-opacity="0.103693" />
                     <path d="M15.7727 6.83313L10.0685 14.574C9.93246 14.7545 9.7296 14.8727 9.50552 14.9022C9.28143 14.9316 9.0549 14.8698 8.87683 14.7306L4.8035 11.474C4.44405 11.1863 4.38585 10.6617 4.6735 10.3023C4.96115 9.94285 5.48572 9.88465 5.84516 10.1723L9.24183 12.8898L14.431 5.8473C14.6012 5.59195 14.8979 5.45078 15.2033 5.47983C15.5088 5.50887 15.7736 5.70344 15.8926 5.98627C16.0116 6.26911 15.9655 6.59445 15.7727 6.83313Z" fill="#0071BC" />
@@ -752,34 +1041,34 @@ function Home() {
                 </div>
 
 
-              <div className="flex space-x-2 mt-3">
-                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M10 0C4.47715 0 0 4.47715 0 10C0 15.5228 4.47715 20 10 20C15.5228 20 20 15.5228 20 10C19.9936 4.47982 15.5202 0.00642897 10 0Z" fill="#5243C2" fill-opacity="0.103693" />
-                  <path d="M15.7727 6.83313L10.0685 14.574C9.93246 14.7545 9.7296 14.8727 9.50552 14.9022C9.28143 14.9316 9.0549 14.8698 8.87683 14.7306L4.8035 11.474C4.44405 11.1863 4.38585 10.6617 4.6735 10.3023C4.96115 9.94285 5.48572 9.88465 5.84516 10.1723L9.24183 12.8898L14.431 5.8473C14.6012 5.59195 14.8979 5.45078 15.2033 5.47983C15.5088 5.50887 15.7736 5.70344 15.8926 5.98627C16.0116 6.26911 15.9655 6.59445 15.7727 6.83313Z" fill="#0071BC" />
-                </svg>
-                <h3 className="text-[14px] text-[#848199] font-normal">50 multi links</h3>
-              </div>
-              <div className="flex space-x-2 mt-3">
-                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M10 0C4.47715 0 0 4.47715 0 10C0 15.5228 4.47715 20 10 20C15.5228 20 20 15.5228 20 10C19.9936 4.47982 15.5202 0.00642897 10 0Z" fill="#5243C2" fill-opacity="0.103693" />
-                  <path d="M15.7727 6.83313L10.0685 14.574C9.93246 14.7545 9.7296 14.8727 9.50552 14.9022C9.28143 14.9316 9.0549 14.8698 8.87683 14.7306L4.8035 11.474C4.44405 11.1863 4.38585 10.6617 4.6735 10.3023C4.96115 9.94285 5.48572 9.88465 5.84516 10.1723L9.24183 12.8898L14.431 5.8473C14.6012 5.59195 14.8979 5.45078 15.2033 5.47983C15.5088 5.50887 15.7736 5.70344 15.8926 5.98627C16.0116 6.26911 15.9655 6.59445 15.7727 6.83313Z" fill="#0071BC" />
-                </svg>
-                <h3 className="text-[14px] text-[#848199] font-normal">30 mini stores</h3>
-              </div>
-              <div className="flex space-x-2 mt-3">
-                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M10 0C4.47715 0 0 4.47715 0 10C0 15.5228 4.47715 20 10 20C15.5228 20 20 15.5228 20 10C19.9936 4.47982 15.5202 0.00642897 10 0Z" fill="#5243C2" fill-opacity="0.103693" />
-                  <path d="M15.7727 6.83313L10.0685 14.574C9.93246 14.7545 9.7296 14.8727 9.50552 14.9022C9.28143 14.9316 9.0549 14.8698 8.87683 14.7306L4.8035 11.474C4.44405 11.1863 4.38585 10.6617 4.6735 10.3023C4.96115 9.94285 5.48572 9.88465 5.84516 10.1723L9.24183 12.8898L14.431 5.8473C14.6012 5.59195 14.8979 5.45078 15.2033 5.47983C15.5088 5.50887 15.7736 5.70344 15.8926 5.98627C16.0116 6.26911 15.9655 6.59445 15.7727 6.83313Z" fill="#0071BC" />
-                </svg>
-                <h3 className="text-[14px] text-[#848199] font-normal">24/7 customer support</h3>
-              </div>
+                <div className="flex space-x-2 mt-3">
+                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M10 0C4.47715 0 0 4.47715 0 10C0 15.5228 4.47715 20 10 20C15.5228 20 20 15.5228 20 10C19.9936 4.47982 15.5202 0.00642897 10 0Z" fill="#5243C2" fill-opacity="0.103693" />
+                    <path d="M15.7727 6.83313L10.0685 14.574C9.93246 14.7545 9.7296 14.8727 9.50552 14.9022C9.28143 14.9316 9.0549 14.8698 8.87683 14.7306L4.8035 11.474C4.44405 11.1863 4.38585 10.6617 4.6735 10.3023C4.96115 9.94285 5.48572 9.88465 5.84516 10.1723L9.24183 12.8898L14.431 5.8473C14.6012 5.59195 14.8979 5.45078 15.2033 5.47983C15.5088 5.50887 15.7736 5.70344 15.8926 5.98627C16.0116 6.26911 15.9655 6.59445 15.7727 6.83313Z" fill="#0071BC" />
+                  </svg>
+                  <h3 className="text-[14px] text-[#848199] font-normal">50 multi links</h3>
+                </div>
+                <div className="flex space-x-2 mt-3">
+                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M10 0C4.47715 0 0 4.47715 0 10C0 15.5228 4.47715 20 10 20C15.5228 20 20 15.5228 20 10C19.9936 4.47982 15.5202 0.00642897 10 0Z" fill="#5243C2" fill-opacity="0.103693" />
+                    <path d="M15.7727 6.83313L10.0685 14.574C9.93246 14.7545 9.7296 14.8727 9.50552 14.9022C9.28143 14.9316 9.0549 14.8698 8.87683 14.7306L4.8035 11.474C4.44405 11.1863 4.38585 10.6617 4.6735 10.3023C4.96115 9.94285 5.48572 9.88465 5.84516 10.1723L9.24183 12.8898L14.431 5.8473C14.6012 5.59195 14.8979 5.45078 15.2033 5.47983C15.5088 5.50887 15.7736 5.70344 15.8926 5.98627C16.0116 6.26911 15.9655 6.59445 15.7727 6.83313Z" fill="#0071BC" />
+                  </svg>
+                  <h3 className="text-[14px] text-[#848199] font-normal">30 mini stores</h3>
+                </div>
+                <div className="flex space-x-2 mt-3">
+                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M10 0C4.47715 0 0 4.47715 0 10C0 15.5228 4.47715 20 10 20C15.5228 20 20 15.5228 20 10C19.9936 4.47982 15.5202 0.00642897 10 0Z" fill="#5243C2" fill-opacity="0.103693" />
+                    <path d="M15.7727 6.83313L10.0685 14.574C9.93246 14.7545 9.7296 14.8727 9.50552 14.9022C9.28143 14.9316 9.0549 14.8698 8.87683 14.7306L4.8035 11.474C4.44405 11.1863 4.38585 10.6617 4.6735 10.3023C4.96115 9.94285 5.48572 9.88465 5.84516 10.1723L9.24183 12.8898L14.431 5.8473C14.6012 5.59195 14.8979 5.45078 15.2033 5.47983C15.5088 5.50887 15.7736 5.70344 15.8926 5.98627C16.0116 6.26911 15.9655 6.59445 15.7727 6.83313Z" fill="#0071BC" />
+                  </svg>
+                  <h3 className="text-[14px] text-[#848199] font-normal">24/7 customer support</h3>
+                </div>
 
+              </div>
             </div>
-          </div>
 
           </div>
         </div>
-      </div>
+      </div> */}
       {/* End Section */}
 
       {/* Start Section */}
