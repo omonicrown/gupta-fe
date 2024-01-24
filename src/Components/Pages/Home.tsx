@@ -600,7 +600,7 @@ function Home() {
             <p className="text-[#56575B] text-[20px] mt-5">Connect to your audience with branded links, QR Codes, and a Link-in-bio that will get their attention.</p>
           </div>
 
-          <div className="mt-6">
+          <div className=" flex justify-center mt-6">
             <h3>Save up to 34% when you pay annually</h3>
           </div>
 
@@ -788,13 +788,13 @@ function Home() {
       {/* End Section */}
 
       {/* Start Section */}
-      <div className='bg-[#F5F5FA] sm:px-16 px-6 flex justify-center items-start pb-16' >
+      {/* <div className='bg-[#F5F5FA] sm:px-16 px-6 flex justify-center items-start pb-16' >
         <div className='xl:max-w-[1200px] w-full'>
           <div className='flex flex-col justify-center items-center'>
             <h1 className="text-center font-bold font-poppins md:text-[35px] text-[20px] text-[#231D4F] md:leading-[50px] leading-[38px]">
               Detailed Feature Comparison
             </h1>
-            {/* <p className="text-[#848199] text-[20px] mt-5">No contract, no surprice fee</p> */}
+          
           </div>
 
           <div className="flex flex-row gap-10 mt-8 ">
@@ -873,7 +873,7 @@ function Home() {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
       {/* End Section */}
 
 
