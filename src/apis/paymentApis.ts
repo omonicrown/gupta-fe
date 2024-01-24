@@ -36,12 +36,30 @@ export class PaymentApis {
             return this.paymentApis.getProdutCallback(reference);
         }
     } 
+    
+    
 
     static getWalletDetails(): AxiosPromise<Array<any>> {
         if (configs.type === "LOCAL") {
             return {} as AxiosPromise;
         } else {
             return this.paymentApis.getWalletDetails();
+        }
+    } 
+
+    static witdrawFunds(data:any): AxiosPromise<Array<any>> {
+        if (configs.type === "LOCAL") {
+            return {} as AxiosPromise;
+        } else {
+            return this.paymentApis.witdrawFunds(data);
+        }
+    } 
+
+    static getTransactions(): AxiosPromise<Array<any>> {
+        if (configs.type === "LOCAL") {
+            return {} as AxiosPromise;
+        } else {
+            return this.paymentApis.getTransactions();
         }
     } 
 

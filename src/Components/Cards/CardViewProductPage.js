@@ -82,7 +82,7 @@ export default function CardViewProductPage() {
       console?.log('hello2')
       let data = {
         'user_id': value?.user_id,
-        'amount': ((value?.product_price) * productQty),
+        'amount': ((value?.no_of_items) * productQty),
         'customer_full_name': fullName,
         'product_qty': productQty,
         'pay_for': value?.product_name,

@@ -588,7 +588,7 @@ export default function CardCreateProduct() {
         <Modal
           visible={visible}
           width="380"
-          height="700"
+          height=  {userData?.sub_type == 'premium' ?'700':'300'}
           effect="fadeInUp"
           onClickAway={() => toggleModal}
         >

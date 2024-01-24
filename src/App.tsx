@@ -11,6 +11,7 @@ import Login from './Components/Pages/Auth/Login';
 import Index from './Components/Pages/Auth/index';
 import MultiLinks from './Components/user/TiredLink';
 import Mylinks from './Components/user/MyLinks';
+import PaymentDashboard from './Components/user/PaymentDashboard';
 import RedirectLinks from './Components/user/RedirectLink';
 import CreateLink from './Components/user/CreateLink';
 import CreateRedirectLink from './Components/user/CreateRedirectLink';
@@ -53,8 +54,10 @@ function App() {
            <Route  path="/reset-password" element={<ResetPassword/>}/>
            <Route  path="/password-success" element={<PasswordSuccess/>}/>
            <Route  path="/email-verify/:email" element={<EmailVerifyComplete/>}/>
-           {/* <Route  path="/login" element={<Login/>}/> */}
+           {/* <Route  path="/login" element={<Login/>}/> */}  
            <Route  path="/mylinks" element={<Mylinks/>}/>
+           <Route  path="/payment-page" element={<PaymentDashboard/>}/>
+           {/* <Route  path="/payment-page" element={<Mylinks/>}/> */}
            <Route  path="/redirect-links" element={<RedirectLinks/>}/>
            <Route  path="/createlink" element={<CreateLink/>}/> 
            <Route  path="/subscription" element={<Subscription/>}/>
