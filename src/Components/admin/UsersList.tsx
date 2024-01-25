@@ -21,7 +21,6 @@ function UsersList() {
             (response: AxiosResponse<any>) => {
                 if (response?.data) {
                     setUserList(response?.data?.data)
-                    console?.log(response?.data?.data?.data)
                 }
             }
         ).catch(function (error) {

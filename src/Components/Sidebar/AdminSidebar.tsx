@@ -174,23 +174,24 @@ export default function AdminSidebar() {
                 <Link
                   className={
                     "text-xs py-3 font-bold block " +
-                    (window.location.href.indexOf("/view-agent-houses") !== -1
+                    (window.location.href.indexOf("/witdrawal-request") !== -1
                       ? "text-[#0071BC] hover:text-lightBlue-600"
                       : "text-[#8A92A6] hover:text-blueGray-500")
                   }
-                  to="/view-agent-houses"
+                  to="/witdrawal-request"
                 >
                   <i
                     className={
                       "fas fa-tools mr-2 text-sm " +
-                      (window.location.href.indexOf("/view-agent-houses") !== -1
+                      (window.location.href.indexOf("/witdrawal-request") !== -1
                         ? "opacity-75"
                         : "text-blueGray-300")
                     }
                   ></i>{" "}
-                   Subcriptions
+                   Witdrawals
                 </Link>
               </li>
+
               <hr className="mb-1 md:min-w-full" />
               <li className="items-center">
                 <Link

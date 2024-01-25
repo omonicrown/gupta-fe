@@ -9,6 +9,12 @@ export class PaymentLiveApis extends AxiosGlobal{
     
     payForProduct(data:any): AxiosPromise<any> {
         return this.axios.post(`${configs.context}/payment/pay-for-product`, data);
+    } 
+
+    requestWitdrawal(data:any): AxiosPromise<any> {
+        return this.axios.post(`${configs.context}/payment/request-witdrawal`, data,{
+            headers: { "Content-Type": "aplication/json", "Accept": "aplication/json", "Authorization": `Bearer ${store.getState().data.login.value.token}`, "Access-Control-Allow-Origin": "*" },
+        });
     }
 
     witdrawFunds(data:any): AxiosPromise<any> {

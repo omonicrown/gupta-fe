@@ -20,7 +20,7 @@ export default function Navbar({ title }) {
         if (response?.data) {
           // setdata(response?.data)
           console?.log(response?.data)
-          setdata(new Intl.NumberFormat('en-US', { style: 'currency', currency: 'NGN' }).format(response?.data?.data?.total_amount))
+          setdata(new Intl.NumberFormat('en-US', { style: 'currency', currency: 'NGN' }).format((response?.data?.data?.total_amount)?(response?.data?.data?.total_amount):0.0))
           // window.location.reload();
         }
       }

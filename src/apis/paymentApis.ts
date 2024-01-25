@@ -45,13 +45,21 @@ export class PaymentApis {
         } else {
             return this.paymentApis.getWalletDetails();
         }
-    } 
+    }  
 
     static witdrawFunds(data:any): AxiosPromise<Array<any>> {
         if (configs.type === "LOCAL") {
             return {} as AxiosPromise;
         } else {
             return this.paymentApis.witdrawFunds(data);
+        }
+    } 
+
+    static requestWitdrawal(data:any): AxiosPromise<Array<any>> {
+        if (configs.type === "LOCAL") {
+            return {} as AxiosPromise;
+        } else {
+            return this.paymentApis.requestWitdrawal(data);
         }
     } 
 

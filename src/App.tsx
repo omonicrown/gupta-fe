@@ -35,6 +35,7 @@ import SideBar from './Components/Sidebar/index';
 import Home from './Components/Pages/Home';
 import Dashboard from './Components/admin/Dashboard';
 import UsersList from './Components/admin/UsersList';
+import WitdrawalRequest from './Components/admin/WitdrawalRequest';
 import UserDetails from './Components/admin/UserDetails';
 
 
@@ -82,6 +83,7 @@ function App() {
 
            <Route  path='/admin-dashboard' element={<Dashboard/>}/>
            <Route  path='/admin-users' element={<UsersList/>}/>
+           <Route  path='/witdrawal-request' element={<WitdrawalRequest/>}/>
            <Route  path='/user-details/:id' element={<UserDetails/>}/>
       </Routes>
     </div>

@@ -16,12 +16,30 @@ export class SuperAdminApis {
         }
     } 
 
+    
+
+    static payOutCustomers(data:any): AxiosPromise<Array<any>> {
+        if (configs.type === "LOCAL") {
+            return {} as AxiosPromise;
+        } else {
+            return this.adminApi.payOutCustomers(data);
+        }
+    }
+   
 
     static getAllUsers(pageNo:any,query:any): AxiosPromise<Array<any>> {
         if (configs.type === "LOCAL") {
             return {} as AxiosPromise;
         } else {
             return this.adminApi.getAllUsers(pageNo,query);
+        }
+    }
+
+    static  getAllWitdrawals(pageNo:any,query:any): AxiosPromise<Array<any>> {
+        if (configs.type === "LOCAL") {
+            return {} as AxiosPromise;
+        } else {
+            return this.adminApi. getAllWitdrawals(pageNo,query);
         }
     }
 

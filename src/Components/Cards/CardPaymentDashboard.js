@@ -33,6 +33,8 @@ export default function CardPaymentDashboard() {
 
   let [balance, setBalance] = React.useState([]);
 
+  let [refresh, setRefresh] = React.useState(false);
+
   const [transactionList, setTransactionList] = React.useState([]);
 
   React.useEffect(() => {
@@ -49,7 +51,8 @@ export default function CardPaymentDashboard() {
       }
     );
 
-  }, []);
+  }, [refresh]);
+
 
   const paginator = React.useCallback(
     (value) => {
@@ -87,26 +90,35 @@ export default function CardPaymentDashboard() {
         formData.append('account_number', accontNumber)
         formData.append('amount', amount)
   
-        PaymentApis.witdrawFunds(formData).then(
-          (response) => {
-            if (response?.data) {
-              console.log(response?.data)
-              toast.success(response?.data?.message);
-            } else {
-              
-              toast.error(response?.response?.data?.message);
-  
+        if( parseInt(balance?.total_amount) >= parseInt(amount)){
+          console.log(balance?.total_amount)
+          PaymentApis.requestWitdrawal(formData).then(
+            (response) => {
+              if (response?.data) {
+                toast.success(response?.data?.message);
+                setVisible(false)
+                setRefresh(!refresh)
+              } else {
+                setVisible(false)
+                toast.error(response?.response?.data?.message);
+    
+              }
+    
+              // toast.success(response?.data?.message);
             }
-  
-            // toast.success(response?.data?.message);
-          }
-        ).catch(function (error) {
-          // handle error
-          // console.log(error.response);
-          toast.error(error.response.data.message);
-        })
+          ).catch(function (error) {
+            // handle error
+            // console.log(error.response);
+            setVisible(false)
+            toast.error(error.response.data.message);
+          })
+        }else{
+          toast.error("Insufficient Funds !!!");
+          setVisible(false);
+        }
+       
       },
-      [bankCode,accontNumber,amount]
+      [bankCode,accontNumber,amount,visible,balance,refresh]
     );
 
 
