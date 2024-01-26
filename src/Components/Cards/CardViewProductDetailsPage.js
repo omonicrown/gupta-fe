@@ -145,10 +145,10 @@ export default function CardEditProduct() {
 
   return (
     <>
-
+     
       <div className="flex justify-between md:px-20">
 
-      {data?.brand_logo == 'no image' || marketInfo?.brand_logo == null ?
+      {marketInfo?.brand_logo == 'no image' || marketInfo?.brand_logo == null ?
           <span><img src="/images/image.png" /> </span>
           :
           <span><img src={marketInfo?.brand_logo} style={{ height: '30px', width: '70px' }} /></span>

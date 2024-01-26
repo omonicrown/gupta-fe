@@ -25,7 +25,7 @@ export default function CardCreateProduct() {
   const [addLink, setAddLink] = React.useState([]);
 
   const [addContact, setAddContact] = React.useState([]);
-  const [color, setColor] = React.useState({});
+  const [color, setColor] = React.useState({hex:'#0071BC'});
 
   const [productLink, setProductLink] = React.useState([]);
   let [toggleDeleteModal, setToggleDeleteModal] = React.useState(false);
@@ -239,7 +239,7 @@ export default function CardCreateProduct() {
       e.preventDefault();
       const formData = new FormData()
       formData.append('link_name', checkLink.replace(/ /g, '-'))
-      formData.append('brand_primary_color', color.hex)
+      formData.append('brand_primary_color', color?.hex)
       formData.append('brand_description', brandDescription)
       formData.append('facebook_url', facebookUrl)
       formData.append('instagram_url', instagramUrl)

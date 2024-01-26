@@ -224,8 +224,8 @@ export default function CardViewProductPage() {
                         <div className="flex justify-between">
                           <span className="text-[16px] font-[600] mt-1">{data?.product_name}</span>
                           <span className="flex gap-2">
-                            <span style={{ color: marketInfo?.brand_primary_color, textDecorationLine: 'line-through' }} className={`text-[15px] font-[700]`}>{new Intl.NumberFormat('en-US', { style: 'currency', currency: 'NGN' }).format(data?.product_price)} </span>
-                            <span style={{ color: marketInfo?.brand_primary_color }} className={`text-[15px] font-[400]`}>{new Intl.NumberFormat('en-US', { style: 'currency', currency: 'NGN' }).format(data?.no_of_items)} </span>
+                            <span style={{ color: marketInfo?.brand_primary_color !== '' ? marketInfo?.brand_primary_color : '#0071BC', textDecorationLine: 'line-through' }} className={`text-[15px] font-[700]`}>{new Intl.NumberFormat('en-US', { style: 'currency', currency: 'NGN' }).format(data?.product_price)} </span>
+                            <span style={{ color: marketInfo?.brand_primary_color !== '' ? marketInfo?.brand_primary_color : '#0071BC' }} className={`text-[15px] font-[400]`}>{new Intl.NumberFormat('en-US', { style: 'currency', currency: 'NGN' }).format(data?.no_of_items)} </span>
 
                           </span>
                           {/* <span className="text-[#149E49] text-[14px] font-[600]"> {new Intl.NumberFormat('en-US', { style: 'currency', currency: 'NGN' }).format(data?.no_of_items)}</span> */}
@@ -255,7 +255,7 @@ export default function CardViewProductPage() {
                             style={{ backgroundColor: marketInfo?.brand_primary_color }}
                             className={"text-[8px] text-white pt-1  flex cursor-pointer bg-[" + (marketInfo?.brand_primary_color) + "] rounded-full px-2"}
                           >
-                              Pay with gupta
+                            Pay with gupta
                           </span>
                         </div>
 
@@ -276,11 +276,35 @@ export default function CardViewProductPage() {
             </div>
 
 
+            <div className="flex justify-center mt-4">
+              <div className="flex justify-center flex-col mt-3 mb-4" >
+                {(!marketInfo?.facebook_url || !marketInfo?.instagram_url | !marketInfo?.tiktok_url) ?
+                  <span className="flex justify-center gap-4">
+                     <NavLink to={marketInfo?.facebook_url} className={'cursor-pointer'}>
+                     <SvgElement type={icontypesEnum.FACEBOOK} />
+                     </NavLink>
 
-            <div className="flex justify-center mt-3 mb-4" >
-              <span style={{ fontSize: '16px', fontWeight: '300' }}>Powered By Gupta</span>
+                     <NavLink to={marketInfo?.instagram_url} className={'cursor-pointer'}>
+                     <SvgElement type={icontypesEnum.INSTAGRAM} />
+                     </NavLink>
+
+
+                     <NavLink to={marketInfo?.tiktok_url} className={'cursor-pointer'}>
+                     <SvgElement type={icontypesEnum.TWITTER} />
+                     </NavLink>
+                   
+                    {/* <SvgElement type={icontypesEnum.INSTAGRAM} />
+                    <SvgElement type={icontypesEnum.TWITTER} /> */}
+                  </span>
+                  :
+                  ''
+                }
+
+                <span style={{ fontSize: '16px', fontWeight: '300' }}>Powered By Gupta</span>
+              </div>
             </div>
           </div>
+
 
           :
 

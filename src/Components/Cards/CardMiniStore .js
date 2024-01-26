@@ -49,6 +49,9 @@ export default function CardMiniStore() {
   const [name, setName] = React.useState("");
 
 
+  function isCopied() {
+    toast.success("Copied to Clipboard");
+  }
 
   const [loader, setLoader] = React.useState(true);
   function isCopied() {
@@ -74,24 +77,24 @@ export default function CardMiniStore() {
 
   const paginator = React.useCallback(
     (value) => {
-        //   setLoader(true);
-        let value2 = '';
-        if (value !== null) {
-            value2 = value;
-        } else {
-            value2 = ''
+      //   setLoader(true);
+      let value2 = '';
+      if (value !== null) {
+        value2 = value;
+      } else {
+        value2 = ''
+      }
+      setLoader(true)
+      AdminApis.getAllStore(value2).then(
+        (response) => {
+          if (response?.data) {
+            setdata(response?.data)
+            setLoader(false);
+          }
         }
-        setLoader(true)
-        AdminApis.getAllStore(value2).then(
-            (response) => {
-                if (response?.data) {
-                  setdata(response?.data)
-                  setLoader(false);
-                }
-            }
-        ).catch(function (error) {
-            console.log(error.response.data);
-        })
+      ).catch(function (error) {
+        console.log(error.response.data);
+      })
 
     }, [data, loader]);
 
@@ -247,119 +250,153 @@ export default function CardMiniStore() {
                                       {data?.no_of_items} Items in stock
                                     </NavLink> */}
 
-                                      <NavLink to={`/edit-product/${data?.id}`} className={'cursor-pointer mt-1.5'}>
-                                        <FaEdit />
-                                      </NavLink>
+                                      {/* <NavLink to={`/edit-product/${data?.id}`} className={'cursor-pointer mt-1.5'}> */}
+
+                                      <CopyToClipboard text={`${configs?.baseRedirectFront}store/${(data?.link_name)}`}
+                                        onCopy={() => isCopied()}>
+                                        <span
+                                          style={{ color: 'white' }}
+                                          className=" bg-[#0071BC] font-xs rounded-lg text-xs px-2 py-[2px] cursor-pointer"
+                                        >
+                                          Copy
+                                        </span>
+                                     
+                                      </CopyToClipboard>
+
+                                    
+                                    {/* </NavLink> */}
+
+
+                                  </span>
+                                </span>
+
+                              </div>
+                              <hr />
+                              <NavLink to={`/edit-product/${data?.id}`} className={'cursor-pointer'}>
+                                <p class="mb-2 tracking-tight m-2 p-2 bg-[#F4FBFF] h-44" style={{ fontSize: '16px', color: '#595959', backgroundImage: `url(${data?.product_image_1})`, backgroundRepeat: "no-repeat", backgroundSize: 'cover', backgroundPosition: 'center center' }}>{data?.link_info?.message}</p>
+                              </NavLink>
+                              <hr />
+
+                              <div className="flex flex-col pt-[16px] px-[16px]">
+                                <div className="flex justify-between">
+                                  <span className="text-[16px] font-[600]">{data?.product_name}</span>
+
+
+                                  <span
+                                    style={{ color: 'white' }}
+                                    className="ring-1 outline-none bg-[#149E49] font-xs rounded-lg text-xs px-4 h-5 pt-[2px] text-center cursor-pointer"
+                                  >
+                                    Active
+                                  </span>
+
+
+                                </div>
+
+                                <div className="flex justify-between">
+
+                                  <div className="flex justify-start gap-2">
+                                    <span className="text-[#149E49] text-[14px] font-[400]" style={{ textDecorationLine: 'line-through' }}> {new Intl.NumberFormat('en-US', { style: 'currency', currency: 'NGN' }).format(data?.product_price)}</span>
+
+                                    <span className="text-[#149E49] text-[14px] font-[600]"> {new Intl.NumberFormat('en-US', { style: 'currency', currency: 'NGN' }).format(data?.no_of_items)}</span>
+
+                                  </div>
 
 
 
-                                      <button
-                                        type="button"
-                                        onClick={(e) => toggleDelete(data?.id)}
-                                        className=" outline-none  font-xs text-red-500 rounded-full text-xs px-2 py-2 text-center "
-                                      >
-                                        <FaTrash />
-                                      </button>
-                                    </span>
+
+                                  <span className="flex justify-end">
+                                    <NavLink to={`/edit-product/${data?.id}`} className={'cursor-pointer mt-1.5'}>
+                                      <FaEdit />
+                                    </NavLink>
+
+
+
+                                    <button
+                                      type="button"
+                                      onClick={(e) => toggleDelete(data?.id)}
+                                      className=" outline-none  font-xs text-red-500 rounded-full text-xs px-2 py-2 text-center "
+                                    >
+                                      <FaTrash />
+                                    </button>
+
                                   </span>
 
                                 </div>
-                                <hr />
-                                <NavLink to={`/edit-product/${data?.id}`} className={'cursor-pointer'}>
-                                  <p class="mb-2 tracking-tight m-2 p-2 bg-[#F4FBFF] h-44" style={{ fontSize: '16px', color: '#595959', backgroundImage: `url(${data?.product_image_1})`, backgroundRepeat: "no-repeat", backgroundSize: 'cover', backgroundPosition: 'center center' }}>{data?.link_info?.message}</p>
-                                </NavLink>
-                                <hr />
-
-                                <div className="flex flex-col pt-[16px] px-[16px]">
-                                  <div className="flex justify-between">
-                                    <span className="text-[16px] font-[600]">{data?.product_name}</span>
-                                    <span
-                                      style={{ color: 'white' }}
-                                      className="ring-1 outline-none bg-[#149E49] font-xs rounded-lg text-xs px-4 h-5 pt-[2px] text-center cursor-pointer"
-                                    >
-                                      Active
-                                    </span>
-                                  </div>
-
-                                  <div className="flex justify-start gap-2">
-                                  <span className="text-[#149E49] text-[14px] font-[400]" style={{textDecorationLine:'line-through'}}> {new Intl.NumberFormat('en-US', { style: 'currency', currency: 'NGN' }).format(data?.product_price)}</span>
-
-                                  <span className="text-[#149E49] text-[14px] font-[600]"> {new Intl.NumberFormat('en-US', { style: 'currency', currency: 'NGN' }).format(data?.no_of_items)}</span>
-
-                                    </div>
-                                  
-                                  <span className="text-[14px] font-[400] text-[#808191] h-10 overflow-auto">{data?.product_description}</span>
-                                </div>
 
 
-                                {/* <span className="flex justify-between gap-1 pt-4 m-2">
+
+                                <span className="text-[14px] font-[400] text-[#808191] h-10 overflow-auto">{data?.product_description}</span>
+                              </div>
+
+
+                              {/* <span className="flex justify-between gap-1 pt-4 m-2">
                                
 
                                
                               </span> */}
-                              </div>
+                            </div >
                             </>
 
 
 
                           )
-                        )}
+                )}
 
 
-                       
-                      </div>
-                      :
-                      (data?.data == 'sub_expired' ?
-                        <CardRenewSubscription />
-                        :
-                        <div className="relative flex flex-col min-w-0 break-words bg-white w-full mb-6  rounded">
-                          <div className="rounded-t mb-0  py-3 border-0">
-                            <div className="flex flex-wrap items-center">
-                              <div className="w-full px-4 max-w-full p-52 flex-grow flex-1">
 
-                                <h3 className="flex justify-center font-bold"> You haven’t created any Product Link</h3>
-                                <p className="flex text-sm justify-center"> Click on the button below to create a new </p>
-                                <p className="flex text-sm justify-center text-black font-bold"> Product.</p>
+              </div>
+              :
+              (data?.data == 'sub_expired' ?
+              <CardRenewSubscription />
+              :
+              <div className="relative flex flex-col min-w-0 break-words bg-white w-full mb-6  rounded">
+                <div className="rounded-t mb-0  py-3 border-0">
+                  <div className="flex flex-wrap items-center">
+                    <div className="w-full px-4 max-w-full p-52 flex-grow flex-1">
 
-                                <NavLink to='/createproduct' className="flex justify-center">
-                                  < span className="flex justify-center pt-4">
-                                    <button
-                                      type="submit"
-                                      style={{ backgroundColor: '#0071BC', borderRadius: '50px' }}
-                                      className=" text-white hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm w-40 px-5 py-2.5 text-center "
-                                    >
-                                      + Create New
-                                    </button>
-                                  </span>
-                                </NavLink>
+                      <h3 className="flex justify-center font-bold"> You haven’t created any Product Link</h3>
+                      <p className="flex text-sm justify-center"> Click on the button below to create a new </p>
+                      <p className="flex text-sm justify-center text-black font-bold"> Product.</p>
 
-                              </div>
-
-                            </div>
-                          </div>
-                          <div className="block w-full overflow-x-auto">
-                            {/* Projects table */}
-
-                          </div>
-                        </div>)
-                  )
-                )
-
-                  :
-
-                  <div className="p-2  shadow animate-pulse md:p-6 dark:border-gray-700" style={{ height: '70vh', width: '78vw' }}>
-                    <div className="flex justify-center items-center mb-4 h-48 bg-gray-300 rounded dark:bg-gray-400">
+                      <NavLink to='/createproduct' className="flex justify-center">
+                        < span className="flex justify-center pt-4">
+                          <button
+                            type="submit"
+                            style={{ backgroundColor: '#0071BC', borderRadius: '50px' }}
+                            className=" text-white hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm w-40 px-5 py-2.5 text-center "
+                          >
+                            + Create New
+                          </button>
+                        </span>
+                      </NavLink>
 
                     </div>
-                    <div className="h-2.5 bg-gray-200 rounded-full dark:bg-gray-400 w-48 mb-4"></div>
-                    <div className="h-2 bg-gray-200 rounded-full dark:bg-gray-400 mb-2.5"></div>
-                    <div className="h-2 bg-gray-200 rounded-full dark:bg-gray-400 mb-2.5"></div>
-                    <div className="h-2 bg-gray-200 rounded-full dark:bg-gray-400"></div>
-                    <div className="flex items-center mt-4 space-x-3">
 
-                    </div>
-                    <span className="sr-only">Loading...</span>
                   </div>
+                </div>
+                <div className="block w-full overflow-x-auto">
+                  {/* Projects table */}
+
+                </div>
+              </div>)
+              )
+              )
+
+              :
+
+              <div className="p-2  shadow animate-pulse md:p-6 dark:border-gray-700" style={{ height: '70vh', width: '78vw' }}>
+                <div className="flex justify-center items-center mb-4 h-48 bg-gray-300 rounded dark:bg-gray-400">
+
+                </div>
+                <div className="h-2.5 bg-gray-200 rounded-full dark:bg-gray-400 w-48 mb-4"></div>
+                <div className="h-2 bg-gray-200 rounded-full dark:bg-gray-400 mb-2.5"></div>
+                <div className="h-2 bg-gray-200 rounded-full dark:bg-gray-400 mb-2.5"></div>
+                <div className="h-2 bg-gray-200 rounded-full dark:bg-gray-400"></div>
+                <div className="flex items-center mt-4 space-x-3">
+
+                </div>
+                <span className="sr-only">Loading...</span>
+              </div>
                   //  :
                   //  <div>
                   //   <h2>Pending </h2>
@@ -373,34 +410,34 @@ export default function CardMiniStore() {
 
 
 
-              </div>
+            </div>
 
-              <div className='m-4 mt-10 flex justify-end'>
-                          {
-                            data?.data?.links?.filter(((item, idx) => idx < 1000)).map(
-                              (datas, index) => (
-                                <button onClick={() => paginator(datas?.label == 'Next &raquo;' ? datas?.url.charAt(datas?.url.length - 1) : (datas?.label === '&laquo; Previous') ? datas?.url.charAt(datas?.url.length - 1) : datas?.label)} disabled={datas?.active} className={'mx-1 py-1 px-2 ' + (datas?.active == false ? 'bg-gray-300 text-black ' : 'bg-[#0071BC] text-white')}>
-                                  {datas?.label == '&laquo; Previous' ? '< Previous' : (datas?.label === 'Next &raquo;') ? 'Next  >' : datas?.label}
-                                </button>
-                              )
-                            )
-                          }
-
-                        </div>
-
-
-
-
+            <div className='m-4 mt-10 flex justify-end'>
+              {
+                data?.data?.links?.filter(((item, idx) => idx < 1000)).map(
+                  (datas, index) => (
+                    <button onClick={() => paginator(datas?.label == 'Next &raquo;' ? datas?.url.charAt(datas?.url.length - 1) : (datas?.label === '&laquo; Previous') ? datas?.url.charAt(datas?.url.length - 1) : datas?.label)} disabled={datas?.active} className={'mx-1 py-1 px-2 ' + (datas?.active == false ? 'bg-gray-300 text-black ' : 'bg-[#0071BC] text-white')}>
+                      {datas?.label == '&laquo; Previous' ? '< Previous' : (datas?.label === 'Next &raquo;') ? 'Next  >' : datas?.label}
+                    </button>
+                  )
+                )
+              }
 
             </div>
 
+
+
+
+
           </div>
-        </div>
-        <div className="block w-full overflow-x-auto">
-          {/* Projects table */}
 
         </div>
       </div>
+      <div className="block w-full overflow-x-auto">
+        {/* Projects table */}
+
+      </div>
+    </div >
 
 
       <section>
