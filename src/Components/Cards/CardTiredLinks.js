@@ -187,7 +187,7 @@ export default function CardMyLinks() {
                             <span className="flex justify-between gap-3 rounded-t-lg border bg-[#0071BC] px-3 py-1" >
                               <p class="mb-2 font-medium tracking-tight text-white" style={{ fontSize: '18px' }}>mygupta.co/{data?.name}</p>
                               < span className="flex justify-center mt-2">
-                                <CopyToClipboard text={`${configs?.baseRedirectFront}/${(data?.name)}`}
+                                <CopyToClipboard text={`${configs?.baseRedirectFront}${(data?.name)}`}
                                   onCopy={() => isCopied()}>
                                   <span
                                     style={{ color: 'white', borderColor: '#0071BC' }}
