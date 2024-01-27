@@ -116,7 +116,7 @@ export default function CardViewLinkDetails() {
           setMacBook((response?.data?.link?.social_traffic?.map((year: any) => year?.macbook)))
           setAndroid((response?.data?.link?.social_traffic?.map((year: any) => year?.android)))
 
-          setDates(response?.data?.link?.graph?.map((year: any) => year?.month_year))
+          setDates(response?.data?.link?.graph?.map((year: any) => year?.month_day))
           setChartData(response?.data?.link?.graph?.map((year: any) => year?.total_click))
         }
       }
