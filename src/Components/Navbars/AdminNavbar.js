@@ -19,7 +19,6 @@ export default function Navbar({ title }) {
       (response) => {
         if (response?.data) {
           // setdata(response?.data)
-          console?.log(response?.data)
           setdata(new Intl.NumberFormat('en-US', { style: 'currency', currency: 'NGN' }).format((response?.data?.data?.total_amount)?(response?.data?.data?.total_amount):0.0))
           // window.location.reload();
         }
@@ -35,7 +34,7 @@ export default function Navbar({ title }) {
     <>
     <div className="relative md:pt-12 pb-2 pt-8 md:border md:rounded md:shadow-md md:m-3" style={{backgroundColor:'#FFFFFF'}}>
       {/* Navbar */}
-      <nav className="absolute top-0 left-0 w-full z-10 bg-transparent md:flex-row md:flex-nowrap md:justify-end flex items-center p-2">
+      <nav className="absolute top-0 left-0 w-full  bg-transparent md:flex-row md:flex-nowrap md:justify-end flex items-center p-2">
         <div className="flex justify-between px-4 lg:w-full">
           {/* Brand */}
           <a

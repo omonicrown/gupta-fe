@@ -450,8 +450,8 @@ export default function CardCreateProduct() {
               <label for="first_name" class="block mb-2 mt-6 text-sm  text-gray-900 dark:text-gray-600">Product Name</label>
               <input required type="text" defaultValue={title} onChange={(e) => setProductName(e?.target?.value)} id="first_name" class="bg-[#F4FBFF] border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" placeholder="Title of business here" />
 
-              <label for="first_name" class="block mb-2 mt-4 text-sm  text-gray-900 dark:text-gray-600 ">Product Description</label>
-              <textarea required id="message" defaultValue={bio} onChange={(e) => setProductDescription(e?.target?.value)} rows={3} className="block bg-[#F4FBFF] p-2.5 w-full text-sm text-gray-900  rounded-lg border border-gray-300 focus:ring-gray-500 focus:border-gray-500" placeholder="Bried Descriptrion" ></textarea>
+              <label for="first_name" class="block mb-2 mt-4 text-sm  text-gray-900 dark:text-gray-600 ">Product Description / Details</label>
+              <textarea required id="message" defaultValue={bio} onChange={(e) => setProductDescription(e?.target?.value)} rows={3} className="block bg-[#F4FBFF] p-2.5 w-full text-sm text-gray-900  rounded-lg border border-gray-300 focus:ring-gray-500 focus:border-gray-500" placeholder="eg. about product,product size e.t.c..." ></textarea>
 
               <div className="grid md:grid-cols-2 gap-2">
                 <div>

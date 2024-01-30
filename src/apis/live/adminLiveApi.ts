@@ -191,8 +191,8 @@ export class AdinLiveApis extends AxiosGlobal {
     }
 
 
-    getProductByLinkName(name: any): AxiosPromise<Array<any>> {
-        return this.axios.get(`${configs.context}/get-products-by-link-name/${name}`, {
+    getProductByLinkName(name: any,pageNo:any): AxiosPromise<Array<any>> {
+        return this.axios.get(`${configs.context}/get-products-by-link-name/${name}?page=${pageNo}`, {
             headers: { "Content-Type": "aplication/json", "Accept": "aplication/json", "Authorization": `Bearer ${store.getState().data.login.value.token}`, "Access-Control-Allow-Origin": "*" },
         });
     }

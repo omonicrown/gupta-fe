@@ -74,6 +74,8 @@ export default function CardViewProductPage() {
     });
   }
 
+  const [loader, setLoader] = React.useState(true);
+
 
   const handlePayment = React.useCallback(
     (e) => {
@@ -140,7 +142,7 @@ export default function CardViewProductPage() {
 
 
   React.useEffect(() => {
-    AdminApis.getProductByLinkName(params?.storeId).then(
+    AdminApis.getProductByLinkName(params?.storeId,'').then(
       (response) => {
         if (response?.data) {
           // console?.log('ssss')
@@ -171,6 +173,33 @@ export default function CardViewProductPage() {
   }, []);
 
 
+
+  const paginator = React.useCallback(
+    (value) => {
+      //   setLoader(true);
+      let value2 = '';
+      if (value !== null) {
+        value2 = value;
+      } else {
+        value2 = ''
+      }
+      setLoader(true)
+      AdminApis.getProductByLinkName(params?.storeId,value2).then(
+        (response) => {
+          if (response?.data) {
+            setData(response?.data?.data)
+          setMarketInfo(response?.data?.data?.market_info)
+            setLoader(false);
+          }
+        }
+      ).catch(function (error) {
+        console.log(error.response.data);
+      })
+
+    }, [data, loader,params]);
+
+
+
   return (
     <>
 
@@ -180,7 +209,7 @@ export default function CardViewProductPage() {
         {marketInfo?.brand_logo == 'no image' || marketInfo?.brand_logo == null ?
           <span><img src="/images/image.png" /> </span>
           :
-          <span><img src={marketInfo?.brand_logo} style={{ height: '30px', width: '70px' }} /></span>
+          <span><img src={marketInfo?.brand_logo} style={{ height: '50px', width: '70px' }} /></span>
         }
 
 
@@ -200,16 +229,16 @@ export default function CardViewProductPage() {
         </div>
       </div> */}
 
-      <div className=" mt-10 md:px-16">
+      <div className=" mt-10 mb-4 md:px-16 ">
 
 
-        {data?.products?.length >= 1
+        {data?.products?.data?.length >= 1
           ?
           <div class="px-4 bg-white rounded-lg">
 
 
-            <div className=" flex-col md:flex-row md:justify-start mt-1 pt-1 grid lg:grid-cols-3 md:grid-cols-2   gap-3">
-              {data?.products?.map(
+            <div className="  flex-col md:flex-row md:justify-start mt-1 pt-1 grid lg:grid-cols-3 md:grid-cols-2   gap-3">
+              {data?.products?.data?.map(
                 (data, index) => (
 
                   <>
@@ -273,36 +302,59 @@ export default function CardViewProductPage() {
 
                 )
               )}
+
+
+
+
+
             </div>
 
 
-            <div className="flex justify-center mt-4">
-              <div className="flex justify-center flex-col mt-3 mb-4" >
-                {(!marketInfo?.facebook_url || !marketInfo?.instagram_url | !marketInfo?.tiktok_url) ?
-                  <span className="flex justify-center gap-4">
-                     <NavLink to={marketInfo?.facebook_url} className={'cursor-pointer'}>
-                     <SvgElement type={icontypesEnum.FACEBOOK} />
-                     </NavLink>
-
-                     <NavLink to={marketInfo?.instagram_url} className={'cursor-pointer'}>
-                     <SvgElement type={icontypesEnum.INSTAGRAM} />
-                     </NavLink>
-
-
-                     <NavLink to={marketInfo?.tiktok_url} className={'cursor-pointer'}>
-                     <SvgElement type={icontypesEnum.TWITTER} />
-                     </NavLink>
-                   
-                    {/* <SvgElement type={icontypesEnum.INSTAGRAM} />
-                    <SvgElement type={icontypesEnum.TWITTER} /> */}
-                  </span>
-                  :
-                  ''
+            <div className=' m-4 mt-10 flex justify-end'>
+                {
+                  data?.products?.links?.filter(((item, idx) => idx < 1000)).map(
+                    (datas, index) => (
+                      <button onClick={() => paginator(datas?.label == 'Next &raquo;' ? datas?.url.charAt(datas?.url.length - 1) : (datas?.label === '&laquo; Previous') ? datas?.url.charAt(datas?.url.length - 1) : datas?.label)} disabled={datas?.active} className={'mx-1 py-1 px-2 ' + (datas?.active == false ? 'bg-gray-300 text-black ' : `bg-[${marketInfo?.brand_primary_color !== '' ?(marketInfo?.brand_primary_color):'#0071BC'}] text-white`)} style={{backgroundColor:`${datas?.active == false ?'rgb(209 213 219':(marketInfo?.brand_primary_color !== '' ?(marketInfo?.brand_primary_color):'#0071BC')}`}}>
+                        {datas?.label == '&laquo; Previous' ? '< Previous' : (datas?.label === 'Next &raquo;') ? 'Next  >' : datas?.label}
+                      </button>
+                    )
+                  )
                 }
 
-                <span style={{ fontSize: '16px', fontWeight: '300' }}>Powered By Gupta</span>
+              </div>
+
+
+            <div className="  md:bottom-[0px] w-full  bottom-[-150px]">
+              <div className="flex justify-center mt-4 w-full text-center lg:pb-2 pb-4">
+                <div className="flex justify-center flex-col mt-3 mb-4  w-full text-center lg:pb-2 pb-4" >
+                  {(marketInfo?.facebook_url || marketInfo?.instagram_url | marketInfo?.tiktok_url) ?
+                    <span className="flex justify-center gap-4">
+                      <a href={marketInfo?.facebook_url} target="_blank" className={'cursor-pointer'}>
+                        <SvgElement type={icontypesEnum.FACEBOOK} />
+                      </a>
+
+                      <a href={marketInfo?.instagram_url} target="_blank" className={'cursor-pointer'}>
+                        <SvgElement type={icontypesEnum.INSTAGRAM} />
+                      </a>
+
+
+                      <a href={marketInfo?.tiktok_url} target="_blank" className={'cursor-pointer'}>
+                        <SvgElement type={icontypesEnum.TWITTER} />
+                      </a>
+
+                      {/* <SvgElement type={icontypesEnum.INSTAGRAM} />
+                    <SvgElement type={icontypesEnum.TWITTER} /> */}
+                    </span>
+                    :
+                    ''
+                  }
+
+                  <span style={{ fontSize: '16px', fontWeight: '300' }}>Powered By Gupta</span>
+                </div>
               </div>
             </div>
+
+
           </div>
 
 
@@ -400,7 +452,7 @@ export default function CardViewProductPage() {
                   <span className="flex justify-center pt-4">
                     <button
                       type="submit"
-                      style={{ backgroundColor: '#0071BC', borderRadius: '50px' }}
+                      style={{ backgroundColor:`${marketInfo?.brand_primary_color !== '' ?(marketInfo?.brand_primary_color):'#0071BC'}`, borderRadius: '50px' }}
                       className=" text-white hover:bg-[#0071BC] focus:ring-4 focus:outline-none focus:ring-[#0071BC] font-medium rounded-lg text-sm w-full px-2 py-2.5 text-center "
                     >
                       Proceed to payment

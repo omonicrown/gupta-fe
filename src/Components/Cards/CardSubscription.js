@@ -25,51 +25,51 @@ export default function CardSubscription() {
 
   if (searchParams.get('tx_ref')) {
     AdminApis.getCallback(searchParams.get('tx_ref')).then(
-        (response) => {
-            if (response?.data) {
-                // navigate('/wallet');
-                if (response?.data?.success === true) {
-                    navigate('/mylinks');
-                }
-            } else {
-                // toast.warn('Invalid Login Credentials');
-            }
+      (response) => {
+        if (response?.data) {
+          // navigate('/wallet');
+          if (response?.data?.success === true) {
+            navigate('/mylinks');
+          }
+        } else {
+          // toast.warn('Invalid Login Credentials');
         }
+      }
     ).catch(function (error) {
-        // handle error
-        console.log(error.response.data);
+      // handle error
+      console.log(error.response.data);
     }).finally(() => {
-        // toast.error("No Internet Connection");
+      // toast.error("No Internet Connection");
 
     });
-}
+  }
 
 
 
-  const handleSubmit = (e,amount) => {
+  const handleSubmit = (e, amount) => {
     e.preventDefault();
     const formData = new FormData()
     formData.append('amount', amount)
 
     AdminApis.makePayment(formData).then(
-        (response) => {
-          console?.log(response)
-            if (response?.data) {
-              console?.log(response?.data)
-                if (response?.data?.success === true) {
-                    window.location.replace(response?.data?.data?.data?.link);
-                }
-            } else {
-                // toast.warn('Invalid Login Credentials');
-            }
+      (response) => {
+        console?.log(response)
+        if (response?.data) {
+          console?.log(response?.data)
+          if (response?.data?.success === true) {
+            window.location.replace(response?.data?.data?.data?.link);
+          }
+        } else {
+          // toast.warn('Invalid Login Credentials');
         }
+      }
     ).catch(function (error) {
-        // handle error
+      // handle error
     }).finally(() => {
-        // toast.error("No Internet Connection");
+      // toast.error("No Internet Connection");
 
     });
-}
+  }
 
   return (
     <>
@@ -83,211 +83,262 @@ export default function CardSubscription() {
             <p className="text-[#848199] text-[20px] mt-5">No contract, no surprice fee</p>
           </div>
           <div className="grid grid-cols-1 gap-2 lg:grid-cols-4 md:grid-cols-2 mt-10">
-         
-         
+
+            {/* <div className="grid grid-cols-1 gap-2 lg:grid-cols-4 md:grid-cols-2 mt-10"> */}
+
             <div>
+              <div className="border border-[#0071BC] rounded-[8px] p-4 bg-white pt-4 pb-8">
+                <h3 className="text-center text-[#56575B] uppercase text-[14px]">FREE</h3>
+                <h1 className="text-center mt-5 text-[34px] text-[#56575B]">₦ 0<sup className="text-[16px]">(First three weeks)</sup> </h1>
+                <div className="flex-col justify-center mt-5">
+                  {/* <h3 className="text-center text-[#56575B] text-[14px]">Free for 3 weeks</h3>
+    <h3 className="text-center text-[#56575B] text-[14px] ">10 links/month</h3>
+    <h3 className="text-center text-[#56575B] text-[14px]">1 Link-in-bio page</h3> */}
+                  <div className="mt-4">
+                    <NavLink to="/login">
+                      <button className=" w-full py-[14px] bg-[#EDF2FE] text-[#0071BC] text-[15px] rounded-[6px]">Get Started</button>
+                    </NavLink>
+                  </div>
+                  <div className="mt-4">
+                    <h3 className="text-[#56575B] text-[15px]">Includes:</h3>
+                    <div className=" flex space-x-3 mt-4">
+                      <SvgElement type={icontypesEnum.PLANS} />
+                      <h3 className="text-[13px] text-[#56575B]">5 Personalized Whatsapp Links</h3>
+                    </div>
+                    <div className="flex space-x-3 mt-2">
+                      <SvgElement type={icontypesEnum.PLANS} />
+                      <h3 className="text-[13px] text-[#56575B]">5 Personalized Redirect Links</h3></div>
+                    <div className="flex space-x-3 mt-2">
+                      <SvgElement type={icontypesEnum.PLANS} />
+                      <h3 className="text-[13px] text-[#56575B]">3 Multi Links</h3>
+                    </div>
 
-            
-            <div className="bg-white py-6 px-8 md:rounded-l-[26px] rounded-[15px] mt-8">
-              <h2 className="text-[33px] text-[#231D4F] font-semibold">$2 <span className="text-[14px] text-[#848199]">/ month</span></h2>
-              <h3 className="mt-2 text-[#231D4F] text-[26px]">Basic</h3>
-              <p className="mt-1 text-[14px] text-[#848199]">For most businesses that want to otpimize web queries</p>
-              <div className="mt-3">
-                <div className="flex space-x-2 mt-3">
-                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M10 0C4.47715 0 0 4.47715 0 10C0 15.5228 4.47715 20 10 20C15.5228 20 20 15.5228 20 10C19.9936 4.47982 15.5202 0.00642897 10 0Z" fill="#5243C2" fill-opacity="0.103693" />
-                    <path d="M15.7727 6.83313L10.0685 14.574C9.93246 14.7545 9.7296 14.8727 9.50552 14.9022C9.28143 14.9316 9.0549 14.8698 8.87683 14.7306L4.8035 11.474C4.44405 11.1863 4.38585 10.6617 4.6735 10.3023C4.96115 9.94285 5.48572 9.88465 5.84516 10.1723L9.24183 12.8898L14.431 5.8473C14.6012 5.59195 14.8979 5.45078 15.2033 5.47983C15.5088 5.50887 15.7736 5.70344 15.8926 5.98627C16.0116 6.26911 15.9655 6.59445 15.7727 6.83313Z" fill="#0071BC" />
-                  </svg>
-                  <h3 className="text-[14px] text-[#848199] font-normal">All limited links</h3>
-                </div>
-                <div className="flex space-x-2 mt-3">
-                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M10 0C4.47715 0 0 4.47715 0 10C0 15.5228 4.47715 20 10 20C15.5228 20 20 15.5228 20 10C19.9936 4.47982 15.5202 0.00642897 10 0Z" fill="#5243C2" fill-opacity="0.103693" />
-                    <path d="M15.7727 6.83313L10.0685 14.574C9.93246 14.7545 9.7296 14.8727 9.50552 14.9022C9.28143 14.9316 9.0549 14.8698 8.87683 14.7306L4.8035 11.474C4.44405 11.1863 4.38585 10.6617 4.6735 10.3023C4.96115 9.94285 5.48572 9.88465 5.84516 10.1723L9.24183 12.8898L14.431 5.8473C14.6012 5.59195 14.8979 5.45078 15.2033 5.47983C15.5088 5.50887 15.7736 5.70344 15.8926 5.98627C16.0116 6.26911 15.9655 6.59445 15.7727 6.83313Z" fill="#0071BC" />
-                  </svg>
-                  <h3 className="text-[14px] text-[#848199] font-normal">Own analytics platform</h3>
-                </div>
-                <div className="flex space-x-2 mt-3">
-                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M10 0C4.47715 0 0 4.47715 0 10C0 15.5228 4.47715 20 10 20C15.5228 20 20 15.5228 20 10C19.9936 4.47982 15.5202 0.00642897 10 0Z" fill="#5243C2" fill-opacity="0.103693" />
-                    <path d="M15.7727 6.83313L10.0685 14.574C9.93246 14.7545 9.7296 14.8727 9.50552 14.9022C9.28143 14.9316 9.0549 14.8698 8.87683 14.7306L4.8035 11.474C4.44405 11.1863 4.38585 10.6617 4.6735 10.3023C4.96115 9.94285 5.48572 9.88465 5.84516 10.1723L9.24183 12.8898L14.431 5.8473C14.6012 5.59195 14.8979 5.45078 15.2033 5.47983C15.5088 5.50887 15.7736 5.70344 15.8926 5.98627C16.0116 6.26911 15.9655 6.59445 15.7727 6.83313Z" fill="#0071BC" />
-                  </svg>
-                  <h3 className="text-[14px] text-[#848199] font-normal">Chat support</h3>
-                </div>
-                <div className="flex space-x-2 mt-3">
-                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M10 0C4.47715 0 0 4.47715 0 10C0 15.5228 4.47715 20 10 20C15.5228 20 20 15.5228 20 10C19.9936 4.47982 15.5202 0.00642897 10 0Z" fill="#5243C2" fill-opacity="0.103693" />
-                    <path d="M15.7727 6.83313L10.0685 14.574C9.93246 14.7545 9.7296 14.8727 9.50552 14.9022C9.28143 14.9316 9.0549 14.8698 8.87683 14.7306L4.8035 11.474C4.44405 11.1863 4.38585 10.6617 4.6735 10.3023C4.96115 9.94285 5.48572 9.88465 5.84516 10.1723L9.24183 12.8898L14.431 5.8473C14.6012 5.59195 14.8979 5.45078 15.2033 5.47983C15.5088 5.50887 15.7736 5.70344 15.8926 5.98627C16.0116 6.26911 15.9655 6.59445 15.7727 6.83313Z" fill="#0071BC" />
-                  </svg>
-                  <h3 className="text-[14px] text-[#848199] font-normal">Optimize hashtags</h3>
-                </div>
-                <div className="flex space-x-2 mt-3">
-                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M10 0C4.47715 0 0 4.47715 0 10C0 15.5228 4.47715 20 10 20C15.5228 20 20 15.5228 20 10C19.9936 4.47982 15.5202 0.00642897 10 0Z" fill="#5243C2" fill-opacity="0.103693" />
-                    <path d="M15.7727 6.83313L10.0685 14.574C9.93246 14.7545 9.7296 14.8727 9.50552 14.9022C9.28143 14.9316 9.0549 14.8698 8.87683 14.7306L4.8035 11.474C4.44405 11.1863 4.38585 10.6617 4.6735 10.3023C4.96115 9.94285 5.48572 9.88465 5.84516 10.1723L9.24183 12.8898L14.431 5.8473C14.6012 5.59195 14.8979 5.45078 15.2033 5.47983C15.5088 5.50887 15.7736 5.70344 15.8926 5.98627C16.0116 6.26911 15.9655 6.59445 15.7727 6.83313Z" fill="#0071BC" />
-                  </svg>
-                  <h3 className="text-[14px] text-[#848199] font-normal">Unlimited users</h3>
-                </div>
+                    <div className="flex space-x-3 mt-2">
+                      <SvgElement type={icontypesEnum.PLANS} />
+                      <h3 className="text-[13px] text-[#56575B]">1 Market Links(Shop)</h3>
+                    </div>
 
-                <div className="flex justify-between mt-2">
-                  {/* <NavLink to='/register' className=""> */}
-                  <span onClick={(e)=>handleSubmit(e,'2')} className="text-[#0071BC] hover:underline text-[10px] font-[700] cursor-pointer">Pay a month</span>
-                  {/* </NavLink> */}
-
-
-                
-                  <span onClick={(e)=>handleSubmit(e,'20')} className="text-[#0071BC] hover:underline text-[10px] font-[700] cursor-pointer">Pay a year</span>
-                  
-                </div>
-
-
-
+                    <div className="flex space-x-3 mt-2">
+                      <SvgElement type={icontypesEnum.PLANS} />
+                      <h3 className="text-[13px] text-[#56575B]">10 Product Listing</h3>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
 
-            {/* <div className="bg-white py-6 px-8 mt-8 md:rounded-l-[26px] rounded-[15px]">
-              <h2 className="text-[33px] text-[#231D4F] font-semibold">$50 <span className="text-[14px] text-[#848199]">/ month</span></h2>
-              <h3 className="mt-2 text-[#231D4F] text-[26px]">Base</h3>
-              <p className="mt-1 text-[14px] text-[#848199]">For most businesses that want to otpimize web queries</p>
-              <div className="mt-3">
-                <div className="flex space-x-2 mt-3">
-                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M10 0C4.47715 0 0 4.47715 0 10C0 15.5228 4.47715 20 10 20C15.5228 20 20 15.5228 20 10C19.9936 4.47982 15.5202 0.00642897 10 0Z" fill="#5243C2" fill-opacity="0.103693" />
-                    <path d="M15.7727 6.83313L10.0685 14.574C9.93246 14.7545 9.7296 14.8727 9.50552 14.9022C9.28143 14.9316 9.0549 14.8698 8.87683 14.7306L4.8035 11.474C4.44405 11.1863 4.38585 10.6617 4.6735 10.3023C4.96115 9.94285 5.48572 9.88465 5.84516 10.1723L9.24183 12.8898L14.431 5.8473C14.6012 5.59195 14.8979 5.45078 15.2033 5.47983C15.5088 5.50887 15.7736 5.70344 15.8926 5.98627C16.0116 6.26911 15.9655 6.59445 15.7727 6.83313Z" fill="#0071BC" />
-                  </svg>
-                  <h3 className="text-[14px] text-[#848199] font-normal">All limited links</h3>
-                </div>
-                <div className="flex space-x-2 mt-3">
-                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M10 0C4.47715 0 0 4.47715 0 10C0 15.5228 4.47715 20 10 20C15.5228 20 20 15.5228 20 10C19.9936 4.47982 15.5202 0.00642897 10 0Z" fill="#5243C2" fill-opacity="0.103693" />
-                    <path d="M15.7727 6.83313L10.0685 14.574C9.93246 14.7545 9.7296 14.8727 9.50552 14.9022C9.28143 14.9316 9.0549 14.8698 8.87683 14.7306L4.8035 11.474C4.44405 11.1863 4.38585 10.6617 4.6735 10.3023C4.96115 9.94285 5.48572 9.88465 5.84516 10.1723L9.24183 12.8898L14.431 5.8473C14.6012 5.59195 14.8979 5.45078 15.2033 5.47983C15.5088 5.50887 15.7736 5.70344 15.8926 5.98627C16.0116 6.26911 15.9655 6.59445 15.7727 6.83313Z" fill="#0071BC" />
-                  </svg>
-                  <h3 className="text-[14px] text-[#848199] font-normal">Own analytics platform</h3>
-                </div>
-                <div className="flex space-x-2 mt-3">
-                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M10 0C4.47715 0 0 4.47715 0 10C0 15.5228 4.47715 20 10 20C15.5228 20 20 15.5228 20 10C19.9936 4.47982 15.5202 0.00642897 10 0Z" fill="#5243C2" fill-opacity="0.103693" />
-                    <path d="M15.7727 6.83313L10.0685 14.574C9.93246 14.7545 9.7296 14.8727 9.50552 14.9022C9.28143 14.9316 9.0549 14.8698 8.87683 14.7306L4.8035 11.474C4.44405 11.1863 4.38585 10.6617 4.6735 10.3023C4.96115 9.94285 5.48572 9.88465 5.84516 10.1723L9.24183 12.8898L14.431 5.8473C14.6012 5.59195 14.8979 5.45078 15.2033 5.47983C15.5088 5.50887 15.7736 5.70344 15.8926 5.98627C16.0116 6.26911 15.9655 6.59445 15.7727 6.83313Z" fill="#0071BC" />
-                  </svg>
-                  <h3 className="text-[14px] text-[#848199] font-normal">Chat support</h3>
-                </div>
-                <div className="flex space-x-2 mt-3">
-                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M10 0C4.47715 0 0 4.47715 0 10C0 15.5228 4.47715 20 10 20C15.5228 20 20 15.5228 20 10C19.9936 4.47982 15.5202 0.00642897 10 0Z" fill="#5243C2" fill-opacity="0.103693" />
-                    <path d="M15.7727 6.83313L10.0685 14.574C9.93246 14.7545 9.7296 14.8727 9.50552 14.9022C9.28143 14.9316 9.0549 14.8698 8.87683 14.7306L4.8035 11.474C4.44405 11.1863 4.38585 10.6617 4.6735 10.3023C4.96115 9.94285 5.48572 9.88465 5.84516 10.1723L9.24183 12.8898L14.431 5.8473C14.6012 5.59195 14.8979 5.45078 15.2033 5.47983C15.5088 5.50887 15.7736 5.70344 15.8926 5.98627C16.0116 6.26911 15.9655 6.59445 15.7727 6.83313Z" fill="#0071BC" />
-                  </svg>
-                  <h3 className="text-[14px] text-[#848199] font-normal">Optimize hashtags</h3>
-                </div>
-                <div className="flex space-x-2 mt-3">
-                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M10 0C4.47715 0 0 4.47715 0 10C0 15.5228 4.47715 20 10 20C15.5228 20 20 15.5228 20 10C19.9936 4.47982 15.5202 0.00642897 10 0Z" fill="#5243C2" fill-opacity="0.103693" />
-                    <path d="M15.7727 6.83313L10.0685 14.574C9.93246 14.7545 9.7296 14.8727 9.50552 14.9022C9.28143 14.9316 9.0549 14.8698 8.87683 14.7306L4.8035 11.474C4.44405 11.1863 4.38585 10.6617 4.6735 10.3023C4.96115 9.94285 5.48572 9.88465 5.84516 10.1723L9.24183 12.8898L14.431 5.8473C14.6012 5.59195 14.8979 5.45078 15.2033 5.47983C15.5088 5.50887 15.7736 5.70344 15.8926 5.98627C16.0116 6.26911 15.9655 6.59445 15.7727 6.83313Z" fill="#0071BC" />
-                  </svg>
-                  <h3 className="text-[14px] text-[#848199] font-normal">Unlimited users</h3>
-                </div>
+            <div>
+              <div className="uppercase text-center bg-[#0071BC] py-2 rounded-t-[8px] text-white ">Most popular</div>
+              <div className="border-2 border-[#0071BC] rounded-b-[8px] p-4 bg-white pt-4 pb-8">
+                <h3 className="text-center text-[#56575B] uppercase text-[14px]">Basic</h3>
+                <h1 className="text-center mt-5 text-[34px] text-[#56575B]">₦3,500<sup className="text-[16px]">/month</sup> </h1>
+                <div className="flex-col justify-center mt-5">
+                  {/* <h3 className="text-center text-[#56575B] text-[14px]">2 QR Codes/month</h3>
+                    <h3 className="text-center text-[#56575B] text-[14px] ">10 links/month</h3>
+                    <h3 className="text-center text-[#56575B] text-[14px]">1 Link-in-bio page</h3> */}
+                                <div className="mt-4">
+                    <div onClick={(e)=>handleSubmit(e,'3500')}>
+                      <button className=" w-full py-[14px] bg-[#0071BC] text-[#ffffff] text-[15px] rounded-[6px]">Get Started</button>
+                    </div>
+                  </div>
+                  <div className="mt-4">
+                    <div className=" flex space-x-3 mt-4">
+                      <SvgElement type={icontypesEnum.PLANS} />
+                      <h3 className="text-[13px] text-[#56575B]">10 Personalized Whatsapp Links</h3>
+                    </div>
+                    <div className="flex space-x-3 mt-2">
+                      <SvgElement type={icontypesEnum.PLANS} />
+                      <h3 className="text-[13px] text-[#56575B]">10 Personalized Redirect Links</h3></div>
+                    <div className="flex space-x-3 mt-2">
+                      <SvgElement type={icontypesEnum.PLANS} />
+                      <h3 className="text-[13px] text-[#56575B]">10 Multi Links</h3>
+                    </div>
 
-              </div>
-            </div> */}
+                    <div className="flex space-x-3 mt-2">
+                      <SvgElement type={icontypesEnum.PLANS} />
+                      <h3 className="text-[13px] text-[#56575B]">5 Market Links (Shops)</h3>
+                    </div>
 
+                    <div className="flex space-x-3 mt-2">
+                      <SvgElement type={icontypesEnum.PLANS} />
+                      <h3 className="text-[13px] text-[#56575B]">100 Product Listing</h3>
+                    </div>
+                    {/* <div className="flex space-x-3 mt-2">
+          <SvgElement type={icontypesEnum.PLANS} />
+          <h3 className="text-[13px] text-[#56575B]">Can edit Product Details</h3>
+        </div> */}
 
-            <div className="bg-[#0071BC] py-6 px-8 md:mb-8 mb-0 mt-8 md:mt-0 rounded-[20px] shadow-2xl shadow-[#0071BC]">
-              <div className="flex justify-end">
-                <h3 className="text-[10px] text-white">POPULAR</h3>
-              </div>
-              <h2 className="text-[33px] text-[#ffffff] font-semibold">$5 <span className="text-[14px] text-[#ffffff]">/ month</span></h2>
-              <h3 className="mt-2 text-[#ffffff]  text-[26px]">Pro</h3>
-              <p className="mt-1 text-[14px] text-white ">For most businesses that want to otpimize web queries</p>
-              <div className="mt-3">
-                <div className="flex space-x-2 mt-3">
-                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path opacity="0.1" d="M10 0C4.47715 0 0 4.47715 0 10C0 15.5228 4.47715 20 10 20C15.5228 20 20 15.5228 20 10C19.9936 4.47982 15.5202 0.00642897 10 0Z" fill="white" />
-                    <path d="M15.7727 6.83313L10.0685 14.574C9.93246 14.7545 9.7296 14.8727 9.50552 14.9022C9.28143 14.9316 9.0549 14.8698 8.87683 14.7306L4.8035 11.474C4.44405 11.1863 4.38585 10.6617 4.6735 10.3023C4.96115 9.94285 5.48572 9.88465 5.84516 10.1723L9.24183 12.8898L14.431 5.8473C14.6012 5.59195 14.8979 5.45078 15.2033 5.47983C15.5088 5.50887 15.7736 5.70344 15.8926 5.98627C16.0116 6.26911 15.9655 6.59445 15.7727 6.83313Z" fill="white" />
-                  </svg>
+                    <div className="flex space-x-3 mt-2">
+                      <SvgElement type={icontypesEnum.PLANS} />
+                      <h3 className="text-[13px] text-[#56575B]">Can edit Multi Links Info</h3>
+                    </div>
 
-                  <h3 className="text-[14px] text-[#ffffff]  font-normal">All limited links</h3>
+                    <div className="flex space-x-3 mt-2">
+                      <SvgElement type={icontypesEnum.PLANS} />
+                      <h3 className="text-[13px] text-[#56575B]">Can edit whatsapp message</h3>
+                    </div>
+
+                    <div className="flex space-x-3 mt-2">
+                      <SvgElement type={icontypesEnum.PLANS} />
+                      <h3 className="text-[13px] text-[#56575B]">Can edit redirect link info</h3>
+                    </div>
+
+                  </div>
                 </div>
-                <div className="flex space-x-2 mt-3">
-                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path opacity="0.1" d="M10 0C4.47715 0 0 4.47715 0 10C0 15.5228 4.47715 20 10 20C15.5228 20 20 15.5228 20 10C19.9936 4.47982 15.5202 0.00642897 10 0Z" fill="white" />
-                    <path d="M15.7727 6.83313L10.0685 14.574C9.93246 14.7545 9.7296 14.8727 9.50552 14.9022C9.28143 14.9316 9.0549 14.8698 8.87683 14.7306L4.8035 11.474C4.44405 11.1863 4.38585 10.6617 4.6735 10.3023C4.96115 9.94285 5.48572 9.88465 5.84516 10.1723L9.24183 12.8898L14.431 5.8473C14.6012 5.59195 14.8979 5.45078 15.2033 5.47983C15.5088 5.50887 15.7736 5.70344 15.8926 5.98627C16.0116 6.26911 15.9655 6.59445 15.7727 6.83313Z" fill="white" />
-                  </svg>
-
-                  <h3 className="text-[14px] text-[#ffffff]  font-normal">Own analytics platform</h3>
-                </div>
-                <div className="flex space-x-2 mt-3">
-                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path opacity="0.1" d="M10 0C4.47715 0 0 4.47715 0 10C0 15.5228 4.47715 20 10 20C15.5228 20 20 15.5228 20 10C19.9936 4.47982 15.5202 0.00642897 10 0Z" fill="white" />
-                    <path d="M15.7727 6.83313L10.0685 14.574C9.93246 14.7545 9.7296 14.8727 9.50552 14.9022C9.28143 14.9316 9.0549 14.8698 8.87683 14.7306L4.8035 11.474C4.44405 11.1863 4.38585 10.6617 4.6735 10.3023C4.96115 9.94285 5.48572 9.88465 5.84516 10.1723L9.24183 12.8898L14.431 5.8473C14.6012 5.59195 14.8979 5.45078 15.2033 5.47983C15.5088 5.50887 15.7736 5.70344 15.8926 5.98627C16.0116 6.26911 15.9655 6.59445 15.7727 6.83313Z" fill="white" />
-                  </svg>
-
-                  <h3 className="text-[14px] text-[#ffffff] font-normal">Chat support</h3>
-                </div>
-                <div className="flex space-x-2 mt-3">
-                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path opacity="0.1" d="M10 0C4.47715 0 0 4.47715 0 10C0 15.5228 4.47715 20 10 20C15.5228 20 20 15.5228 20 10C19.9936 4.47982 15.5202 0.00642897 10 0Z" fill="white" />
-                    <path d="M15.7727 6.83313L10.0685 14.574C9.93246 14.7545 9.7296 14.8727 9.50552 14.9022C9.28143 14.9316 9.0549 14.8698 8.87683 14.7306L4.8035 11.474C4.44405 11.1863 4.38585 10.6617 4.6735 10.3023C4.96115 9.94285 5.48572 9.88465 5.84516 10.1723L9.24183 12.8898L14.431 5.8473C14.6012 5.59195 14.8979 5.45078 15.2033 5.47983C15.5088 5.50887 15.7736 5.70344 15.8926 5.98627C16.0116 6.26911 15.9655 6.59445 15.7727 6.83313Z" fill="white" />
-                  </svg>
-
-                  <h3 className="text-[14px] text-[#ffffff]  font-normal">Optimize hashtags</h3>
-                </div>
-                <div className="flex space-x-2 mt-3">
-                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path opacity="0.1" d="M10 0C4.47715 0 0 4.47715 0 10C0 15.5228 4.47715 20 10 20C15.5228 20 20 15.5228 20 10C19.9936 4.47982 15.5202 0.00642897 10 0Z" fill="white" />
-                    <path d="M15.7727 6.83313L10.0685 14.574C9.93246 14.7545 9.7296 14.8727 9.50552 14.9022C9.28143 14.9316 9.0549 14.8698 8.87683 14.7306L4.8035 11.474C4.44405 11.1863 4.38585 10.6617 4.6735 10.3023C4.96115 9.94285 5.48572 9.88465 5.84516 10.1723L9.24183 12.8898L14.431 5.8473C14.6012 5.59195 14.8979 5.45078 15.2033 5.47983C15.5088 5.50887 15.7736 5.70344 15.8926 5.98627C16.0116 6.26911 15.9655 6.59445 15.7727 6.83313Z" fill="white" />
-                  </svg>
-
-                  <h3 className="text-[14px] text-[#ffffff]  font-normal">Unlimited users</h3>
-                </div>
-
               </div>
             </div>
 
 
-            <div className="bg-white py-6 px-8 mt-8 md:rounded-r-[26px] rounded-[15px]">
-              <h2 className="text-[33px] text-[#231D4F] font-semibold">$10 <span className="text-[14px] text-[#848199]">/ month</span></h2>
-              <h3 className="mt-2 text-[#231D4F] text-[26px]">Premium</h3>
-              <p className="mt-1 text-[14px] text-[#848199]">For most businesses that want to otpimize web queries</p>
-              <div className="mt-3">
-                <div className="flex space-x-2 mt-3">
-                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M10 0C4.47715 0 0 4.47715 0 10C0 15.5228 4.47715 20 10 20C15.5228 20 20 15.5228 20 10C19.9936 4.47982 15.5202 0.00642897 10 0Z" fill="#5243C2" fill-opacity="0.103693" />
-                    <path d="M15.7727 6.83313L10.0685 14.574C9.93246 14.7545 9.7296 14.8727 9.50552 14.9022C9.28143 14.9316 9.0549 14.8698 8.87683 14.7306L4.8035 11.474C4.44405 11.1863 4.38585 10.6617 4.6735 10.3023C4.96115 9.94285 5.48572 9.88465 5.84516 10.1723L9.24183 12.8898L14.431 5.8473C14.6012 5.59195 14.8979 5.45078 15.2033 5.47983C15.5088 5.50887 15.7736 5.70344 15.8926 5.98627C16.0116 6.26911 15.9655 6.59445 15.7727 6.83313Z" fill="#0071BC" />
-                  </svg>
-                  <h3 className="text-[14px] text-[#848199] font-normal">All limited links</h3>
-                </div>
-                <div className="flex space-x-2 mt-3">
-                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M10 0C4.47715 0 0 4.47715 0 10C0 15.5228 4.47715 20 10 20C15.5228 20 20 15.5228 20 10C19.9936 4.47982 15.5202 0.00642897 10 0Z" fill="#5243C2" fill-opacity="0.103693" />
-                    <path d="M15.7727 6.83313L10.0685 14.574C9.93246 14.7545 9.7296 14.8727 9.50552 14.9022C9.28143 14.9316 9.0549 14.8698 8.87683 14.7306L4.8035 11.474C4.44405 11.1863 4.38585 10.6617 4.6735 10.3023C4.96115 9.94285 5.48572 9.88465 5.84516 10.1723L9.24183 12.8898L14.431 5.8473C14.6012 5.59195 14.8979 5.45078 15.2033 5.47983C15.5088 5.50887 15.7736 5.70344 15.8926 5.98627C16.0116 6.26911 15.9655 6.59445 15.7727 6.83313Z" fill="#0071BC" />
-                  </svg>
-                  <h3 className="text-[14px] text-[#848199] font-normal">Own analytics platform</h3>
-                </div>
-                <div className="flex space-x-2 mt-3">
-                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M10 0C4.47715 0 0 4.47715 0 10C0 15.5228 4.47715 20 10 20C15.5228 20 20 15.5228 20 10C19.9936 4.47982 15.5202 0.00642897 10 0Z" fill="#5243C2" fill-opacity="0.103693" />
-                    <path d="M15.7727 6.83313L10.0685 14.574C9.93246 14.7545 9.7296 14.8727 9.50552 14.9022C9.28143 14.9316 9.0549 14.8698 8.87683 14.7306L4.8035 11.474C4.44405 11.1863 4.38585 10.6617 4.6735 10.3023C4.96115 9.94285 5.48572 9.88465 5.84516 10.1723L9.24183 12.8898L14.431 5.8473C14.6012 5.59195 14.8979 5.45078 15.2033 5.47983C15.5088 5.50887 15.7736 5.70344 15.8926 5.98627C16.0116 6.26911 15.9655 6.59445 15.7727 6.83313Z" fill="#0071BC" />
-                  </svg>
-                  <h3 className="text-[14px] text-[#848199] font-normal">Chat support</h3>
-                </div>
-                <div className="flex space-x-2 mt-3">
-                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M10 0C4.47715 0 0 4.47715 0 10C0 15.5228 4.47715 20 10 20C15.5228 20 20 15.5228 20 10C19.9936 4.47982 15.5202 0.00642897 10 0Z" fill="#5243C2" fill-opacity="0.103693" />
-                    <path d="M15.7727 6.83313L10.0685 14.574C9.93246 14.7545 9.7296 14.8727 9.50552 14.9022C9.28143 14.9316 9.0549 14.8698 8.87683 14.7306L4.8035 11.474C4.44405 11.1863 4.38585 10.6617 4.6735 10.3023C4.96115 9.94285 5.48572 9.88465 5.84516 10.1723L9.24183 12.8898L14.431 5.8473C14.6012 5.59195 14.8979 5.45078 15.2033 5.47983C15.5088 5.50887 15.7736 5.70344 15.8926 5.98627C16.0116 6.26911 15.9655 6.59445 15.7727 6.83313Z" fill="#0071BC" />
-                  </svg>
-                  <h3 className="text-[14px] text-[#848199] font-normal">Optimize hashtags</h3>
-                </div>
-                <div className="flex space-x-2 mt-3">
-                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M10 0C4.47715 0 0 4.47715 0 10C0 15.5228 4.47715 20 10 20C15.5228 20 20 15.5228 20 10C19.9936 4.47982 15.5202 0.00642897 10 0Z" fill="#5243C2" fill-opacity="0.103693" />
-                    <path d="M15.7727 6.83313L10.0685 14.574C9.93246 14.7545 9.7296 14.8727 9.50552 14.9022C9.28143 14.9316 9.0549 14.8698 8.87683 14.7306L4.8035 11.474C4.44405 11.1863 4.38585 10.6617 4.6735 10.3023C4.96115 9.94285 5.48572 9.88465 5.84516 10.1723L9.24183 12.8898L14.431 5.8473C14.6012 5.59195 14.8979 5.45078 15.2033 5.47983C15.5088 5.50887 15.7736 5.70344 15.8926 5.98627C16.0116 6.26911 15.9655 6.59445 15.7727 6.83313Z" fill="#0071BC" />
-                  </svg>
-                  <h3 className="text-[14px] text-[#848199] font-normal">Unlimited users</h3>
-                </div>
+            <div>
+              <div className="border border-[#0071BC] rounded-[8px] p-4 bg-white pt-4 pb-8">
+                <h3 className="text-center text-[#56575B] uppercase text-[14px]">POPULAR</h3>
+                <h1 className="text-center mt-5 text-[34px] text-[#56575B]">₦7,500<sup className="text-[16px]">/month</sup> </h1>
+                <div className="flex-col justify-center mt-5">
+                  {/* <h3 className="text-center text-[#56575B] text-[14px]">2 QR Codes/month</h3>
+      <h3 className="text-center text-[#56575B] text-[14px] ">10 links/month</h3>
+      <h3 className="text-center text-[#56575B] text-[14px]">1 Link-in-bio page</h3> */}
+                  <div className="mt-4">
+                  <div onClick={(e)=>handleSubmit(e,'7500')}>
+                      <button className=" w-full py-[14px] bg-[#EDF2FE] text-[#0071BC] text-[15px] rounded-[6px]">Get Started
+                      </button>
+                    </div>
+                  </div>
+                  <div className="mt-4">
+                    <div className=" flex space-x-3 mt-4">
+                      <SvgElement type={icontypesEnum.PLANS} />
+                      <h3 className="text-[13px] text-[#56575B]">25 Personalized Whatsapp Links</h3>
+                    </div>
+                    <div className="flex space-x-3 mt-2">
+                      <SvgElement type={icontypesEnum.PLANS} />
+                      <h3 className="text-[13px] text-[#56575B]">25 Personalized Redirect Links</h3></div>
+                    <div className="flex space-x-3 mt-2">
+                      <SvgElement type={icontypesEnum.PLANS} />
+                      <h3 className="text-[13px] text-[#56575B]">25 Multi Links</h3>
+                    </div>
 
+                    <div className="flex space-x-3 mt-2">
+                      <SvgElement type={icontypesEnum.PLANS} />
+                      <h3 className="text-[13px] text-[#56575B]">10 Market Links(Shops)</h3>
+                    </div>
+
+                    <div className="flex space-x-3 mt-2">
+                      <SvgElement type={icontypesEnum.PLANS} />
+                      <h3 className="text-[13px] text-[#56575B]">Free QR Code</h3>
+                    </div>
+
+                    <div className="flex space-x-3 mt-2">
+                      <SvgElement type={icontypesEnum.PLANS} />
+                      <h3 className="text-[13px] text-[#56575B]">500 Product Listing</h3>
+                    </div>
+                    <div className="flex space-x-3 mt-2">
+                      <SvgElement type={icontypesEnum.PLANS} />
+                      <h3 className="text-[13px] text-[#56575B]">Can edit Product Details</h3>
+                    </div>
+
+                    <div className="flex space-x-3 mt-2">
+                      <SvgElement type={icontypesEnum.PLANS} />
+                      <h3 className="text-[13px] text-[#56575B]">Can edit Multi Links Info</h3>
+                    </div>
+
+                    <div className="flex space-x-3 mt-2">
+                      <SvgElement type={icontypesEnum.PLANS} />
+                      <h3 className="text-[13px] text-[#56575B]">Can edit whatsapp message</h3>
+                    </div>
+
+                    <div className="flex space-x-3 mt-2">
+                      <SvgElement type={icontypesEnum.PLANS} />
+                      <h3 className="text-[13px] text-[#56575B]">Can edit redirect link info</h3>
+                    </div>
+                  </div>
+                </div>
               </div>
+
             </div>
 
+            <div className="border border-[#0071BC] rounded-[8px] p-4 bg-white pt-4 pb-8">
+              <h3 className="text-center text-[#56575B] uppercase text-[14px]">PREMIUM</h3>
+              <h1 className="text-center mt-5 text-[34px] text-[#56575B]">₦16,500<sup className="text-[16px]">/month</sup> </h1>
+              <div className="flex-col justify-center mt-5">
+                {/* <h3 className="text-center text-[#56575B] text-[14px]">2 QR Codes/month</h3>
+    <h3 className="text-center text-[#56575B] text-[14px] ">10 links/month</h3>
+    <h3 className="text-center text-[#56575B] text-[14px]">1 Link-in-bio page</h3> */}
+                <div className="mt-4">
+                <div onClick={(e)=>handleSubmit(e,'16500')}>
+                    <button className=" w-full py-[14px] bg-[#EDF2FE] text-[#0071BC] text-[15px] rounded-[6px]">Get Started</button>
+                  </div>
+                </div>
+                <div className="mt-4">
+                  <div className=" flex space-x-3 mt-4">
+                    <SvgElement type={icontypesEnum.PLANS} />
+                    <h3 className="text-[13px] text-[#56575B]">Unlimited Personalized Whatsapp Links</h3>
+                  </div>
+                  <div className="flex space-x-3 mt-2">
+                    <SvgElement type={icontypesEnum.PLANS} />
+                    <h3 className="text-[13px] text-[#56575B]">unlimited Personalized Redirect Links</h3></div>
+                  <div className="flex space-x-3 mt-2">
+                    <SvgElement type={icontypesEnum.PLANS} />
+                    <h3 className="text-[13px] text-[#56575B]">Unlimited Multi Links</h3>
+                  </div>
+
+                  <div className="flex space-x-3 mt-2">
+                    <SvgElement type={icontypesEnum.PLANS} />
+                    <h3 className="text-[13px] text-[#56575B]">Unlimited Market Links(Shops)</h3>
+                  </div>
+
+                  <div className="flex space-x-3 mt-2">
+                    <SvgElement type={icontypesEnum.PLANS} />
+                    <h3 className="text-[13px] text-[#56575B]">Free QR Code</h3>
+                  </div>
+
+                  <div className="flex space-x-3 mt-2">
+                    <SvgElement type={icontypesEnum.PLANS} />
+                    <h3 className="text-[13px] text-[#56575B]">Unlimited Product Listing</h3>
+                  </div>
+
+                  <div className="flex space-x-3 mt-2">
+                    <SvgElement type={icontypesEnum.PLANS} />
+                    <h3 className="text-[13px] text-[#56575B]">Product page customization</h3>
+                  </div>
+
+                  <div className="flex space-x-3 mt-2">
+                    <SvgElement type={icontypesEnum.PLANS} />
+                    <h3 className="text-[13px] text-[#56575B]">Can add branded Logo</h3>
+                  </div>
+
+                  <div className="flex space-x-3 mt-2">
+                    <SvgElement type={icontypesEnum.PLANS} />
+                    <h3 className="text-[13px] text-[#56575B]">Can add social media links</h3>
+                  </div>
+
+                  <div className="flex space-x-3 mt-2">
+                    <SvgElement type={icontypesEnum.PLANS} />
+                    <h3 className="text-[13px] text-[#56575B]">Can edit Market links</h3>
+                  </div>
+
+                  <div className="flex space-x-3 mt-2">
+                    <SvgElement type={icontypesEnum.PLANS} />
+                    <h3 className="text-[13px] text-[#56575B]">Can edit Product Details</h3>
+                  </div>
+
+                  <div className="flex space-x-3 mt-2">
+                    <SvgElement type={icontypesEnum.PLANS} />
+                    <h3 className="text-[13px] text-[#56575B]">Can edit Multi Links Info</h3>
+                  </div>
+
+                  <div className="flex space-x-3 mt-2">
+                    <SvgElement type={icontypesEnum.PLANS} />
+                    <h3 className="text-[13px] text-[#56575B]">Can edit whatsapp message</h3>
+                  </div>
+
+                  <div className="flex space-x-3 mt-2">
+                    <SvgElement type={icontypesEnum.PLANS} />
+                    <h3 className="text-[13px] text-[#56575B]">Can edit redirect link info</h3>
+                  </div>
+                </div>
+                {/* </div> */}
+              </div>
+
+            </div>
 
           </div>
         </div>
@@ -304,7 +355,7 @@ export default function CardSubscription() {
 
 
 
-  
+
 
       <ToastContainer
         position="bottom-left"

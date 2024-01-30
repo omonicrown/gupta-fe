@@ -45,7 +45,7 @@ export default function CardEditProduct() {
   const [pro3, setPro3] = React.useState([]);
   const [data, setData] = React.useState([]);
   const delay = 2500;
-  
+
 
   const [index, setIndex] = React.useState(0);
   const timeoutRef = React.useRef(null);
@@ -145,13 +145,13 @@ export default function CardEditProduct() {
 
   return (
     <>
-     
+
       <div className="flex justify-between md:px-20">
 
-      {marketInfo?.brand_logo == 'no image' || marketInfo?.brand_logo == null ?
+        {marketInfo?.brand_logo == 'no image' || marketInfo?.brand_logo == null ?
           <span><img src="/images/image.png" /> </span>
           :
-          <span><img src={marketInfo?.brand_logo} style={{ height: '30px', width: '70px' }} /></span>
+          <span><img src={marketInfo?.brand_logo} style={{ height: '50px', width: '90px' }} /></span>
         }
         {/* <span  className=""><img src="/images/image.png" /> </span> */}
         {/* <span>djdjks</span> */}
@@ -159,7 +159,7 @@ export default function CardEditProduct() {
       </div>
 
       <div className="md:pl-20 mt-4 cursor-pointer">
-      <span onClick={() => navigate(-1)}><img src="/images/backarrow.png" style={{ height: '30px' }} /></span>
+        <span onClick={() => navigate(-1)}><img src="/images/backarrow.png" style={{ height: '30px' }} /></span>
       </div>
 
       <div className="flex md:pl-24 md:pr-24 pt-10">
@@ -173,18 +173,35 @@ export default function CardEditProduct() {
           className="mySwiper"
         // style={{maxHeight:'400px'}}
         >
-          <SwiperSlide style={{color:'red'}}>
-            <img className="object-fill w-full h-[500px] md:min-h-[500px] min-h-[300px] max-h-[300px] md:max-h-[500px]" src={pro1} alt="" />
+          <SwiperSlide style={{ color: 'red' }}>
+
+            {pro1 == 'no image' ?
+              <img className="object-fill w-full h-[500px] md:min-h-[500px] min-h-[300px] max-h-[300px] md:max-h-[500px]" src="/images/noimage.jpeg" alt={pro1} />
+              :
+              <img className="object-fill w-full h-[500px] md:min-h-[500px] min-h-[300px] max-h-[300px] md:max-h-[500px]" src={pro1} alt={pro1} />
+            }
+
             <h3 className="absolute text-5xl text-gray-400 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
               gupta</h3>
           </SwiperSlide>
           <SwiperSlide>
-            <img className="object-fill w-full h-[500px] md:min-h-[500px] min-h-[300px] max-h-[300px] md:max-h-[500px]" src={pro2} alt="" />
+
+          {pro2 == 'no image' ?
+              <img className="object-fill w-full h-[500px] md:min-h-[500px] min-h-[300px] max-h-[300px] md:max-h-[500px]" src="/images/noimage.jpeg" alt={pro2} />
+              :
+              <img className="object-fill w-full h-[500px] md:min-h-[500px] min-h-[300px] max-h-[300px] md:max-h-[500px]" src={pro2} alt={pro2} />
+            }
+            
             <h3 className="absolute text-5xl text-gray-400 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
               gupta</h3>
           </SwiperSlide>
           <SwiperSlide>
-            <img className="object-fill w-full h-[500px] md:min-h-[500px] min-h-[300px] max-h-[300px] md:max-h-[500px]" src={pro3} alt="" />
+          {pro3 == 'no image' ?
+              <img className="object-fill w-full h-[500px] md:min-h-[500px] min-h-[300px] max-h-[300px] md:max-h-[500px]" src="/images/noimage.jpeg" alt={pro3} />
+              :
+              <img className="object-fill w-full h-[500px] md:min-h-[500px] min-h-[300px] max-h-[300px] md:max-h-[500px]" src={pro3} alt={pro3} />
+            }
+           
             <h3 className="absolute text-5xl text-gray-400 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
               gupta</h3>
           </SwiperSlide>
@@ -199,21 +216,21 @@ export default function CardEditProduct() {
         </div>
 
         <div className="flex justify-start gap-3 py-3">
-        <a target='_blank' href={`${configs?.baseRedirect}/${data?.phone_number}`}
-          style={{ backgroundColor: marketInfo?.brand_primary_color }}
+          <a target='_blank' href={`${configs?.baseRedirect}/${data?.phone_number}`}
+            style={{ backgroundColor: marketInfo?.brand_primary_color }}
             className=" text-[10px] text-white pt-1  flex cursor-pointer bg-[#0071BC] rounded-full px-2"
           >
             <FaWhatsapp className="mt-[2px] mr-1" />  Contact Vendor
           </a>
 
           <span onClick={() => togglePaymentModal(data)}
-           style={{ backgroundColor: marketInfo?.brand_primary_color }}
+            style={{ backgroundColor: marketInfo?.brand_primary_color }}
             className=" text-[10px] text-[white] py-1  flex cursor-pointer bg-[#DBF2FF] rounded-full px-2"
           >
-             Pay with gupta
+            Pay with gupta
           </span>
 
-         
+
         </div>
 
         <span>{data?.product_description}</span>

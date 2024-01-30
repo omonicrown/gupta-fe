@@ -184,7 +184,10 @@ export default function CardMiniStore() {
 
 
       <div className="relative flex flex-col min-w-0 break-words bg-white w-full mb-6  rounded">
-        <div className="rounded-t mb-0  md:py-3 p-1 border-0">
+        <div className="rounded-t mb-0  md:py-1 p-1 border-0">
+        <div className="bg-blue-100  rounded-lg ml-3 m-1 p-2 mb-3">
+            <span className=" bg-blue-100  rounded-lg  text-gray-500 text-[12px]"><span className="mr-4 text-red-500 bg-red-200 p-1 px-3 rounded-full text-[15px]">!</span>Unlock a personalized shopping hub with Gupta's Mini Store. Tailor market links, showcase products, and enhance the shopping journey effortlessly.</span>
+          </div>
           <div className="flex flex-wrap items-center">
             <div className="w-full px-4 max-w-full flex-grow flex-1">
 

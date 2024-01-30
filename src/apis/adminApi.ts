@@ -253,11 +253,11 @@ export class AdminApis {
         }
     }
 
-    static getProductByLinkName(id: any): AxiosPromise<Array<any>> {
+    static getProductByLinkName(id: any,pageNo:any): AxiosPromise<Array<any>> {
         if (configs.type === "LOCAL") {
             return {} as AxiosPromise;
         } else {
-            return this.adminApi.getProductByLinkName(id);
+            return this.adminApi.getProductByLinkName(id,pageNo);
         }
     } 
 
