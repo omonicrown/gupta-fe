@@ -38,7 +38,7 @@ const Hero = () => {
             </button>
           </div>
         </div>
-        <div className='flex-1 flex justify-center items-center'>
+        <div className='flex-1 flex justify-center items-center lg:mt-0 mt-10'>
         <img src="/images/hero.png" alt="hero"/>
         </div>
       </section>
