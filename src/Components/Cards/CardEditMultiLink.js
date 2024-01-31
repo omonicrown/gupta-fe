@@ -243,7 +243,6 @@ export default function CardTiredLinks() {
     [permissionList, permissionIdList]
   );
 
-  console?.log(permissionList)
 
 
   return (
@@ -300,10 +299,10 @@ export default function CardTiredLinks() {
                               type="button"
                                 disabled={imageList?.length ? true : false}
                                 style={isDragging ? { color: 'red' } : undefined}
-                                onClick={onImageUpload}
+                                // onClick={onImageUpload}
                                 {...dragProps}
                               >
-                                {imageList?.length ? '' : <span className="flex justify-center mx-20 p-6 rounded-full"> <div> <img src={configs?.imageUrl + multiLinks?.multiLinks?.logo} className="flex justify-center rounded-[100px]" />  </div> </span>}
+                                {imageList?.length ? '' : <span className="flex justify-center mx-20 p-6 rounded-full"> <div> <img src={multiLinks?.multiLinks?.logo} className="flex justify-center rounded-[100px]" />  </div> </span>}
 
                               </button>
                               &nbsp;
@@ -441,7 +440,7 @@ export default function CardTiredLinks() {
                               onClick={null}
                               {...dragProps}
                             >
-                              {imageList?.length ? '' : <span className="flex justify-center mx-20 p-6 rounded-full"> <div> <img src={configs?.imageUrl + multiLinks?.multiLinks?.logo} className="flex justify-center rounded-[100px]" />  </div> </span>}
+                              {imageList?.length ? '' : <span className="flex justify-center mx-20 p-6 rounded-full"> <div> <img src={multiLinks?.multiLinks?.logo} className="flex justify-center rounded-[100px]" />  </div> </span>}
 
                             </button>
                             &nbsp;
