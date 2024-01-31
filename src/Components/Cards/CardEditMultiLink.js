@@ -314,10 +314,10 @@ export default function CardTiredLinks() {
                                     <img src={image['data_url']} alt="" className=" mx-32 rounded-3xl max-h-20 max-w-sm" />
                                   </div>
 
-                                  <div className="image-item__btn-wrapper flex justify-center">
+                                  {/* <div className="image-item__btn-wrapper flex justify-center">
                                     <button type="button" onClick={() => onImageUpdate(index)}>update</button> | &nbsp;
                                     <button type="button" onClick={() => onImageRemove(index)}>remove</button>
-                                  </div>
+                                  </div> */}
                                 </div>
                               ))}
                             </div>
