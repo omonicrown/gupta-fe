@@ -263,7 +263,7 @@ export default function CardCreateLink() {
 
                   <span class="block p-3 max-w-xs bg-red-100 rounded-lg border border-gray-200 shadow-md hover:bg-gray-10 mb-3">
                     <p class="text-red-400 text-sm flex gap-2 pb-1" style={{ fontStyle: 'Inter' }}><AiOutlineWarning style={{ marginTop: '3px' }} /> Warning</p>
-                    <p class="text-gray-600 text-xs" style={{ fontStyle: 'Inter' }}>Before creating your link, confirm that you have an active WhatsApp Business catalog. If you don’t have, learn how to create it here</p>
+                    <p class="text-gray-600 text-xs" style={{ fontStyle: 'Inter' }}>Before creating your link, confirm that you have an active WhatsApp Business catalog.</p>
                   </span>
 
                 }

@@ -37,6 +37,8 @@ import Dashboard from './Components/admin/Dashboard';
 import UsersList from './Components/admin/UsersList';
 import WitdrawalRequest from './Components/admin/WitdrawalRequest';
 import UserDetails from './Components/admin/UserDetails';
+import FAQ from './Components/Pages/FAQ';
+import Pricing from './Components/Pages/Pricing';
 
 
 function App() {
@@ -48,6 +50,8 @@ function App() {
       <Routes>
       {/* <Route  path="/" element={<Index/>}/> */}
       <Route  path="/" element={<Home/>}/>
+      <Route  path="/faq" element={<FAQ/>}/>
+      <Route  path="/pricing" element={<Pricing/>}/>
            <Route  path="/login" element={<Login/>}/>
            <Route  path="/register" element={<Register/>}/>
            <Route  path="/email-verify" element={<EmailVerify/>}/>

@@ -1,100 +1,26 @@
-
-import React, { useState } from "react";
-import { Dispatch } from "redux";
-import { useSelector, useDispatch } from 'react-redux';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import { NavLink, useNavigate, useSearchParams } from "react-router-dom";
-import Modal from 'react-awesome-modal';
-import { PhoneInput } from "react-contact-number-input";
-import { SvgElement, icontypesEnum } from "../assets/svgElement";
-import { AdminApis } from "../../apis/adminApi";
-import { FaTrash, FaEdit } from "react-icons/fa";
-import { AiOutlineWarning } from "react-icons/ai";
-import EmojiPicker from 'emoji-picker-react';
-import { AuthApis } from "../../apis/authApis";
-
-
-// components
-
-
-
-export default function CardSubscription() {
-  const navigate = useNavigate();
-  const [searchParams, setSearchParams] = useSearchParams()
-  const [subValue, setSubValue] = React.useState(1);
-
-  if (searchParams.get('tx_ref')) {
-    AdminApis.getCallback(searchParams.get('tx_ref')).then(
-      (response) => {
-        if (response?.data) {
-          // navigate('/wallet');
-          if (response?.data?.success === true) {
-            navigate('/mylinks');
-          }
-        } else {
-          // toast.warn('Invalid Login Credentials');
-        }
-      }
-    ).catch(function (error) {
-      // handle error
-      console.log(error.response.data);
-    }).finally(() => {
-      // toast.error("No Internet Connection");
-
-    });
-  }
-
-
-
-  const handleSubmit = (e, amount) => {
-    e.preventDefault();
-    const formData = new FormData()
-    formData.append('amount', amount)
-
-    AdminApis.makePayment(formData).then(
-      (response) => {
-        console?.log(response)
-        if (response?.data) {
-          console?.log(response?.data)
-          if (response?.data?.success === true) {
-            window.location.replace(response?.data?.data?.data?.link);
-          }
-        } else {
-          // toast.warn('Invalid Login Credentials');
-        }
-      }
-    ).catch(function (error) {
-      // handle error
-    }).finally(() => {
-      // toast.error("No Internet Connection");
-
-    });
-  }
-
+import React from 'react'
+import Navbar from '../Navbars/Navbar'
+import CTA from './CTA'
+import { NavLink } from 'react-router-dom'
+import { SvgElement, icontypesEnum } from '../assets/svgElement'
+function Pricing() {
   return (
     <>
-
-      <div className='bg-[#F5F5FA] sm:px-16 px-6 flex justify-center items-start py-16' >
+      <Navbar />
+      <div className='bg-[#FFFFFF] sm:px-16 px-6 flex justify-center items-start py-16' >
         <div className='xl:max-w-[1200px] w-full'>
           <div className='flex flex-col justify-center items-center'>
-            <h1 className="text-center font-bold font-poppins md:text-[40px] text-[25px] text-[#231D4F] md:leading-[50px] leading-[38px]">
-              Simple, transparent pricing
+            <h1 className="text-center font-bold font-poppins lg:text-[40px] text-[25px] text-[#231D4F] md:leading-[50px] leading-[38px]">
+              Pricing for brands and businesses of all sizes
             </h1>
-            <p className="text-[#848199] text-[20px] mt-5">Save up to 5% when you pay annually</p>
-            <div className="flex justify-center">
-            <button onClick={()=>setSubValue(1)} className={`w-auto py-[5px] px-[10px] bg-[${subValue == 1?'#0071BC':'#EDF2FE'}] text-[${subValue == 1?'#EDF2FE':'#0071BC'}] text-[15px] border`}>Monthly</button>
-            <button onClick={()=>setSubValue(3)} className={`w-auto py-[5px] px-[10px] bg-[${subValue == 3?'#0071BC':'#EDF2FE'}] text-[${subValue == 3?'#EDF2FE':'#0071BC'}] text-[15px] border`}>3 Months</button>
-            <button onClick={()=>setSubValue(6)} className={`w-auto py-[5px] px-[10px] bg-[${subValue == 6?'#0071BC':'#EDF2FE'}] text-[${subValue == 6?'#EDF2FE':'#0071BC'}] text-[15px] border`}>6 Months</button>
-            <button onClick={()=>setSubValue(12)} className={`w-auto py-[5px] px-[10px] bg-[${subValue == 12?'#0071BC':'#EDF2FE'}] text-[${subValue == 12?'#EDF2FE':'#0071BC'}] text-[15px] border`}>12 Months</button>
-         
-            </div>
+            <p className="text-[#56575B] text-[20px] mt-5">Connect to your audience with branded links, QR Codes, and a Link-in-bio that will get their attention.</p>
           </div>
-          <div className="grid grid-cols-1 gap-2 lg:grid-cols-4 md:grid-cols-2 mt-10">
 
-           
+          <div className=" flex justify-center mt-6">
+            <h3>Save up to 14% when you pay annually</h3>
+          </div>
 
-            {/* <div className="grid grid-cols-1 gap-2 lg:grid-cols-4 md:grid-cols-2 mt-10"> */}
+          <div className="grid grid-cols-1 gap-2 lg:grid-cols-4 md:grid-cols-2 mt-10 mb-10">
 
             <div>
               <div className="border border-[#0071BC] rounded-[8px] p-4 bg-white pt-4 pb-8">
@@ -105,9 +31,9 @@ export default function CardSubscription() {
     <h3 className="text-center text-[#56575B] text-[14px] ">10 links/month</h3>
     <h3 className="text-center text-[#56575B] text-[14px]">1 Link-in-bio page</h3> */}
                   <div className="mt-4">
-                   
+                    <NavLink to="/login">
                       <button className=" w-full py-[14px] bg-[#EDF2FE] text-[#0071BC] text-[15px] rounded-[6px]">Get Started</button>
-                   
+                    </NavLink>
                   </div>
                   <div className="mt-4">
                     <h3 className="text-[#56575B] text-[15px]">Includes:</h3>
@@ -141,16 +67,15 @@ export default function CardSubscription() {
               <div className="uppercase text-center bg-[#0071BC] py-2 rounded-t-[8px] text-white ">Most popular</div>
               <div className="border-2 border-[#0071BC] rounded-b-[8px] p-4 bg-white pt-4 pb-8">
                 <h3 className="text-center text-[#56575B] uppercase text-[14px]">Basic</h3>
-                <h1 className="text-center mt-5 text-[20px] text-[#56575B] font-bold"> {(new Intl.NumberFormat('en-US', { style: 'currency', currency: 'NGN' }).format((3500*subValue)-(subValue==1?0:((3500*subValue)*0.05))))}<span className="text-[16px]">/month</span> </h1>
-                {subValue !==1? <span className="flex justify-center text-[12px] text-[#56575B] font-bold italic">Save up to 5% 0ff</span>: ''}
+                <h1 className="text-center mt-5 text-[34px] text-[#56575B]">₦3,500<sup className="text-[16px]">/month</sup> </h1>
                 <div className="flex-col justify-center mt-5">
                   {/* <h3 className="text-center text-[#56575B] text-[14px]">2 QR Codes/month</h3>
-                    <h3 className="text-center text-[#56575B] text-[14px] ">10 links/month</h3>
-                    <h3 className="text-center text-[#56575B] text-[14px]">1 Link-in-bio page</h3> */}
-                                <div className="mt-4">
-                    <div onClick={(e)=>handleSubmit(e,(3500*subValue)-(subValue==1?0:((3500*subValue)*0.05)))}>
+      <h3 className="text-center text-[#56575B] text-[14px] ">10 links/month</h3>
+      <h3 className="text-center text-[#56575B] text-[14px]">1 Link-in-bio page</h3> */}
+                  <div className="mt-4">
+                    <NavLink to="/login">
                       <button className=" w-full py-[14px] bg-[#0071BC] text-[#ffffff] text-[15px] rounded-[6px]">Get Started</button>
-                    </div>
+                    </NavLink>
                   </div>
                   <div className="mt-4">
                     <div className=" flex space-x-3 mt-4">
@@ -203,18 +128,16 @@ export default function CardSubscription() {
             <div>
               <div className="border border-[#0071BC] rounded-[8px] p-4 bg-white pt-4 pb-8">
                 <h3 className="text-center text-[#56575B] uppercase text-[14px]">POPULAR</h3>
-                <h1 className="text-center mt-5 text-[20px] text-[#56575B] font-bold"> {(new Intl.NumberFormat('en-US', { style: 'currency', currency: 'NGN' }).format((7500*subValue)-(subValue==1?0:((7500*subValue)*0.05))))}<span className="text-[16px]">/month</span> </h1>
-                {subValue !==1? <span className="flex justify-center text-[12px] text-[#56575B] font-bold italic">Save up to 5% 0ff</span>: ''}
-                
+                <h1 className="text-center mt-5 text-[34px] text-[#56575B]">₦7,500<sup className="text-[16px]">/month</sup> </h1>
                 <div className="flex-col justify-center mt-5">
                   {/* <h3 className="text-center text-[#56575B] text-[14px]">2 QR Codes/month</h3>
       <h3 className="text-center text-[#56575B] text-[14px] ">10 links/month</h3>
       <h3 className="text-center text-[#56575B] text-[14px]">1 Link-in-bio page</h3> */}
                   <div className="mt-4">
-                  <div onClick={(e)=>handleSubmit(e,(7500*subValue)-(subValue==1?0:((7500*subValue)*0.05)))}>
+                    <NavLink to="/login">
                       <button className=" w-full py-[14px] bg-[#EDF2FE] text-[#0071BC] text-[15px] rounded-[6px]">Get Started
                       </button>
-                    </div>
+                    </NavLink>
                   </div>
                   <div className="mt-4">
                     <div className=" flex space-x-3 mt-4">
@@ -270,18 +193,15 @@ export default function CardSubscription() {
 
             <div className="border border-[#0071BC] rounded-[8px] p-4 bg-white pt-4 pb-8">
               <h3 className="text-center text-[#56575B] uppercase text-[14px]">PREMIUM</h3>
-              <h1 className="text-center mt-5 text-[20px] text-[#56575B] font-bold"> {(new Intl.NumberFormat('en-US', { style: 'currency', currency: 'NGN' }).format((16500*subValue)-(subValue==1?0:((16500*subValue)*0.05))))}<span className="text-[16px]">/month</span> </h1>
-             
-              {subValue !==1? <span className="flex justify-center text-[12px] text-[#56575B] font-bold italic">Save up to 5% 0ff</span>: ''}
+              <h1 className="text-center mt-5 text-[34px] text-[#56575B]">₦16,500<sup className="text-[16px]">/month</sup> </h1>
               <div className="flex-col justify-center mt-5">
-                
                 {/* <h3 className="text-center text-[#56575B] text-[14px]">2 QR Codes/month</h3>
     <h3 className="text-center text-[#56575B] text-[14px] ">10 links/month</h3>
     <h3 className="text-center text-[#56575B] text-[14px]">1 Link-in-bio page</h3> */}
                 <div className="mt-4">
-                <div onClick={(e)=>handleSubmit(e,(16500*subValue)-(subValue==1?0:((16500*subValue)*0.05)))}>
+                  <NavLink to="/login">
                     <button className=" w-full py-[14px] bg-[#EDF2FE] text-[#0071BC] text-[15px] rounded-[6px]">Get Started</button>
-                  </div>
+                  </NavLink>
                 </div>
                 <div className="mt-4">
                   <div className=" flex space-x-3 mt-4">
@@ -351,38 +271,19 @@ export default function CardSubscription() {
                     <h3 className="text-[13px] text-[#56575B]">Can edit redirect link info</h3>
                   </div>
                 </div>
-                {/* </div> */}
               </div>
-
             </div>
 
           </div>
+
+          <div>
+            <CTA />
+          </div>
+
         </div>
       </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-      <ToastContainer
-        position="bottom-left"
-        autoClose={2000}
-        hideProgressBar={true}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover />
     </>
-  );
+  )
 }
+
+export default Pricing

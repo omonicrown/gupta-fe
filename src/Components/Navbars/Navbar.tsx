@@ -40,8 +40,33 @@ function Navbar() {
             </NavLink>
           </div>
           <div className="flex md:order-2">
-            
+            <div className="hidden lg:flex flex-col font-medium md:flex-row lg:space-x-3 mr-[100px]">
+            <NavLink to='/'>
+                  <div
+                    className="hover:bg-gray-100 font-medium rounded-lg text-[16px] pl-8 pr-8 mt-3 p-2 text-center mr-1 md:mr-1 "
+                    
+                 >
+                   About Us
+                  </div>
+                </NavLink>
+            <NavLink to='/pricing'>
+                  <div
+                    className=" hover:bg-gray-100 font-medium rounded-lg text-[16px] pl-8 pr-8 mt-3 p-2 text-center mr-1 md:mr-1 "
+                  >
+                   Pricing
+                  </div>
+                </NavLink>
+            <NavLink to='/faq'>
+                  <div
+                    className=" hover:bg-gray-100 font-medium rounded-lg text-[16px] pl-8 pr-8 mt-3 p-2 text-center mr-1 md:mr-1 "
+                  >
+                   FAQ
+                  </div>
+                </NavLink>
+            </div>
+          
               <span className="hidden md:flex justify-center">
+              
                 <NavLink to='/login'>
                   <div
                     className=" hover:bg-gray-100 focus:outline-none focus:ring-4  focus:ring-gray-200 font-medium rounded-lg text-sm px-1 mt-3 p-2 text-center mr-1 md:mr-1 "
@@ -107,8 +132,9 @@ function Navbar() {
             </button>
           </div>
 
-         
+ 
         </div>
+
 
         <Transition
           show={isOpen}
@@ -120,20 +146,39 @@ function Navbar() {
           leaveTo="opacity-0 scale-95"
         >
           {(ref) => (
-            <div className="md:hidden bg-white w-full mt-3" id="mobile-menu">
-              <div ref={ref} className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-               
-              
+            <div className="md:hidden bg-white w-full pl-6 pr-4 mt-3" id="mobile-menu">
+              <div ref={ref} className=" pt-10 pb-3 space-y-1 ">
+              <NavLink
+                  to="/"
+                  className="block text-[#616161] py-3 font-bold hover:bg-gray-100"
+                >
+                  About Us
+                </NavLink>
+                <hr className="pb-3"/>
+                <NavLink
+                  to="/pricing"
+                  className="block text-[#616161] py-3 font-bold hover:bg-gray-100"
+                >
+                  Pricing
+                </NavLink>
+                <hr className="pb-3"/>
+                <NavLink
+                  to="/faq"
+                  className="block text-[#616161] py-3 font-bold hover:bg-gray-100"
+                >
+                  FAQ
+                </NavLink>
+                <hr className="pb-3"/>
                 <NavLink
                   to="/login"
-                  className="block py-2 pr-4 pl-3 mx-3 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-[#6692d7] md:p-0"
+                  className="block text-[#616161] py-3 font-bold hover:bg-gray-100"
                 >
                   Login
                 </NavLink>
 
                 <NavLink
                   to="/register"
-                  className="block py-2 pr-4 pl-3 mx-3 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-[#6692d7] md:p-0"
+                  className="block text-[#616161] py-3 font-bold hover:bg-gray-100"
                 >
                   Register
                 </NavLink>
@@ -141,6 +186,8 @@ function Navbar() {
                
               </div>
             </div>
+
+            
           )}
         </Transition>
 

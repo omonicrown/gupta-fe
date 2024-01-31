@@ -601,7 +601,7 @@ function Home() {
           </div>
 
           <div className=" flex justify-center mt-6">
-            <h3>Save up to 34% when you pay annually</h3>
+            <h3>Save up to 5% when you pay annually</h3>
           </div>
 
           <div className="grid grid-cols-1 gap-2 lg:grid-cols-4 md:grid-cols-2 mt-10">

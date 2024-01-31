@@ -522,7 +522,10 @@ export default function CardTiredLinks() {
             >
               <div className=" " style={{ overflow: 'auto' }}>
                 <span className="flex justify-end px-3 pt-3">
+                  <NavLink to={'/mylinks'}>
                   <p className="cursor-pointer font-bold" onClick={(e) => null}><SvgElement type={icontypesEnum.CANCEL} /></p>
+                  </NavLink>
+                  
                 </span>
 
 
