@@ -50,19 +50,12 @@ const Hero = () => {
         <img src="/images/hero.png" alt="hero"/>
         </div>
       </section>
-
       
-
-          <Modal open={openModal} onClose={onCloseModal} center>
-        <div className=' w-full '>
-
-          <div className="flex flex-wrap mt-8" >
-            <iframe className="lg:w-[50vw] h-full aspect-video " src="https://www.youtube.com/embed/siGCVexlDCY?si=xlmKB3TvICmAT8sy"></iframe>
-
+      <Modal open={openModal} onClose={onCloseModal} center>
+        <div className='w-full '>
+          <div className="w-full mt-8" >
+            <iframe className="lg:w-[50vw] w-[80vw] h-full aspect-video " src="https://www.youtube.com/embed/siGCVexlDCY?si=xlmKB3TvICmAT8sy"></iframe>
           </div>
-
-          
-
         </div>
 
       </Modal>
