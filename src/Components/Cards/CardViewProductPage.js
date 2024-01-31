@@ -397,15 +397,11 @@ export default function CardViewProductPage() {
 
               <div className="">
 
-                <span className="flex justify-around">
-                  {/* <h1 className=" text-xs text-red-600" style={{ fontSize: '10px' }}>Link can’t be edited in free plan. <span style={{ color: '#61A24F' }} className="font-bold text-xs">Upgrade to Pro</span></h1> */}
-
-                </span>
-
+                
                 <label
                   className="flex justify-start  mb-2 pt-1 text-md font-bold text-black"
                 >
-                  You are about to pay for {value?.product_name}
+                  You are about to pay for <br/>{value?.product_name}
                 </label>
                 {/* <label
                   style={{ fontSize: '14px' }}
