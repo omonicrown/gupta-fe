@@ -1,8 +1,11 @@
 import React from 'react'
 import { SvgElement, icontypesEnum } from "../assets/svgElement";
 import { NavLink } from 'react-router-dom';
+// @ts-ignore
+import Modal from 'react-awesome-modal';
 
 const Hero = () => {
+  const [visible, setVisible] =React.useState(false)
   return (
     <>
       <section className='flex md:flex-row flex-col sm:py-16 py-6'>
@@ -30,7 +33,9 @@ const Hero = () => {
             <NavLink to='/register'>
             <button type="button" className="text-white bg-[#0071BC] hover:bg-[#DBF2FF] hover:text-[#0071BC] font-medium rounded-[5px] text-[15px] md:px-[40px] md:py-4 px-6  py-2.5 md:mr-4 mr-8">Get Started</button>
             </NavLink>
-            <button type="button" className="text-[#0071BC] bg-[#DBF2FF] hover:bg-[#0071BC] hover:text-white font-medium rounded-[5px] text-[15px] md:px-[40px] md:py-4 px-6  py-2.5 inline-flex">
+            <button type="button" 
+            onClick={()=>setVisible(true)}
+            className="text-[#0071BC] bg-[#DBF2FF]  font-medium rounded-[5px] text-[15px] md:px-[40px] md:py-4 px-6  py-2.5 inline-flex">
               Request Demo
               <svg className='ml-[10px]' width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M12.5 2.5C10.5222 2.5 8.58879 3.08649 6.9443 4.1853C5.29981 5.28412 4.01809 6.8459 3.26121 8.67317C2.50433 10.5004 2.3063 12.5111 2.69215 14.4509C3.078 16.3907 4.03041 18.1725 5.42894 19.5711C6.82746 20.9696 8.60929 21.922 10.5491 22.3079C12.4889 22.6937 14.4996 22.4957 16.3268 21.7388C18.1541 20.9819 19.7159 19.7002 20.8147 18.0557C21.9135 16.4112 22.5 14.4778 22.5 12.5C22.5 11.1868 22.2413 9.88642 21.7388 8.67317C21.2363 7.45991 20.4997 6.35752 19.5711 5.42893C18.6425 4.50035 17.5401 3.76375 16.3268 3.2612C15.1136 2.75866 13.8132 2.5 12.5 2.5ZM10.5 17V8L16.5 12.5L10.5 17Z" fill="#0071BC" />
@@ -42,6 +47,40 @@ const Hero = () => {
         <img src="/images/hero.png" alt="hero"/>
         </div>
       </section>
+
+      <section>
+            <Modal
+              visible={visible}
+              width="768"
+              height="80%"
+              effect="fadeInUp"
+              onClickAway={() => setVisible(false)}
+            >
+              <div className="bg-black " style={{ overflow: 'auto' }}>
+                <span className="flex justify-end px-3 pt-2">
+                 
+                  <p className="cursor-pointer font-bold" onClick={() => setVisible(false)}><SvgElement type={icontypesEnum.CANCEL} /></p>
+                 
+                  
+                </span>
+                <div>
+                  <iframe className="w-[50vw] h-full aspect-video " src="https://www.youtube.com/embed/siGCVexlDCY?si=xlmKB3TvICmAT8sy"></iframe>
+
+                  </div>
+
+
+               
+                
+
+                
+
+                
+
+
+
+              </div>
+            </Modal>
+          </section>
     </>
   )
 }
