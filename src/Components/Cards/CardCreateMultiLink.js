@@ -28,8 +28,8 @@ export default function CardTiredLinks() {
   const [logo, setlogo] = useState('');
   const [bio, SetBio] = useState('');
   const [addlink, setAddLink] = useState([]);
-  const [businessSite, setBusinessSite] = useState('');
-  const [businessPolicy, setBusinessPolicy] = useState('');
+  const [businessSite, setBusinessSite] = useState('https://www.mygupta.co');
+  const [businessPolicy, setBusinessPolicy] = useState(' ');
   const [data, setLinks] = useState([]);
   const [isAvailable, setIsAvailable] = useState(false);
   const [permissionList, setPermissionList] = React.useState([]);
