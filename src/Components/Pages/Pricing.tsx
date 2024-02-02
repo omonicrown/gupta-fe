@@ -199,6 +199,11 @@ function Pricing() {
                       <h3 className="text-[13px] text-[#56575B]"> Unlimited Staff Account</h3>
                     </div>
 
+                    <div className="flex space-x-3 mt-2">
+                      <SvgElement type={icontypesEnum.PLANS} />
+                      <h3 className="text-[13px] text-[#56575B]"> Monthly Sales Analysis Report</h3>
+                    </div>
+
 
                     <div className="flex space-x-3 mt-2">
                       <SvgElement type={icontypesEnum.PLANS} />
@@ -282,6 +287,11 @@ function Pricing() {
                     <div className="flex space-x-3 mt-2">
                       <SvgElement type={icontypesEnum.PLANS} />
                       <h3 className="text-[13px] text-[#56575B]"> Unlimited Staff Account</h3>
+                    </div>
+
+                    <div className="flex space-x-3 mt-2">
+                      <SvgElement type={icontypesEnum.PLANS} />
+                      <h3 className="text-[13px] text-[#56575B]"> Monthly Sales Analysis Report</h3>
                     </div>
 
                   <div className="flex space-x-3 mt-2">
