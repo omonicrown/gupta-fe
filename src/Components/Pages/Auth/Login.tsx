@@ -39,33 +39,28 @@ function Login() {
 
       AuthApis.login(formData).then(
         (response: AxiosResponse<any>) => {
-          if (response?.data) {
             if (response?.data?.status === true) {
               dispatch(login({ email: email, token: response.data.token, name: response.data.name, data: response.data?.data }))
                 // navigate('/mylinks');
-                console?.log(response.data?.data?.role)
+               
                 {response.data?.data?.role == 'admin'
                   ? navigate('/admin-dashboard')
                   :
                   navigate('/mylinks')}
                 
 
-              console?.log(response.data?.data?.role)
+              
               // window.location.reload();
+            }else{
+              console?.log(response?.data)
+              toast.error(response?.data?.message);
             }
-          } else {
-            toast.warn('Invalid Login Credentials');
-          }
-
-          toast.success(response?.data?.message);
+         
         }
       ).catch(function (error) {
         // handle error
         console.log(error.response.data);
         toast.error("Offfline");
-      }).finally(() => {
-        // toast.error("No Internet Connection");
-
       });
     },
     [email, password]
@@ -179,7 +174,7 @@ function Login() {
       </div>
 
       <ToastContainer
-        position="bottom-left"
+        position="top-right"
         autoClose={2000}
         hideProgressBar={true}
         newestOnTop={false}

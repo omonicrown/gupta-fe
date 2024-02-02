@@ -360,21 +360,8 @@ export default function CardSubscription() {
         </div>
       </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
       <ToastContainer
-        position="bottom-left"
+         position="top-right"
         autoClose={2000}
         hideProgressBar={true}
         newestOnTop={false}
