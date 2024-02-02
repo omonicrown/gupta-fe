@@ -75,7 +75,7 @@ export default function CardSubscription() {
   return (
     <>
 
-      <div className='bg-[#F5F5FA] sm:px-16 px-6 flex justify-center items-start py-16' >
+      <div className='bg-[#F5F5FA] sm:px-8 px-6 flex justify-center items-start py-16' >
         <div className='xl:max-w-[1200px] w-full'>
           <div className='flex flex-col justify-center items-center'>
             <h1 className="text-center font-bold font-poppins md:text-[40px] text-[25px] text-[#231D4F] md:leading-[50px] leading-[38px]">
@@ -83,16 +83,16 @@ export default function CardSubscription() {
             </h1>
             <p className="text-[#848199] text-[20px] mt-5">Save up to 5% when you pay annually</p>
             <div className="flex justify-center">
-            <button onClick={()=>setSubValue(1)} className={`w-auto py-[5px] px-[10px] bg-[${subValue == 1?'#0071BC':'#EDF2FE'}] text-[${subValue == 1?'#EDF2FE':'#0071BC'}] text-[15px] border`}>Monthly</button>
-            <button onClick={()=>setSubValue(3)} className={`w-auto py-[5px] px-[10px] bg-[${subValue == 3?'#0071BC':'#EDF2FE'}] text-[${subValue == 3?'#EDF2FE':'#0071BC'}] text-[15px] border`}>3 Months</button>
-            <button onClick={()=>setSubValue(6)} className={`w-auto py-[5px] px-[10px] bg-[${subValue == 6?'#0071BC':'#EDF2FE'}] text-[${subValue == 6?'#EDF2FE':'#0071BC'}] text-[15px] border`}>6 Months</button>
-            <button onClick={()=>setSubValue(12)} className={`w-auto py-[5px] px-[10px] bg-[${subValue == 12?'#0071BC':'#EDF2FE'}] text-[${subValue == 12?'#EDF2FE':'#0071BC'}] text-[15px] border`}>12 Months</button>
-         
+              <button onClick={() => setSubValue(1)} className={`w-auto py-[5px] px-[10px] bg-[${subValue == 1 ? '#0071BC' : '#EDF2FE'}] text-[${subValue == 1 ? '#EDF2FE' : '#0071BC'}] text-[15px] border`}>Monthly</button>
+              <button onClick={() => setSubValue(3)} className={`w-auto py-[5px] px-[10px] bg-[${subValue == 3 ? '#0071BC' : '#EDF2FE'}] text-[${subValue == 3 ? '#EDF2FE' : '#0071BC'}] text-[15px] border`}>3 Months</button>
+              <button onClick={() => setSubValue(6)} className={`w-auto py-[5px] px-[10px] bg-[${subValue == 6 ? '#0071BC' : '#EDF2FE'}] text-[${subValue == 6 ? '#EDF2FE' : '#0071BC'}] text-[15px] border`}>6 Months</button>
+              <button onClick={() => setSubValue(12)} className={`w-auto py-[5px] px-[10px] bg-[${subValue == 12 ? '#0071BC' : '#EDF2FE'}] text-[${subValue == 12 ? '#EDF2FE' : '#0071BC'}] text-[15px] border`}>12 Months</button>
+
             </div>
           </div>
           <div className="grid grid-cols-1 gap-2 lg:grid-cols-4 md:grid-cols-2 mt-10">
 
-           
+
 
             {/* <div className="grid grid-cols-1 gap-2 lg:grid-cols-4 md:grid-cols-2 mt-10"> */}
 
@@ -105,9 +105,9 @@ export default function CardSubscription() {
     <h3 className="text-center text-[#56575B] text-[14px] ">10 links/month</h3>
     <h3 className="text-center text-[#56575B] text-[14px]">1 Link-in-bio page</h3> */}
                   <div className="mt-4">
-                   
-                      <button className=" w-full py-[14px] bg-[#EDF2FE] text-[#0071BC] text-[15px] rounded-[6px]">Get Started</button>
-                   
+
+                    <button className=" w-full py-[14px] bg-[#EDF2FE] text-[#0071BC] text-[15px] rounded-[6px]">Get Started</button>
+
                   </div>
                   <div className="mt-4">
                     <h3 className="text-[#56575B] text-[15px]">Includes:</h3>
@@ -141,14 +141,14 @@ export default function CardSubscription() {
               <div className="uppercase text-center bg-[#0071BC] py-2 rounded-t-[8px] text-white ">Most popular</div>
               <div className="border-2 border-[#0071BC] rounded-b-[8px] p-4 bg-white pt-4 pb-8">
                 <h3 className="text-center text-[#56575B] uppercase text-[14px]">Basic</h3>
-                <h1 className="text-center mt-5 text-[20px] text-[#56575B] font-bold"> {(new Intl.NumberFormat('en-US', { style: 'currency', currency: 'NGN' }).format((3500*subValue)-(subValue==1?0:((3500*subValue)*0.05))))}<span className="text-[16px]">/month</span> </h1>
-                {subValue !==1? <span className="flex justify-center text-[12px] text-[#56575B] font-bold italic">Save up to 5% 0ff</span>: ''}
+                <h1 className="text-center mt-5 text-[20px] text-[#56575B] font-bold"> {(new Intl.NumberFormat('en-US', { style: 'currency', currency: 'NGN' }).format((3500 * subValue) - (subValue == 1 ? 0 : ((3500 * subValue) * 0.05))))}<span className="text-[16px]">/month</span> </h1>
+                {subValue !== 1 ? <span className="flex justify-center text-[12px] text-[#56575B] font-bold italic">Save up to 5% 0ff</span> : ''}
                 <div className="flex-col justify-center mt-5">
                   {/* <h3 className="text-center text-[#56575B] text-[14px]">2 QR Codes/month</h3>
                     <h3 className="text-center text-[#56575B] text-[14px] ">10 links/month</h3>
                     <h3 className="text-center text-[#56575B] text-[14px]">1 Link-in-bio page</h3> */}
-                                <div className="mt-4">
-                    <div onClick={(e)=>handleSubmit(e,(3500*subValue)-(subValue==1?0:((3500*subValue)*0.05)))}>
+                  <div className="mt-4">
+                    <div onClick={(e) => handleSubmit(e, (3500 * subValue) - (subValue == 1 ? 0 : ((3500 * subValue) * 0.05)))}>
                       <button className=" w-full py-[14px] bg-[#0071BC] text-[#ffffff] text-[15px] rounded-[6px]">Get Started</button>
                     </div>
                   </div>
@@ -168,6 +168,26 @@ export default function CardSubscription() {
                     <div className="flex space-x-3 mt-2">
                       <SvgElement type={icontypesEnum.PLANS} />
                       <h3 className="text-[13px] text-[#56575B]">5 Market Links (Shops)</h3>
+                    </div> 
+
+                    <div className="flex space-x-3 mt-2">
+                      <SvgElement type={icontypesEnum.PLANS} />
+                      <h3 className="text-[13px] text-[#56575B]"> Online transaction charge (1.5%)</h3>
+                    </div>
+
+                    <div className="flex space-x-3 mt-2">
+                      <SvgElement type={icontypesEnum.PLANS} />
+                      <h3 className="text-[13px] text-[#56575B]"> Unlimited invoicing & receipts</h3>
+                    </div>
+
+                    <div className="flex space-x-3 mt-2">
+                      <SvgElement type={icontypesEnum.PLANS} />
+                      <h3 className="text-[13px] text-[#56575B]"> Unlimited sales records</h3>
+                    </div>
+
+                    <div className="flex space-x-3 mt-2">
+                      <SvgElement type={icontypesEnum.PLANS} />
+                      <h3 className="text-[13px] text-[#56575B]"> Single Staff Account</h3>
                     </div>
 
                     <div className="flex space-x-3 mt-2">
@@ -175,23 +195,23 @@ export default function CardSubscription() {
                       <h3 className="text-[13px] text-[#56575B]">100 Product Listing</h3>
                     </div>
                     {/* <div className="flex space-x-3 mt-2">
-          <SvgElement type={icontypesEnum.PLANS} />
-          <h3 className="text-[13px] text-[#56575B]">Can edit Product Details</h3>
-        </div> */}
+                      <SvgElement type={icontypesEnum.PLANS} />
+                      <h3 className="text-[13px] text-[#56575B]">Can edit Product Details</h3>
+                    </div> */}
 
                     <div className="flex space-x-3 mt-2">
                       <SvgElement type={icontypesEnum.PLANS} />
-                      <h3 className="text-[13px] text-[#56575B]">Can edit Multi Links Info</h3>
+                      <h3 className="text-[13px] text-[#56575B]"> Multi Links Editing</h3>
                     </div>
 
                     <div className="flex space-x-3 mt-2">
                       <SvgElement type={icontypesEnum.PLANS} />
-                      <h3 className="text-[13px] text-[#56575B]">Can edit whatsapp message</h3>
+                      <h3 className="text-[13px] text-[#56575B]">Whatsapp Message Editing</h3>
                     </div>
 
                     <div className="flex space-x-3 mt-2">
                       <SvgElement type={icontypesEnum.PLANS} />
-                      <h3 className="text-[13px] text-[#56575B]">Can edit redirect link info</h3>
+                      <h3 className="text-[13px] text-[#56575B]">Redirect Info Editing</h3>
                     </div>
 
                   </div>
@@ -203,15 +223,18 @@ export default function CardSubscription() {
             <div>
               <div className="border border-[#0071BC] rounded-[8px] p-4 bg-white pt-4 pb-8">
                 <h3 className="text-center text-[#56575B] uppercase text-[14px]">POPULAR</h3>
-                <h1 className="text-center mt-5 text-[20px] text-[#56575B] font-bold"> {(new Intl.NumberFormat('en-US', { style: 'currency', currency: 'NGN' }).format((7500*subValue)-(subValue==1?0:((7500*subValue)*0.05))))}<span className="text-[16px]">/month</span> </h1>
-                {subValue !==1? <span className="flex justify-center text-[12px] text-[#56575B] font-bold italic">Save up to 5% 0ff</span>: ''}
-                
+                <h1 className="text-center mt-5 text-[20px] text-[#56575B] font-bold"> {(new Intl.NumberFormat('en-US', { style: 'currency', currency: 'NGN' }).format((7500 * subValue) - (subValue == 1 ? 0 : ((7500 * subValue) * 0.05))))}<span className="text-[16px]">/month</span> </h1>
+                {subValue !== 1 ? <span className="flex justify-center text-[12px] text-[#56575B] font-bold italic">Save up to 5% 0ff</span> : ''}
+                <span className="flex justify-center text-center w-full py-[4px] font-bold  text-[#0071BC] text-[15px] rounded-[6px]"> Recommended
+                      </span>
                 <div className="flex-col justify-center mt-5">
+                
+                
                   {/* <h3 className="text-center text-[#56575B] text-[14px]">2 QR Codes/month</h3>
       <h3 className="text-center text-[#56575B] text-[14px] ">10 links/month</h3>
       <h3 className="text-center text-[#56575B] text-[14px]">1 Link-in-bio page</h3> */}
                   <div className="mt-4">
-                  <div onClick={(e)=>handleSubmit(e,(7500*subValue)-(subValue==1?0:((7500*subValue)*0.05)))}>
+                    <div onClick={(e) => handleSubmit(e, (7500 * subValue) - (subValue == 1 ? 0 : ((7500 * subValue) * 0.05)))}>
                       <button className=" w-full py-[14px] bg-[#EDF2FE] text-[#0071BC] text-[15px] rounded-[6px]">Get Started
                       </button>
                     </div>
@@ -236,6 +259,27 @@ export default function CardSubscription() {
 
                     <div className="flex space-x-3 mt-2">
                       <SvgElement type={icontypesEnum.PLANS} />
+                      <h3 className="text-[13px] text-[#56575B]"> Online transaction charge (1.5%)</h3>
+                    </div>
+
+                    <div className="flex space-x-3 mt-2">
+                      <SvgElement type={icontypesEnum.PLANS} />
+                      <h3 className="text-[13px] text-[#56575B]"> Unlimited invoicing & receipts</h3>
+                    </div>
+
+                    <div className="flex space-x-3 mt-2">
+                      <SvgElement type={icontypesEnum.PLANS} />
+                      <h3 className="text-[13px] text-[#56575B]"> Unlimited sales records</h3>
+                    </div>
+
+                    <div className="flex space-x-3 mt-2">
+                      <SvgElement type={icontypesEnum.PLANS} />
+                      <h3 className="text-[13px] text-[#56575B]"> Unlimited Staff Account</h3>
+                    </div>
+
+
+                    <div className="flex space-x-3 mt-2">
+                      <SvgElement type={icontypesEnum.PLANS} />
                       <h3 className="text-[13px] text-[#56575B]">Free QR Code</h3>
                     </div>
 
@@ -245,22 +289,22 @@ export default function CardSubscription() {
                     </div>
                     <div className="flex space-x-3 mt-2">
                       <SvgElement type={icontypesEnum.PLANS} />
-                      <h3 className="text-[13px] text-[#56575B]">Can edit Product Details</h3>
+                      <h3 className="text-[13px] text-[#56575B]">Product Details Editing</h3>
                     </div>
 
                     <div className="flex space-x-3 mt-2">
                       <SvgElement type={icontypesEnum.PLANS} />
-                      <h3 className="text-[13px] text-[#56575B]">Can edit Multi Links Info</h3>
+                      <h3 className="text-[13px] text-[#56575B]"> Multi Links Editing</h3>
                     </div>
 
                     <div className="flex space-x-3 mt-2">
                       <SvgElement type={icontypesEnum.PLANS} />
-                      <h3 className="text-[13px] text-[#56575B]">Can edit whatsapp message</h3>
+                      <h3 className="text-[13px] text-[#56575B]">Whatsapp Message Editing</h3>
                     </div>
 
                     <div className="flex space-x-3 mt-2">
                       <SvgElement type={icontypesEnum.PLANS} />
-                      <h3 className="text-[13px] text-[#56575B]">Can edit redirect link info</h3>
+                      <h3 className="text-[13px] text-[#56575B]">Redirect Info Editing</h3>
                     </div>
                   </div>
                 </div>
@@ -270,87 +314,107 @@ export default function CardSubscription() {
 
             <div className="border border-[#0071BC] rounded-[8px] p-4 bg-white pt-4 pb-8">
               <h3 className="text-center text-[#56575B] uppercase text-[14px]">PREMIUM</h3>
-              <h1 className="text-center mt-5 text-[20px] text-[#56575B] font-bold"> {(new Intl.NumberFormat('en-US', { style: 'currency', currency: 'NGN' }).format((16500*subValue)-(subValue==1?0:((16500*subValue)*0.05))))}<span className="text-[16px]">/month</span> </h1>
-             
-              {subValue !==1? <span className="flex justify-center text-[12px] text-[#56575B] font-bold italic">Save up to 5% 0ff</span>: ''}
+              <h1 className="text-center mt-5 text-[20px] text-[#56575B] font-bold"> {(new Intl.NumberFormat('en-US', { style: 'currency', currency: 'NGN' }).format((16500 * subValue) - (subValue == 1 ? 0 : ((16500 * subValue) * 0.05))))}<span className="text-[16px]">/month</span> </h1>
+
+              {subValue !== 1 ? <span className="flex justify-center text-[12px] text-[#56575B] font-bold italic">Save up to 5% 0ff</span> : ''}
               <div className="flex-col justify-center mt-5">
-                
+
                 {/* <h3 className="text-center text-[#56575B] text-[14px]">2 QR Codes/month</h3>
     <h3 className="text-center text-[#56575B] text-[14px] ">10 links/month</h3>
     <h3 className="text-center text-[#56575B] text-[14px]">1 Link-in-bio page</h3> */}
                 <div className="mt-4">
-                <div onClick={(e)=>handleSubmit(e,(16500*subValue)-(subValue==1?0:((16500*subValue)*0.05)))}>
+                  <div onClick={(e) => handleSubmit(e, (16500 * subValue) - (subValue == 1 ? 0 : ((16500 * subValue) * 0.05)))}>
                     <button className=" w-full py-[14px] bg-[#EDF2FE] text-[#0071BC] text-[15px] rounded-[6px]">Get Started</button>
                   </div>
                 </div>
                 <div className="mt-4">
-                  <div className=" flex space-x-3 mt-4">
-                    <SvgElement type={icontypesEnum.PLANS} />
-                    <h3 className="text-[13px] text-[#56575B]">Unlimited Personalized Whatsapp Links</h3>
-                  </div>
-                  <div className="flex space-x-3 mt-2">
-                    <SvgElement type={icontypesEnum.PLANS} />
-                    <h3 className="text-[13px] text-[#56575B]">unlimited Personalized Redirect Links</h3></div>
-                  <div className="flex space-x-3 mt-2">
-                    <SvgElement type={icontypesEnum.PLANS} />
-                    <h3 className="text-[13px] text-[#56575B]">Unlimited Multi Links</h3>
-                  </div>
+                    <div className=" flex space-x-3 mt-4">
+                      <SvgElement type={icontypesEnum.PLANS} />
+                      <h3 className="text-[13px] text-[#56575B]">Unlimited Personalized Whatsapp Links</h3>
+                    </div>
+                    <div className="flex space-x-3 mt-2">
+                      <SvgElement type={icontypesEnum.PLANS} />
+                      <h3 className="text-[13px] text-[#56575B]">unlimited Personalized Redirect Links</h3></div>
+                    <div className="flex space-x-3 mt-2">
+                      <SvgElement type={icontypesEnum.PLANS} />
+                      <h3 className="text-[13px] text-[#56575B]">Unlimited Multi Links</h3>
+                    </div>
 
-                  <div className="flex space-x-3 mt-2">
-                    <SvgElement type={icontypesEnum.PLANS} />
-                    <h3 className="text-[13px] text-[#56575B]">Unlimited Market Links(Shops)</h3>
-                  </div>
+                    <div className="flex space-x-3 mt-2">
+                      <SvgElement type={icontypesEnum.PLANS} />
+                      <h3 className="text-[13px] text-[#56575B]">Unlimited Market Links(Shops)</h3>
+                    </div>
 
-                  <div className="flex space-x-3 mt-2">
-                    <SvgElement type={icontypesEnum.PLANS} />
-                    <h3 className="text-[13px] text-[#56575B]">Free QR Code</h3>
-                  </div>
+                    <div className="flex space-x-3 mt-2">
+                      <SvgElement type={icontypesEnum.PLANS} />
+                      <h3 className="text-[13px] text-[#56575B]"> Online transaction charge (1.5%)</h3>
+                    </div>
 
-                  <div className="flex space-x-3 mt-2">
-                    <SvgElement type={icontypesEnum.PLANS} />
-                    <h3 className="text-[13px] text-[#56575B]">Unlimited Product Listing</h3>
-                  </div>
+                    <div className="flex space-x-3 mt-2">
+                      <SvgElement type={icontypesEnum.PLANS} />
+                      <h3 className="text-[13px] text-[#56575B]"> Unlimited invoicing & receipts</h3>
+                    </div>
 
-                  <div className="flex space-x-3 mt-2">
-                    <SvgElement type={icontypesEnum.PLANS} />
-                    <h3 className="text-[13px] text-[#56575B]">Product page customization</h3>
-                  </div>
+                    <div className="flex space-x-3 mt-2">
+                      <SvgElement type={icontypesEnum.PLANS} />
+                      <h3 className="text-[13px] text-[#56575B]"> Unlimited sales records</h3>
+                    </div>
 
-                  <div className="flex space-x-3 mt-2">
-                    <SvgElement type={icontypesEnum.PLANS} />
-                    <h3 className="text-[13px] text-[#56575B]">Can add branded Logo</h3>
-                  </div>
+                    <div className="flex space-x-3 mt-2">
+                      <SvgElement type={icontypesEnum.PLANS} />
+                      <h3 className="text-[13px] text-[#56575B]"> Unlimited Staff Account</h3>
+                    </div>
 
-                  <div className="flex space-x-3 mt-2">
-                    <SvgElement type={icontypesEnum.PLANS} />
-                    <h3 className="text-[13px] text-[#56575B]">Can add social media links</h3>
-                  </div>
+                    <div className="flex space-x-3 mt-2">
+                      <SvgElement type={icontypesEnum.PLANS} />
+                      <h3 className="text-[13px] text-[#56575B]">Free QR Code</h3>
+                    </div>
 
-                  <div className="flex space-x-3 mt-2">
-                    <SvgElement type={icontypesEnum.PLANS} />
-                    <h3 className="text-[13px] text-[#56575B]">Can edit Market links</h3>
-                  </div>
+                    <div className="flex space-x-3 mt-2">
+                      <SvgElement type={icontypesEnum.PLANS} />
+                      <h3 className="text-[13px] text-[#56575B]">Unlimited Product Listing</h3>
+                    </div>
 
-                  <div className="flex space-x-3 mt-2">
-                    <SvgElement type={icontypesEnum.PLANS} />
-                    <h3 className="text-[13px] text-[#56575B]">Can edit Product Details</h3>
-                  </div>
+                    <div className="flex space-x-3 mt-2">
+                      <SvgElement type={icontypesEnum.PLANS} />
+                      <h3 className="text-[13px] text-[#56575B]">Product page customization</h3>
+                    </div>
 
-                  <div className="flex space-x-3 mt-2">
-                    <SvgElement type={icontypesEnum.PLANS} />
-                    <h3 className="text-[13px] text-[#56575B]">Can edit Multi Links Info</h3>
-                  </div>
+                    <div className="flex space-x-3 mt-2">
+                      <SvgElement type={icontypesEnum.PLANS} />
+                      <h3 className="text-[13px] text-[#56575B]"> Brand Logo included</h3>
+                    </div>
 
-                  <div className="flex space-x-3 mt-2">
-                    <SvgElement type={icontypesEnum.PLANS} />
-                    <h3 className="text-[13px] text-[#56575B]">Can edit whatsapp message</h3>
-                  </div>
+                    <div className="flex space-x-3 mt-2">
+                      <SvgElement type={icontypesEnum.PLANS} />
+                      <h3 className="text-[13px] text-[#56575B]">Social media links Addition</h3>
+                    </div>
 
-                  <div className="flex space-x-3 mt-2">
-                    <SvgElement type={icontypesEnum.PLANS} />
-                    <h3 className="text-[13px] text-[#56575B]">Can edit redirect link info</h3>
+                    <div className="flex space-x-3 mt-2">
+                      <SvgElement type={icontypesEnum.PLANS} />
+                      <h3 className="text-[13px] text-[#56575B]"> Market links Editing</h3>
+                    </div>
+
+                    <div className="flex space-x-3 mt-2">
+                      <SvgElement type={icontypesEnum.PLANS} />
+                      <h3 className="text-[13px] text-[#56575B]">Product Details Editing</h3>
+                    </div>
+
+                    <div className="flex space-x-3 mt-2">
+                      <SvgElement type={icontypesEnum.PLANS} />
+                      <h3 className="text-[13px] text-[#56575B]">Multi Links Editing</h3>
+                    </div>
+
+                    <div className="flex space-x-3 mt-2">
+                      <SvgElement type={icontypesEnum.PLANS} />
+                      <h3 className="text-[13px] text-[#56575B]">Whatsapp Message Editing</h3>
+                    </div>
+
+                    <div className="flex space-x-3 mt-2">
+                      <SvgElement type={icontypesEnum.PLANS} />
+                      <h3 className="text-[13px] text-[#56575B]">Redirect Info Editing</h3>
+                    </div>
                   </div>
-                </div>
                 {/* </div> */}
               </div>
 
@@ -361,7 +425,7 @@ export default function CardSubscription() {
       </div>
 
       <ToastContainer
-         position="top-right"
+        position="top-right"
         autoClose={2000}
         hideProgressBar={true}
         newestOnTop={false}

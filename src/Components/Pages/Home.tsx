@@ -677,6 +677,26 @@ function Home() {
                     <div className="flex space-x-3 mt-2">
                       <SvgElement type={icontypesEnum.PLANS} />
                       <h3 className="text-[13px] text-[#56575B]">5 Market Links (Shops)</h3>
+                    </div> 
+
+                    <div className="flex space-x-3 mt-2">
+                      <SvgElement type={icontypesEnum.PLANS} />
+                      <h3 className="text-[13px] text-[#56575B]"> Online transaction charge (1.5%)</h3>
+                    </div>
+
+                    <div className="flex space-x-3 mt-2">
+                      <SvgElement type={icontypesEnum.PLANS} />
+                      <h3 className="text-[13px] text-[#56575B]"> Unlimited invoicing & receipts</h3>
+                    </div>
+
+                    <div className="flex space-x-3 mt-2">
+                      <SvgElement type={icontypesEnum.PLANS} />
+                      <h3 className="text-[13px] text-[#56575B]"> Unlimited sales records</h3>
+                    </div>
+
+                    <div className="flex space-x-3 mt-2">
+                      <SvgElement type={icontypesEnum.PLANS} />
+                      <h3 className="text-[13px] text-[#56575B]"> Single Staff Account</h3>
                     </div>
 
                     <div className="flex space-x-3 mt-2">
@@ -690,17 +710,17 @@ function Home() {
 
                     <div className="flex space-x-3 mt-2">
                       <SvgElement type={icontypesEnum.PLANS} />
-                      <h3 className="text-[13px] text-[#56575B]">Can edit Multi Links Info</h3>
+                      <h3 className="text-[13px] text-[#56575B]"> Multi Links Editing</h3>
                     </div>
 
                     <div className="flex space-x-3 mt-2">
                       <SvgElement type={icontypesEnum.PLANS} />
-                      <h3 className="text-[13px] text-[#56575B]">Can edit whatsapp message</h3>
+                      <h3 className="text-[13px] text-[#56575B]">Whatsapp Message Editing</h3>
                     </div>
 
                     <div className="flex space-x-3 mt-2">
                       <SvgElement type={icontypesEnum.PLANS} />
-                      <h3 className="text-[13px] text-[#56575B]">Can edit redirect link info</h3>
+                      <h3 className="text-[13px] text-[#56575B]">Redirect Info Editing</h3>
                     </div>
 
                   </div>
@@ -713,6 +733,8 @@ function Home() {
               <div className="border border-[#0071BC] rounded-[8px] p-4 bg-white pt-4 pb-8">
                 <h3 className="text-center text-[#56575B] uppercase text-[14px]">POPULAR</h3>
                 <h1 className="text-center mt-5 text-[34px] text-[#56575B]">₦7,500<sup className="text-[16px]">/month</sup> </h1>
+                <span className="flex justify-center text-center w-full py-[4px] font-bold  text-[#0071BC] text-[15px] rounded-[6px]"> Recommended
+                      </span>
                 <div className="flex-col justify-center mt-5">
                   {/* <h3 className="text-center text-[#56575B] text-[14px]">2 QR Codes/month</h3>
                   <h3 className="text-center text-[#56575B] text-[14px] ">10 links/month</h3>
@@ -743,6 +765,27 @@ function Home() {
 
                     <div className="flex space-x-3 mt-2">
                       <SvgElement type={icontypesEnum.PLANS} />
+                      <h3 className="text-[13px] text-[#56575B]"> Online transaction charge (1.5%)</h3>
+                    </div>
+
+                    <div className="flex space-x-3 mt-2">
+                      <SvgElement type={icontypesEnum.PLANS} />
+                      <h3 className="text-[13px] text-[#56575B]"> Unlimited invoicing & receipts</h3>
+                    </div>
+
+                    <div className="flex space-x-3 mt-2">
+                      <SvgElement type={icontypesEnum.PLANS} />
+                      <h3 className="text-[13px] text-[#56575B]"> Unlimited sales records</h3>
+                    </div>
+
+                    <div className="flex space-x-3 mt-2">
+                      <SvgElement type={icontypesEnum.PLANS} />
+                      <h3 className="text-[13px] text-[#56575B]"> Unlimited Staff Account</h3>
+                    </div>
+
+
+                    <div className="flex space-x-3 mt-2">
+                      <SvgElement type={icontypesEnum.PLANS} />
                       <h3 className="text-[13px] text-[#56575B]">Free QR Code</h3>
                     </div>
 
@@ -752,22 +795,22 @@ function Home() {
                     </div>
                     <div className="flex space-x-3 mt-2">
                       <SvgElement type={icontypesEnum.PLANS} />
-                      <h3 className="text-[13px] text-[#56575B]">Can edit Product Details</h3>
+                      <h3 className="text-[13px] text-[#56575B]">Product Details Editing</h3>
                     </div>
 
                     <div className="flex space-x-3 mt-2">
                       <SvgElement type={icontypesEnum.PLANS} />
-                      <h3 className="text-[13px] text-[#56575B]">Can edit Multi Links Info</h3>
+                      <h3 className="text-[13px] text-[#56575B]"> Multi Links Editing</h3>
                     </div>
 
                     <div className="flex space-x-3 mt-2">
                       <SvgElement type={icontypesEnum.PLANS} />
-                      <h3 className="text-[13px] text-[#56575B]">Can edit whatsapp message</h3>
+                      <h3 className="text-[13px] text-[#56575B]">Whatsapp Message Editing</h3>
                     </div>
 
                     <div className="flex space-x-3 mt-2">
                       <SvgElement type={icontypesEnum.PLANS} />
-                      <h3 className="text-[13px] text-[#56575B]">Can edit redirect link info</h3>
+                      <h3 className="text-[13px] text-[#56575B]">Redirect Info Editing</h3>
                     </div>
                   </div>
                 </div>
@@ -806,6 +849,26 @@ function Home() {
                   </div>
 
                   <div className="flex space-x-3 mt-2">
+                      <SvgElement type={icontypesEnum.PLANS} />
+                      <h3 className="text-[13px] text-[#56575B]"> Online transaction charge (1.5%)</h3>
+                    </div>
+
+                    <div className="flex space-x-3 mt-2">
+                      <SvgElement type={icontypesEnum.PLANS} />
+                      <h3 className="text-[13px] text-[#56575B]"> Unlimited invoicing & receipts</h3>
+                    </div>
+
+                    <div className="flex space-x-3 mt-2">
+                      <SvgElement type={icontypesEnum.PLANS} />
+                      <h3 className="text-[13px] text-[#56575B]"> Unlimited sales records</h3>
+                    </div>
+
+                    <div className="flex space-x-3 mt-2">
+                      <SvgElement type={icontypesEnum.PLANS} />
+                      <h3 className="text-[13px] text-[#56575B]"> Unlimited Staff Account</h3>
+                    </div>
+
+                  <div className="flex space-x-3 mt-2">
                     <SvgElement type={icontypesEnum.PLANS} />
                     <h3 className="text-[13px] text-[#56575B]">Free QR Code</h3>
                   </div>
@@ -822,37 +885,37 @@ function Home() {
 
                   <div className="flex space-x-3 mt-2">
                     <SvgElement type={icontypesEnum.PLANS} />
-                    <h3 className="text-[13px] text-[#56575B]">Can add branded Logo</h3>
+                    <h3 className="text-[13px] text-[#56575B]"> Brand Logo included</h3>
                   </div>
 
                   <div className="flex space-x-3 mt-2">
                     <SvgElement type={icontypesEnum.PLANS} />
-                    <h3 className="text-[13px] text-[#56575B]">Can add social media links</h3>
+                    <h3 className="text-[13px] text-[#56575B]">Social media links Addition</h3>
                   </div>
 
                   <div className="flex space-x-3 mt-2">
                     <SvgElement type={icontypesEnum.PLANS} />
-                    <h3 className="text-[13px] text-[#56575B]">Can edit Market links</h3>
+                    <h3 className="text-[13px] text-[#56575B]"> Market links Editing</h3>
                   </div>
 
                   <div className="flex space-x-3 mt-2">
                     <SvgElement type={icontypesEnum.PLANS} />
-                    <h3 className="text-[13px] text-[#56575B]">Can edit Product Details</h3>
+                    <h3 className="text-[13px] text-[#56575B]">Product Details Editing</h3>
                   </div>
 
                   <div className="flex space-x-3 mt-2">
                     <SvgElement type={icontypesEnum.PLANS} />
-                    <h3 className="text-[13px] text-[#56575B]">Can edit Multi Links Info</h3>
+                    <h3 className="text-[13px] text-[#56575B]">Multi Links Editing</h3>
                   </div>
 
                   <div className="flex space-x-3 mt-2">
                     <SvgElement type={icontypesEnum.PLANS} />
-                    <h3 className="text-[13px] text-[#56575B]">Can edit whatsapp message</h3>
+                    <h3 className="text-[13px] text-[#56575B]">Whatsapp Message Editing</h3>
                   </div>
 
                   <div className="flex space-x-3 mt-2">
                     <SvgElement type={icontypesEnum.PLANS} />
-                    <h3 className="text-[13px] text-[#56575B]">Can edit redirect link info</h3>
+                    <h3 className="text-[13px] text-[#56575B]">Redirect Info Editing</h3>
                   </div>
                 </div>
               </div>
@@ -1286,7 +1349,7 @@ function Home() {
                 </button> */}
           </div>
           <ToastContainer
-            position="bottom-right"
+            position="top-right"
             autoClose={1000}
             hideProgressBar={true}
             newestOnTop={false}
