@@ -710,17 +710,17 @@ function Home() {
 
                     <div className="flex space-x-3 mt-2">
                       <SvgElement type={icontypesEnum.PLANS} />
-                      <h3 className="text-[13px] text-[#56575B]"> Multi Links Editing</h3>
+                      <h3 className="text-[13px] text-[#56575B]">Manage Multi Links</h3>
                     </div>
 
                     <div className="flex space-x-3 mt-2">
                       <SvgElement type={icontypesEnum.PLANS} />
-                      <h3 className="text-[13px] text-[#56575B]">Whatsapp Message Editing</h3>
+                      <h3 className="text-[13px] text-[#56575B]">Manage Whatsapp Message</h3>
                     </div>
 
                     <div className="flex space-x-3 mt-2">
                       <SvgElement type={icontypesEnum.PLANS} />
-                      <h3 className="text-[13px] text-[#56575B]">Redirect Info Editing</h3>
+                      <h3 className="text-[13px] text-[#56575B]">Manage Redirect Info</h3>
                     </div>
 
                   </div>
@@ -800,22 +800,22 @@ function Home() {
                     </div>
                     <div className="flex space-x-3 mt-2">
                       <SvgElement type={icontypesEnum.PLANS} />
-                      <h3 className="text-[13px] text-[#56575B]">Product Details Editing</h3>
+                      <h3 className="text-[13px] text-[#56575B]">Manage Product Details</h3>
                     </div>
 
                     <div className="flex space-x-3 mt-2">
                       <SvgElement type={icontypesEnum.PLANS} />
-                      <h3 className="text-[13px] text-[#56575B]"> Multi Links Editing</h3>
+                      <h3 className="text-[13px] text-[#56575B]"> Manage Multi Links</h3>
                     </div>
 
                     <div className="flex space-x-3 mt-2">
                       <SvgElement type={icontypesEnum.PLANS} />
-                      <h3 className="text-[13px] text-[#56575B]">Whatsapp Message Editing</h3>
+                      <h3 className="text-[13px] text-[#56575B]">Manage Whatsapp Message</h3>
                     </div>
 
                     <div className="flex space-x-3 mt-2">
                       <SvgElement type={icontypesEnum.PLANS} />
-                      <h3 className="text-[13px] text-[#56575B]">Redirect Info Editing</h3>
+                      <h3 className="text-[13px] text-[#56575B]">Manage Redirect Info</h3>
                     </div>
                   </div>
                 </div>
@@ -906,27 +906,27 @@ function Home() {
 
                   <div className="flex space-x-3 mt-2">
                     <SvgElement type={icontypesEnum.PLANS} />
-                    <h3 className="text-[13px] text-[#56575B]"> Market links Editing</h3>
+                    <h3 className="text-[13px] text-[#56575B]">Manage Market links</h3>
                   </div>
 
                   <div className="flex space-x-3 mt-2">
                     <SvgElement type={icontypesEnum.PLANS} />
-                    <h3 className="text-[13px] text-[#56575B]">Product Details Editing</h3>
+                    <h3 className="text-[13px] text-[#56575B]">Manage Product Details </h3>
                   </div>
 
                   <div className="flex space-x-3 mt-2">
                     <SvgElement type={icontypesEnum.PLANS} />
-                    <h3 className="text-[13px] text-[#56575B]">Multi Links Editing</h3>
+                    <h3 className="text-[13px] text-[#56575B]">Manage Multi Links</h3>
                   </div>
 
                   <div className="flex space-x-3 mt-2">
                     <SvgElement type={icontypesEnum.PLANS} />
-                    <h3 className="text-[13px] text-[#56575B]">Whatsapp Message Editing</h3>
+                    <h3 className="text-[13px] text-[#56575B]">Manage Whatsapp Message</h3>
                   </div>
 
                   <div className="flex space-x-3 mt-2">
                     <SvgElement type={icontypesEnum.PLANS} />
-                    <h3 className="text-[13px] text-[#56575B]">Redirect Info Editing</h3>
+                    <h3 className="text-[13px] text-[#56575B]">Manage Redirect Info</h3>
                   </div>
                 </div>
               </div>
