@@ -167,6 +167,7 @@ export default function CardViewProductPage() {
         }
       }).catch(function (error) {
         console?.log(error)
+        setLoader(false)
 
         // toast.error("Offfline");
       })
@@ -215,17 +216,22 @@ export default function CardViewProductPage() {
           <span><img src={marketInfo?.brand_logo} style={{ height: '50px', width: '70px' }} /></span>
         }
 
-        <span style={{borderColor:marketInfo?.brand_primary_color}} className={` font-bold text-[20px] capitalize mt-2 border-[${marketInfo?.brand_primary_color}] rounded-lg pt-1 px-2 border-[1px]`}>
-          {(params?.storeId).replace("-", ' ')}
-        </span>
+        {loader ?
+          ''
+          :
+          <span style={{ borderColor: marketInfo?.brand_primary_color }} className={` font-bold text-[20px] capitalize mt-2 border-[${marketInfo?.brand_primary_color}] rounded-lg pt-1 px-2 border-[1px]`}>
+            {(params?.storeId).replace("-", ' ')}
+          </span>
+        }
 
-       
+
+
 
 
         {/* <span>djdjks</span> */}
         {/* <span><img src="/images/los.png" style={{ height: '30px' }} /></span> */}
       </div>
-      <hr className=" mt-4 h-4"/>
+      <hr className=" mt-4 h-4" />
 
       {/* <div className="border border-[#D9D9D9] rounded md:mx-20 py-8 mt-5 px-10 flex gap-6">
         <span><img src="/images/los.png" /></span>
@@ -260,7 +266,7 @@ export default function CardViewProductPage() {
                       <hr />
 
                       <div className="flex flex-col pt-[16px] px-[16px]">
-                      <div className="flex justify-start">
+                        <div className="flex justify-start">
                           <span className="text-[16px] font-[600] mt-1">{data?.product_name}</span>
                         </div>
                         <div className="flex justify-start mt-2">
@@ -273,7 +279,7 @@ export default function CardViewProductPage() {
                           {/* <span className="text-[#149E49] text-[14px] font-[600]"> {new Intl.NumberFormat('en-US', { style: 'currency', currency: 'NGN' }).format(data?.no_of_items)}</span> */}
 
                         </div>
-                       
+
 
 
                         <span className="text-[14px] font-[400] mt-3 text-[#808191] h-10 overflow-auto">{data?.product_description}</span>
