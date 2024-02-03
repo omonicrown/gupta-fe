@@ -406,7 +406,7 @@ export default function CardCreateProduct() {
 
         <div className="md:flex md:justify-between">
           <div className="bg-blue-100 md:w-2/5 rounded-lg m-1 p-2">
-            <span className=" bg-blue-100  rounded-lg  text-gray-500 text-[12px]"><span className=" text-red-500 bg-red-200 p-1 px-3 rounded-full text-[15px]">!</span><br />  ATTENTION : Please kindly note that the market market link is the link where your customers will see the list of your products</span>
+            <span className=" bg-blue-100  rounded-lg  text-gray-500 text-[12px]"><span className=" text-red-500 bg-red-200 p-1 px-3 rounded-full text-[15px]">!</span><br />  ATTENTION : Please kindly note that the market link is the link where your customers will see the list of your products</span>
           </div>
 
 
