@@ -216,7 +216,7 @@ export default function CardViewProductPage() {
           <span><img src={marketInfo?.brand_logo} style={{ height: '50px', width: '70px' }} /></span>
         }
 
-        {loader ?
+        {(loader  || data?.products?.data?.length<=0)?
           ''
           :
           <span style={{ borderColor: marketInfo?.brand_primary_color }} className={` font-bold text-[20px] capitalize mt-2 border-[${marketInfo?.brand_primary_color}] rounded-lg pt-1 px-2 border-[1px]`}>
@@ -248,7 +248,7 @@ export default function CardViewProductPage() {
       <div className=" mt-10 mb-4 md:px-16 ">
 
 
-        {data?.products?.data?.length >= 0
+        {data?.products?.data?.length > 0
           ?
           <div class="px-4 bg-white rounded-lg">
 
@@ -394,7 +394,7 @@ export default function CardViewProductPage() {
               />
             </div>
             :
-            <div className="px-4 flex justify-center mt-[30vh] bg-white border shadow-lg rounded-lg ">
+            <div className="px-4 flex justify-center flex-col mt-[30vh] bg-white border shadow-lg rounded-lg ">
 
               <span className="p-10 flex justify-center">Link does not exist</span>
 
