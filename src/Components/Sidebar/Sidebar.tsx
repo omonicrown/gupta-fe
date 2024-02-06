@@ -19,9 +19,6 @@ export default function Sidebar(title: any) {
   const dispatch: Dispatch = useDispatch();
   const userLoginData = useSelector((state: any) => state.data.login.value);
 
-  console?.log()
-
-
   React.useEffect(() => {
     AdminApis.searchName('').then(
       (response: AxiosResponse<any>) => {
@@ -87,22 +84,25 @@ export default function Sidebar(title: any) {
       <nav className=" md:left-0 md:block md:fixed md:top-0 md:bottom-0 md:overflow-y-auto md:flex-row md:flex-nowrap md:overflow-hidden shadow-xl md:bg-[#0071BC] rounded-xl mt-2 ml-1 relative md:w-64 z-2 py-2 px-1">
         <div className="md:flex-col md:items-stretch md:min-h-full md:flex-nowrap px-0 flex flex-wrap items-center justify-between w-full mx-auto">
           {/* Toggler */}
-          
+
 
           <button
             className="cursor-pointer text-black md:hidden px-3 py-1 text-xl leading-none bg-transparent rounded border border-solid border-transparent"
             type="button"
             onClick={() => setCollapseShow("bg-white m-2 py-3 px-6")}
           >
-            <b className="fas fa-bars text-3xl"> ≡ </b><span className="text-black">{title?.title}</span>
+            <b className="fas fa-bars text-3xl"> ≡ </b><span className="text-black ">{title?.title}</span>
           </button>
           {/* Brand */}
 
           <span className="flex justify-end md:hidden">
             <span className="flex  flex-row flex-wrap items-center lg:ml-auto mr-3">
-              <div className="relative flex w-full flex-wrap items-stretch gap-5">
-                <h2 className="pt-2"><SvgElement type={icontypesEnum.SEARCH} /></h2>
-                <h2 className="pt-2"><SvgElement type={icontypesEnum.NOTIFICATION} /></h2>
+              <div className="relative flex w-full flex-wrap items-stretch gap-2">
+                <NavLink to='/subscription'>
+                  <div className="relative bg-blue-200 flex w-full font-bold rounded-lg border-[2px] p-1 flex-wrap items-stretch">
+                  👑 Upgrade
+                  </div>
+                </NavLink>
                 <NavLink to='/editprofile'>
                   <h2 className=" pt-2"><SvgElement type={icontypesEnum.SETTINGS} /></h2>
                 </NavLink>
@@ -169,8 +169,8 @@ export default function Sidebar(title: any) {
                   to="/mylinks"
                 >
                   <span className="flex  py-2.5 px-2">
-                    
-                    <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" className="mr-3 " viewBox="0 0 24 24"><path fill="white" d="M19.05 4.91A9.816 9.816 0 0 0 12.04 2c-5.46 0-9.91 4.45-9.91 9.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21c5.46 0 9.91-4.45 9.91-9.91c0-2.65-1.03-5.14-2.9-7.01m-7.01 15.24c-1.48 0-2.93-.4-4.2-1.15l-.3-.18l-3.12.82l.83-3.04l-.2-.31a8.264 8.264 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.24-8.24c2.2 0 4.27.86 5.82 2.42a8.183 8.183 0 0 1 2.41 5.83c.02 4.54-3.68 8.23-8.22 8.23m4.52-6.16c-.25-.12-1.47-.72-1.69-.81c-.23-.08-.39-.12-.56.12c-.17.25-.64.81-.78.97c-.14.17-.29.19-.54.06c-.25-.12-1.05-.39-1.99-1.23c-.74-.66-1.23-1.47-1.38-1.72c-.14-.25-.02-.38.11-.51c.11-.11.25-.29.37-.43s.17-.25.25-.41c.08-.17.04-.31-.02-.43s-.56-1.34-.76-1.84c-.2-.48-.41-.42-.56-.43h-.48c-.17 0-.43.06-.66.31c-.22.25-.86.85-.86 2.07c0 1.22.89 2.4 1.01 2.56c.12.17 1.75 2.67 4.23 3.74c.59.26 1.05.41 1.41.52c.59.19 1.13.16 1.56.1c.48-.07 1.47-.6 1.67-1.18c.21-.58.21-1.07.14-1.18s-.22-.16-.47-.28"/></svg>
+
+                    <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" className="mr-3 " viewBox="0 0 24 24"><path fill="white" d="M19.05 4.91A9.816 9.816 0 0 0 12.04 2c-5.46 0-9.91 4.45-9.91 9.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21c5.46 0 9.91-4.45 9.91-9.91c0-2.65-1.03-5.14-2.9-7.01m-7.01 15.24c-1.48 0-2.93-.4-4.2-1.15l-.3-.18l-3.12.82l.83-3.04l-.2-.31a8.264 8.264 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.24-8.24c2.2 0 4.27.86 5.82 2.42a8.183 8.183 0 0 1 2.41 5.83c.02 4.54-3.68 8.23-8.22 8.23m4.52-6.16c-.25-.12-1.47-.72-1.69-.81c-.23-.08-.39-.12-.56.12c-.17.25-.64.81-.78.97c-.14.17-.29.19-.54.06c-.25-.12-1.05-.39-1.99-1.23c-.74-.66-1.23-1.47-1.38-1.72c-.14-.25-.02-.38.11-.51c.11-.11.25-.29.37-.43s.17-.25.25-.41c.08-.17.04-.31-.02-.43s-.56-1.34-.76-1.84c-.2-.48-.41-.42-.56-.43h-.48c-.17 0-.43.06-.66.31c-.22.25-.86.85-.86 2.07c0 1.22.89 2.4 1.01 2.56c.12.17 1.75 2.67 4.23 3.74c.59.26 1.05.41 1.41.52c.59.19 1.13.16 1.56.1c.48-.07 1.47-.6 1.67-1.18c.21-.58.21-1.07.14-1.18s-.22-.16-.47-.28" /></svg>
                     <span style={{ fontSize: '15px' }} className=" font-normal mt-1"> Whatsapp Links</span>
                   </span>
 

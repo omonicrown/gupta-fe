@@ -83,10 +83,10 @@ export default function CardSubscription() {
             </h1>
             <p className="text-[#848199] text-[20px] mt-5">Save up to 5% when you pay annually</p>
             <div className="flex justify-center">
-              <button onClick={() => setSubValue(1)} className={`w-auto py-[5px] px-[10px] bg-[${subValue == 1 ? '#0071BC' : '#EDF2FE'}] text-[${subValue == 1 ? '#EDF2FE' : '#0071BC'}] text-[15px] border`}>Monthly</button>
-              <button onClick={() => setSubValue(3)} className={`w-auto py-[5px] px-[10px] bg-[${subValue == 3 ? '#0071BC' : '#EDF2FE'}] text-[${subValue == 3 ? '#EDF2FE' : '#0071BC'}] text-[15px] border`}>3 Months</button>
-              <button onClick={() => setSubValue(6)} className={`w-auto py-[5px] px-[10px] bg-[${subValue == 6 ? '#0071BC' : '#EDF2FE'}] text-[${subValue == 6 ? '#EDF2FE' : '#0071BC'}] text-[15px] border`}>6 Months</button>
-              <button onClick={() => setSubValue(12)} className={`w-auto py-[5px] px-[10px] bg-[${subValue == 12 ? '#0071BC' : '#EDF2FE'}] text-[${subValue == 12 ? '#EDF2FE' : '#0071BC'}] text-[15px] border`}>12 Months</button>
+              <button onClick={() => setSubValue(1)} className={`w-auto py-[5px] px-[10px] bg-[${subValue == 1 ? '#0071BC' : '#EDF2FE'}] text-[${subValue == 1 ? 'white' : '#0071BC'}] text-[15px] border`}>Monthly</button>
+              <button onClick={() => setSubValue(3)} className={`w-auto py-[5px] px-[10px] bg-[${subValue == 3 ? '#0071BC' : '#EDF2FE'}] text-[${subValue == 3 ? 'white' : '#0071BC'}] text-[15px] border`}>3 Months</button>
+              <button onClick={() => setSubValue(6)} className={`w-auto py-[5px] px-[10px] bg-[${subValue == 6 ? '#0071BC' : '#EDF2FE'}] text-[${subValue == 6 ? 'white' : '#0071BC'}] text-[15px] border`}>6 Months</button>
+              <button onClick={() => setSubValue(12)} className={`w-auto py-[5px] px-[10px] bg-[${subValue == 12 ? '#0071BC' : '#EDF2FE'}] text-[${subValue == 12 ? 'white' : '#0071BC'}] text-[15px] border`}>12 Months</button>
 
             </div>
           </div>
@@ -141,7 +141,7 @@ export default function CardSubscription() {
               <div className="uppercase text-center bg-[#0071BC] py-2 rounded-t-[8px] text-white ">Most popular</div>
               <div className="border-2 border-[#0071BC] rounded-b-[8px] p-4 bg-white pt-4 pb-8">
                 <h3 className="text-center text-[#56575B] uppercase text-[14px]">Basic</h3>
-                <h1 className="text-center mt-5 text-[20px] text-[#56575B] font-bold"> {(new Intl.NumberFormat('en-US', { style: 'currency', currency: 'NGN' }).format((3500 * subValue) - (subValue == 1 ? 0 : ((3500 * subValue) * 0.05))))}<span className="text-[16px]">/month</span> </h1>
+                <h1 className="text-center mt-5 text-[20px] text-[#56575B] font-bold"> {(new Intl.NumberFormat('en-US', { style: 'currency', currency: 'NGN' }).format((3500 * subValue) - (subValue == 1 ? 0 : ((3500 * subValue) * 0.05))))}<span className="text-[16px]">/ {subValue} Month(s)</span> </h1>
                 {subValue !== 1 ? <span className="flex justify-center text-[12px] text-[#56575B] font-bold italic">Save up to 5% 0ff</span> : ''}
                 <div className="flex-col justify-center mt-5">
                   {/* <h3 className="text-center text-[#56575B] text-[14px]">2 QR Codes/month</h3>
@@ -223,7 +223,7 @@ export default function CardSubscription() {
             <div>
               <div className="border border-[#0071BC] rounded-[8px] p-4 bg-white pt-4 pb-8">
                 <h3 className="text-center text-[#56575B] uppercase text-[14px]">POPULAR</h3>
-                <h1 className="text-center mt-5 text-[20px] text-[#56575B] font-bold"> {(new Intl.NumberFormat('en-US', { style: 'currency', currency: 'NGN' }).format((7500 * subValue) - (subValue == 1 ? 0 : ((7500 * subValue) * 0.05))))}<span className="text-[16px]">/month</span> </h1>
+                <h1 className="text-center mt-5 text-[20px] text-[#56575B] font-bold"> {(new Intl.NumberFormat('en-US', { style: 'currency', currency: 'NGN' }).format((7500 * subValue) - (subValue == 1 ? 0 : ((7500 * subValue) * 0.05))))}<span className="text-[16px]">/ {subValue} Month(s)</span> </h1>
                 {subValue !== 1 ? <span className="flex justify-center text-[12px] text-[#56575B] font-bold italic">Save up to 5% 0ff</span> : ''}
                 <span className="flex justify-center text-center w-full py-[4px] font-bold  text-[#0071BC] text-[15px] rounded-[6px]"> Recommended
                       </span>
@@ -319,7 +319,7 @@ export default function CardSubscription() {
 
             <div className="border border-[#0071BC] rounded-[8px] p-4 bg-white pt-4 pb-8">
               <h3 className="text-center text-[#56575B] uppercase text-[14px]">PREMIUM</h3>
-              <h1 className="text-center mt-5 text-[20px] text-[#56575B] font-bold"> {(new Intl.NumberFormat('en-US', { style: 'currency', currency: 'NGN' }).format((16500 * subValue) - (subValue == 1 ? 0 : ((16500 * subValue) * 0.05))))}<span className="text-[16px]">/month</span> </h1>
+              <h1 className="text-center mt-5 text-[20px] text-[#56575B] font-bold"> {(new Intl.NumberFormat('en-US', { style: 'currency', currency: 'NGN' }).format((16500 * subValue) - (subValue == 1 ? 0 : ((16500 * subValue) * 0.05))))}<span className="text-[16px]">/{subValue} Month(s)</span> </h1>
 
               {subValue !== 1 ? <span className="flex justify-center text-[12px] text-[#56575B] font-bold italic">Save up to 5% 0ff</span> : ''}
               <div className="flex-col justify-center mt-5">
