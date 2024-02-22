@@ -138,7 +138,7 @@ function ResetPassword() {
 
               </form>
 
-              <NavLink to={"/sign-in"} className="flex justify-center mt-4">
+              <NavLink to={"/login"} className="flex justify-center mt-4">
                 {/* <img src="/images/arrow-back-icon.svg" className=" mr-2" alt="sign-in" /> */}
                 <p className="text-center text-xs font-semibold text-gray-500 mt-1">
 
