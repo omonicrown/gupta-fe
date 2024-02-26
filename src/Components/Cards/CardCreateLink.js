@@ -96,7 +96,7 @@ export default function CardCreateLink() {
 
       formData.append('phone_number', (phone?.countryCode + phone?.phoneNumber).replace(/ /g, ''))
       formData.append('name', name.replace(/ /g, ''))
-      formData.append('message', message)
+      formData.append('message', message?.replace(/[\n\r]+/g, " "))
       {
         type === 'message' ?
           AdminApis.createLink(formData).then(

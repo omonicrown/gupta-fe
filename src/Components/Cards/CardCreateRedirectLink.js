@@ -100,7 +100,7 @@ export default function CardCreateRedirectLink() {
       e.preventDefault();
       const formData = new FormData()
       formData.append('name', name.replace(/ /g, ''))
-      formData.append('url', url)
+      formData.append('url', url?.replace(/[\n\r]+/g, " "))
       AdminApis.createRedirectLink(formData).then(
         (response) => {
           if (response?.data) {
