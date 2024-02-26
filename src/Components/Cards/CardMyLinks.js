@@ -72,7 +72,7 @@ export default function CardMyLinks() {
       e.preventDefault();
       console?.log(message)
       data = {
-        'message':  message?.replace(/[\n\r]+/g, " "),
+        'message':  message?.replace(/[\n\r]+/g, "."),
         'id': value?.id,
         'name': value?.name,
         'phone_number': value?.link_info?.phone_number
