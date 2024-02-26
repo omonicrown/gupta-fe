@@ -191,7 +191,7 @@ export default function CardCreateRedirectLink() {
                   <input
                     type="text"
                     name="url"
-                    className="flex justify-center shadow-sm bg-gray-50  border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 w-[350px] p-2.5 "
+                    className="flex justify-center shadow-sm bg-gray-50  border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-[350px] p-2.5 "
                     placeholder="Enter url..."
                     defaultValue={url}
                     onChange={(e) => setUrl(e.target.value)}
