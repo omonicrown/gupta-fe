@@ -91,6 +91,9 @@ function UsersList() {
                         <table className="w-full text-sm text-left rtl:text-right text-gray-500 ">
                             <thead className="text-xs text-gray-700 bg-gray-50 ">
                                 <tr>
+                                <th scope="col" className="px-6 py-3">
+                                        S/N
+                                    </th>
                                     <th scope="col" className="px-6 py-3">
                                         Name
                                     </th>
@@ -111,7 +114,7 @@ function UsersList() {
                                     </th>
 
                                     <th scope="col" className="px-6 py-3">
-                                        <span className="sr-only">Actions</span>
+                                        <span >Actions</span>
                                     </th>
                                 </tr>
                             </thead>
