@@ -443,8 +443,8 @@ console.log(country);
             <span className="md:flex md:justify-start gap-2">
               <button
                 type="submit"
-                style={{ backgroundColor: '#61A24F', borderRadius: '50px' }}
-                className="text-sm w-full sm:w-auto px-10 py-2.5 text-center text-white hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg  "
+                style={{ backgroundColor: '#0071BC', borderRadius: '50px' }}
+                className="text-sm w-full sm:w-auto px-10 py-2.5 text-center text-white hover:bg-[#0071BC] focus:ring-4 focus:outline-none focus:ring-[#0071BC] font-medium rounded-lg  "
               >
                 Update
               </button>
@@ -487,8 +487,8 @@ console.log(country);
 
               <button
                 type="submit"
-                style={{ backgroundColor: '#61A24F', borderRadius: '50px' }}
-                className="text-sm w-full sm:w-auto px-10 py-2.5 text-center text-white hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg  "
+                style={{ backgroundColor: '#0071BC', borderRadius: '50px' }}
+                className="text-sm w-full sm:w-auto px-10 py-2.5 text-center text-white hover:bg-[#0071BC] focus:ring-4 focus:outline-none focus:ring-[#0071BC] font-medium rounded-lg  "
               >
                 Update
               </button>
@@ -568,7 +568,7 @@ console.log(country);
       </section>
 
       <ToastContainer
-        position="bottom-left"
+         position="top-right"
         autoClose={2000}
         hideProgressBar={true}
         newestOnTop={false}

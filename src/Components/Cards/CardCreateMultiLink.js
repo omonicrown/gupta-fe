@@ -28,11 +28,13 @@ export default function CardTiredLinks() {
   const [logo, setlogo] = useState('');
   const [bio, SetBio] = useState('');
   const [addlink, setAddLink] = useState([]);
-  const [businessSite, setBusinessSite] = useState('');
-  const [businessPolicy, setBusinessPolicy] = useState('');
+  const [businessSite, setBusinessSite] = useState('https://www.mygupta.co');
+  const [businessPolicy, setBusinessPolicy] = useState('no policy');
   const [data, setLinks] = useState([]);
   const [isAvailable, setIsAvailable] = useState(false);
   const [permissionList, setPermissionList] = React.useState([]);
+
+  const [loader, setLoader] = React.useState(false);
 
   const [permissionIdList, setPermissionIdList] = React.useState([]);
 
@@ -94,12 +96,13 @@ export default function CardTiredLinks() {
   const handleSubmit = React.useCallback(
     (e) => {
       e.preventDefault();
+      setLoader(true);
       const formData = new FormData()
       formData.append('name', name.replace(/ /g, ''))
       formData.append('title', title)
       formData.append('bio', bio)
       formData.append('attach_links', permissionList?.toString())
-      formData.append('logo', (images == ''? '1' : images[0]?.file) )
+      formData.append('logo', (images == ''? 'No selected file' : images[0]?.file) )
       formData.append('redirect_link', addlink)
       formData.append('business_website', businessSite)
       formData.append('business_policy', businessPolicy)
@@ -108,11 +111,12 @@ export default function CardTiredLinks() {
       AdminApis.createTieredLink(formData).then(
         (response) => {
           if (response?.data) {
-            console.log(response?.data)
+            setLoader(false);
             toast.success(response?.data?.message);
             navigate('/multi-links')
           } else {
             toast.error(response?.response?.data?.message);
+            setLoader(false);
           }
           
           // toast.success(response?.data?.message);
@@ -121,6 +125,7 @@ export default function CardTiredLinks() {
         // handle error
         // console.log(error.response);
         toast.error(error.response.data.message);
+        setLoader(false);
       })
       :
       toast.error('You need to attach at least two links to create Multi-link');
@@ -247,7 +252,7 @@ export default function CardTiredLinks() {
                   :
 
                   <form onSubmit={handleSubmit}>
-                    <div className="mb-4">
+                    <div className={"mb-4"+ (loader ? 'shadow animate-pulse ' : '')}>
                       <span className="mt-0 flex justify-center">
                         <p className=" text-black font-bold">
                           <button
@@ -292,7 +297,7 @@ export default function CardTiredLinks() {
                                 </button>
                                 &nbsp;
                                 {/* <button onClick={onImageRemoveAll}>Remove all images</button> */}
-                                {imageList.map((image, index) => (
+                                {imageList?.map((image, index) => (
                                   <div key={index} className="image-item rounded-full">
                                     <div className="flex justify-center">
                                       <img src={image['data_url']} alt="" className=" mx-32 rounded-3xl max-h-20 max-w-sm" />
@@ -355,11 +360,11 @@ export default function CardTiredLinks() {
                         </div>
 
                         <label for="first_name" class="block mb-2 mt-2 text-sm  text-gray-900 dark:text-gray-600">Busines website</label>
-                        <input type="text" defaultValue={businessSite} onChange={(e) => setBusinessSite(e?.target?.value)} id="first_name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5" placeholder="https:// busines website" />
+                        <input type="text"  onChange={(e) => setBusinessSite(e?.target?.value)} id="first_name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5" placeholder="https:// busines website" />
 
 
                         <label for="first_name" class="block mb-2 mt-2 text-sm  text-gray-900 dark:text-gray-600">Business policy</label>
-                        <input type="text" defaultValue={businessPolicy} onChange={(e) => setBusinessPolicy(e?.target?.value)} id="first_name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5" placeholder="Business policy" />
+                        <input type="text"  onChange={(e) => setBusinessPolicy(e?.target?.value)} id="first_name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5" placeholder="Business policy" />
 
                       </div>
                       {/* {nameExist > 0 ? <span className="text-xs text-red-500">Name already exist</span> : <span className="text-xs text-green-500">Name Available</span>} */}
@@ -569,7 +574,7 @@ export default function CardTiredLinks() {
       }
 
       <ToastContainer
-        position="bottom-left"
+        position="top-right"
         autoClose={2000}
         hideProgressBar={true}
         newestOnTop={false}

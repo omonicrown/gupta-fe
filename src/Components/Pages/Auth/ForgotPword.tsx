@@ -29,6 +29,8 @@ function ForgotPword() {
             navigate('/reset-password',{state:{email:userData?.email}});
             toast.success(response?.data?.message);
 
+          }else{
+            toast.warn(response?.data?.data);
           }
         } else {
           toast.error('Something went wrong');
@@ -52,7 +54,7 @@ function ForgotPword() {
       <section className="bg-[#FBFBFB]  body-font font-poppins ">
         <div className="flex justify-center     ">
 
-          <div className="px-24  mt-36">
+          <div className="md:px-24 px-5  mt-36">
             <div className="flex justify-center">
               <SvgElement type={icontypesEnum.BARS} />
             </div>

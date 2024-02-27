@@ -109,10 +109,10 @@ export default function CardTiredLinks() {
                       type="button"
                       disabled={imageList?.length ? true : false}
                       style={isDragging ? { color: 'red' } : undefined}
-                      onClick={null}
+                      // onClick={null}
                       {...dragProps}
                     >
-                      {imageList?.length ? '' : <span className="flex justify-center md:mx-2 p-6 max-w-[80vw] min-w-[80vw] md:min-w-[30vw] md:max-w-[40vw]  max-h-[50vh] md:min-h-[50%] md:max-h-[25vh]"> <div className=""> <img src={configs?.imageUrl + multiLinks?.multiLinks?.logo} className=" rounded-full max-w-[100%] min-w-[100%] md:min-w-[10vw] md:max-w-[10vw]] max-h-[80%] md:min-h-[50%] md:max-h-[20vh]" />  </div> </span>}
+                      {imageList?.length ? '' : <span className="flex justify-center md:mx-2 p-6 max-w-[80vw] min-w-[80vw] md:min-w-[30vw] md:max-w-[40vw]  max-h-[50vh] md:min-h-[50%] md:max-h-[25vh]"> <div className=""> <img src={multiLinks?.multiLinks?.logo} className=" rounded-full max-w-[100%] min-w-[100%] md:min-w-[10vw] md:max-w-[10vw]] max-h-[80%] md:min-h-[50%] md:max-h-[20vh]" />  </div> </span>}
 
                     </button>
                     &nbsp;
@@ -200,16 +200,8 @@ export default function CardTiredLinks() {
       </div>
 
 
-
-
-
-
-
-
-
-
       <ToastContainer
-        position="bottom-left"
+         position="top-right"
         autoClose={2000}
         hideProgressBar={true}
         newestOnTop={false}

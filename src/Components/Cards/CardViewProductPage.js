@@ -14,6 +14,7 @@ import { PaymentApis } from "../../apis/paymentApis";
 
 //@ts-ignore
 import { PhoneInput } from "react-contact-number-input";
+import { Oval } from 'react-loader-spinner'
 // components
 
 export default function CardViewProductPage() {
@@ -27,6 +28,7 @@ export default function CardViewProductPage() {
   const [searchParams, setSearchParams] = useSearchParams()
 
   let [visible, setVisible] = React.useState(false);
+  let [loader, setLoader] = React.useState(false);
   let [value, setvalue] = React.useState('');
   let [fullName, setFullName] = React.useState('');
   let [email, setEmail] = React.useState('');
@@ -74,7 +76,6 @@ export default function CardViewProductPage() {
     });
   }
 
-  const [loader, setLoader] = React.useState(true);
 
 
   const handlePayment = React.useCallback(
@@ -142,7 +143,8 @@ export default function CardViewProductPage() {
 
 
   React.useEffect(() => {
-    AdminApis.getProductByLinkName(params?.storeId,'').then(
+    setLoader(true)
+    AdminApis.getProductByLinkName(params?.storeId, '').then(
       (response) => {
         if (response?.data) {
           // console?.log('ssss')
@@ -156,6 +158,7 @@ export default function CardViewProductPage() {
           // setBusinessPolicy(response?.data?.data?.multiLinks?.business_policy)
           setData(response?.data?.data)
           setMarketInfo(response?.data?.data?.market_info)
+          setLoader(false)
 
           // response?.data?.data?.attachLinks?.map(
           //   (data, index) => (
@@ -164,6 +167,7 @@ export default function CardViewProductPage() {
         }
       }).catch(function (error) {
         console?.log(error)
+        setLoader(false)
 
         // toast.error("Offfline");
       })
@@ -184,11 +188,11 @@ export default function CardViewProductPage() {
         value2 = ''
       }
       setLoader(true)
-      AdminApis.getProductByLinkName(params?.storeId,value2).then(
+      AdminApis.getProductByLinkName(params?.storeId, value2).then(
         (response) => {
           if (response?.data) {
             setData(response?.data?.data)
-          setMarketInfo(response?.data?.data?.market_info)
+            setMarketInfo(response?.data?.data?.market_info)
             setLoader(false);
           }
         }
@@ -196,7 +200,7 @@ export default function CardViewProductPage() {
         console.log(error.response.data);
       })
 
-    }, [data, loader,params]);
+    }, [data, loader, params]);
 
 
 
@@ -212,10 +216,22 @@ export default function CardViewProductPage() {
           <span><img src={marketInfo?.brand_logo} style={{ height: '50px', width: '70px' }} /></span>
         }
 
+        {(loader  || data?.products?.data?.length<=0)?
+          ''
+          :
+          <span style={{ borderColor: marketInfo?.brand_primary_color }} className={` font-bold text-[20px] capitalize mt-2 border-[${marketInfo?.brand_primary_color}] rounded-lg pt-1 px-2 border-[1px]`}>
+            {(params?.storeId).replace("-", ' ')}
+          </span>
+        }
+
+
+
+
 
         {/* <span>djdjks</span> */}
         {/* <span><img src="/images/los.png" style={{ height: '30px' }} /></span> */}
       </div>
+      <hr className=" mt-4 h-4" />
 
       {/* <div className="border border-[#D9D9D9] rounded md:mx-20 py-8 mt-5 px-10 flex gap-6">
         <span><img src="/images/los.png" /></span>
@@ -232,7 +248,7 @@ export default function CardViewProductPage() {
       <div className=" mt-10 mb-4 md:px-16 ">
 
 
-        {data?.products?.data?.length >= 1
+        {data?.products?.data?.length > 0
           ?
           <div class="px-4 bg-white rounded-lg">
 
@@ -250,8 +266,11 @@ export default function CardViewProductPage() {
                       <hr />
 
                       <div className="flex flex-col pt-[16px] px-[16px]">
-                        <div className="flex justify-between">
+                        <div className="flex justify-start">
                           <span className="text-[16px] font-[600] mt-1">{data?.product_name}</span>
+                        </div>
+                        <div className="flex justify-start mt-2">
+                          {/* <span className="text-[16px] font-[600] mt-1">{data?.product_name}</span> */}
                           <span className="flex gap-2">
                             <span style={{ color: marketInfo?.brand_primary_color !== '' ? marketInfo?.brand_primary_color : '#0071BC', textDecorationLine: 'line-through' }} className={`text-[15px] font-[700]`}>{new Intl.NumberFormat('en-US', { style: 'currency', currency: 'NGN' }).format(data?.product_price)} </span>
                             <span style={{ color: marketInfo?.brand_primary_color !== '' ? marketInfo?.brand_primary_color : '#0071BC' }} className={`text-[15px] font-[400]`}>{new Intl.NumberFormat('en-US', { style: 'currency', currency: 'NGN' }).format(data?.no_of_items)} </span>
@@ -262,27 +281,28 @@ export default function CardViewProductPage() {
                         </div>
 
 
-                        <span className="text-[14px] font-[400] text-[#808191] h-10 overflow-auto">{data?.product_description}</span>
 
-                        <div className="flex justify-between gap-3 py-3">
+                        <span className="text-[14px] font-[400] mt-3 text-[#808191] h-10 overflow-auto">{data?.product_description}</span>
+
+                        <div className="flex justify-between py-3">
 
                           <NavLink to={`/storedetails/${data?.id}`}
                             style={{ backgroundColor: marketInfo?.brand_primary_color }}
-                            className={"text-[8px] text-white py-1  flex cursor-pointer rounded-full px-2"}
+                            className={"text-[10px] text-white py-1  flex cursor-pointer rounded-full px-2"}
                           >
                             <FaEye className="mt-[2px] mr-1" />  View Product
                           </NavLink>
 
                           <a target='_blank' href={`https://gupta-tkwuj.ondigitalocean.app/${data?.phone_number}`}
                             style={{ backgroundColor: marketInfo?.brand_primary_color }}
-                            className={"text-[8px] text-white pt-1  flex cursor-pointer bg-[" + (marketInfo?.brand_primary_color) + "] rounded-full px-2"}
+                            className={"text-[10px] text-white pt-1 pb-1  flex cursor-pointer bg-[" + (marketInfo?.brand_primary_color) + "] rounded-full px-2"}
                           >
                             <FaWhatsapp className="mt-[2px] mr-1" />  Contact Vendor
                           </a>
 
                           <span onClick={() => togglePaymentModal(data)}
                             style={{ backgroundColor: marketInfo?.brand_primary_color }}
-                            className={"text-[8px] text-white pt-1  flex cursor-pointer bg-[" + (marketInfo?.brand_primary_color) + "] rounded-full px-2"}
+                            className={"text-[10px] text-white pt-1 pb-1 flex cursor-pointer bg-[" + (marketInfo?.brand_primary_color) + "] rounded-full px-3"}
                           >
                             Pay with gupta
                           </span>
@@ -311,17 +331,17 @@ export default function CardViewProductPage() {
 
 
             <div className=' m-4 mt-10 flex justify-end'>
-                {
-                  data?.products?.links?.filter(((item, idx) => idx < 1000)).map(
-                    (datas, index) => (
-                      <button onClick={() => paginator(datas?.label == 'Next &raquo;' ? datas?.url.charAt(datas?.url.length - 1) : (datas?.label === '&laquo; Previous') ? datas?.url.charAt(datas?.url.length - 1) : datas?.label)} disabled={datas?.active} className={'mx-1 py-1 px-2 ' + (datas?.active == false ? 'bg-gray-300 text-black ' : `bg-[${marketInfo?.brand_primary_color !== '' ?(marketInfo?.brand_primary_color):'#0071BC'}] text-white`)} style={{backgroundColor:`${datas?.active == false ?'rgb(209 213 219':(marketInfo?.brand_primary_color !== '' ?(marketInfo?.brand_primary_color):'#0071BC')}`}}>
-                        {datas?.label == '&laquo; Previous' ? '< Previous' : (datas?.label === 'Next &raquo;') ? 'Next  >' : datas?.label}
-                      </button>
-                    )
+              {
+                data?.products?.links?.filter(((item, idx) => idx < 1000)).map(
+                  (datas, index) => (
+                    <button onClick={() => paginator(datas?.label == 'Next &raquo;' ? datas?.url.charAt(datas?.url.length - 1) : (datas?.label === '&laquo; Previous') ? datas?.url.charAt(datas?.url.length - 1) : datas?.label)} disabled={datas?.active} className={'mx-1 py-1 px-2 ' + (datas?.active == false ? 'bg-gray-300 text-black ' : `bg-[${marketInfo?.brand_primary_color !== '' ? (marketInfo?.brand_primary_color) : '#0071BC'}] text-white`)} style={{ backgroundColor: `${datas?.active == false ? 'rgb(209 213 219' : (marketInfo?.brand_primary_color !== '' ? (marketInfo?.brand_primary_color) : '#0071BC')}` }}>
+                      {datas?.label == '&laquo; Previous' ? '< Previous' : (datas?.label === 'Next &raquo;') ? 'Next  >' : datas?.label}
+                    </button>
                   )
-                }
+                )
+              }
 
-              </div>
+            </div>
 
 
             <div className="  md:bottom-[0px] w-full  bottom-[-150px]">
@@ -360,15 +380,34 @@ export default function CardViewProductPage() {
 
           :
 
-          <div class="px-4 mt-[30vh] bg-white border shadow-lg rounded-lg ">
-            <span className="p-10 flex justify-center">Link does not exist</span>
+          (loader ?
+            <div className="px-4 flex justify-center mt-[30vh] ">
+              <Oval
+                visible={true}
+                height="80"
+                width="80"
+                color="#0071BC"
+                secondaryColor="#0071BC"
+                ariaLabel="oval-loading"
+                wrapperStyle={{}}
+                wrapperClass=""
+              />
+            </div>
+            :
+            <div className="px-4 flex justify-center flex-col mt-[30vh] bg-white border shadow-lg rounded-lg ">
+
+              <span className="p-10 flex justify-center">Link does not exist</span>
 
 
-            <div className="flex justify-center mt-3 mb-4" >
-              <span style={{ fontSize: '16px', fontWeight: '300' }}>Powered By Gupta</span>
+              <div className="flex justify-center mt-3 mb-4" >
+                <span style={{ fontSize: '16px', fontWeight: '300' }}>Powered By Gupta</span>
+              </div>
+
             </div>
 
-          </div>
+          )
+
+
 
 
 
@@ -397,15 +436,11 @@ export default function CardViewProductPage() {
 
               <div className="">
 
-                <span className="flex justify-around">
-                  {/* <h1 className=" text-xs text-red-600" style={{ fontSize: '10px' }}>Link can’t be edited in free plan. <span style={{ color: '#61A24F' }} className="font-bold text-xs">Upgrade to Pro</span></h1> */}
-
-                </span>
 
                 <label
                   className="flex justify-start  mb-2 pt-1 text-md font-bold text-black"
                 >
-                  You are about to pay for {value?.product_name}
+                  You are about to pay for <br />{value?.product_name}
                 </label>
                 {/* <label
                   style={{ fontSize: '14px' }}
@@ -452,7 +487,7 @@ export default function CardViewProductPage() {
                   <span className="flex justify-center pt-4">
                     <button
                       type="submit"
-                      style={{ backgroundColor:`${marketInfo?.brand_primary_color !== '' ?(marketInfo?.brand_primary_color):'#0071BC'}`, borderRadius: '50px' }}
+                      style={{ backgroundColor: `${marketInfo?.brand_primary_color !== '' ? (marketInfo?.brand_primary_color) : '#0071BC'}`, borderRadius: '50px' }}
                       className=" text-white hover:bg-[#0071BC] focus:ring-4 focus:outline-none focus:ring-[#0071BC] font-medium rounded-lg text-sm w-full px-2 py-2.5 text-center "
                     >
                       Proceed to payment
@@ -482,18 +517,8 @@ export default function CardViewProductPage() {
         </Modal>
       </section>
 
-
-
-
-
-
-
-
-
-
-
       <ToastContainer
-        position="bottom-left"
+        position="top-right"
         autoClose={2000}
         hideProgressBar={true}
         newestOnTop={false}

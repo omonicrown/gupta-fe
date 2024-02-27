@@ -243,7 +243,6 @@ export default function CardTiredLinks() {
     [permissionList, permissionIdList]
   );
 
-  console?.log(permissionList)
 
 
   return (
@@ -300,10 +299,10 @@ export default function CardTiredLinks() {
                               type="button"
                                 disabled={imageList?.length ? true : false}
                                 style={isDragging ? { color: 'red' } : undefined}
-                                onClick={onImageUpload}
+                                // onClick={onImageUpload}
                                 {...dragProps}
                               >
-                                {imageList?.length ? '' : <span className="flex justify-center mx-20 p-6 rounded-full"> <div> <img src={configs?.imageUrl + multiLinks?.multiLinks?.logo} className="flex justify-center rounded-[100px]" />  </div> </span>}
+                                {imageList?.length ? '' : <span className="flex justify-center mx-20 p-6 rounded-full"> <div> <img src={multiLinks?.multiLinks?.logo} className="flex justify-center rounded-[100px]" />  </div> </span>}
 
                               </button>
                               &nbsp;
@@ -314,10 +313,10 @@ export default function CardTiredLinks() {
                                     <img src={image['data_url']} alt="" className=" mx-32 rounded-3xl max-h-20 max-w-sm" />
                                   </div>
 
-                                  <div className="image-item__btn-wrapper flex justify-center">
+                                  {/* <div className="image-item__btn-wrapper flex justify-center">
                                     <button type="button" onClick={() => onImageUpdate(index)}>update</button> | &nbsp;
                                     <button type="button" onClick={() => onImageRemove(index)}>remove</button>
-                                  </div>
+                                  </div> */}
                                 </div>
                               ))}
                             </div>
@@ -441,7 +440,7 @@ export default function CardTiredLinks() {
                               onClick={null}
                               {...dragProps}
                             >
-                              {imageList?.length ? '' : <span className="flex justify-center mx-20 p-6 rounded-full"> <div> <img src={configs?.imageUrl + multiLinks?.multiLinks?.logo} className="flex justify-center rounded-[100px]" />  </div> </span>}
+                              {imageList?.length ? '' : <span className="flex justify-center mx-20 p-6 rounded-full"> <div> <img src={multiLinks?.multiLinks?.logo} className="flex justify-center rounded-[100px]" />  </div> </span>}
 
                             </button>
                             &nbsp;
@@ -525,7 +524,7 @@ export default function CardTiredLinks() {
       </div>
 
       <ToastContainer
-        position="bottom-left"
+        position="top-right"
         autoClose={2000}
         hideProgressBar={true}
         newestOnTop={false}

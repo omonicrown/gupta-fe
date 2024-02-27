@@ -34,14 +34,14 @@ export class AuthLiveApis extends AxiosGlobal{
 
     resetPassword(data:any): AxiosPromise<any> {
         return this.axios.post(`${configs.context}/auth/reset`, data);
-    }
+    } 
 
     logout(data: any): AxiosPromise<any> {
         return this.axios.post(`${configs.context}/logout`, data, {
             headers: { "Content-Type": "aplication/json", "Accept": "aplication/json", "Authorization": `Bearer ${store.getState().data.login.value.token}`, "Access-Control-Allow-Origin": "*" },
         });
     }
-    
+  
    
 
 

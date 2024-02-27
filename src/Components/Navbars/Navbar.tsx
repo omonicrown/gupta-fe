@@ -41,15 +41,15 @@ function Navbar() {
           </div>
           <div className="flex md:order-2">
             <div className="hidden lg:flex flex-col font-medium md:flex-row lg:space-x-3 mr-[100px]">
-            <NavLink to='/'>
+            {/* <NavLink to='/'>
                   <div
                     className="hover:bg-gray-100 font-medium rounded-lg text-[16px] pl-8 pr-8 mt-3 p-2 text-center mr-1 md:mr-1 "
                     
                  >
                    About Us
                   </div>
-                </NavLink>
-            <NavLink to='/pricing'>
+                </NavLink> */}
+            {/* <NavLink to='/pricing'>
                   <div
                     className=" hover:bg-gray-100 font-medium rounded-lg text-[16px] pl-8 pr-8 mt-3 p-2 text-center mr-1 md:mr-1 "
                   >
@@ -62,7 +62,7 @@ function Navbar() {
                   >
                    FAQ
                   </div>
-                </NavLink>
+                </NavLink> */}
             </div>
           
               <span className="hidden md:flex justify-center">
@@ -148,7 +148,7 @@ function Navbar() {
           {(ref) => (
             <div className="md:hidden bg-white w-full pl-6 pr-4 mt-3" id="mobile-menu">
               <div ref={ref} className=" pt-10 pb-3 space-y-1 ">
-              <NavLink
+              {/* <NavLink
                   to="/"
                   className="block text-[#616161] py-3 font-bold hover:bg-gray-100"
                 >
@@ -167,7 +167,7 @@ function Navbar() {
                   className="block text-[#616161] py-3 font-bold hover:bg-gray-100"
                 >
                   FAQ
-                </NavLink>
+                </NavLink> */}
                 <hr className="pb-3"/>
                 <NavLink
                   to="/login"

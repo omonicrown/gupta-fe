@@ -70,7 +70,7 @@ export default function CardRedirectLink() {
       e.preventDefault();
       console?.log(message)
       data = {
-        'message': message,
+        'message': message?.replace(/[\n\r]+/g, "."),
         'id': value?.id,
         'name': value?.name,
         'phone_number': value?.link_info?.phone_number
@@ -530,7 +530,7 @@ export default function CardRedirectLink() {
       </section>
 
       <ToastContainer
-        position="bottom-left"
+         position="top-right"
         autoClose={2000}
         hideProgressBar={true}
         newestOnTop={false}

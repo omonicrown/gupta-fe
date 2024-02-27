@@ -100,7 +100,7 @@ export default function CardCreateRedirectLink() {
       e.preventDefault();
       const formData = new FormData()
       formData.append('name', name.replace(/ /g, ''))
-      formData.append('url', url)
+      formData.append('url', url?.replace(/[\n\r]+/g, "."))
       AdminApis.createRedirectLink(formData).then(
         (response) => {
           if (response?.data) {
@@ -191,7 +191,7 @@ export default function CardCreateRedirectLink() {
                   <input
                     type="text"
                     name="url"
-                    className="flex justify-center shadow-sm bg-gray-50  border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 w-[350px] p-2.5 "
+                    className="flex justify-center shadow-sm bg-gray-50  border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-[350px] p-2.5 "
                     placeholder="Enter url..."
                     defaultValue={url}
                     onChange={(e) => setUrl(e.target.value)}
@@ -391,7 +391,7 @@ export default function CardCreateRedirectLink() {
       </section>
 
       <ToastContainer
-        position="bottom-left"
+        position="top-right"
         autoClose={2000}
         hideProgressBar={true}
         newestOnTop={false}
