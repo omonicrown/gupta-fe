@@ -177,7 +177,7 @@ function MostViewed(props: FullName) {
                                                 <FaEye className="mt-[2px] mr-1" />  View Product
                                             </NavLink>
 
-                                            <a target='_blank' href={`https://gupta-tkwuj.ondigitalocean.app/${data?.phone_number}`}
+                                            <a target='_blank' href={`${configs?.baseRedirect}/${data?.phone_number}`}
                                                 style={{ backgroundColor: '#0071BC' }}
                                                 className={"text-[10px] text-white pt-1 pb-1  flex cursor-pointer bg-[#0071BC] rounded-full px-2"}
                                             >

@@ -293,7 +293,7 @@ export default function CardViewProductPage() {
                             <FaEye className="mt-[2px] mr-1" />  View Product
                           </NavLink>
 
-                          <a target='_blank' href={`https://gupta-tkwuj.ondigitalocean.app/${data?.phone_number}`}
+                          <a target='_blank' href={`${configs?.baseRedirect}/${data?.phone_number}`}
                             style={{ backgroundColor: marketInfo?.brand_primary_color }}
                             className={"text-[10px] text-white pt-1 pb-1  flex cursor-pointer bg-[" + (marketInfo?.brand_primary_color) + "] rounded-full px-2"}
                           >
