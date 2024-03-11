@@ -38,7 +38,7 @@ const configs = {
   imageUrl: "https://link.mygupta.co/TieredImages/",
   context: "https://link.mygupta.co/api",
   baseRedirectFront:'mygupta.co/',
-  baseRedirect:'link.mygupta.co',
+  baseRedirect:'https://link.mygupta.co',
 
   // imageUrl2: "http://127.0.0.1:8000/products/",
   // imageUrl: "http://127.0.0.1:8000/TieredImages/",
