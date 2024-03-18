@@ -49,8 +49,8 @@ function App() {
       {/* <Navbar/> */}
 
       <Routes>
-        {/* <Route  path="/" element={<Index/>}/> */}
-        <Route path="/" element={<Home />} />
+       
+        <Route path="/" element={<Marketplace />} />
         <Route path="/faq" element={<FAQ />} />
         <Route path="/pricing" element={<Pricing />} />
         <Route path="/login" element={<Login />} />
@@ -60,10 +60,10 @@ function App() {
         <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/password-success" element={<PasswordSuccess />} />
         <Route path="/email-verify/:email" element={<EmailVerifyComplete />} />
-        {/* <Route  path="/login" element={<Login/>}/> */}
+       
         <Route path="/mylinks" element={<Mylinks />} />
         <Route path="/payment-page" element={<PaymentDashboard />} />
-        {/* <Route  path="/payment-page" element={<Mylinks/>}/> */}
+       
         <Route path="/redirect-links" element={<RedirectLinks />} />
         <Route path="/createlink" element={<CreateLink />} />
         <Route path="/subscription" element={<Subscription />} />
