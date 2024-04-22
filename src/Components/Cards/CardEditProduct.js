@@ -38,6 +38,8 @@ export default function CardEditProduct() {
   const [productDescription, setProductDescription] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [noOfItems, setNoOfItems] = useState('');
+  const [category, setCategory] = useState('');
+  const [location, setLocation] = useState('');
   const [price, setPrice] = useState('');
 
   const [imgId1, setImgId1] = useState('');
@@ -232,6 +234,8 @@ export default function CardEditProduct() {
       formData.append('phone_number', phoneNumber)
       formData.append('no_of_items', noOfItems)
       formData.append('id', productId)
+      formData.append('category', category)
+        formData.append('location', location)
       formData.append('product_price', price)
       formData.append('product_image_1', img1)
       formData.append('product_image_2', img2)
@@ -261,7 +265,7 @@ export default function CardEditProduct() {
         toast.error(error.response.data.message);
       })
     },
-    [addLink, productName, productDescription, noOfItems, price, img1, img2, img3, productId, imgId1, imgId2, imgId3,phoneNumber]
+    [addLink, productName, productDescription, noOfItems, price, img1, img2, img3, productId, imgId1, imgId2, imgId3,phoneNumber,location,category]
   );
 
   // const handleSubmit = React.useCallback(
@@ -341,6 +345,71 @@ export default function CardEditProduct() {
               <label for="first_name" class="block mb-2 mt-4 text-sm  text-gray-900 dark:text-gray-600 ">Product Description</label>
               <textarea id="message" defaultValue={productDescription} onChange={(e) => setProductDescription(e?.target?.value)} rows={3} className="block bg-[#F4FBFF] p-2.5 w-full text-sm text-gray-900  rounded-lg border border-gray-300 focus:ring-gray-500 focus:border-gray-500" placeholder="Bio" ></textarea>
 
+              <div className="grid md:grid-cols-2 gap-2">
+                <div>
+                  <label for="first_name" class="block mb-2 mt-6 text-sm  text-gray-900 dark:text-gray-600">Category</label>
+                  <select id="gender" defaultValue={category} onChange={e => setCategory(e.target.value)} name="programs_type" class="bg-[#F4FBFF] border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 cursor-pointer">
+                    <option selected value="">All Categories</option>
+                    <option value="women fashion">Women's Fashion</option>
+                    <option value="men fashion">Men's Fashion</option>
+                    <option value="bags">Bags</option>
+                    <option value="sport/outdoor">Sport/Outdoor</option>
+                    <option value="home/kitchen">Home/Kitchen</option>
+                    <option value="shoes">Shoes</option>
+                    <option value="watches">Watches</option>
+                    <option value="keyboard & mice">Keyboard & mice</option>
+                    <option value="laptops">Laptops</option>
+                    <option value="phones">Phones</option>
+                  </select>
+
+                </div>
+
+                <div>
+                  <label for="first_name" class="block mb-2 mt-6 text-sm  text-gray-900 dark:text-gray-600">Location</label>
+                  <select id="gender" defaultValue={location} onChange={e => setLocation(e.target.value)} name="programs_type" class="bg-[#F4FBFF] border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 cursor-pointer">
+                    <option value="" selected="selected">- Select State -</option>
+                    <option value="Abuja FCT">Abuja FCT</option>
+                    <option value="Abia">Abia</option>
+                    <option value="Adamawa">Adamawa</option>
+                    <option value="Akwa Ibom">Akwa Ibom</option>
+                    <option value="Anambra">Anambra</option>
+                    <option value="Bauchi">Bauchi</option>
+                    <option value="Bayelsa">Bayelsa</option>
+                    <option value="Benue">Benue</option>
+                    <option value="Borno">Borno</option>
+                    <option value="Cross River">Cross River</option>
+                    <option value="Delta">Delta</option>
+                    <option value="Ebonyi">Ebonyi</option>
+                    <option value="Edo">Edo</option>
+                    <option value="Ekiti">Ekiti</option>
+                    <option value="Enugu">Enugu</option>
+                    <option value="Gombe">Gombe</option>
+                    <option value="Imo">Imo</option>
+                    <option value="Jigawa">Jigawa</option>
+                    <option value="Kaduna">Kaduna</option>
+                    <option value="Kano">Kano</option>
+                    <option value="Katsina">Katsina</option>
+                    <option value="Kebbi">Kebbi</option>
+                    <option value="Kogi">Kogi</option>
+                    <option value="Kwara">Kwara</option>
+                    <option value="Lagos">Lagos</option>
+                    <option value="Nassarawa">Nassarawa</option>
+                    <option value="Niger">Niger</option>
+                    <option value="Ogun">Ogun</option>
+                    <option value="Ondo">Ondo</option>
+                    <option value="Osun">Osun</option>
+                    <option value="Oyo">Oyo</option>
+                    <option value="Plateau">Plateau</option>
+                    <option value="Rivers">Rivers</option>
+                    <option value="Sokoto">Sokoto</option>
+                    <option value="Taraba">Taraba</option>
+                    <option value="Yobe">Yobe</option>
+                    <option value="Zamfara">Zamfara</option>
+                  </select>
+                </div>
+
+              </div>
+              
               <div className="grid md:grid-cols-2 gap-2">
                 <div>
                   <label for="first_name" class="block mb-2 mt-6 text-sm  text-gray-900 dark:text-gray-600">Sales Price</label>

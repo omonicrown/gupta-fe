@@ -1,6 +1,6 @@
 import './App.css';
 import React from 'react'
-import { Routes, Route } from "react-router-dom";  
+import { Routes, Route } from "react-router-dom";
 import EmailVerify from './Components/Pages/Auth/EmailVerify'
 import ForgotPassword from './Components/Pages/Auth/ForgotPword'
 import ResetPassword from './Components/Pages/Auth/ResetPassword'
@@ -12,6 +12,7 @@ import Index from './Components/Pages/Auth/index';
 import MultiLinks from './Components/user/TiredLink';
 import Mylinks from './Components/user/MyLinks';
 import PaymentDashboard from './Components/user/PaymentDashboard';
+import Marketplace from './Components/Marketplace/Home';
 import RedirectLinks from './Components/user/RedirectLink';
 import CreateLink from './Components/user/CreateLink';
 import CreateRedirectLink from './Components/user/CreateRedirectLink';
@@ -44,51 +45,57 @@ import Pricing from './Components/Pages/Pricing';
 function App() {
   return (
     <div>
-    
+
       {/* <Navbar/> */}
-      
+
       <Routes>
-      {/* <Route  path="/" element={<Index/>}/> */}
-      <Route  path="/" element={<Home/>}/>
-      <Route  path="/faq" element={<FAQ/>}/>
-      <Route  path="/pricing" element={<Pricing/>}/>
-           <Route  path="/login" element={<Login/>}/>
-           <Route  path="/register" element={<Register/>}/>
-           <Route  path="/email-verify" element={<EmailVerify/>}/>
-           <Route  path="/forgot-password" element={<ForgotPassword/>}/>
-           <Route  path="/reset-password" element={<ResetPassword/>}/>
-           <Route  path="/password-success" element={<PasswordSuccess/>}/>
-           <Route  path="/email-verify/:email" element={<EmailVerifyComplete/>}/>
-           {/* <Route  path="/login" element={<Login/>}/> */}  
-           <Route  path="/mylinks" element={<Mylinks/>}/>
-           <Route  path="/payment-page" element={<PaymentDashboard/>}/>
-           {/* <Route  path="/payment-page" element={<Mylinks/>}/> */}
-           <Route  path="/redirect-links" element={<RedirectLinks/>}/>
-           <Route  path="/createlink" element={<CreateLink/>}/> 
-           <Route  path="/subscription" element={<Subscription/>}/>
-           <Route  path="/create-redirect-link" element={<CreateRedirectLink/>}/>
-           <Route  path="/createproduct" element={<CreateProduct/>}/>
-           <Route  path="/edit-product/:id" element={<EditProduct/>}/>
-           <Route  path="/update-multi-link/:linkId" element={<EditMultiLink/>}/>
-           <Route  path="/:linkId" element={<ViewMultiPage/>}/>
-           <Route  path="/store/:storeId" element={<ViewProductPage/>}/>
-           <Route  path="/storedetails/:storeId" element={<ViewProductDetailPage/>}/>
-           <Route  path="/create-multi-link" element={<CreateMultiLink/>}/>
-           <Route  path="/EditUserMessage" element={<EditUserMessage/>}/>
-           <Route  path="/editprofile" element={<EditProfile/>}/>  
-           <Route  path="/formlinks" element={<Formlink/>}/>
-           <Route  path="/mini-store" element={<MiniStore/>}/>
-           <Route  path="/link-details/:id" element={<LinkDetails/>}/>
-           <Route  path="/multi-links" element={<MultiLinks/>}/>
-           <Route  path="/chatrouting" element={<Chatrouting/>}/>
-           <Route  path='/sidebar' element={<SideBar/>}/>
-           <Route  path='/proplan' element={<ProPlan/>}/>
+       
+        <Route path="/" element={<Home />} />
+        <Route path="/faq" element={<FAQ />} />
+        <Route path="/pricing" element={<Pricing />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/email-verify" element={<EmailVerify />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/reset-password" element={<ResetPassword />} />
+        <Route path="/password-success" element={<PasswordSuccess />} />
+        <Route path="/email-verify/:email" element={<EmailVerifyComplete />} />
+       
+        <Route path="/mylinks" element={<Mylinks />} />
+        <Route path="/payment-page" element={<PaymentDashboard />} />
+       
+        <Route path="/redirect-links" element={<RedirectLinks />} />
+        <Route path="/createlink" element={<CreateLink />} />
+        <Route path="/subscription" element={<Subscription />} />
+        <Route path="/create-redirect-link" element={<CreateRedirectLink />} />
+        <Route path="/createproduct" element={<CreateProduct />} />
+        <Route path="/edit-product/:id" element={<EditProduct />} />
+        <Route path="/update-multi-link/:linkId" element={<EditMultiLink />} />
+        <Route path="/:linkId" element={<ViewMultiPage />} />
+        <Route path="/store/:storeId" element={<ViewProductPage />} />
+        <Route path="/storedetails/:storeId" element={<ViewProductDetailPage />} />
+        <Route path="/create-multi-link" element={<CreateMultiLink />} />
+        <Route path="/EditUserMessage" element={<EditUserMessage />} />
+        <Route path="/editprofile" element={<EditProfile />} />
+        <Route path="/formlinks" element={<Formlink />} />
+        <Route path="/mini-store" element={<MiniStore />} />
+        <Route path="/link-details/:id" element={<LinkDetails />} />
+        <Route path="/multi-links" element={<MultiLinks />} />
+        <Route path="/chatrouting" element={<Chatrouting />} />
+        <Route path='/sidebar' element={<SideBar />} />
+        <Route path='/proplan' element={<ProPlan />} />
 
 
-           <Route  path='/admin-dashboard' element={<Dashboard/>}/>
-           <Route  path='/admin-users' element={<UsersList/>}/>
-           <Route  path='/witdrawal-request' element={<WitdrawalRequest/>}/>
-           <Route  path='/user-details/:id' element={<UserDetails/>}/>
+        <Route path='/admin-dashboard' element={<Dashboard />} />
+        <Route path='/admin-users' element={<UsersList />} />
+        <Route path='/witdrawal-request' element={<WitdrawalRequest />} />
+        <Route path='/user-details/:id' element={<UserDetails />} />
+
+
+
+
+        {/* Marketplace */}
+        <Route path='/marketplace' element={<Marketplace />} />
       </Routes>
     </div>
   );

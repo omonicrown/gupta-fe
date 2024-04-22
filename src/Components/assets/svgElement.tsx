@@ -40,7 +40,17 @@ export enum icontypesEnum {
     DELETE = "DELETE",
     EXPLORE = "EXPLORE",
     EDITPEN = "EDITPEN",
-    MAP = "MAP"
+    MAP = "MAP",
+    WOMEN = "WOMEN",
+    MEN = "MEN",
+    SHOES = "SHOES",
+    BAGS = "BAGS",
+    SPORT = "SPORT",
+    HOUSEHOLD = "HOUSEHOLD",
+    KITCHEN = "KITCHEN",
+    LAPTOPS = "LAPTOPS",
+    PHONES = "PHONES",
+    COMPUTERS = "COMPUTERS"
 
 }
 
@@ -351,9 +361,32 @@ export const SvgElement: React.FunctionComponent<SvgElementProps> = (props: SvgE
                         <rect width="24" height="24" fill="white" />
                     </clipPath>
                 </defs>
-            </svg>
+            </svg>;
 
-                ;
+        case icontypesEnum.WOMEN:
+            return <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"><path fill="none" stroke="dimgray" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M18 21H6s1.66-4.825 1.5-8c-.1-1.989-1.524-3.079-1-5c.23-.842 1-2 1-2S9 7 12 7s4.5-1 4.5-1s.77 1.158 1 2c.524 1.921-.9 3.011-1 5c-.16 3.175 1.5 8 1.5 8ZM7.5 6V3m9 3V3" />
+            </svg>;
+
+
+        case icontypesEnum.MEN:
+            return <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 48 48"><g fill="none" stroke="dimgray" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m6 10l12-6h12l12 6l-2 25h-6v9H14v-9H8L6 10Zm8 25V20m20 15V20" /><path d="M24 10a6 6 0 0 0 6-6H18a6 6 0 0 0 6 6Z" /></g>
+            </svg>;
+
+        case icontypesEnum.SHOES:
+            return <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 48 48"><path fill="none" stroke="dimgray" stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M29.183 20C31.264 15.054 36.35 10.667 39 8c1.104.667 5 2.604 5 7c0 4-1.455 7.111-3 8l-5.987 4.191a23 23 0 0 0-6.533 7.01L25 40H4v-4c2.429-1.333 9.82-5.867 13-8c7 4 10.5-4 12.183-8ZM43 21v19" />
+            </svg>;
+
+        case icontypesEnum.BAGS:
+            return <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"><path fill="dimgray" d="M4 20h2V10a1 1 0 0 1 1-1h12V7a1 1 0 0 0-1-1h-3.051c-.252-2.244-2.139-4-4.449-4S6.303 3.756 6.051 6H3a1 1 0 0 0-1 1v11a2 2 0 0 0 2 2zm6.5-16c1.207 0 2.218.86 2.45 2h-4.9c.232-1.14 1.243-2 2.45-2z" /><path fill="dimgray" d="M21 11H9a1 1 0 0 0-1 1v8a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-8a1 1 0 0 0-1-1zm-6 7c-2.757 0-5-2.243-5-5h2c0 1.654 1.346 3 3 3s3-1.346 3-3h2c0 2.757-2.243 5-5 5z" />
+            </svg>;
+
+        case icontypesEnum.SPORT:
+            return <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"><path fill="dimgray" d="M13.015 9.308a4.481 4.481 0 0 0 .956-3.317a2.99 2.99 0 0 1-1.221.259a2.986 2.986 0 0 1-1.739-.555l-.804.805l2.808 2.808Zm-.707.708L9.164 6.87a.516.516 0 0 1-.034-.034L5.984 3.69c-.353.44-.624.948-.792 1.5a7.482 7.482 0 0 0-.995-.159a5.502 5.502 0 0 1 6.442-3.914a5.52 5.52 0 0 1 3.864 3.095c.166.364.294.747.379 1.148a5.502 5.502 0 0 1-3.914 6.441a7.47 7.47 0 0 0-.16-.995a4.49 4.49 0 0 0 1.5-.791Zm1.431-5.027a4.494 4.494 0 0 0-.724-1.298l-1.282 1.282a2 2 0 0 0 2.007.016Zm-2.712-.724l1.281-1.28a4.492 4.492 0 0 0-1.296-.725c-.167.292-.262.63-.262.99c0 .37.1.718.277 1.015ZM10.009 2.03a4.481 4.481 0 0 0-3.318.955L9.5 5.792l.804-.804A2.986 2.986 0 0 1 9.75 3.25c0-.435.093-.848.26-1.221ZM2.5 7a.5.5 0 0 0-.5.5v1A5.5 5.5 0 0 0 7.5 14h1a.5.5 0 0 0 .5-.5v-1A5.5 5.5 0 0 0 3.5 7h-1ZM1 7.5A1.5 1.5 0 0 1 2.5 6h1a6.5 6.5 0 0 1 6.5 6.5v1A1.5 1.5 0 0 1 8.5 15h-1A6.5 6.5 0 0 1 1 8.5v-1Zm3.396 1.896a.5.5 0 0 1 .708 0l1.5 1.5a.5.5 0 0 1-.708.708l-1.5-1.5a.5.5 0 0 1 0-.708Z" />
+            </svg>;
+
+        case icontypesEnum.KITCHEN:
+            return <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"><path fill="none" stroke="dimgray" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 3h8l-1 9H5zm3 15h2v3H7zM20 3v12h-5c-.023-3.681.184-7.406 5-12zm0 12v6h-1v-3M8 12v6" />
+            </svg>;
 
 
 
