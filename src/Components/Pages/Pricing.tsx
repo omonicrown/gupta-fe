@@ -3,6 +3,7 @@ import Navbar from '../Navbars/Navbar'
 import CTA from './CTA'
 import { NavLink } from 'react-router-dom'
 import { SvgElement, icontypesEnum } from '../assets/svgElement'
+import Footer from './Footer'
 function Pricing() {
   return (
     <>
@@ -349,6 +350,8 @@ function Pricing() {
           </div>
         </div>
       </div>
+      
+      <Footer/>
     </>
   )
 }
