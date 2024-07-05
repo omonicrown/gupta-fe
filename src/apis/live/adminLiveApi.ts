@@ -132,9 +132,6 @@ export class AdinLiveApis extends AxiosGlobal {
     }
 
 
-
-   
-
     //Market apis
     checkMarketLink(data: any): AxiosPromise<Array<any>> {
         return this.axios.post(`${configs.context}/market-links/check-market-link`, data, {
