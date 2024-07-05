@@ -532,13 +532,13 @@ console.log(country);
                     </span>
 
                     <label
-                      className="flex justify-start block mb-2 pt-2 text-xs font-bold text-black"
+                      className="flex justify-start  mb-2 pt-2 text-xs font-bold text-black"
                     >
                       You are the owner of wa.uforo.link/{slicedLink}
                     </label>
 
                     <label
-                      className="flex justify-start block mb-2 pt-2 text-xs font-medium text-gray-600"
+                      className="flex justify-start  mb-2 pt-2 text-xs font-medium text-gray-600"
                     >
                       There are 2 links in your plan, you have already use 1, you can create 1 additional link
                     </label>

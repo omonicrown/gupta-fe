@@ -31,6 +31,7 @@ import downloadjs from 'downloadjs';
 import html2canvas from 'html2canvas';
 import EmojiPicker from 'emoji-picker-react';
 import { Session } from 'inspector';
+import Footer from './Footer';
 
 function Home() {
   let [visible, setVisible] = React.useState(false);
@@ -180,7 +181,7 @@ function Home() {
       {/* End Section */}
 
       {/* Start Section */}
-      <div className='bg-[#F4FBFF] sm:px-16 px-6 md:flex md:justify-center items-start ' >
+      {/* <div className='bg-[#F4FBFF] sm:px-16 px-6 md:flex md:justify-center items-start ' >
         <div className='xl:max-w-[1000px] w-full mx-auto'>
           <div className="flex flex-row flex-wrap items-center justify-between py-[16px] px-[60px] md:py-[40px] md:px-[140px] border rounded-[30px] shadow-[4px_35px_60px_-7px_rgba(0,0,0,0.3)] mb-2">
             <div className='flex space-x-2'>
@@ -201,11 +202,11 @@ function Home() {
 
           </div>
         </div>
-      </div>
+      </div> */}
       {/* End Section */}
 
       {/* Start Section */}
-      <div className='bg-[#F4FBFF] sm:px-16 px-6 flex justify-center items-start md:pt-10' >
+      <div className='bg-[#FFFFFF] sm:px-16 px-6 flex justify-center items-start md:pt-10' >
         <div className='xl:max-w-[1280px] w-full'>
           <section className='flex md:flex-row flex-col sm:py-16 py-6'>
             <div className='flex-1 flex-col justify-center items-start  '>
@@ -214,13 +215,17 @@ function Home() {
 
             <div className='flex-1 flex   flex-col md:ml-[120px] ml-0 md:mt-[110px] mt-20 relative'>
               <div className="md:flex flex-row   w-full">
-                <h1 className="flex-1 font-poppins font-[900] md:text-[40px] text-[27px] text-black md:leading-[48px] leading-[38px]">
-                  Take your  Business<br className="sm:block hidden" /> {" "}
-                  <div className='flex'>
-                    <h1 className=""> </h1>
-                  </div>
-                  to the next level.
+                <h1 className="lg:flex hidden font-poppins font-[900] md:text-[40px] text-black md:leading-[48px] leading-[38px]">
+                Take your WhatsApp <br className="sm:block hidden" />
+                business communication <br className="sm:block hidden" />
+                 to the next level.
                 </h1>
+                <h1 className="flex lg:hidden font-poppins font-[900] text-[25px] text-black leading-[38px]">
+                Take your WhatsApp 
+                business communication
+                 to the next level.
+                </h1>
+
               </div>
               <div>
                 <ul className="max-w-md space-y-3 text-[#6C757D] list-disc list-inside mt-[24px]">
@@ -280,7 +285,7 @@ function Home() {
       <div className='bg-[#F4FBFF] sm:px-16 px-6 flex justify-center items-start pb-10' >
         <div className='xl:max-w-[1280px] w-full'>
           <div className='flex justify-center items-center'>
-            <h1 className="text-center font-bold font-poppins md:text-[40px] text-[27px] text-black md:leading-[50px] leading-[38px]">
+            <h1 className="lg:text-center text-left font-bold font-poppins md:text-[40px] text-[25px] text-black md:leading-[50px] leading-[38px]">
               Unique Features Tailored <br />for you
             </h1>
           </div>
@@ -332,11 +337,11 @@ function Home() {
       <div className='bg-[#F4FBFF] sm:px-16 px-6 flex justify-center items-start' >
         <div className='xl:max-w-[1280px] w-full'>
           <div className='flex justify-center items-center pt-6'>
-            <h1 className="text-center font-bold font-poppins md:text-[36px] text-[27px] text-black md:leading-[50px] leading-[38px]">
+            <h1 className="lg:text-center text-left font-bold font-poppins md:text-[36px] text-[25px] text-black md:leading-[50px] leading-[38px]">
               Create your free link here
             </h1>
           </div>
-          <section className='flex md:flex-row flex-col sm:py-16 py-6'>
+          <section className='flex md:flex-row flex-col sm:py-16 py-6 px-4'>
             <div className='flex-1 flex justify-center items-start flex-col'>
 
               <div className="container flex flex-row justify-center bg-[#F4FBFF] mx-auto items-center rounded-lg p-6">
@@ -545,7 +550,7 @@ function Home() {
                 In today's fast-paced digital world, convenience and efficiency are key. Long, unwieldy URLs can be cumbersome to share and remember, especially in the era of character limits on social media platforms. That's where short links come to the rescue! Short links condense lengthy URLs into manageable snippets, making sharing and accessing content a breeze. In this guide, we'll explore the ins and outs of short links, how to create them, and why they're essential for simplifying your online presence.
               </p>
             </div>
-            <div className='flex-1 flex justify-center items-center'>
+            <div className='flex-1 flex justify-center items-center px-6 pt-8'>
               <form onSubmit={handleSubmit2} className="pt-[20px] pb-4 rounded-[10px] p-8 border-[#0071BC] border">
                 <div className='text-lg pb-5 text-bold'>Generate Short Link</div>
                 <div className="mb-3 ">
@@ -611,9 +616,7 @@ function Home() {
                 <h3 className="text-center text-[#56575B] uppercase text-[14px]">FREE</h3>
                 <h1 className="text-center mt-5 text-[34px] text-[#56575B]">₦ 0<sup className="text-[16px]">(First three weeks)</sup> </h1>
                 <div className="flex-col justify-center mt-5">
-                  {/* <h3 className="text-center text-[#56575B] text-[14px]">Free for 3 weeks</h3>
-                <h3 className="text-center text-[#56575B] text-[14px] ">10 links/month</h3>
-                <h3 className="text-center text-[#56575B] text-[14px]">1 Link-in-bio page</h3> */}
+                 
                   <div className="mt-4">
                   <NavLink to="/login">
                     <button className=" w-full py-[14px] bg-[#EDF2FE] text-[#0071BC] text-[15px] rounded-[6px]">Get Started</button>
@@ -1222,11 +1225,17 @@ function Home() {
       {/* End Section */}
 
       {/* Start Section */}
-      <div className='bg-[#F4FBFF] sm:px-16 px-6 flex justify-center items-start py-16' >
+      <div className='bg-[#0071BC] sm:px-16 px-6 flex justify-center items-start ' >
         <div className='xl:max-w-[1200px] w-full'>
           <CTA />
         </div>
       </div>
+      {/* End Section */}
+
+       {/* Start Section */}
+      <div>
+        <Footer/>
+        </div>
       {/* End Section */}
 
       <section>
