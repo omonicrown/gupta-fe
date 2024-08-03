@@ -16,6 +16,8 @@ const CTA = () => {
             </div>
           </div> */}
 
+          
+
       <div className='flex md:flex-row flex-col'>
       <div className='flex-1 lg:pt-[125px] pt-10'>
         <h1 className='lg:text-[48px] text-[30px] text-white font-bold md:leading-[58px] leading-[45px]'>Starting with Gupta is Easy and Fast.</h1>
