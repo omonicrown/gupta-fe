@@ -18,9 +18,9 @@ const CTA = () => {
 
       <div className='flex md:flex-row flex-col'>
       <div className='flex-1 lg:pt-[125px] pt-10'>
-        <h1 className='lg:text-[48px] text-[30px] text-white font-bold md:leading-[58px] leading-[45px]'>Starting with Gupta is Easy and Fast</h1>
-        <p className='lg:text-[18px] text-[15px] text-white mt-[25px]'>Download the app to manage your projects, keep track of the progress and complete tasks without procastinating. Stay on track and complete on time!</p>
-     <div className='mt-[25px]'>
+        <h1 className='lg:text-[48px] text-[30px] text-white font-bold md:leading-[58px] leading-[45px]'>Starting with Gupta is Easy and Fast.</h1>
+       
+     <div className='my-[35px]'>
       <button className='bg-white text-[#0071BC] py-[13px] px-[30px] rounded-[29px] font-medium'>Get Started - It's free</button>
      </div>
       </div>

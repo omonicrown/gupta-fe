@@ -91,15 +91,16 @@ export default function CardEditProduct() {
   const [img12, setImg12] = React.useState('empty');
   function uploadImg1(e) {
     let size = (e.target.files[0].size / 1048576.0)
-    setImg12(URL.createObjectURL(e.target.files[0]))
     if (e.target.files && e.target.files[0]) {
       if (size > 4) {
         if (e.target.name == 'uploadImg1') {
           e.target.value = ''
+          toast.warn(`Image too large ${size}`)
         }
       }
       if (size <=4) {
         if (e.target.name == 'uploadImg1') {
+          setImg12(URL.createObjectURL(e.target.files[0]))
           setImg1(e.target.files[0]);
         }
       }
@@ -111,15 +112,16 @@ export default function CardEditProduct() {
   const [img22, setImg22] = React.useState('empty');
   function uploadImg2(e) {
     let size = (e.target.files[0].size / 1048576.0)
-    setImg22(URL.createObjectURL(e.target.files[0]))
     if (e.target.files && e.target.files[0]) {
-      if (size > 2) {
+      if (size > 4) {
         if (e.target.name == 'uploadImg2') {
           e.target.value = ''
+          toast.warn(`Image too large.`)
         }
       }
-      if (size <= 2) {
+      if (size <= 4) {
         if (e.target.name == 'uploadImg2') {
+          setImg22(URL.createObjectURL(e.target.files[0]))
           setImg2(e.target.files[0]);
         }
       }
@@ -130,15 +132,16 @@ export default function CardEditProduct() {
   const [img32, setImg32] = React.useState('empty');
   function uploadImg3(e) {
     let size = (e.target.files[0].size / 1048576.0)
-    setImg32(URL.createObjectURL(e.target.files[0]))
     if (e.target.files && e.target.files[0]) {
-      if (size > 2) {
+      if (size > 4) {
         if (e.target.name == 'uploadImg3') {
           e.target.value = ''
+          toast.warn('Image too large')
         }
       }
-      if (size <= 2) {
+      if (size <= 4) {
         if (e.target.name == 'uploadImg3') {
+          setImg32(URL.createObjectURL(e.target.files[0]))
           setImg3(e.target.files[0]);
         }
       }
@@ -300,43 +303,9 @@ export default function CardEditProduct() {
     <>
 
       <form onSubmit={createProduct} className="pb-32 sm:px-5">
-        <div className="flex justify-end gap-2 mt-5">
-          {/* <button
-            type="button"
-            onClick={toggleModal}
-            className=" text-gray-900 bg-[#8ed2ff] hover:bg-[#167bbe] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm  px-5 py-2.5 text-center "
-          >
-            Add Market Link
-          </button> */}
-          {
-            loader ?
-              <div className='flex justify-center '>
-                <Oval
-                  height={40}
-                  width={40}
-                  color="#0071BC"
-                  wrapperStyle={{}}
-                  wrapperClass=""
-                  visible={loader}
-                  ariaLabel='oval-loading'
-                  secondaryColor="#96cff6"
-                  strokeWidth={2}
-                  strokeWidthSecondary={2}
-                />
-              </div>
-              :
-              ''
-          }
+      
 
-          <button
-            type="submit"
-            className=" text-white bg-[#0071BC] hover:bg-[#103f5e] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm  px-5 py-2.5 text-center "
-          >
-            Update Product 
-          </button>
-        </div>
-
-        <div className={"lg:grid lg:grid-cols-2 gap-2 mt-20 "+(loader?'shadow animate-pulse ':'')}>
+        <div className={"lg:grid lg:grid-cols-2 gap-2 mt-10 "+(loader?'shadow animate-pulse ':'')}>
           <div className="mb-10">
             <div className=" lg:w-4/5">
               <label for="first_name" class="block mb-2 mt-6 text-sm  text-gray-900 dark:text-gray-600">Product Name</label>
@@ -465,33 +434,66 @@ export default function CardEditProduct() {
             <div className="">
               <label className="flex flex-col items-center justify-center w-full  rounded-[5px] cursor-pointer ">
                 <div className="flex flex-col items-center justify-center  ">
-                  {img12 == 'no image' ? <img src="/images/img1.png" style={{ minHeight: '200px', maxHeight: "200px" }} /> : <img src={img12} style={{ minHeight: '200px', maxHeight: "200px" }} />}
+                  {img12 == 'no image' ? <img src="/images/img1.png" style={{ minHeight: '200px' }} /> : <img src={img12} className=" md:min-h-[250px] md:max-h-[250px] min-h-[200px] max-h-[200px]"/>}
                 </div>
                 <input id="dropzone-file" onChange={uploadImg1} name='uploadImg1' type="file" className={"hidden mb-2 text-sm text-[#6C757D] font-medium"} />
               </label>
+              <span className="text-[10px] text-[#dc143c]">Image should not be more than 4MB.</span>
             </div>
 
             <div className="">
               <label className="flex flex-col items-center justify-center w-full  rounded-[5px] cursor-pointer ">
                 <div className="flex flex-col items-center justify-center ">
-                  {img22 == 'no image' ?  <img src={`/images/img2.png`} alt={img22} style={{ minHeight: '200px', maxHeight: "200px" }} /> : <img src={img22} style={{ minHeight: '200px', maxHeight: "200px" }} />}
+                  {img22 == 'no image' ?  <img src={`/images/img2.png`} alt={img22} style={{ minHeight: '200px' }} /> : <img src={img22} className=" md:min-h-[250px] md:max-h-[250px] min-h-[200px] max-h-[200px]" />}
                 </div>
                 <input id="dropzone-file" name='uploadImg2' onChange={uploadImg2} type="file" className={"hidden mb-2 text-sm text-[#6C757D] font-medium"} />
               </label>
+              <span className="text-[10px] text-[#dc143c]">Image should not be more than 4MB.</span>
             </div>
 
             <div className="">
               <label className="flex flex-col items-center justify-center w-full  rounded-[5px] cursor-pointer ">
                 <div className="flex flex-col items-center justify-center ">
-                  {img32 == 'no image' ? <img src="/images/img3.png" style={{ minHeight: '200px', maxHeight: "200px" }} /> : <img src={img32} style={{ minHeight: '200px', maxHeight: "200px" }} />}
+                  {img32 == 'no image' ? <img src="/images/img3.png" style={{ minHeight: '200px'}} /> : <img src={img32} className=" md:min-h-[250px] md:max-h-[250px] min-h-[200px] max-h-[200px]" />}
                 </div>
                 <input id="dropzone-file" name='uploadImg3' onChange={uploadImg3} type="file" className={"hidden mb-2 text-sm text-[#6C757D] font-medium"} />
               </label>
+              <span className="text-[10px] text-[#dc143c]">Image should not be more than 4MB.</span>
             </div>
 
 
           </div>
 
+        </div>
+
+
+        <div className="flex justify-center gap-2 mt-5">
+          {
+            loader ?
+              <div className='flex justify-center '>
+                <Oval
+                  height={40}
+                  width={40}
+                  color="#0071BC"
+                  wrapperStyle={{}}
+                  wrapperClass=""
+                  visible={loader}
+                  ariaLabel='oval-loading'
+                  secondaryColor="#96cff6"
+                  strokeWidth={2}
+                  strokeWidthSecondary={2}
+                />
+              </div>
+              :
+              ''
+          }
+
+          <button
+            type="submit"
+            className=" text-white bg-[#0071BC] hover:bg-[#103f5e] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm  px-5 py-2.5 text-center "
+          >
+            Update Product 
+          </button>
         </div>
 
 

@@ -28,7 +28,7 @@ function Navbar() {
   };
 
   return (
-    <div>
+    <div className=" w-full fixed z-20 top-0 left-0">
       <nav className="bg-white sm:px-4 w-full z-20 top-0 left-0 shadow-md py-4 md:py-0 px-5" >
         <div className=" flex justify-between  mx-auto">
           <div className=" md:px-16 px-1">
@@ -49,6 +49,15 @@ function Navbar() {
                    About Us
                   </div>
                 </NavLink> */}
+                 <NavLink to='/'>
+                  <div
+                    className=" hover:bg-gray-100 font-medium rounded-lg text-[16px] pl-8 pr-8 mt-3 p-2 text-center mr-1 md:mr-1 "
+                  >
+                   Home
+                  </div>
+                </NavLink>
+
+
             <NavLink to='/pricing'>
                   <div
                     className=" hover:bg-gray-100 font-medium rounded-lg text-[16px] pl-8 pr-8 mt-3 p-2 text-center mr-1 md:mr-1 "

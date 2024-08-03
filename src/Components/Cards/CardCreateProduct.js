@@ -2,14 +2,15 @@
 import React, { useState } from "react";
 import { Dispatch } from "redux";
 import { useSelector, useDispatch } from 'react-redux';
-import { NavLink, useNavigate } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Modal from 'react-awesome-modal';
 import { PhoneInput } from "react-contact-number-input";
 import { SvgElement, icontypesEnum } from "../assets/svgElement";
 import { AdminApis } from "../../apis/adminApi";
-import { FaTrash, FaEdit } from "react-icons/fa";
+import { FaTrash, FaEdit,} from "react-icons/fa";
+import { IoIosAddCircle } from "react-icons/io";
 import { AiOutlineWarning } from "react-icons/ai";
 import EmojiPicker from 'emoji-picker-react';
 import { Oval } from 'react-loader-spinner'
@@ -141,13 +142,13 @@ export default function CardCreateProduct() {
     let size = (e.target.files[0].size / 1048576.0)
     setLogoImgPrev(URL.createObjectURL(e.target.files[0]))
     if (e.target.files && e.target.files[0]) {
-      if (size > 1) {
+      if (size > 4) {
         if (e.target.name == 'uploadImg1') {
           e.target.value = ''
           toast.warn('Image too large')
         }
       }
-      if (size <= 1) {
+      if (size <= 4) {
         if (e.target.name == 'uploadImg1') {
           setLogoImg(e.target.files[0]);
         }
@@ -161,17 +162,17 @@ export default function CardCreateProduct() {
   const [img12, setImg12] = React.useState('empty');
   function uploadImg1(e) {
     let size = (e.target.files[0].size / 1048576.0)
-    setImg12(URL.createObjectURL(e.target.files[0]))
     if (e.target.files && e.target.files[0]) {
-      if (size > 1) {
+      if (size > 4) {
         if (e.target.name == 'uploadImg1') {
           e.target.value = ''
           toast.warn('Image too large')
         }
       }
-      if (size <= 1) {
+      if (size <= 4) {
         if (e.target.name == 'uploadImg1') {
           setImg1(e.target.files[0]);
+          setImg12(URL.createObjectURL(e.target.files[0]))
         }
       }
     }
@@ -182,17 +183,17 @@ export default function CardCreateProduct() {
   const [img22, setImg22] = React.useState('empty');
   function uploadImg2(e) {
     let size = (e.target.files[0].size / 1048576.0)
-    setImg22(URL.createObjectURL(e.target.files[0]))
     if (e.target.files && e.target.files[0]) {
-      if (size > 1) {
+      if (size > 4) {
         if (e.target.name == 'uploadImg2') {
           e.target.value = ''
           toast.warn('Image too large')
         }
       }
-      if (size <= 1) {
+      if (size <= 4) {
         if (e.target.name == 'uploadImg2') {
           setImg2(e.target.files[0]);
+          setImg22(URL.createObjectURL(e.target.files[0]))
         }
       }
     }
@@ -202,17 +203,17 @@ export default function CardCreateProduct() {
   const [img32, setImg32] = React.useState('empty');
   function uploadImg3(e) {
     let size = (e.target.files[0].size / 1048576.0)
-    setImg32(URL.createObjectURL(e.target.files[0]))
     if (e.target.files && e.target.files[0]) {
-      if (size > 1) {
+      if (size > 4) {
         if (e.target.name == 'uploadImg3') {
           e.target.value = ''
           toast.warn('Image too large')
         }
       }
-      if (size <= 1) {
+      if (size <= 4) {
         if (e.target.name == 'uploadImg3') {
           setImg3(e.target.files[0]);
+          setImg32(URL.createObjectURL(e.target.files[0]))
         }
       }
     }
@@ -406,7 +407,7 @@ export default function CardCreateProduct() {
   // console.log((data?.url).slice(8))
   return (
     <>
-      <form onSubmit={createProduct} className="pb-32 sm:px-3">
+      <form onSubmit={createProduct} className="pb-12 sm:px-3">
 
         <div className="md:flex md:justify-between">
           <div className="bg-blue-100 md:w-2/5 rounded-lg m-1 p-2">
@@ -423,12 +424,7 @@ export default function CardCreateProduct() {
               Add Market Link
             </button>
 
-            <button
-              type="submit"
-              className=" text-white h-10 bg-[#0071BC] hover:bg-[#103f5e] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm  px-5 py-2.5 text-center "
-            >
-              Add Product
-            </button>
+
 
             <Oval
               height={40}
@@ -539,12 +535,17 @@ export default function CardCreateProduct() {
 
               <div className="grid md:grid-cols-2 gap-2">
                 <div>
-                  <label for="first_name" class="block mb-2 mt-6 text-sm  text-gray-900 dark:text-gray-600">Link to Product (Market Link)</label>
+                  <label for="first_name" class=" mb-2 mt-6 text-sm inline-flex gap-2 text-gray-900 dark:text-gray-600">Link to Product (Market Link) <span className=" cursor-pointer" onClick={toggleModal}><IoIosAddCircle color="#0071BC" size={20} /></span> </label> 
                   <select required onChange={(e) => { setAddLink(e?.target?.value); }} class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
                     <option value={''}>Select link</option>
                     {productLink.map(
                       (data, index) => (
-                        <option value={`${data?.link_name} ${data?.id}`}>{data?.link_name}  </option>
+                        <option className="flex justify-between" value={`${data?.link_name} ${data?.id}`}>
+
+                           <span> {data?.link_name} </span> 
+
+                           
+                            </option>
                       )
                     )}
 
@@ -553,7 +554,7 @@ export default function CardCreateProduct() {
 
 
                 <div>
-                  <label for="first_name" class="block mb-2 mt-6 text-sm  text-gray-900 dark:text-gray-600">Whatsapp Link</label>
+                  <label for="first_name" class="gap-2 mb-2 mt-6 text-sm flex justify-between  text-gray-900 dark:text-gray-600"> <span>Whatsapp Link</span>  <Link to={'/mylinks'} className=" cursor-pointer"><IoIosAddCircle color="#0071BC" size={20} /></Link></label>
                   <select required onChange={(e) => { setPhoneNumber(e?.target?.value); }} class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
                     <option value={''}>Select whatsapp url</option>
                     {addContact.map(
@@ -564,84 +565,43 @@ export default function CardCreateProduct() {
 
                   </select>
                 </div>
-
-
-
-
-
               </div>
-
-
-
-
-
-
-
             </div>
-
-
-
-            <div className=" max-w-200-px mt-10">
-              <div className=" font-[600] underline mb-3">Market Links</div>
-
-              {productLink?.length > 0 ?
-                productLink.map(
-                  (data, index) => (
-                    <span className="flex justify-between mb-4">
-                      <span><span>({index + 1}) </span>  {data?.link_name}</span>
-
-                      <span className="flex space-x-2">
-
-                        {userData?.sub_type == 'premium' ? <span className=" text-blue-500 cursor-pointer" onClick={() => toggleMarketLinkData(data)}><FaEdit /></span> : ''}
-
-
-                        <span className=" text-red-500 cursor-pointer" onClick={() => toggleDeleteMarketLink(data?.id)}><FaTrash /></span>
-
-                      </span>
-
-
-                    </span>
-                  )
-                )
-                :
-                "No Market Link Created"
-              }
-
-
-            </div>
-
           </div>
 
 
 
 
           {/* second Div */}
-          <div className="grid grid-cols-2 gap-2">
+          <div className="grid grid-cols-2 gap-1">
             <div className="">
               <label className="flex flex-col items-center justify-center w-full  rounded-[5px] cursor-pointer ">
                 <div className="flex flex-col items-center justify-center  ">
-                  {img12 == 'empty' ? <img src="/images/img1.png" style={{ minHeight: '200px', maxHeight: "200px" }} /> : <img src={img12} style={{ minHeight: '200px', maxHeight: "200px" }} />}
+                  {img12 == 'empty' ? <img src="/images/img1.png" style={{ minHeight: '200px' }} /> : <img src={img12} className=" md:min-h-[250px] md:max-h-[250px] min-h-[200px] max-h-[200px]" />}
                 </div>
                 <input id="dropzone-file" onChange={uploadImg1} accept="image/x-png,image/gif,image/jpeg" name='uploadImg1' type="file" className={"hidden mb-2 text-sm text-[#6C757D] font-medium"} />
               </label>
+              <span className="text-[10px] text-[#dc143c]">Image should not be more than 4MB.</span>
             </div>
 
             <div className="">
               <label className="flex flex-col items-center justify-center w-full  rounded-[5px] cursor-pointer ">
                 <div className="flex flex-col items-center justify-center ">
-                  {img22 == 'empty' ? <img src="/images/img2.png" style={{ minHeight: '200px', maxHeight: "200px" }} /> : <img src={img22} style={{ minHeight: '200px', maxHeight: "200px" }} />}
+                  {img22 == 'empty' ? <img src="/images/img2.png" style={{ minHeight: '200px' }} /> : <img src={img22} className=" md:min-h-[250px] md:max-h-[250px] min-h-[200px] max-h-[200px]"/>}
                 </div>
                 <input id="dropzone-file" name='uploadImg2' accept="image/x-png,image/gif,image/jpeg" onChange={uploadImg2} type="file" className={"hidden mb-2 text-sm text-[#6C757D] font-medium"} />
               </label>
+              <span className="text-[10px] text-[#dc143c]">Image should not be more than 4MB.</span>
             </div>
 
             <div className="">
               <label className="flex flex-col items-center justify-center w-full  rounded-[5px] cursor-pointer ">
                 <div className="flex flex-col items-center justify-center ">
-                  {img32 == 'empty' ? <img src="/images/img3.png" style={{ minHeight: '200px', maxHeight: "200px" }} /> : <img src={img32} style={{ minHeight: '200px', maxHeight: "200px" }} />}
+                  {img32 == 'empty' ? <img src="/images/img3.png" style={{ minHeight: '200px' }} /> : <img src={img32} className=" md:min-h-[250px] md:max-h-[250px] min-h-[200px] max-h-[200px]" />}
                 </div>
                 <input id="dropzone-file" name='uploadImg3' accept="image/x-png,image/gif,image/jpeg" onChange={uploadImg3} type="file" className={"hidden mb-2 text-sm text-[#6C757D] font-medium"} />
               </label>
+              <span className="text-[10px] text-[#dc143c]">Image should not be more than 4MB.</span>
             </div>
 
 
@@ -649,8 +609,52 @@ export default function CardCreateProduct() {
 
         </div>
 
+        <div className=" w-full py-10 flex justify-center">
+          <button
+            type="submit"
+            className=" text-white h-10 bg-[#0071BC] hover:bg-[#103f5e] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm  px-5 py-2.5 text-center "
+          >
+            Add Product
+          </button>
+        </div>
+
+
+
+
 
       </form>
+
+      <hr className="mb-5"/>
+
+      <div className=" max-w-200-px ">
+        <div className=" font-[600] underline mb-3">Market Links</div>
+
+        {productLink?.length > 0 ?
+          productLink.map(
+            (data, index) => (
+              <span className="flex justify-between mb-4">
+                <span><span>({index + 1}) </span>  {data?.link_name}</span>
+
+                <span className="flex space-x-2">
+
+                  {userData?.sub_type == 'premium' ? <span className=" text-blue-500 cursor-pointer" onClick={() => toggleMarketLinkData(data)}><FaEdit /></span> : ''}
+
+
+                  <span className=" text-red-500 cursor-pointer" onClick={() => toggleDeleteMarketLink(data?.id)}><FaTrash /></span>
+
+                </span>
+
+
+              </span>
+            )
+          )
+          :
+          "No Market Link Created"
+        }
+
+
+      </div>
+
 
 
       {/* CREATE MARKET LINK */}

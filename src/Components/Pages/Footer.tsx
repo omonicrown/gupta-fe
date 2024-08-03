@@ -15,30 +15,30 @@ function Footer() {
                     </div>
                     <div className=' col-span-1 hidden md:block'></div>
                     <div className=' col-span-2 mt-3'>
-                        <h4 className='text-[#0071BC] text-[16px] md:text-[18px] font-medium mb-6'>Product</h4>
+                        <h4 className='text-[#0071BC] text-[16px] md:text-[18px] font-medium mb-3'>Product</h4>
                         <NavLink to="/faq">
-                        <h3 className='mb-2 text-[16px] md:text-[18px] font-medium text-[#999999]'>Overview</h3>
+                        <h3 className='mb-2 text-[14px] font-medium text-[#999999]'>Overview</h3>
                         </NavLink>
                         <NavLink to="/product">
-                        <h3 className='mb-2 text-[16px] md:text-[18px] font-medium text-[#999999]'>Features</h3>
+                        <h3 className='mb-2 text-[14px] font-medium text-[#999999]'>Features</h3>
                         </NavLink>
                        <NavLink to="contact-us">
-                       <h3 className='mb-2 text-[16px] md:text-[18px] font-medium text-[#999999]'>Pricing</h3>
+                       <h3 className='mb-2 text-[14px] font-medium text-[#999999]'>Pricing</h3>
                        </NavLink>
                     </div>
                     <div className=' col-span-2 mt-3'>
-                        <h4 className='text-[#0071BC] text-[16px] md:text-[18px] font-medium mb-6'>Company</h4>
+                        <h4 className='text-[#0071BC] text-[16px] md:text-[18px] font-medium mb-3'>Company</h4>
                         <NavLink to="/faq">
-                        <h3 className='mb-2 text-[16px] md:text-[18px] font-medium text-[#999999]'>FAQs</h3>
+                        <h3 className='mb-2 text-[14px] font-medium text-[#999999]'>FAQs</h3>
                         </NavLink>
                         <NavLink to="/product">
-                        <h3 className='mb-2 text-[16px] md:text-[18px] font-medium text-[#999999]'>Blog</h3>
+                        <h3 className='mb-2 text-[14px] font-medium text-[#999999]'>Blog</h3>
                         </NavLink>
                         <NavLink to="/product">
-                        <h3 className='mb-2 text-[16px] md:text-[18px] font-medium text-[#999999]'>About Us</h3>
+                        <h3 className='mb-2 text-[14px] font-medium text-[#999999]'>About Us</h3>
                         </NavLink>
                        <NavLink to="contact-us">
-                       <h3 className='mb-2 text-[16px] md:text-[18px] font-medium text-[#999999]'>Contact Us</h3>
+                       <h3 className='mb-2 text-[14px] font-medium text-[#999999]'>Contact Us</h3>
                        </NavLink>
                         {/* <NavLink to="/">
                         <h3 className='mb-2 text-[16px] md:text-[18px] font-medium text-[#A6A6A6]'>Blog</h3>
@@ -46,17 +46,17 @@ function Footer() {
                         
                     </div>
                     <div className=' col-span-2 mt-3'>
-                        <h4 className='text-[#0071BC] text-[16px] md:text-[18px] font-bold mb-6'>Support</h4>
-                        <h3 className='mb-2 text-[16px] md:text-[18px] font-medium text-[#999999]'>Help Center</h3>
-                        <h3 className='mb-2 text-[16px] md:text-[18px] font-medium text-[#999999]'>Terms of service</h3>
-                        <h3 className='mb-2 text-[16px] md:text-[18px] font-medium text-[#999999]'>Privacy Policy</h3>
+                        <h4 className='text-[#0071BC] text-[16px] md:text-[18px] font-medium mb-3'>Support</h4>
+                        <h3 className='mb-2 text-[14px] font-medium text-[#999999]'>Help Center</h3>
+                        <h3 className='mb-2 text-[14px] font-medium text-[#999999]'>Terms of service</h3>
+                        <h3 className='mb-2 text-[14px] font-medium text-[#999999]'>Privacy Policy</h3>
                     </div>
                     <div className=' col-span-2 mt-3'>
-                        <h4 className='text-[#0071BC] text-[16px] md:text-[18px] font-medium mb-6'>Follow Us</h4>
-                        <h3 className='mb-2 text-[16px] md:text-[18px] font-medium text-[#999999]'>Facebook</h3>
-                        <h3 className='mb-2 text-[16px] md:text-[18px] font-medium text-[#999999]'>Instagram</h3>
-                        <h3 className='mb-2 text-[16px] md:text-[18px] font-medium text-[#999999]'>Twitter</h3>
-                        <h3 className='mb-2 text-[16px] md:text-[18px] font-medium text-[#999999]'>Tik Tok</h3>
+                        <h4 className='text-[#0071BC] text-[16px] md:text-[18px] font-medium mb-3'>Follow Us</h4>
+                        <h3 className='mb-2 text-[14px] font-medium text-[#999999]'>Facebook</h3>
+                        <h3 className='mb-2 text-[14px] font-medium text-[#999999]'>Instagram</h3>
+                        <h3 className='mb-2 text-[14px] font-medium text-[#999999]'>Twitter</h3>
+                        <h3 className='mb-2 text-[14px] font-medium text-[#999999]'>Tik Tok</h3>
                        
                         
                     </div>

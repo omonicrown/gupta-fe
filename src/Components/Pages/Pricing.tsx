@@ -8,13 +8,13 @@ function Pricing() {
   return (
     <>
       <Navbar />
-      <div className='bg-[#F5F5FA] sm:px-16 px-6 flex justify-center items-start py-16' >
+      <div className='bg-[#F5F5FA] sm:px-16 px-6 flex justify-center items-start py-28' >
         <div className='xl:max-w-[1200px] w-full'>
           <div className='flex flex-col justify-center items-center'>
             <h1 className="text-center font-bold font-poppins lg:text-[40px] text-[25px] text-[#231D4F] md:leading-[50px] leading-[38px]">
               Pricing for brands and businesses of all sizes
             </h1>
-            <p className="text-[#56575B] text-[20px] mt-5">Connect to your audience with branded links, QR Codes, and a Link-in-bio that will get their attention.</p>
+            <p className="text-[#56575B] text-[20px] mt-5">Engage your audience with branded links, QR codes, and a Link-in-bio to capture their attention.</p>
           </div>
 
           <div className=" flex justify-center mt-6">
