@@ -31,6 +31,7 @@ import downloadjs from 'downloadjs';
 import html2canvas from 'html2canvas';
 import EmojiPicker from 'emoji-picker-react';
 import { Session } from 'inspector';
+import Footer from './Footer';
 
 function Home() {
   let [visible, setVisible] = React.useState(false);
@@ -180,7 +181,7 @@ function Home() {
       {/* End Section */}
 
       {/* Start Section */}
-      <div className='bg-[#F4FBFF] sm:px-16 px-6 md:flex md:justify-center items-start ' >
+      {/* <div className='bg-[#F4FBFF] sm:px-16 px-6 md:flex md:justify-center items-start ' >
         <div className='xl:max-w-[1000px] w-full mx-auto'>
           <div className="flex flex-row flex-wrap items-center justify-between py-[16px] px-[60px] md:py-[40px] md:px-[140px] border rounded-[30px] shadow-[4px_35px_60px_-7px_rgba(0,0,0,0.3)] mb-2">
             <div className='flex space-x-2'>
@@ -201,11 +202,11 @@ function Home() {
 
           </div>
         </div>
-      </div>
+      </div> */}
       {/* End Section */}
 
       {/* Start Section */}
-      <div className='bg-[#F4FBFF] sm:px-16 px-6 flex justify-center items-start md:pt-10' >
+      <div className='bg-[#FFFFFF] sm:px-16 px-6 flex justify-center items-start md:pt-10' >
         <div className='xl:max-w-[1280px] w-full'>
           <section className='flex md:flex-row flex-col sm:py-16 py-6'>
             <div className='flex-1 flex-col justify-center items-start  '>
@@ -214,27 +215,30 @@ function Home() {
 
             <div className='flex-1 flex   flex-col md:ml-[120px] ml-0 md:mt-[110px] mt-20 relative'>
               <div className="md:flex flex-row   w-full">
-                <h1 className="flex-1 font-poppins font-[900] md:text-[40px] text-[27px] text-black md:leading-[48px] leading-[38px]">
-                  Take your  Business<br className="sm:block hidden" /> {" "}
-                  <div className='flex'>
-                    <h1 className=""> </h1>
-                  </div>
-                  to the next level.
+                <h1 className="lg:flex hidden font-poppins font-[900] md:text-[40px] text-black md:leading-[48px] leading-[38px]">
+                Take your  business  <br className="sm:block hidden" />
+                 to the next level.
                 </h1>
+                <h1 className="flex lg:hidden font-poppins font-[900] text-[25px] text-black leading-[38px]">
+                Take your 
+                business 
+                 to the next level.
+                </h1>
+
               </div>
               <div>
-                <ul className="max-w-md space-y-3 text-[#6C757D] list-disc list-inside mt-[24px]">
+                <ul className="max-w-md space-y-3 text-[#6C757D] list-inside mt-[24px]">
                   <li>
-                    Utilize descriptive and customized labels for links to maintain an organized link library.
+                  <b>Customized WhatsApp Links:</b> Create links for direct chats with pre-written messages or to your catalog, and see how many times they are clicked.
                   </li>
                   {/* <li>
                     Tailor automated messages to be concise, relevant, and personalized.
                   </li> */}
                   <li>
-                    Regularly review and update your multilinks to reflect changing business needs.
+                  <b>Multi-link Page:</b> Make a simple page with multiple WhatsApp links for easy customer access.
                   </li>
                   <li>
-                    Analyze link engagement and message responses to refine your communication strategy.
+                  <b>Custom Website:</b> Showcase your products with your customized Whatsapp link attached to each product, so customers can contact you easily.
                   </li>
                 </ul>
               </div>
@@ -255,16 +259,16 @@ function Home() {
             <div className='flex-1 flex justify-center items-start flex-col'>
               <div className="md:flex flex-row justify-between items-center w-full">
                 <h1 className="flex-1 font-poppins font-[900] md:text-[40px] text-[27px] text-black md:leading-[50px] leading-[38px]">
-                  The Ultimate <br className="sm:block hidden" /> {" "}
+                The Best Online Tool  <br className="sm:block hidden" /> {" "}
                   <div className='flex'>
-                    <h1 className="">SaaS platform </h1>
+                    <h1 className="">for Your Business </h1>
 
                   </div>
                 </h1>
               </div>
 
               <p className={`font-poppins font-normal text-[#6C757D] md:text-[15px] text-[13px] md:leading-[23.85px] leading-[20px] max-w-[530px] mt-[30px] `}>
-                Gupta functions as a vast marketplace, allowing vendors to establish various shops featuring diverse products. Each product is linked to a WhatsApp connection within the system, streamlining transactions for effortless customer engagement.
+              Gupta is a platform that boosts your business where you can set up different shops with many products. Each product has a direct WhatsApp link, making it easy for customers to connect and buy.
               </p>
             </div>
             <div className='flex-1 flex justify-center items-center'>
@@ -280,7 +284,7 @@ function Home() {
       <div className='bg-[#F4FBFF] sm:px-16 px-6 flex justify-center items-start pb-10' >
         <div className='xl:max-w-[1280px] w-full'>
           <div className='flex justify-center items-center'>
-            <h1 className="text-center font-bold font-poppins md:text-[40px] text-[27px] text-black md:leading-[50px] leading-[38px]">
+            <h1 className="lg:text-center text-left font-bold font-poppins md:text-[40px] text-[25px] text-black md:leading-[50px] leading-[38px]">
               Unique Features Tailored <br />for you
             </h1>
           </div>
@@ -288,22 +292,22 @@ function Home() {
             <div className='flex-1 flex space-x-2 justify-center items-start'>
               <div className='bg-black text-white text-sm font-medium mr-2 mt-1 px-3 py-1.5 rounded'>1</div>
               <div>
-                <h3 className='font-semibold text-[20px] leading-[25px]'>Customized <br />WhatsApp Links</h3>
-                <p className='mt-3 text-[#6C757D] '>Vendors effortlessly generate customized WhatsApp or catalog links, with detailed analytics showcasing click-through data. QR codes for each link are downloadable, enhancing vendor engagement.</p>
+                <h3 className='font-semibold text-[20px] leading-[25px]'>Customized WhatsApp Links</h3>
+                <p className='mt-3 text-[#6C757D] '>You can easily create personalized WhatsApp or catalog links and track how often they're clicked. You can also download QR codes for each link, which helps you stay connected with your customers.</p>
               </div>
             </div>
             <div className='flex-1 flex space-x-2 justify-center items-start md:mt-0 mt-5'>
               <div className='bg-black text-white text-sm font-medium mr-2 mt-1 px-3 py-1.5 rounded'>2</div>
               <div>
                 <h3 className='font-semibold text-[20px] leading-[25px]'>Customized Redirect Links</h3>
-                <p className='mt-3 text-[#6C757D] max-w-[280px]'>Customers create shortened, custom URLs for efficient sharing. Analytics for each short URL, including click data, are available. Vendors can generate QR codes for each link, enhancing accessibility.</p>
+                <p className='mt-3 text-[#6C757D] max-w-[280px]'>You can make short, custom URLs that redirect to a specific website. You can see how many times each link is clicked and create QR codes for them, making it even easier to use."</p>
               </div>
             </div>
             <div className='flex-1 flex space-x-2 justify-center items-start md:mt-0 mt-5'>
               <div className='bg-black text-white text-sm font-medium mr-2 mt-1 px-3 py-1.5 rounded'>3</div>
               <div>
-                <h3 className='font-semibold text-[20px] leading-[25px]'>Customized Multilinks<br /> Creation</h3>
-                <p className='mt-3 text-[#6C757D] '>Customers curate a mini webpage featuring multiple WhatsApp links. Vendors personalize the page with brand logos and social media links, optimizing customer interaction.</p>
+                <h3 className='font-semibold text-[20px] leading-[25px]'>Customized Multilinks Creation</h3>
+                <p className='mt-3 text-[#6C757D] '>You can create a mini webpage with several customized WhatsApp links. You can also add your brand logos and social media links to the page, making it easier for your customers to interact with them.</p>
               </div>
             </div>
           </div>
@@ -311,15 +315,15 @@ function Home() {
             <div className='flex-1 flex space-x-2 justify-center items-start md:mt-0'>
               <div className='bg-black text-white text-sm font-medium mr-2 mt-1 px-3 py-1.5 rounded'>4</div>
               <div>
-                <h3 className='font-semibold text-[20px] leading-[25px]'>Customized Product <br /> Listing</h3>
-                <p className='mt-3 text-[#6C757D] max-w-[280px]'>A pivotal component, enabling vendors to create market links with custom URLs representing their shops. Vendors populate these market links with products, fostering a seamless shopping experience.Subscription plans dictate customization options.</p>
+                <h3 className='font-semibold text-[20px] leading-[25px]'>Customized Product Listing</h3>
+                <p className='mt-3 text-[#6C757D] max-w-[280px]'>You can create your customized website URLs for your shops and add your products to your website. This makes it easy for your customers to browse and shop.</p>
               </div>
             </div>
             <div className='flex-1 flex space-x-2 justify-center items-start md:mt-0 mt-5'>
               <div className='bg-black text-white text-sm font-medium mr-2 mt-1 px-3 py-1.5 rounded'>5</div>
               <div>
                 <h3 className='font-semibold text-[20px] leading-[25px]'>Pay with  Gupta</h3>
-                <p className='mt-3 text-[#6C757D] max-w-[280px]'>Vendors seamlessly collect payments through Gupta payment links on product pages. The platform includes a wallet section for vendors to monitor customer payments and facilitate withdrawals.</p>
+                <p className='mt-3 text-[#6C757D] max-w-[280px]'>You can easily collect payments using Gupta payment links on your product pages. Gupta also provide a mini wallet section where you can track your customer payments and make withdrawals.</p>
               </div>
             </div>
           </div>
@@ -332,11 +336,11 @@ function Home() {
       <div className='bg-[#F4FBFF] sm:px-16 px-6 flex justify-center items-start' >
         <div className='xl:max-w-[1280px] w-full'>
           <div className='flex justify-center items-center pt-6'>
-            <h1 className="text-center font-bold font-poppins md:text-[36px] text-[27px] text-black md:leading-[50px] leading-[38px]">
+            <h1 className="lg:text-center text-left font-bold font-poppins md:text-[36px] text-[25px] text-black md:leading-[50px] leading-[38px]">
               Create your free link here
             </h1>
           </div>
-          <section className='flex md:flex-row flex-col sm:py-16 py-6'>
+          <section className='flex md:flex-row flex-col sm:py-16 py-6 px-4'>
             <div className='flex-1 flex justify-center items-start flex-col'>
 
               <div className="container flex flex-row justify-center bg-[#F4FBFF] mx-auto items-center rounded-lg p-6">
@@ -542,10 +546,10 @@ function Home() {
               </div>
 
               <p className={`font-poppins font-normal text-[#6C757D] md:text-[15px] text-[13px] md:leading-[23.85px] leading-[20px] max-w-[530px] mt-[30px] `}>
-                In today's fast-paced digital world, convenience and efficiency are key. Long, unwieldy URLs can be cumbersome to share and remember, especially in the era of character limits on social media platforms. That's where short links come to the rescue! Short links condense lengthy URLs into manageable snippets, making sharing and accessing content a breeze. In this guide, we'll explore the ins and outs of short links, how to create them, and why they're essential for simplifying your online presence.
+              Long URLs can be hard to share and remember, especially on social media with character limits. Short links solve this by condensing long URLs into easy-to-share snippets. Learn how to create and use them to simplify your online presence.
               </p>
             </div>
-            <div className='flex-1 flex justify-center items-center'>
+            <div className='flex-1 flex justify-center items-center px-6 pt-8'>
               <form onSubmit={handleSubmit2} className="pt-[20px] pb-4 rounded-[10px] p-8 border-[#0071BC] border">
                 <div className='text-lg pb-5 text-bold'>Generate Short Link</div>
                 <div className="mb-3 ">
@@ -591,350 +595,7 @@ function Home() {
 
       {/* Start Section */}
       {/* <!-- Pricing Section --> */}
-      <div className='bg-[#F5F5FA] sm:px-16 px-6 flex justify-center items-start py-16' >
-        <div className='xl:max-w-[1200px] w-full'>
-          <div className='flex flex-col justify-center items-center'>
-            <h1 className="text-center font-bold font-poppins lg:text-[40px] text-[25px] text-[#231D4F] md:leading-[50px] leading-[38px]">
-              Pricing for brands and businesses of all sizes
-            </h1>
-            <p className="text-[#56575B] text-[20px] mt-5">Connect to your audience with branded links, QR Codes, and a Link-in-bio that will get their attention.</p>
-          </div>
-
-          <div className=" flex justify-center mt-6">
-            <h3>Save up to 5% when you pay annually</h3>
-          </div>
-
-          <div className="grid grid-cols-1 gap-2 lg:grid-cols-4 md:grid-cols-2 mt-10">
-
-            <div>
-              <div className="border border-[#0071BC] rounded-[8px] p-4 bg-white pt-4 pb-8">
-                <h3 className="text-center text-[#56575B] uppercase text-[14px]">FREE</h3>
-                <h1 className="text-center mt-5 text-[34px] text-[#56575B]">₦ 0<sup className="text-[16px]">(First three weeks)</sup> </h1>
-                <div className="flex-col justify-center mt-5">
-                  {/* <h3 className="text-center text-[#56575B] text-[14px]">Free for 3 weeks</h3>
-                <h3 className="text-center text-[#56575B] text-[14px] ">10 links/month</h3>
-                <h3 className="text-center text-[#56575B] text-[14px]">1 Link-in-bio page</h3> */}
-                  <div className="mt-4">
-                  <NavLink to="/login">
-                    <button className=" w-full py-[14px] bg-[#EDF2FE] text-[#0071BC] text-[15px] rounded-[6px]">Get Started</button>
-                    </NavLink>
-                  </div>
-                  <div className="mt-4">
-                    <h3 className="text-[#56575B] text-[15px]">Includes:</h3>
-                    <div className=" flex space-x-3 mt-4">
-                      <SvgElement type={icontypesEnum.PLANS} />
-                      <h3 className="text-[13px] text-[#56575B]">5 Personalized Whatsapp Links</h3>
-                    </div>
-                    <div className="flex space-x-3 mt-2">
-                      <SvgElement type={icontypesEnum.PLANS} />
-                      <h3 className="text-[13px] text-[#56575B]">5 Personalized Redirect Links</h3></div>
-                    <div className="flex space-x-3 mt-2">
-                      <SvgElement type={icontypesEnum.PLANS} />
-                      <h3 className="text-[13px] text-[#56575B]">3 Multi Links</h3>
-                    </div>
-
-                    <div className="flex space-x-3 mt-2">
-                      <SvgElement type={icontypesEnum.PLANS} />
-                      <h3 className="text-[13px] text-[#56575B]">1 Market Links(Shop)</h3>
-                    </div>
-
-                    <div className="flex space-x-3 mt-2">
-                      <SvgElement type={icontypesEnum.PLANS} />
-                      <h3 className="text-[13px] text-[#56575B]">10 Product Listing</h3>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div>
-              <div className="uppercase text-center bg-[#0071BC] py-2 rounded-t-[8px] text-white ">Most popular</div>
-              <div className="border-2 border-[#0071BC] rounded-b-[8px] p-4 bg-white pt-4 pb-8">
-                <h3 className="text-center text-[#56575B] uppercase text-[14px]">Basic</h3>
-                <h1 className="text-center mt-5 text-[34px] text-[#56575B]">₦3,500<sup className="text-[16px]">/month</sup> </h1>
-                <div className="flex-col justify-center mt-5">
-                  {/* <h3 className="text-center text-[#56575B] text-[14px]">2 QR Codes/month</h3>
-                  <h3 className="text-center text-[#56575B] text-[14px] ">10 links/month</h3>
-                  <h3 className="text-center text-[#56575B] text-[14px]">1 Link-in-bio page</h3> */}
-                  <div className="mt-4">
-                  <NavLink to="/login">
-                    <button className=" w-full py-[14px] bg-[#0071BC] text-[#ffffff] text-[15px] rounded-[6px]">Get Started</button>
-                    </NavLink>
-                  </div>
-                  <div className="mt-4">
-                    <div className=" flex space-x-3 mt-4">
-                      <SvgElement type={icontypesEnum.PLANS} />
-                      <h3 className="text-[13px] text-[#56575B]">10 Personalized Whatsapp Links</h3>
-                    </div>
-                    <div className="flex space-x-3 mt-2">
-                      <SvgElement type={icontypesEnum.PLANS} />
-                      <h3 className="text-[13px] text-[#56575B]">10 Personalized Redirect Links</h3></div>
-                    <div className="flex space-x-3 mt-2">
-                      <SvgElement type={icontypesEnum.PLANS} />
-                      <h3 className="text-[13px] text-[#56575B]">10 Multi Links</h3>
-                    </div>
-
-                    <div className="flex space-x-3 mt-2">
-                      <SvgElement type={icontypesEnum.PLANS} />
-                      <h3 className="text-[13px] text-[#56575B]">5 Market Links (Shops)</h3>
-                    </div> 
-
-                    <div className="flex space-x-3 mt-2">
-                      <SvgElement type={icontypesEnum.PLANS} />
-                      <h3 className="text-[13px] text-[#56575B]"> Online transaction charge (1.5%)</h3>
-                    </div>
-
-                    <div className="flex space-x-3 mt-2">
-                      <SvgElement type={icontypesEnum.PLANS} />
-                      <h3 className="text-[13px] text-[#56575B]"> Unlimited invoicing & receipts</h3>
-                    </div>
-
-                    <div className="flex space-x-3 mt-2">
-                      <SvgElement type={icontypesEnum.PLANS} />
-                      <h3 className="text-[13px] text-[#56575B]"> Unlimited sales records</h3>
-                    </div>
-
-                    <div className="flex space-x-3 mt-2">
-                      <SvgElement type={icontypesEnum.PLANS} />
-                      <h3 className="text-[13px] text-[#56575B]"> Single Staff Account</h3>
-                    </div>
-
-                    <div className="flex space-x-3 mt-2">
-                      <SvgElement type={icontypesEnum.PLANS} />
-                      <h3 className="text-[13px] text-[#56575B]">100 Product Listing</h3>
-                    </div>
-                    {/* <div className="flex space-x-3 mt-2">
-                      <SvgElement type={icontypesEnum.PLANS} />
-                      <h3 className="text-[13px] text-[#56575B]">Can edit Product Details</h3>
-                    </div> */}
-
-                    <div className="flex space-x-3 mt-2">
-                      <SvgElement type={icontypesEnum.PLANS} />
-                      <h3 className="text-[13px] text-[#56575B]">Manage Multi Links</h3>
-                    </div>
-
-                    <div className="flex space-x-3 mt-2">
-                      <SvgElement type={icontypesEnum.PLANS} />
-                      <h3 className="text-[13px] text-[#56575B]">Manage Whatsapp Message</h3>
-                    </div>
-
-                    <div className="flex space-x-3 mt-2">
-                      <SvgElement type={icontypesEnum.PLANS} />
-                      <h3 className="text-[13px] text-[#56575B]">Manage Redirect Info</h3>
-                    </div>
-
-                  </div>
-                </div>
-              </div>
-            </div>
-
-
-            <div>
-              <div className="border border-[#0071BC] rounded-[8px] p-4 bg-white pt-4 pb-8">
-                <h3 className="text-center text-[#56575B] uppercase text-[14px]">POPULAR</h3>
-                <h1 className="text-center mt-5 text-[34px] text-[#56575B]">₦7,500<sup className="text-[16px]">/month</sup> </h1>
-                <span className="flex justify-center text-center w-full py-[4px] font-bold  text-[#0071BC] text-[15px] rounded-[6px]"> Recommended
-                      </span>
-                <div className="flex-col justify-center mt-5">
-                  {/* <h3 className="text-center text-[#56575B] text-[14px]">2 QR Codes/month</h3>
-                  <h3 className="text-center text-[#56575B] text-[14px] ">10 links/month</h3>
-                  <h3 className="text-center text-[#56575B] text-[14px]">1 Link-in-bio page</h3> */}
-                  <div className="mt-4">
-                    <NavLink to="/login">
-                      <button className=" w-full py-[14px] bg-[#EDF2FE] text-[#0071BC] text-[15px] rounded-[6px]">Get Started
-                      </button>
-                    </NavLink>
-                  </div>
-                  <div className="mt-4">
-                    <div className=" flex space-x-3 mt-4">
-                      <SvgElement type={icontypesEnum.PLANS} />
-                      <h3 className="text-[13px] text-[#56575B]">25 Personalized Whatsapp Links</h3>
-                    </div>
-                    <div className="flex space-x-3 mt-2">
-                      <SvgElement type={icontypesEnum.PLANS} />
-                      <h3 className="text-[13px] text-[#56575B]">25 Personalized Redirect Links</h3></div>
-                    <div className="flex space-x-3 mt-2">
-                      <SvgElement type={icontypesEnum.PLANS} />
-                      <h3 className="text-[13px] text-[#56575B]">25 Multi Links</h3>
-                    </div>
-
-                    <div className="flex space-x-3 mt-2">
-                      <SvgElement type={icontypesEnum.PLANS} />
-                      <h3 className="text-[13px] text-[#56575B]">10 Market Links(Shops)</h3>
-                    </div>
-
-                    <div className="flex space-x-3 mt-2">
-                      <SvgElement type={icontypesEnum.PLANS} />
-                      <h3 className="text-[13px] text-[#56575B]"> Online transaction charge (1.5%)</h3>
-                    </div>
-
-                    <div className="flex space-x-3 mt-2">
-                      <SvgElement type={icontypesEnum.PLANS} />
-                      <h3 className="text-[13px] text-[#56575B]"> Unlimited invoicing & receipts</h3>
-                    </div>
-
-                    <div className="flex space-x-3 mt-2">
-                      <SvgElement type={icontypesEnum.PLANS} />
-                      <h3 className="text-[13px] text-[#56575B]"> Unlimited sales records</h3>
-                    </div>
-
-                    <div className="flex space-x-3 mt-2">
-                      <SvgElement type={icontypesEnum.PLANS} />
-                      <h3 className="text-[13px] text-[#56575B]"> Unlimited Staff Account</h3>
-                    </div>
-
-                    <div className="flex space-x-3 mt-2">
-                      <SvgElement type={icontypesEnum.PLANS} />
-                      <h3 className="text-[13px] text-[#56575B]"> Monthly Sales Analysis Report</h3>
-                    </div>
-
-
-                    <div className="flex space-x-3 mt-2">
-                      <SvgElement type={icontypesEnum.PLANS} />
-                      <h3 className="text-[13px] text-[#56575B]">Free QR Code</h3>
-                    </div>
-
-                    <div className="flex space-x-3 mt-2">
-                      <SvgElement type={icontypesEnum.PLANS} />
-                      <h3 className="text-[13px] text-[#56575B]">500 Product Listing</h3>
-                    </div>
-                    <div className="flex space-x-3 mt-2">
-                      <SvgElement type={icontypesEnum.PLANS} />
-                      <h3 className="text-[13px] text-[#56575B]">Manage Product Details</h3>
-                    </div>
-
-                    <div className="flex space-x-3 mt-2">
-                      <SvgElement type={icontypesEnum.PLANS} />
-                      <h3 className="text-[13px] text-[#56575B]"> Manage Multi Links</h3>
-                    </div>
-
-                    <div className="flex space-x-3 mt-2">
-                      <SvgElement type={icontypesEnum.PLANS} />
-                      <h3 className="text-[13px] text-[#56575B]">Manage Whatsapp Message</h3>
-                    </div>
-
-                    <div className="flex space-x-3 mt-2">
-                      <SvgElement type={icontypesEnum.PLANS} />
-                      <h3 className="text-[13px] text-[#56575B]">Manage Redirect Info</h3>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-            </div>
-
-            <div className="border border-[#0071BC] rounded-[8px] p-4 bg-white pt-4 pb-8">
-              <h3 className="text-center text-[#56575B] uppercase text-[14px]">PREMIUM</h3>
-              <h1 className="text-center mt-5 text-[34px] text-[#56575B]">₦16,500<sup className="text-[16px]">/month</sup> </h1>
-              <div className="flex-col justify-center mt-5">
-                {/* <h3 className="text-center text-[#56575B] text-[14px]">2 QR Codes/month</h3>
-                <h3 className="text-center text-[#56575B] text-[14px] ">10 links/month</h3>
-                <h3 className="text-center text-[#56575B] text-[14px]">1 Link-in-bio page</h3> */}
-                <div className="mt-4">
-                  <NavLink to="/login">
-                    <button className=" w-full py-[14px] bg-[#EDF2FE] text-[#0071BC] text-[15px] rounded-[6px]">Get Started</button>
-                  </NavLink>
-                </div>
-                <div className="mt-4">
-                  <div className=" flex space-x-3 mt-4">
-                    <SvgElement type={icontypesEnum.PLANS} />
-                    <h3 className="text-[13px] text-[#56575B]">Unlimited Personalized Whatsapp Links</h3>
-                  </div>
-                  <div className="flex space-x-3 mt-2">
-                    <SvgElement type={icontypesEnum.PLANS} />
-                    <h3 className="text-[13px] text-[#56575B]">unlimited Personalized Redirect Links</h3></div>
-                  <div className="flex space-x-3 mt-2">
-                    <SvgElement type={icontypesEnum.PLANS} />
-                    <h3 className="text-[13px] text-[#56575B]">Unlimited Multi Links</h3>
-                  </div>
-
-                  <div className="flex space-x-3 mt-2">
-                    <SvgElement type={icontypesEnum.PLANS} />
-                    <h3 className="text-[13px] text-[#56575B]">Unlimited Market Links(Shops)</h3>
-                  </div>
-
-                  <div className="flex space-x-3 mt-2">
-                      <SvgElement type={icontypesEnum.PLANS} />
-                      <h3 className="text-[13px] text-[#56575B]"> Online transaction charge (1.5%)</h3>
-                    </div>
-
-                   
-
-                    <div className="flex space-x-3 mt-2">
-                      <SvgElement type={icontypesEnum.PLANS} />
-                      <h3 className="text-[13px] text-[#56575B]"> Unlimited invoicing & receipts</h3>
-                    </div>
-
-                    <div className="flex space-x-3 mt-2">
-                      <SvgElement type={icontypesEnum.PLANS} />
-                      <h3 className="text-[13px] text-[#56575B]"> Unlimited sales records</h3>
-                    </div>
-
-                    <div className="flex space-x-3 mt-2">
-                      <SvgElement type={icontypesEnum.PLANS} />
-                      <h3 className="text-[13px] text-[#56575B]"> Unlimited Staff Account</h3>
-                    </div>
-                    <div className="flex space-x-3 mt-2">
-                      <SvgElement type={icontypesEnum.PLANS} />
-                      <h3 className="text-[13px] text-[#56575B]"> Monthly Sales Analysis Report</h3>
-                    </div>
-
-                  <div className="flex space-x-3 mt-2">
-                    <SvgElement type={icontypesEnum.PLANS} />
-                    <h3 className="text-[13px] text-[#56575B]">Free QR Code</h3>
-                  </div>
-
-                  <div className="flex space-x-3 mt-2">
-                    <SvgElement type={icontypesEnum.PLANS} />
-                    <h3 className="text-[13px] text-[#56575B]">Unlimited Product Listing</h3>
-                  </div>
-
-                  <div className="flex space-x-3 mt-2">
-                    <SvgElement type={icontypesEnum.PLANS} />
-                    <h3 className="text-[13px] text-[#56575B]">Product page customization</h3>
-                  </div>
-
-                  <div className="flex space-x-3 mt-2">
-                    <SvgElement type={icontypesEnum.PLANS} />
-                    <h3 className="text-[13px] text-[#56575B]"> Brand Logo included</h3>
-                  </div>
-
-                  <div className="flex space-x-3 mt-2">
-                    <SvgElement type={icontypesEnum.PLANS} />
-                    <h3 className="text-[13px] text-[#56575B]">Social media links Addition</h3>
-                  </div>
-
-                  <div className="flex space-x-3 mt-2">
-                    <SvgElement type={icontypesEnum.PLANS} />
-                    <h3 className="text-[13px] text-[#56575B]">Manage Market links</h3>
-                  </div>
-
-                  <div className="flex space-x-3 mt-2">
-                    <SvgElement type={icontypesEnum.PLANS} />
-                    <h3 className="text-[13px] text-[#56575B]">Manage Product Details </h3>
-                  </div>
-
-                  <div className="flex space-x-3 mt-2">
-                    <SvgElement type={icontypesEnum.PLANS} />
-                    <h3 className="text-[13px] text-[#56575B]">Manage Multi Links</h3>
-                  </div>
-
-                  <div className="flex space-x-3 mt-2">
-                    <SvgElement type={icontypesEnum.PLANS} />
-                    <h3 className="text-[13px] text-[#56575B]">Manage Whatsapp Message</h3>
-                  </div>
-
-                  <div className="flex space-x-3 mt-2">
-                    <SvgElement type={icontypesEnum.PLANS} />
-                    <h3 className="text-[13px] text-[#56575B]">Manage Redirect Info</h3>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-          </div>
-        </div>
-      </div>
+    
       {/* End Section */}
 
       {/* Start Section */}
@@ -1222,11 +883,17 @@ function Home() {
       {/* End Section */}
 
       {/* Start Section */}
-      <div className='bg-[#F4FBFF] sm:px-16 px-6 flex justify-center items-start py-16' >
+      <div className='bg-[#0071BC] sm:px-16 px-6 flex justify-center items-start ' >
         <div className='xl:max-w-[1200px] w-full'>
           <CTA />
         </div>
       </div>
+      {/* End Section */}
+
+       {/* Start Section */}
+      <div>
+        <Footer/>
+        </div>
       {/* End Section */}
 
       <section>

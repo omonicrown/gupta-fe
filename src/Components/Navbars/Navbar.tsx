@@ -28,7 +28,7 @@ function Navbar() {
   };
 
   return (
-    <div>
+    <div className=" w-full fixed z-20 top-0 left-0">
       <nav className="bg-white sm:px-4 w-full z-20 top-0 left-0 shadow-md py-4 md:py-0 px-5" >
         <div className=" flex justify-between  mx-auto">
           <div className=" md:px-16 px-1">
@@ -40,7 +40,7 @@ function Navbar() {
             </NavLink>
           </div>
           <div className="flex md:order-2">
-            <div className="hidden lg:flex flex-col font-medium md:flex-row lg:space-x-3 mr-[100px]">
+            <div className="hidden lg:flex flex-col justify-center font-medium md:flex-row lg:space-x-3 mr-[300px]">
             {/* <NavLink to='/'>
                   <div
                     className="hover:bg-gray-100 font-medium rounded-lg text-[16px] pl-8 pr-8 mt-3 p-2 text-center mr-1 md:mr-1 "
@@ -49,7 +49,16 @@ function Navbar() {
                    About Us
                   </div>
                 </NavLink> */}
-            {/* <NavLink to='/pricing'>
+                 <NavLink to='/'>
+                  <div
+                    className=" hover:bg-gray-100 font-medium rounded-lg text-[16px] pl-8 pr-8 mt-3 p-2 text-center mr-1 md:mr-1 "
+                  >
+                   Home
+                  </div>
+                </NavLink>
+
+
+            <NavLink to='/pricing'>
                   <div
                     className=" hover:bg-gray-100 font-medium rounded-lg text-[16px] pl-8 pr-8 mt-3 p-2 text-center mr-1 md:mr-1 "
                   >
@@ -62,7 +71,7 @@ function Navbar() {
                   >
                    FAQ
                   </div>
-                </NavLink> */}
+                </NavLink>
             </div>
           
               <span className="hidden md:flex justify-center">
