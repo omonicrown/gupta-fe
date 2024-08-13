@@ -63,7 +63,7 @@ export default function CardTiredLinks() {
           setTitle(response?.data?.data?.multiLinks?.title)
           SetBio(response?.data?.data?.multiLinks?.bio)
           setBusinessSite(response?.data?.data?.multiLinks?.business_website)
-          console?.log(response?.data?.data?.attachLinks)
+          // console?.log(response?.data?.data?.attachLinks)
           setPermissionList(response?.data?.data?.attachLinks)
           setBusinessPolicy(response?.data?.data?.multiLinks?.business_policy)
 
@@ -433,14 +433,14 @@ export default function CardTiredLinks() {
                           dragProps,
                         }) => (
                           // write your building UI
-                          <div className="upload__image-wrapper">
+                          <div className="upload__image-wrapper flex justify-center">
                             <button
                               disabled={imageList?.length ? true : false}
                               style={isDragging ? { color: 'red' } : undefined}
                               onClick={null}
                               {...dragProps}
                             >
-                              {imageList?.length ? '' : <span className="flex justify-center mx-20 p-6 rounded-full"> <div> <img src={multiLinks?.multiLinks?.logo} className="flex justify-center rounded-[100px]" />  </div> </span>}
+                              {imageList?.length ? '' : <span className="flex justify-center items-center rounded-full"> <div> <img src={multiLinks?.multiLinks?.logo} height={100} width={100} className="flex justify-center rounded-full" />  </div> </span>}
 
                             </button>
                             &nbsp;

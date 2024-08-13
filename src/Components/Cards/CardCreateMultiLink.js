@@ -1,12 +1,13 @@
 
 import React, { useState } from "react";
 import { AdminApis } from "../../apis/adminApi";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { SvgElement, icontypesEnum } from "../assets/svgElement";
 import { ToastContainer, toast } from 'react-toastify';
 import ImageUploading from 'react-images-uploading';
 import Modal from 'react-awesome-modal';
 import { useNavigate } from 'react-router-dom';
+import { IoIosAddCircle } from "react-icons/io";
 
 // components
 
@@ -98,7 +99,7 @@ export default function CardTiredLinks() {
       e.preventDefault();
       setLoader(true);
       const formData = new FormData()
-      formData.append('name', name.replace(/ /g, ''))
+      formData.append('name', name.replace(/\s+/g, '-').replace(/[^a-zA-Z0-9\-]/g, ''))
       formData.append('title', title)
       formData.append('bio', bio)
       formData.append('attach_links', permissionList?.toString())
@@ -194,7 +195,7 @@ export default function CardTiredLinks() {
         const temp = [...permissionList];
         temp.splice(index, 1);
         setPermissionList(temp)
-        setPermissionIdList(permissionIdList => [...permissionIdList, { 'name': value }])
+        // setPermissionIdList(permissionIdList => [...permissionIdList, { 'name': value }])
 
         // permissionIdList?.map(
         //   (data, index) => (
@@ -213,10 +214,14 @@ export default function CardTiredLinks() {
   return (
     <>
       <div className="relative flex flex-col min-w-0 break-words bg-white w-full mb-6  rounded">
-        <div className="rounded-t mb-0  py-3 border-0">
+        <div className="rounded-t mb-0  pb-3 border-0">
           <div className=" lg:w-10/12 w-12/12">
-            <div className="w-full px-4 max-w-full pt-4 flex-grow flex-1">
-              <p className="flex justify-center text-sm mb-4"> The Tiered Link service enables a web page that group all the Walinks you want under a single URL. This service is available for users with 2 or more links in their subscription plan.</p>
+            <div className="w-full px-4 max-w-full pt-2 flex-grow flex-1">
+            <div className="bg-blue-100  rounded-lg ml-3 m-1 p-2 mb-3">
+            <span className=" bg-blue-100  rounded-lg  text-gray-500 text-[12px]"><span className="mr-4 text-red-500 bg-red-200 p-1 px-3 rounded-full text-[15px]">!</span>  The Multi Link service lets you create a web page that combines all your Whatsapp links under one URL.</span>
+              </div>
+           
+              {/* <p className="flex justify-center text-sm mb-4"></p> */}
               <div className="grid lg:gap-40 sm:gap-2 mb-6 md:grid-cols-2">
 
                 {/* First Section */}
@@ -231,8 +236,8 @@ export default function CardTiredLinks() {
                         </p>
                       </span>
                       <div className="mt-3">
-                        <label for="first_name" class="block mb-2 text-sm  text-gray-900 dark:text-gray-600">Search for your tiered link URL first</label>
-                        <input type="text" defaultValue={name} onChange={(e) => setName(e?.target?.value)} id="first_name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="uforo.link/ username" required />
+                        <label for="first_name" class="block mb-2 text-sm  text-gray-900 dark:text-gray-600">Search for your Multi link URL first</label>
+                        <input type="text" defaultValue={name} onChange={(e) => setName(e?.target?.value)} id="first_name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="mygupta.co/username" required />
                       </div>
                       {(name.length <= 0) ? '' : (nameExist > 0 ? <span className="text-xs text-red-500">Name already exist</span> : <span className="text-xs text-green-500">Name Available</span>)}
 
@@ -284,7 +289,7 @@ export default function CardTiredLinks() {
                               dragProps,
                             }) => (
                               // write your building UI
-                              <div className="upload__image-wrapper">
+                              <div className="upload__image-wrapper ">
                                 <button
                                   type="button"
                                   disabled={imageList?.length ? true : false}
@@ -314,8 +319,14 @@ export default function CardTiredLinks() {
                           </ImageUploading>
                         </span>
                         <label for="first_name" class="block mb-2 text-sm  text-gray-900 dark:text-gray-600"></label>
-                        <input type="text" defaultValue={name} onChange={(e) => setName(e?.target?.value)} id="first_name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg mt-1 block w-full p-2.5" placeholder="username" style={{ backgroundColor: '#F4FBFF' }} required />
-                        {(name.length <= 0) ? <div className="text-xs my-2 ml-1"> gupta.ink/</div> : (nameExist > 0 ? <span className="text-xs text-red-500">Name already exist</span> : <span className="text-xs text-[#0071BC]">Name Available</span>)}
+                        <input type="text" defaultValue={name} onChange={(e) => setName(e?.target?.value)} id="first_name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg mt-1 block w-full p-2.5" placeholder="business name" style={{ backgroundColor: '#F4FBFF' }} required />
+                        
+                        <div className="flex justify-between">
+                        <div className="text-xs my-2 ml-1"> mygupta.co/{name.replace(/\s+/g, '-').replace(/[^a-zA-Z0-9\-]/g, '')}</div>
+                        {(name.length <= 0) ? '': (nameExist > 0 ? <span className="text-xs text-red-500 my-2">Name already exist</span> : <span className="text-xs text-[#0071BC] my-2">Name Available</span>)}
+                        </div>
+                        
+                        {/* {(name.length <= 0) ? <div className="text-xs my-2 ml-1"> mygupta.co/</div> : (nameExist > 0 ? <span className="text-xs text-red-500">Name already exist</span> : <span className="text-xs text-[#0071BC]">Name Available</span>)} */}
 
                         {/* <div className="flex justify-start gap-2">
                           <SvgElement type={icontypesEnum.QRCODE} />
@@ -328,7 +339,7 @@ export default function CardTiredLinks() {
                         <input type="text" defaultValue={title} onChange={(e) => setTitle(e?.target?.value)} id="first_name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5" placeholder="Title of business here" style={{ backgroundColor: '#F4FBFF' }} />
                         <label for="first_name" class="block mb-2 mt-2 text-sm  text-gray-900 dark:text-gray-600">Bio</label>
                         <textarea id="message" defaultValue={bio} onChange={(e) => SetBio(e?.target?.value)} rows={3} className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-gray-500 focus:border-gray-500" placeholder="Bio" style={{ backgroundColor: '#F4FBFF' }}></textarea>
-                        <label for="first_name" class="block mb-2 mt-2 text-sm  text-gray-900 dark:text-gray-600">Add link</label>
+                        <label for="first_name" class="mb-2 mt-2 text-sm  text-gray-900 dark:text-gray-600 flex justify-between"> <span>Add link</span>  <Link to={'/mylinks'} className=" cursor-pointer"><IoIosAddCircle color="#0071BC" size={20} /></Link></label>
 
                         <div>
                           <select onChange={(e) => { setAddLink(e?.target?.value); permissionDropdownChange(e?.target?.value) }} class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">

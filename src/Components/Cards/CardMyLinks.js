@@ -145,7 +145,7 @@ export default function CardMyLinks() {
       <div className="relative flex flex-col min-w-0 break-words bg-white w-full mb-6  rounded">
         <div className="rounded-t mb-0  md:py-1 p-1 border-0">
         <div className="bg-blue-100  rounded-lg ml-3 m-1 p-2 mb-3">
-            <span className=" bg-blue-100  rounded-lg  text-gray-500 text-[12px]"><span className="mr-4 text-red-500 bg-red-200 p-1 px-3 rounded-full text-[15px]">!</span> Easily create custom WhatsApp links with analytics. Downloadable QR codes boost vendor engagement. Streamline connections effortlessly.</span>
+            <span className=" bg-blue-100  rounded-lg  text-gray-500 text-[12px]"><span className="mr-4 text-red-500 bg-red-200 p-1 px-3 rounded-full text-[15px]">!</span> Easily create custom WhatsApp links with built-in analytics. Download QR codes to boost customers engagement and make connections effortless.</span>
           </div>
           <div className="flex flex-wrap items-center">
             <div className="w-full px-4 max-w-full flex-grow flex-1">

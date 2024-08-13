@@ -157,11 +157,11 @@ function Navbar() {
           {(ref) => (
             <div className="md:hidden bg-white w-full pl-6 pr-4 mt-3" id="mobile-menu">
               <div ref={ref} className=" pt-10 pb-3 space-y-1 ">
-              {/* <NavLink
+              <NavLink
                   to="/"
                   className="block text-[#616161] py-3 font-bold hover:bg-gray-100"
                 >
-                  About Us
+                  Home
                 </NavLink>
                 <hr className="pb-3"/>
                 <NavLink
@@ -176,7 +176,7 @@ function Navbar() {
                   className="block text-[#616161] py-3 font-bold hover:bg-gray-100"
                 >
                   FAQ
-                </NavLink> */}
+                </NavLink>
                 <hr className="pb-3"/>
                 <NavLink
                   to="/login"

@@ -115,7 +115,7 @@ function Register() {
   return (
     <>
       <Navbar />
-      <div className="pb-32 md:mt-10 sm:px-10">
+      <div className="pb-32 mt-32 lg:mt-20 sm:px-10">
         <div className="container flex flex-row justify-center bg-[#fff] mx-auto items-center rounded-lg p-6">
 
           <div className="border py-6 rounded-lg px-6">
@@ -139,7 +139,7 @@ function Register() {
                     id="brand"
                     name="name"
                     className="flex justify-center shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 w-full p-2.5 "
-                    placeholder="Eg. Mark Store"
+                    placeholder="Eg. Sammie Store"
                     defaultValue={email}
                     onChange={handleChange}
                     required={true}

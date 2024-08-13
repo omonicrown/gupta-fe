@@ -66,7 +66,7 @@ export default function CardCreateLink() {
 
   React.useEffect(() => {
    
-    AdminApis.searchName({'name':name}).then(
+    AdminApis.searchName({'name':name?.replace(/\s+/g, '-').replace(/[^a-zA-Z0-9\-]/g, '')}).then(
       (response) => {
         if (response?.data) {
           setNameExist(response?.data?.data)
@@ -95,7 +95,7 @@ export default function CardCreateLink() {
       const formData = new FormData()
 
       formData.append('phone_number', (phone?.countryCode + phone?.phoneNumber).replace(/ /g, ''))
-      formData.append('name', name.replace(/ /g, ''))
+      formData.append('name', name.replace(/\s+/g, '-').replace(/[^a-zA-Z0-9\-]/g, ''))
       formData.append('message', message?.replace(/[\n\r]+/g, "."))
       {
         type === 'message' ?
@@ -168,13 +168,13 @@ export default function CardCreateLink() {
           
             <div className="rounded-lg px-6 pb-4 pt-6 border border-[#D9D9D9] shadow-md mt-6">
               <form onSubmit={handleSubmit} className=" ">
-              <span className="font-bold text-[20px]">Create a Named gupta.ink</span>
+              <span className="font-bold text-[16px]">Create customized wahtapp Url</span>
                 <div className="mb-4 mt-6">
                   <label
                     htmlFor="name"
                     className="flex justify-start  mb-2 text-sm  text-gray-600 "
                   >
-                    Name
+                    Product Name
                   </label>
                   <div class="relative">
                     <input
@@ -198,7 +198,7 @@ export default function CardCreateLink() {
                     className="flex justify-start text-sm font-medium pt-2 text-gray-700 "
                   >
                    
-                   <b>gupta.ink/{name.replace(/ /g, '')}</b> 
+                   <b>link.mygupta.co/{name.replace(/\s+/g, '-').replace(/[^a-zA-Z0-9\-]/g, '')}</b> 
                   </label>
                 </div>
                 {/* <CountryDropdown  id="UNIQUE_ID" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" preferredCountries={['gb', 'us']}  value="" handleChange={e => console.log(e.target.value)}></CountryDropdown>    */}

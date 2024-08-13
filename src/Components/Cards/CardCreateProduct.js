@@ -160,6 +160,7 @@ export default function CardCreateProduct() {
 
   const [img1, setImg1] = React.useState('No selected file');
   const [img12, setImg12] = React.useState('empty');
+  
   function uploadImg1(e) {
     let size = (e.target.files[0].size / 1048576.0)
     if (e.target.files && e.target.files[0]) {
@@ -225,7 +226,7 @@ export default function CardCreateProduct() {
 
   React.useEffect(() => {
     setLoader(true);
-    AdminApis.checkMarketLink({ 'link_name': checkLink.replace(/ /g, '-') }).then(
+    AdminApis.checkMarketLink({ 'link_name': checkLink.replace(/\s+/g, '-').replace(/[^a-zA-Z0-9\-]/g, '')}).then(
       (response) => {
         if (response?.data) {
           setLoader(false)
@@ -241,7 +242,7 @@ export default function CardCreateProduct() {
     (e) => {
       e.preventDefault();
       const formData = new FormData()
-      formData.append('link_name', checkLink.replace(/ /g, '-'))
+      formData.append('link_name', checkLink.replace(/\s+/g, '-').replace(/[^a-zA-Z0-9\-]/g, ''))
       formData.append('brand_primary_color', color?.hex)
       formData.append('brand_description', brandDescription)
       formData.append('facebook_url', facebookUrl)
@@ -285,7 +286,7 @@ export default function CardCreateProduct() {
       // console?.log(color.hex)
       e.preventDefault();
       const formData = new FormData()
-      formData.append('link_name', marketLinkData?.link_name)
+      formData.append('link_name', (marketLinkData?.link_name).replace(/\s+/g, '-').replace(/[^a-zA-Z0-9\-]/g, ''))
       formData.append('brand_primary_color', (color?.hex) ? color?.hex : marketLinkData?.brand_primary_color)
       formData.append('brand_description', brandDescription == '' ? marketLinkData?.brand_description : brandDescription)
       formData.append('facebook_url', facebookUrl == '' ? marketLinkData?.facebook_url : facebookUrl)
@@ -541,10 +542,7 @@ export default function CardCreateProduct() {
                     {productLink.map(
                       (data, index) => (
                         <option className="flex justify-between" value={`${data?.link_name} ${data?.id}`}>
-
-                           <span> {data?.link_name} </span> 
-
-                           
+                           <span>mygupta.co/store/ {data?.link_name} </span> 
                             </option>
                       )
                     )}
@@ -626,14 +624,14 @@ export default function CardCreateProduct() {
 
       <hr className="mb-5"/>
 
-      <div className=" max-w-200-px ">
+      <div className="flex flex-col ">
         <div className=" font-[600] underline mb-3">Market Links</div>
 
         {productLink?.length > 0 ?
           productLink.map(
             (data, index) => (
-              <span className="flex justify-between mb-4">
-                <span><span>({index + 1}) </span>  {data?.link_name}</span>
+              <span className="flex justify-start gap-5 mb-4">
+                <span><span>({index + 1}) </span>mygupta.co/store/{data?.link_name}</span>
 
                 <span className="flex space-x-2">
 
@@ -663,7 +661,7 @@ export default function CardCreateProduct() {
         <Modal
           visible={visible}
           width="380"
-          height={userData?.sub_type == 'premium' ? '700' : '300'}
+          height={userData?.sub_type == 'premium' ||userData?.sub_type =='popular' ? '700' : '300'}
           effect="fadeInUp"
           onClickAway={() => toggleModal}
         >
@@ -682,13 +680,13 @@ export default function CardCreateProduct() {
                     <input type="text" defaultValue={checkLink} onChange={(e) => setCheckLink(e?.target?.value)} id="first_name" class="bg-[#F4FBFF] border border-gray-300 text-gray-900 text-sm rounded-lg  p-2.5 w-4/5 " required placeholder="Business Link Name" />
                     {(checkLink?.length !== 0 && data == 0) ? <span className="pl-4 w-1/5 text-[30px]">👌</span> : (data != 1 ? '' : <span className="pl-4 w-1/5 text-[30px] "> 😭 </span>)}
                   </div>
-                  <span className="text-[10px]">{`https://www.mygupta.co/store/${checkLink.replace(/ /g, '-')}`} </span> <br />{(checkLink?.length !== 0 && data == 0) ? <span className=" w-1/5 text-[10px] text-green-500">Available</span> : (data != 1 ? '' : <span className=" w-1/5 text-[10px] text-red-500"> Link is taken </span>)}
+                  <span className="text-[10px]">{`https://www.mygupta.co/store/${checkLink.replace(/\s+/g, '-').replace(/[^a-zA-Z0-9\-]/g, '')}`} </span> <br />{(checkLink?.length !== 0 && data == 0) ? <span className=" w-1/5 text-[10px] text-green-500">Available</span> : (data != 1 ? '' : <span className=" w-1/5 text-[10px] text-red-500"> Link is taken </span>)}
 
 
                 </div>
 
 
-                {userData?.sub_type == 'premium' ?
+                {userData?.sub_type == 'premium' || userData?.sub_type =='popular' ?
                   <div>
                     <div>
 
@@ -751,15 +749,6 @@ export default function CardCreateProduct() {
                   ''
                 }
 
-
-
-
-
-
-
-
-
-
                 <button
                   type="submit"
                   disabled={data == 0 ? false : true}
@@ -802,7 +791,7 @@ export default function CardCreateProduct() {
 
 
                 </div>
-                {userData?.sub_type == 'premium' ?
+                {userData?.sub_type == 'premium' || userData?.sub_type =='popular' ?
                   <div>
                     <div>
 
