@@ -19,10 +19,10 @@ function Footer() {
                         <NavLink to="/faq">
                         <h3 className='mb-2 text-[14px] font-medium text-[#999999]'>Overview</h3>
                         </NavLink>
-                        <NavLink to="/product">
+                        <NavLink to="#">
                         <h3 className='mb-2 text-[14px] font-medium text-[#999999]'>Features</h3>
                         </NavLink>
-                       <NavLink to="contact-us">
+                       <NavLink to="/pricing">
                        <h3 className='mb-2 text-[14px] font-medium text-[#999999]'>Pricing</h3>
                        </NavLink>
                     </div>
@@ -31,13 +31,13 @@ function Footer() {
                         <NavLink to="/faq">
                         <h3 className='mb-2 text-[14px] font-medium text-[#999999]'>FAQs</h3>
                         </NavLink>
-                        <NavLink to="/product">
+                        <NavLink to="#">
                         <h3 className='mb-2 text-[14px] font-medium text-[#999999]'>Blog</h3>
                         </NavLink>
-                        <NavLink to="/product">
+                        <NavLink to="/">
                         <h3 className='mb-2 text-[14px] font-medium text-[#999999]'>About Us</h3>
                         </NavLink>
-                       <NavLink to="contact-us">
+                       <NavLink to="#">
                        <h3 className='mb-2 text-[14px] font-medium text-[#999999]'>Contact Us</h3>
                        </NavLink>
                         {/* <NavLink to="/">
