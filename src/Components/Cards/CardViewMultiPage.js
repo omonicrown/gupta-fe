@@ -164,7 +164,7 @@ export default function CardTiredLinks() {
                 <div
                   className="flex mb-2 justify-center border border-[#0071BC] px-2 w-30 py-1.5 cursor-pointer text-[#0071BC] hover:border-blue-800  rounded-lg  "
                 >
-                  <a className="flex justify-between" href={`http://${businessSite}`} target="_blank">
+                  <a className="flex justify-between" href={`https://${businessSite}`} target="_blank">
                     <span className="pl-3">Visit</span>
                     <span className="px-3  pt-1"><SvgElement type={icontypesEnum.EXPLORE} /> </span>
                   </a>
