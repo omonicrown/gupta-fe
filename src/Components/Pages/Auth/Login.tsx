@@ -71,7 +71,7 @@ function Login() {
   return (
     <>
       <Navbar />
-      <div className="pb-32 md:mt-32 sm:px-10">
+      <div className="pb-32 mt-32 sm:px-10">
         <div className="container flex flex-row justify-center bg-[#fff] mx-auto items-center rounded-lg p-6">
 
           <div className="border py-6 rounded-lg px-6">

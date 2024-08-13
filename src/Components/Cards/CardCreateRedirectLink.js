@@ -72,7 +72,7 @@ export default function CardCreateRedirectLink() {
 
   React.useEffect(() => {
    
-    AdminApis.searchName({'name':name}).then(
+    AdminApis.searchName({'name':name.replace(/\s+/g, '-').replace(/[^a-zA-Z0-9\-]/g, '')}).then(
       (response) => {
         if (response?.data) {
           setNameExist(response?.data?.data)
@@ -99,7 +99,7 @@ export default function CardCreateRedirectLink() {
     (e) => {
       e.preventDefault();
       const formData = new FormData()
-      formData.append('name', name.replace(/ /g, ''))
+      formData.append('name', name.replace(/\s+/g, '-').replace(/[^a-zA-Z0-9\-]/g, ''))
       formData.append('url', url?.replace(/[\n\r]+/g, "."))
       AdminApis.createRedirectLink(formData).then(
         (response) => {
@@ -132,21 +132,19 @@ export default function CardCreateRedirectLink() {
   return (
     <>
 
-      <div className="pb-32 sm:px-5">
+      <div className="pb-32 sm:px-5 mt-20">
         <div className="container flex flex-row justify-center bg-[#fff] mx-auto items-center rounded-lg p-1 ">
 
           <div className=" ">
           
             <div className="rounded-lg px-6 pb-4 pt-6 border border-[#D9D9D9] shadow-md mt-6">
             
-              <span className="font-bold text-[20px]">Create a Redirect &nbsp;&nbsp; mygupta.co</span>
+              <span className="font-bold text-[20px] pl-4">Create a Redirect URL</span>
               
                 {/* <CountryDropdown  id="UNIQUE_ID" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" preferredCountries={['gb', 'us']}  value="" handleChange={e => console.log(e.target.value)}></CountryDropdown>    */}
 
 
                 <form onSubmit={handleSubmit2} className="pt-[20px] pb-2 rounded-[10px] p-5  ">
-                <div className='text-lg pb-5 text-bold'>Generate Short Link</div>
-
                 <div className="mb-4 mt-3">
                   <label
                     htmlFor="name"
@@ -176,7 +174,7 @@ export default function CardCreateRedirectLink() {
                     className="flex justify-start text-sm font-medium pt-2 text-gray-700 "
                   >
                    
-                   <b>link.mygupta.co/{name.replace(/ /g, '')}</b> 
+                   <b>link.mygupta.co/{name.replace(/\s+/g, '-').replace(/[^a-zA-Z0-9\-]/g, '')}</b> 
                   </label>
                 </div>
 
@@ -207,12 +205,10 @@ export default function CardCreateRedirectLink() {
                     style={{ backgroundColor: '#0071BC', borderRadius: '50px' }}
                     className=" text-white hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm w-full px-2 py-2.5 text-center "
                   >
-                    Generate my gupta.ink
+                    Generate url
                   </button>
                 </span>
-                <NavLink to='/register' className="flex justify-center">
-                  <p className="ml-2 mt-3 text-sm font-medium text-gray-400 ">Don't have an account? <a href="#" className="text-[#0071BC] hover:underline ">Create one</a></p>
-                </NavLink>
+               
               </form>
              
 

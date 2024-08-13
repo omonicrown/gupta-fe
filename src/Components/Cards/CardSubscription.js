@@ -17,8 +17,6 @@ import { AuthApis } from "../../apis/authApis";
 
 // components
 
-
-
 export default function CardSubscription() {
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams()
@@ -90,79 +88,41 @@ export default function CardSubscription() {
 
             </div>
           </div>
-          <div className="grid grid-cols-1 gap-2 lg:grid-cols-4 md:grid-cols-2 mt-10">
+          <div className="grid grid-cols-1 gap-2 lg:grid-cols-3 md:grid-cols-2 mt-10">
 
 
 
             {/* <div className="grid grid-cols-1 gap-2 lg:grid-cols-4 md:grid-cols-2 mt-10"> */}
 
+           
             <div>
-              <div className="border border-[#0071BC] rounded-[8px] p-4 bg-white pt-4 pb-8">
-                <h3 className="text-center text-[#56575B] uppercase text-[14px]">FREE</h3>
-                <h1 className="text-center mt-5 text-[34px] text-[#56575B]">₦ 0<sup className="text-[16px]">(First three weeks)</sup> </h1>
-                <div className="flex-col justify-center mt-5">
-                  {/* <h3 className="text-center text-[#56575B] text-[14px]">Free for 3 weeks</h3>
-    <h3 className="text-center text-[#56575B] text-[14px] ">10 links/month</h3>
-    <h3 className="text-center text-[#56575B] text-[14px]">1 Link-in-bio page</h3> */}
-                  <div className="mt-4">
-
-                    <button className=" w-full py-[14px] bg-[#EDF2FE] text-[#0071BC] text-[15px] rounded-[6px]">Get Started</button>
-
-                  </div>
-                  <div className="mt-4">
-                    <h3 className="text-[#56575B] text-[15px]">Includes:</h3>
-                    <div className=" flex space-x-3 mt-4">
-                      <SvgElement type={icontypesEnum.PLANS} />
-                      <h3 className="text-[13px] text-[#56575B]">5 Personalized Whatsapp Links</h3>
-                    </div>
-                    <div className="flex space-x-3 mt-2">
-                      <SvgElement type={icontypesEnum.PLANS} />
-                      <h3 className="text-[13px] text-[#56575B]">5 Personalized Redirect Links</h3></div>
-                    <div className="flex space-x-3 mt-2">
-                      <SvgElement type={icontypesEnum.PLANS} />
-                      <h3 className="text-[13px] text-[#56575B]">3 Multi Links</h3>
-                    </div>
-
-                    <div className="flex space-x-3 mt-2">
-                      <SvgElement type={icontypesEnum.PLANS} />
-                      <h3 className="text-[13px] text-[#56575B]">1 Market Links(Shop)</h3>
-                    </div>
-
-                    <div className="flex space-x-3 mt-2">
-                      <SvgElement type={icontypesEnum.PLANS} />
-                      <h3 className="text-[13px] text-[#56575B]">10 Product Listing</h3>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div>
-              <div className="uppercase text-center bg-[#0071BC] py-2 rounded-t-[8px] text-white ">Most popular</div>
+            
+              {/* <div className="uppercase text-center bg-[#0071BC] py-2 rounded-t-[8px] text-white ">Most popular</div> */}
               <div className="border-2 border-[#0071BC] rounded-b-[8px] p-4 bg-white pt-4 pb-8">
+              {/* <h3 className="text-center text-[#56575B] uppercase text-[14px]">POPULAR</h3> */}
                 <h3 className="text-center text-[#56575B] uppercase text-[14px]">Basic</h3>
-                <h1 className="text-center mt-5 text-[20px] text-[#56575B] font-bold"> {(new Intl.NumberFormat('en-US', { style: 'currency', currency: 'NGN' }).format((3500 * subValue) - (subValue == 1 ? 0 : ((3500 * subValue) * 0.05))))}<span className="text-[16px]">/ {subValue} Month(s)</span> </h1>
+                <h1 className="text-center mt-5 text-[20px] text-[#56575B] font-bold"> {(new Intl.NumberFormat('en-US', { style: 'currency', currency: 'NGN' }).format((1500 * subValue) - (subValue == 1 ? 0 : ((1500 * subValue) * 0.05))))}<span className="text-[16px]">/ {subValue} Month(s)</span> </h1>
                 {subValue !== 1 ? <span className="flex justify-center text-[12px] text-[#56575B] font-bold italic">Save up to 5% 0ff</span> : ''}
                 <div className="flex-col justify-center mt-5">
                   {/* <h3 className="text-center text-[#56575B] text-[14px]">2 QR Codes/month</h3>
                     <h3 className="text-center text-[#56575B] text-[14px] ">10 links/month</h3>
                     <h3 className="text-center text-[#56575B] text-[14px]">1 Link-in-bio page</h3> */}
                   <div className="mt-4">
-                    <div onClick={(e) => handleSubmit(e, (3500 * subValue) - (subValue == 1 ? 0 : ((3500 * subValue) * 0.05)))}>
-                      <button className=" w-full py-[14px] bg-[#0071BC] text-[#ffffff] text-[15px] rounded-[6px]">Get Started</button>
+                    <div onClick={(e) => handleSubmit(e, (1500 * subValue) - (subValue == 1 ? 0 : ((1500 * subValue) * 0.05)))}>
+                      <button className=" w-full py-[14px] bg-[#EDF2FE] text-[#0071BC] text-[15px] rounded-[6px]">Get Started</button>
                     </div>
                   </div>
                   <div className="mt-4">
                     <div className=" flex space-x-3 mt-4">
                       <SvgElement type={icontypesEnum.PLANS} />
-                      <h3 className="text-[13px] text-[#56575B]">10 Personalized Whatsapp Links</h3>
+                      <h3 className="text-[13px] text-[#56575B]">25 Custom WhatsApp Links</h3>
                     </div>
                     <div className="flex space-x-3 mt-2">
                       <SvgElement type={icontypesEnum.PLANS} />
-                      <h3 className="text-[13px] text-[#56575B]">10 Personalized Redirect Links</h3></div>
+                      <h3 className="text-[13px] text-[#56575B]">25 Custom Redirect Links</h3></div>
                     <div className="flex space-x-3 mt-2">
                       <SvgElement type={icontypesEnum.PLANS} />
-                      <h3 className="text-[13px] text-[#56575B]">10 Multi Links</h3>
+                      <h3 className="text-[13px] text-[#56575B]">25 Multi Links</h3>
                     </div>
 
                     <div className="flex space-x-3 mt-2">
@@ -172,7 +132,7 @@ export default function CardSubscription() {
 
                     <div className="flex space-x-3 mt-2">
                       <SvgElement type={icontypesEnum.PLANS} />
-                      <h3 className="text-[13px] text-[#56575B]"> Online transaction charge (1.5%)</h3>
+                      <h3 className="text-[13px] text-[#56575B]"> Online transaction charge (0.5%)</h3>
                     </div>
 
                     <div className="flex space-x-3 mt-2">
@@ -192,7 +152,7 @@ export default function CardSubscription() {
 
                     <div className="flex space-x-3 mt-2">
                       <SvgElement type={icontypesEnum.PLANS} />
-                      <h3 className="text-[13px] text-[#56575B]">100 Product Listing</h3>
+                      <h3 className="text-[13px] text-[#56575B]">250 Product Listing</h3>
                     </div>
                     {/* <div className="flex space-x-3 mt-2">
                       <SvgElement type={icontypesEnum.PLANS} />
@@ -221,9 +181,9 @@ export default function CardSubscription() {
 
 
             <div>
-              <div className="border border-[#0071BC] rounded-[8px] p-4 bg-white pt-4 pb-8">
-                <h3 className="text-center text-[#56575B] uppercase text-[14px]">POPULAR</h3>
-                <h1 className="text-center mt-5 text-[20px] text-[#56575B] font-bold"> {(new Intl.NumberFormat('en-US', { style: 'currency', currency: 'NGN' }).format((7500 * subValue) - (subValue == 1 ? 0 : ((7500 * subValue) * 0.05))))}<span className="text-[16px]">/ {subValue} Month(s)</span> </h1>
+            <div className="uppercase text-center bg-[#0071BC] py-2 rounded-t-[8px] text-white ">Most popular</div>
+              <div className="border border-[#0071BC]  rounded-b-[8px] p-4 bg-white pt-4 pb-8">
+                <h1 className="text-center mt-5 text-[20px] text-[#56575B] font-bold"> {(new Intl.NumberFormat('en-US', { style: 'currency', currency: 'NGN' }).format((2500 * subValue) - (subValue == 1 ? 0 : ((2500 * subValue) * 0.05))))}<span className="text-[16px]">/ {subValue} Month(s)</span> </h1>
                 {subValue !== 1 ? <span className="flex justify-center text-[12px] text-[#56575B] font-bold italic">Save up to 5% 0ff</span> : ''}
                 <span className="flex justify-center text-center w-full py-[4px] font-bold  text-[#0071BC] text-[15px] rounded-[6px]"> Recommended
                       </span>
@@ -234,32 +194,32 @@ export default function CardSubscription() {
       <h3 className="text-center text-[#56575B] text-[14px] ">10 links/month</h3>
       <h3 className="text-center text-[#56575B] text-[14px]">1 Link-in-bio page</h3> */}
                   <div className="mt-4">
-                    <div onClick={(e) => handleSubmit(e, (7500 * subValue) - (subValue == 1 ? 0 : ((7500 * subValue) * 0.05)))}>
-                      <button className=" w-full py-[14px] bg-[#EDF2FE] text-[#0071BC] text-[15px] rounded-[6px]">Get Started
+                    <div onClick={(e) => handleSubmit(e, (2500 * subValue) - (subValue == 1 ? 0 : ((2500 * subValue) * 0.05)))}>
+                      <button className=" w-full py-[14px] bg-[#0071BC] text-[#ffffff] text-[15px] rounded-[6px]">Get Started
                       </button>
                     </div>
                   </div>
                   <div className="mt-4">
                     <div className=" flex space-x-3 mt-4">
                       <SvgElement type={icontypesEnum.PLANS} />
-                      <h3 className="text-[13px] text-[#56575B]">25 Personalized Whatsapp Links</h3>
+                      <h3 className="text-[13px] text-[#56575B]">100 Custom WhatsApp Links</h3>
                     </div>
                     <div className="flex space-x-3 mt-2">
                       <SvgElement type={icontypesEnum.PLANS} />
-                      <h3 className="text-[13px] text-[#56575B]">25 Personalized Redirect Links</h3></div>
+                      <h3 className="text-[13px] text-[#56575B]">100 Custom Redirect Links</h3></div>
                     <div className="flex space-x-3 mt-2">
                       <SvgElement type={icontypesEnum.PLANS} />
-                      <h3 className="text-[13px] text-[#56575B]">25 Multi Links</h3>
-                    </div>
-
-                    <div className="flex space-x-3 mt-2">
-                      <SvgElement type={icontypesEnum.PLANS} />
-                      <h3 className="text-[13px] text-[#56575B]">10 Market Links(Shops)</h3>
+                      <h3 className="text-[13px] text-[#56575B]">100 Multi Links</h3>
                     </div>
 
                     <div className="flex space-x-3 mt-2">
                       <SvgElement type={icontypesEnum.PLANS} />
-                      <h3 className="text-[13px] text-[#56575B]"> Online transaction charge (1.5%)</h3>
+                      <h3 className="text-[13px] text-[#56575B]">100 Market Links(Shops)</h3>
+                    </div>
+
+                    <div className="flex space-x-3 mt-2">
+                      <SvgElement type={icontypesEnum.PLANS} />
+                      <h3 className="text-[13px] text-[#56575B]"> Online transaction charge (0.5%)</h3>
                     </div>
 
                     <div className="flex space-x-3 mt-2">
@@ -319,7 +279,7 @@ export default function CardSubscription() {
 
             <div className="border border-[#0071BC] rounded-[8px] p-4 bg-white pt-4 pb-8">
               <h3 className="text-center text-[#56575B] uppercase text-[14px]">PREMIUM</h3>
-              <h1 className="text-center mt-5 text-[20px] text-[#56575B] font-bold"> {(new Intl.NumberFormat('en-US', { style: 'currency', currency: 'NGN' }).format((16500 * subValue) - (subValue == 1 ? 0 : ((16500 * subValue) * 0.05))))}<span className="text-[16px]">/{subValue} Month(s)</span> </h1>
+              <h1 className="text-center mt-5 text-[20px] text-[#56575B] font-bold"> {(new Intl.NumberFormat('en-US', { style: 'currency', currency: 'NGN' }).format((7000 * subValue) - (subValue == 1 ? 0 : ((7000 * subValue) * 0.05))))}<span className="text-[16px]">/{subValue} Month(s)</span> </h1>
 
               {subValue !== 1 ? <span className="flex justify-center text-[12px] text-[#56575B] font-bold italic">Save up to 5% 0ff</span> : ''}
               <div className="flex-col justify-center mt-5">
@@ -328,18 +288,18 @@ export default function CardSubscription() {
     <h3 className="text-center text-[#56575B] text-[14px] ">10 links/month</h3>
     <h3 className="text-center text-[#56575B] text-[14px]">1 Link-in-bio page</h3> */}
                 <div className="mt-4">
-                  <div onClick={(e) => handleSubmit(e, (16500 * subValue) - (subValue == 1 ? 0 : ((16500 * subValue) * 0.05)))}>
+                  <div onClick={(e) => handleSubmit(e, (7000 * subValue) - (subValue == 1 ? 0 : ((7000 * subValue) * 0.05)))}>
                     <button className=" w-full py-[14px] bg-[#EDF2FE] text-[#0071BC] text-[15px] rounded-[6px]">Get Started</button>
                   </div>
                 </div>
                 <div className="mt-4">
                     <div className=" flex space-x-3 mt-4">
                       <SvgElement type={icontypesEnum.PLANS} />
-                      <h3 className="text-[13px] text-[#56575B]">Unlimited Personalized Whatsapp Links</h3>
+                      <h3 className="text-[13px] text-[#56575B]">Unlimited Custom WhatsApp Links</h3>
                     </div>
                     <div className="flex space-x-3 mt-2">
                       <SvgElement type={icontypesEnum.PLANS} />
-                      <h3 className="text-[13px] text-[#56575B]">unlimited Personalized Redirect Links</h3></div>
+                      <h3 className="text-[13px] text-[#56575B]">unlimited Custom Redirect Links</h3></div>
                     <div className="flex space-x-3 mt-2">
                       <SvgElement type={icontypesEnum.PLANS} />
                       <h3 className="text-[13px] text-[#56575B]">Unlimited Multi Links</h3>
@@ -352,7 +312,7 @@ export default function CardSubscription() {
 
                     <div className="flex space-x-3 mt-2">
                       <SvgElement type={icontypesEnum.PLANS} />
-                      <h3 className="text-[13px] text-[#56575B]"> Online transaction charge (1.5%)</h3>
+                      <h3 className="text-[13px] text-[#56575B]"> Online transaction charge (0.5%)</h3>
                     </div>
 
                     <div className="flex space-x-3 mt-2">
