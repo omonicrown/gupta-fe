@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 import { useParams } from 'react-router-dom';
 
 import { useSelector } from "react-redux";
+import { Oval } from "react-loader-spinner";
 
 function EmailVerify() {
 
@@ -58,6 +59,18 @@ function EmailVerify() {
 
   return (
     <>
+    <div className="flex justify-center mt-[50vh]">
+        <Oval
+          visible={true}
+          height="80"
+          width="80"
+          color="#0071BC"
+          secondaryColor="#FCBF94"
+          ariaLabel="oval-loading"
+          wrapperStyle={{}}
+          wrapperClass=""
+        />
+      </div>
     </>
   );
 }

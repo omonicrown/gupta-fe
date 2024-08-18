@@ -14,12 +14,14 @@ import { useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Navbar from "../../Navbars/Navbar";
+import { Oval } from "react-loader-spinner";
 
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [show, setShow] = useState(false);
+  const [loader, setLoader] = useState(false);
 
   const navigate = useNavigate();
 
@@ -32,6 +34,7 @@ function Login() {
   const handleSubmit = React.useCallback(
     (e: React.ChangeEvent<HTMLFormElement>) => {
       e.preventDefault();
+      setLoader(true);
       const formData = new FormData()
 
       formData.append('email', email)
@@ -39,31 +42,34 @@ function Login() {
 
       AuthApis.login(formData).then(
         (response: AxiosResponse<any>) => {
-            if (response?.data?.status === true) {
-              dispatch(login({ email: email, token: response.data.token, name: response.data.name, data: response.data?.data }))
-                // navigate('/mylinks');
-               
-                {response.data?.data?.role == 'admin'
-                  ? navigate('/admin-dashboard')
-                  :
-                  navigate('/mylinks')}
-                
+          if (response?.data?.status === true) {
+            dispatch(login({ email: email, token: response.data.token, name: response.data.name, data: response.data?.data }))
+            // navigate('/mylinks');
+            setLoader(false);
 
-              
-              // window.location.reload();
-            }else{
-              console?.log(response?.data)
-              toast.error(response?.data?.message);
+            {
+              response.data?.data?.role == 'admin'
+              ? navigate('/admin-dashboard')
+              :
+              navigate('/mylinks')
             }
-         
+
+
+
+            // window.location.reload();
+          } else {
+            setLoader(false);
+            toast.error(response?.data?.message);
+          }
+
         }
       ).catch(function (error) {
         // handle error
-        console.log(error.response.data);
+        setLoader(false);
         toast.error("Offfline");
       });
     },
-    [email, password]
+    [email, password,loader]
   );
 
 
@@ -148,10 +154,23 @@ function Login() {
 
                   <button
                     type="submit"
+                    disabled={loader}
                     style={{ backgroundColor: '#0071BC', borderRadius: '50px' }}
                     className=" text-white hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm w-96 px-5 py-2.5 text-center "
                   >
-                    Log In
+                    <div className="flex justify-center gap-3 ">
+                      <span>Login</span>
+                      <Oval
+                        visible={loader}
+                        height="20"
+                        width="20"
+                        color="#0071BC"
+                        secondaryColor="#FCBF94"
+                        ariaLabel="oval-loading"
+                        wrapperStyle={{}}
+                        wrapperClass=""
+                      />
+                    </div>
                   </button>
                 </span>
                 <NavLink to='/register' className="flex justify-center">
