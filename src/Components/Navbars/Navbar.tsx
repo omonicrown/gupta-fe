@@ -41,7 +41,7 @@ function Navbar() {
           </div>
           <div className="flex md:order-2">
             <div className="hidden lg:flex flex-col justify-center font-medium md:flex-row lg:space-x-3 mr-[300px]">
-            {/* <NavLink to='/'>
+              {/* <NavLink to='/'>
                   <div
                     className="hover:bg-gray-100 font-medium rounded-lg text-[16px] pl-8 pr-8 mt-3 p-2 text-center mr-1 md:mr-1 "
                     
@@ -49,45 +49,45 @@ function Navbar() {
                    About Us
                   </div>
                 </NavLink> */}
-                 <NavLink to='/'>
-                  <div
-                    className=" hover:bg-gray-100 font-medium rounded-lg text-[16px] pl-8 pr-8 mt-3 p-2 text-center mr-1 md:mr-1 "
-                  >
-                   Home
-                  </div>
-                </NavLink>
+              <NavLink to='/'>
+                <div
+                  className=" hover:bg-gray-100 font-medium rounded-lg text-[16px] pl-8 pr-8 mt-3 p-2 text-center mr-1 md:mr-1 "
+                >
+                  Home
+                </div>
+              </NavLink>
 
 
-            <NavLink to='/pricing'>
-                  <div
-                    className=" hover:bg-gray-100 font-medium rounded-lg text-[16px] pl-8 pr-8 mt-3 p-2 text-center mr-1 md:mr-1 "
-                  >
-                   Pricing
-                  </div>
-                </NavLink>
-            <NavLink to='/faq'>
-                  <div
-                    className=" hover:bg-gray-100 font-medium rounded-lg text-[16px] pl-8 pr-8 mt-3 p-2 text-center mr-1 md:mr-1 "
-                  >
-                   FAQ
-                  </div>
-                </NavLink>
+              <NavLink to='/pricing'>
+                <div
+                  className=" hover:bg-gray-100 font-medium rounded-lg text-[16px] pl-8 pr-8 mt-3 p-2 text-center mr-1 md:mr-1 "
+                >
+                  Pricing
+                </div>
+              </NavLink>
+              <NavLink to='/faq'>
+                <div
+                  className=" hover:bg-gray-100 font-medium rounded-lg text-[16px] pl-8 pr-8 mt-3 p-2 text-center mr-1 md:mr-1 "
+                >
+                  FAQ
+                </div>
+              </NavLink>
             </div>
-          
-              <span className="hidden md:flex justify-center">
-              
-                <NavLink to='/login'>
-                  <div
-                    className=" hover:bg-gray-100 focus:outline-none focus:ring-4  focus:ring-gray-200 font-medium rounded-lg text-sm px-1 mt-3 p-2 text-center mr-1 md:mr-1 "
-                  >
-                    Log in
-                  </div>
-                </NavLink>
 
-                <NavLink to="/Register">
-                  <div
-                    className="text-white focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-3 md:mr-3 "
-                  >
+            <span className="hidden md:flex justify-center">
+
+              <NavLink to='/login'>
+                <div
+                  className=" hover:bg-gray-100 focus:outline-none focus:ring-4  focus:ring-gray-200 font-medium rounded-lg text-sm px-1 mt-3 p-2 text-center mr-1 md:mr-1 "
+                >
+                  Log in
+                </div>
+              </NavLink>
+
+              <NavLink to="/Register">
+                <div
+                  className="text-white focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-3 md:mr-3 "
+                >
                   <button
                     type="submit"
                     style={{ backgroundColor: '#0071BC', borderRadius: '50px' }}
@@ -95,53 +95,72 @@ function Navbar() {
                   >
                     Sign up
                   </button>
-                  </div></NavLink>
-              </span>
+                </div></NavLink>
+            </span>
 
-            <button
-              onClick={() => setIsOpen(!isOpen)}
-              data-collapse-toggle="navbar-sticky"
-              type="button"
-              className="inline-flex items-center p-2 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 "
-              aria-controls="navbar-sticky"
-              aria-expanded="false"
-            >
-              <span className="sr-only">Open main menu</span>
-              {!isOpen ? (
-                <svg
-                  className="w-6 h-6"
-                  aria-hidden="true"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                  xmlns="http://www.w3.org/2000/svg"
+
+            <span className="flex justify-end">
+              <NavLink to="/Register" className={' md:hidden'}>
+                <div
+                  className="text-white focus:outline-none focus:ring-blue-300 font-medium rounded-sm text-sm  py-1.5 text-center mr-1"
                 >
-                  <path
-                    fill-rule="evenodd"
-                    d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
-                    clip-rule="evenodd"
-                  ></path>
-                </svg>
-              ) : (
-                <svg
-                  className="block h-6 w-6"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  aria-hidden="true"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M6 18L18 6M6 6l12 12"
-                  />
-                </svg>
-              )}
-            </button>
+                  <button
+                    type="submit"
+                    style={{ backgroundColor: '#0071BC', borderRadius: '10px' }}
+                    className=" text-white hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-sm text-sm  px-2 py-1.5 text-center "
+                  >
+                    Sign up
+                  </button>
+                </div></NavLink>
+
+              <button
+                onClick={() => setIsOpen(!isOpen)}
+                data-collapse-toggle="navbar-sticky"
+                type="button"
+                className="inline-flex items-center p-2 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 "
+                aria-controls="navbar-sticky"
+                aria-expanded="false"
+              >
+                <span className="sr-only">Open main menu</span>
+                {!isOpen ? (
+                  <svg
+                    className="w-6 h-6"
+                    aria-hidden="true"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
+                      clip-rule="evenodd"
+                    ></path>
+                  </svg>
+                ) : (
+                  <svg
+                    className="block h-6 w-6"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    aria-hidden="true"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M6 18L18 6M6 6l12 12"
+                    />
+                  </svg>
+                )}
+              </button>
+            </span>
+
+
+
           </div>
 
- 
+
         </div>
 
 
@@ -157,27 +176,27 @@ function Navbar() {
           {(ref) => (
             <div className="md:hidden bg-white w-full pl-6 pr-4 mt-3" id="mobile-menu">
               <div ref={ref} className=" pt-10 pb-3 space-y-1 ">
-              <NavLink
+                <NavLink
                   to="/"
                   className="block text-[#616161] py-3 font-bold hover:bg-gray-100"
                 >
                   Home
                 </NavLink>
-                <hr className="pb-3"/>
+                <hr className="pb-3" />
                 <NavLink
                   to="/pricing"
                   className="block text-[#616161] py-3 font-bold hover:bg-gray-100"
                 >
                   Pricing
                 </NavLink>
-                <hr className="pb-3"/>
+                <hr className="pb-3" />
                 <NavLink
                   to="/faq"
                   className="block text-[#616161] py-3 font-bold hover:bg-gray-100"
                 >
                   FAQ
                 </NavLink>
-                <hr className="pb-3"/>
+                <hr className="pb-3" />
                 <NavLink
                   to="/login"
                   className="block text-[#616161] py-3 font-bold hover:bg-gray-100"
@@ -192,11 +211,11 @@ function Navbar() {
                   Register
                 </NavLink>
 
-               
+
               </div>
             </div>
 
-            
+
           )}
         </Transition>
 

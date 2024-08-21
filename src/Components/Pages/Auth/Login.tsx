@@ -82,7 +82,7 @@ function Login() {
 
           <div className="border py-6 rounded-lg px-6">
             <div className=" ">
-              <h1 className=" my-4 text-xl font-semibold text-gray-600">Log in</h1>
+              <h1 className=" my-4 text-xl font-semibold text-gray-600 text-center">Welcome Back!</h1>
 
             </div>
 
