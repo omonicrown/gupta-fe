@@ -174,6 +174,8 @@ export default function CardEditProduct() {
           setPrice(response?.data?.data?.product?.product_price)
           setNoOfItems(response?.data?.data?.product?.no_of_items)
           setAddLink(response?.data?.data?.product?.link_name)
+          setCategory(response?.data?.data?.product?.category)
+          setLocation(response?.data?.data?.product?.location)
           setPhoneNumber(response?.data?.data?.product?.phone_number)
           setPhoneNumber(response?.data?.data?.product?.phone_number)
           setImg12(response?.data?.data?.product?.product_image_1)
@@ -318,10 +320,11 @@ export default function CardEditProduct() {
                 <div>
                   <label for="first_name" class="block mb-2 mt-6 text-sm  text-gray-900 dark:text-gray-600">Category</label>
                   <select id="gender" defaultValue={category} onChange={e => setCategory(e.target.value)} name="programs_type" class="bg-[#F4FBFF] border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 cursor-pointer">
-                    <option selected value="">All Categories</option>
+                    <option selected value={category}>{category}</option>
                     <option value="women fashion">Women's Fashion</option>
                     <option value="men fashion">Men's Fashion</option>
                     <option value="bags">Bags</option>
+                    <option value="beauty&cosmetics">Beauty and cosmetics</option>
                     <option value="sport/outdoor">Sport/Outdoor</option>
                     <option value="home/kitchen">Home/Kitchen</option>
                     <option value="shoes">Shoes</option>
@@ -336,7 +339,7 @@ export default function CardEditProduct() {
                 <div>
                   <label for="first_name" class="block mb-2 mt-6 text-sm  text-gray-900 dark:text-gray-600">Location</label>
                   <select id="gender" defaultValue={location} onChange={e => setLocation(e.target.value)} name="programs_type" class="bg-[#F4FBFF] border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 cursor-pointer">
-                    <option value="" selected="selected">- Select State -</option>
+                    <option value={location} selected="selected">{location}</option>
                     <option value="Abuja FCT">Abuja FCT</option>
                     <option value="Abia">Abia</option>
                     <option value="Adamawa">Adamawa</option>

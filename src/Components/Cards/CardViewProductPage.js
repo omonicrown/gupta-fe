@@ -270,7 +270,7 @@ export default function CardViewProductPage() {
                           {/* <span className="text-[16px] font-[600] mt-1">{data?.product_name}</span> */}
                           <span className="flex gap-2">
                             {/* <span style={{ color: marketInfo?.brand_primary_color !== '' ? marketInfo?.brand_primary_color : '#0071BC', textDecorationLine: 'line-through' }} className={`text-[15px] font-[700]`}>{new Intl.NumberFormat('en-US', { style: 'currency', currency: 'NGN' }).format(data?.product_price)} </span> */}
-                            <span style={{ color: marketInfo?.brand_primary_color !== '' ? marketInfo?.brand_primary_color : '#0071BC' }} className={`text-[15px] font-[500]`}>{new Intl.NumberFormat('en-US', { style: 'currency', currency: 'NGN' }).format(data?.no_of_items)} </span>
+                            <span style={{ color: marketInfo?.brand_primary_color !== '' ? marketInfo?.brand_primary_color : '#0071BC' }} className={`text-[15px] font-[500]`}>{new Intl.NumberFormat('en-US', { style: 'currency', currency: 'NGN' }).format(data?.product_price)} </span>
 
                           </span>
                           {/* <span className="text-[#149E49] text-[14px] font-[600]"> {new Intl.NumberFormat('en-US', { style: 'currency', currency: 'NGN' }).format(data?.no_of_items)}</span> */}
@@ -438,9 +438,9 @@ export default function CardViewProductPage() {
 
 
                 <label
-                  className="flex justify-start  mb-2 pt-1 text-md font-bold text-black"
+                  className="flex justify-start mb-2 pt-1 text-md font-bold text-black"
                 >
-                  You are about to pay for <br />{value?.product_name}
+                  You are about to pay for {value?.product_name}
                 </label>
                 {/* <label
                   style={{ fontSize: '14px' }}

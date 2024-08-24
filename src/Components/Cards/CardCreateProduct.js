@@ -462,7 +462,7 @@ export default function CardCreateProduct() {
                     <option selected value="all">All Categories</option>
                     <option value="women fashion">Women's Fashion</option>
                     <option value="men fashion">Men's Fashion</option>
-                    <option value="beauty&cusmetics">beauty and cusmetics</option>
+                    <option value="beauty&cosmetics">Beauty and cosmetics</option>
                     <option value="bags">Bags</option>
                     <option value="sport/outdoor">Sport/Outdoor</option>
                     <option value="home/kitchen">Home/Kitchen</option>
