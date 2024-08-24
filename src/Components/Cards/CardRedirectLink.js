@@ -195,8 +195,8 @@ export default function CardRedirectLink() {
 
                               </span>
                               <NavLink to={`/link-details/${data?.id}`} className={'cursor-pointer'}>
-                                <span className="flex justify-between gap-2 m-2 ">
-                                  <p class="mb-2 tracking-tight text-gray-900 font-medium" style={{ fontSize: '16px' }}>{(data?.link_info?.phone_number)?.replace(/ /g, '')}  </p>
+                                <span className="flex justify-end gap-2 m-2 ">
+                                  {/* <p class="mb-2 tracking-tight text-gray-900 font-medium" style={{ fontSize: '16px' }}>{(data?.link_info?.phone_number)?.replace(/ /g, '')}  </p> */}
                                   {/* <p class=" text-xs tracking-tight font-bold text-gray-900" style={{ fontSize: '16px' }}> .</p> */}
                                   <p class="tracking-tight font-bold " style={{ color: '#149E49', fontSize: '16px', paddingTop: '1px' }}> {data?.short_url?.visits?.filter(visit => visit?.operating_system !== '0').length ? data?.short_url?.visits?.filter(visit => visit?.operating_system !== '0').length : '0'} click(s)</p>
                                 </span>
