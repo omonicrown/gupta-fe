@@ -141,6 +141,12 @@ export default function CardMyLinks() {
     }, [inputEl, searchTerm, searchResult, data]);
 
 
+  const truncateText = (str) => {
+    if (str.length > 14) {
+      return str.substring(0, 14) + '...';
+    }
+    return str;
+  };
 
 
 
@@ -154,40 +160,60 @@ export default function CardMyLinks() {
             <span className=" bg-blue-100  rounded-lg  text-gray-500 text-[12px]"><span className="mr-4 text-red-500 bg-red-200 p-1 px-3 rounded-full text-[15px]">!</span> Build a simple webpage with multiple WhatsApp links. Customize it with your logo and social media to boost customer engagement.</span>
           </div>
           <div className="flex flex-wrap items-center">
-            <div className="w-full px-4 max-w-full flex-grow flex-1">
+            <div className="w-full max-w-full flex-grow flex-1">
+              <div className=" ">
+                {data?.multi_link?.length ?
+                  <span className="flex justify-between" >
+                    {/* <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-gray-300">Search</label> */}
+                    <div class="relative invisible md:visible">
+                      <input ref={inputEl} onChange={getSearchTerm} type="text" style={{ borderColor: '#0071BC' }} id="default-search" class="block p-4 pl-4 w-full h-4 text-sm text-gray-900 bg-gray-50 rounded-lg border focus:ring-green-500 focus:border-green-500 " placeholder="Search " />
+                      <svg aria-hidden="true" class="w-5 h-5 right-2.5 bottom-3 absolute text-gray-500 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                    </div>
 
-              {data?.multi_link?.length ?
-                <span className="flex justify-between" >
-                  {/* <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-gray-300">Search</label> */}
-                  <div class="relative invisible md:visible">
-                    <input ref={inputEl} onChange={getSearchTerm} type="text" style={{ borderColor: '#0071BC' }} id="default-search" class="block p-4 pl-4 w-full h-4 text-sm text-gray-900 bg-gray-50 rounded-lg border focus:ring-green-500 focus:border-green-500 " placeholder="Search " />
-                    <svg aria-hidden="true" class="w-5 h-5 right-2.5 bottom-3 absolute text-gray-500 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
-                  </div>
+                    <NavLink to='/create-multi-link' className="flex justify-center">
+                      < span className="flex justify-center ">
+                        <button
+                          type="button"
+                          style={{ backgroundColor: '#0071BC', borderRadius: '10px' }}
+                          className=" text-white hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm w-40 px-5 py-2.5 text-center "
+                        >
+                          + Create New
+                        </button>
+                      </span>
+                    </NavLink>
+                  </span>
+                  :
+                  ''
+                }
+              </div>
 
-                  <NavLink to='/create-multi-link' className="flex justify-center">
-                    < span className="flex justify-center ">
-                      <button
-                        type="button"
-                        style={{ backgroundColor: '#0071BC', borderRadius: '50px' }}
-                        className=" text-white hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm w-40 px-5 py-2.5 text-center "
-                      >
-                        + Create New
-                      </button>
-                    </span>
-                  </NavLink>
-                </span>
-                :
-                ''
-              }
 
-              <div>
+              <div className="pt-5">
                 {!loader ? (
                   (data?.multi_link?.length >= 1) ?
-                    <div className="container flex-col md:flex-row md:justify-start mt-1 pt-1 grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-3">
+                    <div className="container flex-col md:flex-row md:justify-start mt-1 pt-1 grid lg:grid-cols-3 grid-cols-2  md:gap-1 gap-3">
                       {(inputEl?.current?.value?.length > 1 ? searchResult : data?.multi_link).map(
                         (data, index) => (
                           <div class="max-w-sm bg-white rounded-lg border border-gray-200 shadow-md">
-                            <span className="flex justify-between gap-3 rounded-t-lg border bg-[#0071BC] px-3 py-1" >
+
+                            <span className="flex justify-between lg:hidden md:gap-3 rounded-t-lg border-none bg-[#0071BC] px-1 py-1" >
+                              <p class="mb-2 font-medium tracking-tight text-white mt-2" style={{ fontSize: '12px' }}>{truncateText(`${data?.name}`)}</p>
+                              < span className="flex justify-center mt-2">
+                                <CopyToClipboard text={`${configs?.baseRedirectFront}${(data?.name)}`}
+                                  onCopy={() => isCopied()}>
+                                  <span
+                                    style={{ color: 'white', borderColor: '#0071BC' }}
+                                    className="ring-1 cursor-pointer outline-none font-xs rounded-lg text-[12px] px-1 h-4  text-center "
+                                  >
+                                    Copy&nbsp;link
+                                  </span>
+                                </CopyToClipboard>
+                              </span>
+                            </span>
+
+
+
+                            <span className="lg:flex hidden lg:justify-between md:gap-3 rounded-t-lg border-none bg-[#0071BC] px-3 py-1" >
                               <p class="mb-2 font-medium tracking-tight text-white" style={{ fontSize: '18px' }}>mygupta.co/{data?.name}</p>
                               < span className="flex justify-center mt-2">
                                 <CopyToClipboard text={`${configs?.baseRedirectFront}${(data?.name)}`}
@@ -201,6 +227,9 @@ export default function CardMyLinks() {
                                 </CopyToClipboard>
                               </span>
                             </span>
+
+
+
 
                             <NavLink to={`/update-multi-link/${data?.id}`}>
                               <p class="mb-2 tracking-tight m-2 p-2 bg-[#F4FBFF] flex justify-center cursor-pointer" style={{ fontSize: '16px', color: '#595959' }}><span className="py-10 text-xl" style={{ fontWeight: '600' }}>View Link Details</span>  </p>
@@ -503,7 +532,7 @@ export default function CardMyLinks() {
       </section>
 
       <ToastContainer
-         position="top-right"
+        position="top-right"
         autoClose={2000}
         hideProgressBar={true}
         newestOnTop={false}

@@ -216,7 +216,7 @@ export default function CardViewProductPage() {
           <span><img src={marketInfo?.brand_logo} style={{ height: '50px', width: '70px' }} /></span>
         }
 
-        {(loader  || data?.products?.data?.length<=0)?
+        {(loader || data?.products?.data?.length <= 0) ?
           ''
           :
           <span style={{ borderColor: marketInfo?.brand_primary_color }} className={` font-bold text-[20px] capitalize mt-2 border-[${marketInfo?.brand_primary_color}] rounded-lg pt-1 px-2 border-[1px]`}>
@@ -245,15 +245,15 @@ export default function CardViewProductPage() {
         </div>
       </div> */}
 
-      <div className=" mt-10 mb-4 md:px-16 ">
+      <div className=" mt-10 mb-4 md:px-8 ">
 
 
         {data?.products?.data?.length > 0
           ?
-          <div class="px-4 bg-white rounded-lg">
+          <div class=" bg-white rounded-lg">
 
 
-            <div className="  flex-col md:flex-row md:justify-start mt-1 pt-1 grid lg:grid-cols-3 md:grid-cols-2   gap-3">
+            <div className="  flex-col md:flex-row md:justify-start mt-1 pt-1 grid lg:grid-cols-4 grid-cols-2 gap-3">
               {data?.products?.data?.map(
                 (data, index) => (
 
@@ -266,45 +266,45 @@ export default function CardViewProductPage() {
                       <hr />
 
                       <div className="flex flex-col pt-[16px] px-[16px]">
-                        <div className="flex justify-start">
-                          <span className="text-[16px] font-[600] mt-1">{data?.product_name}</span>
-                        </div>
-                        <div className="flex justify-start mt-2">
+                      <div className="flex justify-start mt-2">
                           {/* <span className="text-[16px] font-[600] mt-1">{data?.product_name}</span> */}
                           <span className="flex gap-2">
-                            <span style={{ color: marketInfo?.brand_primary_color !== '' ? marketInfo?.brand_primary_color : '#0071BC', textDecorationLine: 'line-through' }} className={`text-[15px] font-[700]`}>{new Intl.NumberFormat('en-US', { style: 'currency', currency: 'NGN' }).format(data?.product_price)} </span>
-                            <span style={{ color: marketInfo?.brand_primary_color !== '' ? marketInfo?.brand_primary_color : '#0071BC' }} className={`text-[15px] font-[400]`}>{new Intl.NumberFormat('en-US', { style: 'currency', currency: 'NGN' }).format(data?.no_of_items)} </span>
+                            {/* <span style={{ color: marketInfo?.brand_primary_color !== '' ? marketInfo?.brand_primary_color : '#0071BC', textDecorationLine: 'line-through' }} className={`text-[15px] font-[700]`}>{new Intl.NumberFormat('en-US', { style: 'currency', currency: 'NGN' }).format(data?.product_price)} </span> */}
+                            <span style={{ color: marketInfo?.brand_primary_color !== '' ? marketInfo?.brand_primary_color : '#0071BC' }} className={`text-[15px] font-[500]`}>{new Intl.NumberFormat('en-US', { style: 'currency', currency: 'NGN' }).format(data?.no_of_items)} </span>
 
                           </span>
                           {/* <span className="text-[#149E49] text-[14px] font-[600]"> {new Intl.NumberFormat('en-US', { style: 'currency', currency: 'NGN' }).format(data?.no_of_items)}</span> */}
 
                         </div>
+                        <div className="flex justify-start">
+                          <span className="text-[16px] font-[600] mt-1">{data?.product_name}</span>
+                        </div>
+                       
 
 
 
                         <span className="text-[14px] font-[400] mt-3 text-[#808191] h-10 overflow-auto">{data?.product_description}</span>
 
-                        <div className="flex justify-between py-3">
-
+                        <div className="lg:flex lg:justify-between grid lg:grid-cols-2 grid-cols-2 gap-1 py-3">
                           <NavLink to={`/storedetails/${data?.id}`}
                             style={{ backgroundColor: marketInfo?.brand_primary_color }}
-                            className={"text-[10px] text-white py-1  flex cursor-pointer rounded-full px-2"}
+                            className={"text-[8px] text-white  py-1 flex justify-center cursor-pointer rounded-md lg:px-4 "}
                           >
-                            <FaEye className="mt-[2px] mr-1" />  View Product
+                            View&nbsp;Product
                           </NavLink>
 
                           <a target='_blank' href={`${configs?.baseRedirect}/${data?.phone_number}`}
                             style={{ backgroundColor: marketInfo?.brand_primary_color }}
-                            className={"text-[10px] text-white pt-1 pb-1  flex cursor-pointer bg-[" + (marketInfo?.brand_primary_color) + "] rounded-full px-2"}
+                            className={"text-[8px] text-white pt-1 pb-1  flex justify-center cursor-pointer bg-[" + (marketInfo?.brand_primary_color) + "] rounded-md lg:px-4"}
                           >
-                            <FaWhatsapp className="mt-[2px] mr-1" />  Contact Vendor
+                             Contact&nbsp;Vendor
                           </a>
 
                           <span onClick={() => togglePaymentModal(data)}
                             style={{ backgroundColor: marketInfo?.brand_primary_color }}
-                            className={"text-[10px] text-white pt-1 pb-1 flex cursor-pointer bg-[" + (marketInfo?.brand_primary_color) + "] rounded-full px-3"}
+                            className={"text-[8px] block text-white pt-1 pb-1  cursor-pointer bg-[" + (marketInfo?.brand_primary_color) + "] rounded-md px-1 lg:px-4"}
                           >
-                            Pay with gupta
+                            Pay&nbsp;with&nbsp;gupta
                           </span>
                         </div>
 
