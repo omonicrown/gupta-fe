@@ -34,7 +34,7 @@ export default function CardCreateProduct() {
   const [productName, setProductName] = useState('');
   const [productDescription, setProductDescription] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
-  const [noOfItems, setNoOfItems] = useState('');
+  const [noOfItems, setNoOfItems] = useState('0');
   const [category, setCategory] = useState('all');
   const [location, setLocation] = useState('');
   const [price, setPrice] = useState('');
@@ -529,8 +529,8 @@ export default function CardCreateProduct() {
                 </div>
 
                 <div>
-                  <label for="first_name" class="block mb-2 mt-6 text-sm  text-gray-900 dark:text-gray-600">Discounted Price</label>
-                  <input required type="number" defaultValue={title} onChange={(e) => setNoOfItems(e?.target?.value)} id="first_name" class="bg-[#F4FBFF] border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" placeholder="Discount Price" />
+                  <label for="first_name" class="block mb-2 mt-6 text-sm  text-gray-900 dark:text-gray-600">Discounted Price(Optional)</label>
+                  <input type="number" defaultValue={title} onChange={(e) => setNoOfItems(e?.target?.value)} id="first_name" class="bg-[#F4FBFF] border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" placeholder="Discount Price" />
                 </div>
 
               </div>
