@@ -20,7 +20,7 @@ export default function CardRenewSubscription() {
 
   return (
     <>
-      <div className="relative flex flex-col min-w-0 break-words bg-white w-full mb-6  rounded">
+    <div className="relative flex flex-col min-w-0 break-words bg-white w-full mb-6  rounded">
         <div className="rounded-t mb-0  py-3 border-0">
           <div className="flex flex-wrap items-center">
             <div className="w-full px-4 max-w-full p-52 flex-grow flex-1">

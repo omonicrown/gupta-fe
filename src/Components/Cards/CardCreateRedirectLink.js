@@ -72,7 +72,7 @@ export default function CardCreateRedirectLink() {
 
   React.useEffect(() => {
    
-    AdminApis.searchName({'name':name.replace(/\s+/g, '-').replace(/[^a-zA-Z0-9\-]/g, '')}).then(
+    AdminApis.searchName({'name':name.toLowerCase().replace(/\s+/g, '-').replace(/[^a-zA-Z0-9\-]/g, '')}).then(
       (response) => {
         if (response?.data) {
           setNameExist(response?.data?.data)
@@ -99,7 +99,7 @@ export default function CardCreateRedirectLink() {
     (e) => {
       e.preventDefault();
       const formData = new FormData()
-      formData.append('name', name.replace(/\s+/g, '-').replace(/[^a-zA-Z0-9\-]/g, ''))
+      formData.append('name', name.toLowerCase().replace(/\s+/g, '-').replace(/[^a-zA-Z0-9\-]/g, ''))
       formData.append('url', url?.replace(/[\n\r]+/g, "."))
       AdminApis.createRedirectLink(formData).then(
         (response) => {
@@ -158,7 +158,7 @@ export default function CardCreateRedirectLink() {
                       id="brand"
                       name="name"
                       className="flex w-full justify-center shadow-sm bg-[#F4FBFF]  text-gray-900 text-sm rounded-lg p-2.5 "
-                      placeholder="Name"
+                      placeholder="Eg. mark-survey-form"
                       defaultValue={name}
                       onChange={(e) => setName(e?.target?.value)}
                       required={true}
@@ -174,7 +174,7 @@ export default function CardCreateRedirectLink() {
                     className="flex justify-start text-sm font-medium pt-2 text-gray-700 "
                   >
                    
-                   <b>link.mygupta.co/{name.replace(/\s+/g, '-').replace(/[^a-zA-Z0-9\-]/g, '')}</b> 
+                   <b>link.mygupta.co/{name.toLowerCase().replace(/\s+/g, '-').replace(/[^a-zA-Z0-9\-]/g, '')}</b> 
                   </label>
                 </div>
 

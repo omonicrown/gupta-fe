@@ -72,7 +72,7 @@ export default function CardMyLinks() {
       e.preventDefault();
       console?.log(message)
       data = {
-        'message':  message?.replace(/[\n\r]+/g, "."),
+        'message': message?.replace(/[\n\r]+/g, "."),
         'id': value?.id,
         'name': value?.name,
         'phone_number': value?.link_info?.phone_number
@@ -144,14 +144,15 @@ export default function CardMyLinks() {
     <>
       <div className="relative flex flex-col min-w-0 break-words bg-white w-full mb-6  rounded">
         <div className="rounded-t mb-0  md:py-1 p-1 border-0">
-        <div className="bg-blue-100  rounded-lg ml-3 m-1 p-2 mb-3">
+          <div className="bg-blue-100  rounded-lg m-1 p-2 mb-3">
             <span className=" bg-blue-100  rounded-lg  text-gray-500 text-[12px]"><span className="mr-4 text-red-500 bg-red-200 p-1 px-3 rounded-full text-[15px]">!</span> Easily create custom WhatsApp links with built-in analytics. Download QR codes to boost customers engagement and make connections effortless.</span>
           </div>
           <div className="flex flex-wrap items-center">
-            <div className="w-full px-4 max-w-full flex-grow flex-1">
+            <div className="w-full  max-w-full flex-grow flex-1">
 
+              <div className="px-4">
               {data?.link?.length ?
-                <span className="flex justify-between" >
+                <span className="flex justify-between " >
                   {/* <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-gray-300">Search</label> */}
                   <div class="relative invisible md:visible">
                     <input ref={inputEl} onChange={getSearchTerm} type="text" id="default-search" class="block p-2.5 pl-4 w-full text-sm text-gray-900 bg-[#F4FBFF] rounded-lg border border-[#D9D9D9] " placeholder="Search Link" />
@@ -172,6 +173,9 @@ export default function CardMyLinks() {
                 :
                 ''
               }
+              </div>
+
+              
 
 
 
@@ -183,8 +187,8 @@ export default function CardMyLinks() {
                         (data, index) => (
 
                           <>
-                            <div class="max-w-sm bg-white rounded-lg border border-gray-200 shadow-md">
-                              <span className="flex justify-between gap-3 rounded-t-lg border-none bg-[#0071BC] px-3 py-1" >
+                            <div class="max-w-sm md:mx-0 mx-2  bg-white rounded-lg border border-gray-200 shadow-md">
+                              <span className="flex justify-between md:gap-3 rounded-t-lg border-none bg-[#0071BC] px-3 py-1" >
                                 <p class="mb-2 font-medium tracking-tight text-white" style={{ fontSize: '18px' }}>link.mygupta.co/{data?.name} </p>
                                 <div>
                                   <CopyToClipboard text={`${configs?.baseRedirect}/${(data?.name)}`}
@@ -242,17 +246,22 @@ export default function CardMyLinks() {
 
                                 < span className="flex justify-end gap-1 ">
 
-                                  
 
-                                  <button
-                                    type="button"
-                                    style={{}}
-                                    onClick={(e) => toggleModal(data)}
-                                    className=" outline-none  font-xs rounded-full text-xs px-2  text-center "
-                                  >
-                                    {/* <FaEdit /> */}
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="#0071bc" d="M6.414 15.89L16.556 5.748l-1.414-1.414L5 14.476v1.414h1.414Zm.829 2H3v-4.243L14.435 2.212a1 1 0 0 1 1.414 0l2.829 2.829a1 1 0 0 1 0 1.414L7.243 17.89ZM3 19.89h18v2H3v-2Z" /></svg>
-                                  </button>
+
+                                  {data?.type === 'catalog' ?
+                                    ''
+                                    :
+                                    <button
+                                      type="button"
+                                      style={{}}
+                                      onClick={(e) => toggleModal(data)}
+                                      className=" outline-none  font-xs rounded-full text-xs px-2  text-center "
+                                    >
+                                      {/* <FaEdit /> */}
+                                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="#0071bc" d="M6.414 15.89L16.556 5.748l-1.414-1.414L5 14.476v1.414h1.414Zm.829 2H3v-4.243L14.435 2.212a1 1 0 0 1 1.414 0l2.829 2.829a1 1 0 0 1 0 1.414L7.243 17.89ZM3 19.89h18v2H3v-2Z" /></svg>
+                                    </button>
+                                  }
+
 
 
                                   <button
@@ -499,7 +508,7 @@ export default function CardMyLinks() {
       </section>
 
       <ToastContainer
-         position="top-right"
+        position="top-right"
         autoClose={2000}
         hideProgressBar={true}
         newestOnTop={false}

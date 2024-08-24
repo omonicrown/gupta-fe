@@ -57,7 +57,7 @@ export default function CardTiredLinks() {
   }, []);
 
   React.useEffect(() => {
-    AdminApis.searchName({ 'name': name }).then(
+    AdminApis.searchName({ 'name': name.toLowerCase().replace(/\s+/g, '-').replace(/[^a-zA-Z0-9\-]/g, '') }).then(
       (response) => {
         if (response?.data) {
           setNameExist(response?.data?.data)
@@ -99,7 +99,7 @@ export default function CardTiredLinks() {
       e.preventDefault();
       setLoader(true);
       const formData = new FormData()
-      formData.append('name', name.replace(/\s+/g, '-').replace(/[^a-zA-Z0-9\-]/g, ''))
+      formData.append('name', name.toLowerCase().replace(/\s+/g, '-').replace(/[^a-zA-Z0-9\-]/g, ''))
       formData.append('title', title)
       formData.append('bio', bio)
       formData.append('attach_links', permissionList?.toString())
@@ -318,11 +318,11 @@ export default function CardTiredLinks() {
                             )}
                           </ImageUploading>
                         </span>
-                        <label for="first_name" class="block mb-2 text-sm  text-gray-900 dark:text-gray-600"></label>
-                        <input type="text" defaultValue={name} onChange={(e) => setName(e?.target?.value)} id="first_name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg mt-1 block w-full p-2.5" placeholder="business name" style={{ backgroundColor: '#F4FBFF' }} required />
+                        <label for="first_name" class="block mb-2 text-sm  text-gray-900 dark:text-gray-600">Brand name </label>
+                        <input type="text" defaultValue={name} onChange={(e) => setName(e?.target?.value)} id="first_name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg mt-1 block w-full p-2.5" placeholder="E.g mark-shoe-links" style={{ backgroundColor: '#F4FBFF' }} required />
                         
                         <div className="flex justify-between">
-                        <div className="text-xs my-2 ml-1"> mygupta.co/{name.replace(/\s+/g, '-').replace(/[^a-zA-Z0-9\-]/g, '')}</div>
+                        <div className="text-xs my-2 ml-1"> mygupta.co/{name.toLowerCase().replace(/\s+/g, '-').replace(/[^a-zA-Z0-9\-]/g, '')}</div>
                         {(name.length <= 0) ? '': (nameExist > 0 ? <span className="text-xs text-red-500 my-2">Name already exist</span> : <span className="text-xs text-[#0071BC] my-2">Name Available</span>)}
                         </div>
                         

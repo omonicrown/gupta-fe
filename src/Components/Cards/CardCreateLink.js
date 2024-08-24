@@ -66,7 +66,7 @@ export default function CardCreateLink() {
 
   React.useEffect(() => {
    
-    AdminApis.searchName({'name':name?.replace(/\s+/g, '-').replace(/[^a-zA-Z0-9\-]/g, '')}).then(
+    AdminApis.searchName({'name':name.toLowerCase()?.replace(/\s+/g, '-').replace(/[^a-zA-Z0-9\-]/g, '')}).then(
       (response) => {
         if (response?.data) {
           setNameExist(response?.data?.data)
@@ -95,7 +95,7 @@ export default function CardCreateLink() {
       const formData = new FormData()
 
       formData.append('phone_number', (phone?.countryCode + phone?.phoneNumber).replace(/ /g, ''))
-      formData.append('name', name.replace(/\s+/g, '-').replace(/[^a-zA-Z0-9\-]/g, ''))
+      formData.append('name', name.toLowerCase().replace(/\s+/g, '-').replace(/[^a-zA-Z0-9\-]/g, ''))
       formData.append('message', message?.replace(/[\n\r]+/g, "."))
       {
         type === 'message' ?
@@ -155,8 +155,6 @@ export default function CardCreateLink() {
     [phone, message, name, type,visible3,visible,visible2]
   );
 
-  console.log(name)
-
   // console.log((data?.url).slice(8))
   return (
     <>
@@ -174,7 +172,7 @@ export default function CardCreateLink() {
                     htmlFor="name"
                     className="flex justify-start  mb-2 text-sm  text-gray-600 "
                   >
-                    Product Name
+                    Brand name
                   </label>
                   <div class="relative">
                     <input
@@ -182,7 +180,7 @@ export default function CardCreateLink() {
                       id="brand"
                       name="name"
                       className="flex w-80 justify-center shadow-sm bg-[#F4FBFF]  text-gray-900 text-sm rounded-lg p-2.5 "
-                      placeholder="Name"
+                      placeholder="Eg. shoes-with-mark"
                       defaultValue={name}
                       onChange={(e) => setName(e?.target?.value)}
                       required={true}
@@ -198,7 +196,7 @@ export default function CardCreateLink() {
                     className="flex justify-start text-sm font-medium pt-2 text-gray-700 "
                   >
                    
-                   <b>link.mygupta.co/{name.replace(/\s+/g, '-').replace(/[^a-zA-Z0-9\-]/g, '')}</b> 
+                   <b>link.mygupta.co/{name.toLowerCase().replace(/\s+/g, '-').replace(/[^a-zA-Z0-9\-]/g, '')}</b> 
                   </label>
                 </div>
                 {/* <CountryDropdown  id="UNIQUE_ID" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" preferredCountries={['gb', 'us']}  value="" handleChange={e => console.log(e.target.value)}></CountryDropdown>    */}
@@ -254,7 +252,7 @@ export default function CardCreateLink() {
                     😊 Add emoji
                   </label>
 
-                  <textarea id="message" disabled={type !== 'message'?true : false} rows={3} className="block p-2.5 w-full text-sm text-gray-900 bg-[#F4FBFF] rounded-lg border border-gray-300 focus:ring-gray-500 focus:border-gray-500" placeholder="Add a pre-filled message that users will send to you." style={{ backgroundColor: '#F4FBFF' }} onChange={(e) => setMessage(e?.target?.value)} value={message}></textarea>
+                  <textarea id="message" disabled={type !== 'message'?true : false} rows={3} className="block p-2.5 w-full text-sm text-gray-900 bg-[#F4FBFF] rounded-lg border border-gray-300 focus:ring-gray-500 focus:border-gray-500" placeholder="Add a pre-filled message that users will send to you. Eg. Hello mark, i want to buy snickers." style={{ backgroundColor: '#F4FBFF' }} onChange={(e) => setMessage(e?.target?.value)} value={message}></textarea>
 
 
                 </div>

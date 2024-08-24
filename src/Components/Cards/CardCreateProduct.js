@@ -226,7 +226,7 @@ export default function CardCreateProduct() {
 
   React.useEffect(() => {
     setLoader(true);
-    AdminApis.checkMarketLink({ 'link_name': checkLink.replace(/\s+/g, '-').replace(/[^a-zA-Z0-9\-]/g, '')}).then(
+    AdminApis.checkMarketLink({ 'link_name': checkLink.toLowerCase().replace(/\s+/g, '-').replace(/[^a-zA-Z0-9\-]/g, '')}).then(
       (response) => {
         if (response?.data) {
           setLoader(false)
@@ -242,7 +242,7 @@ export default function CardCreateProduct() {
     (e) => {
       e.preventDefault();
       const formData = new FormData()
-      formData.append('link_name', checkLink.replace(/\s+/g, '-').replace(/[^a-zA-Z0-9\-]/g, ''))
+      formData.append('link_name', checkLink.toLowerCase().replace(/\s+/g, '-').replace(/[^a-zA-Z0-9\-]/g, ''))
       formData.append('brand_primary_color', color?.hex)
       formData.append('brand_description', brandDescription)
       formData.append('facebook_url', facebookUrl)
@@ -286,7 +286,7 @@ export default function CardCreateProduct() {
       // console?.log(color.hex)
       e.preventDefault();
       const formData = new FormData()
-      formData.append('link_name', (marketLinkData?.link_name).replace(/\s+/g, '-').replace(/[^a-zA-Z0-9\-]/g, ''))
+      formData.append('link_name', (marketLinkData?.link_name).toLowerCase().replace(/\s+/g, '-').replace(/[^a-zA-Z0-9\-]/g, ''))
       formData.append('brand_primary_color', (color?.hex) ? color?.hex : marketLinkData?.brand_primary_color)
       formData.append('brand_description', brandDescription == '' ? marketLinkData?.brand_description : brandDescription)
       formData.append('facebook_url', facebookUrl == '' ? marketLinkData?.facebook_url : facebookUrl)
@@ -681,7 +681,7 @@ export default function CardCreateProduct() {
                     <input type="text" defaultValue={checkLink} onChange={(e) => setCheckLink(e?.target?.value)} id="first_name" class="bg-[#F4FBFF] border border-gray-300 text-gray-900 text-sm rounded-lg  p-2.5 w-4/5 " required placeholder="E.g mark-stores" />
                     {(checkLink?.length !== 0 && data == 0) ? <span className="pl-4 w-1/5 text-[30px]">👌</span> : (data != 1 ? '' : <span className="pl-4 w-1/5 text-[30px] "> 😭 </span>)}
                   </div>
-                  <span className="text-[10px]">{`https://www.mygupta.co/store/${checkLink.replace(/\s+/g, '-').replace(/[^a-zA-Z0-9\-]/g, '')}`} </span> <br />{(checkLink?.length !== 0 && data == 0) ? <span className=" w-1/5 text-[10px] text-green-500">Available</span> : (data != 1 ? '' : <span className=" w-1/5 text-[10px] text-red-500"> Link is taken </span>)}
+                  <span className="text-[10px]">{`https://www.mygupta.co/store/${checkLink.toLowerCase().replace(/\s+/g, '-').replace(/[^a-zA-Z0-9\-]/g, '')}`} </span> <br />{(checkLink?.length !== 0 && data == 0) ? <span className=" w-1/5 text-[10px] text-green-500">Available</span> : (data != 1 ? '' : <span className=" w-1/5 text-[10px] text-red-500"> Link is taken </span>)}
 
 
                 </div>
