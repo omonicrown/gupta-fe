@@ -265,8 +265,8 @@ export default function CardViewProductPage() {
                       </NavLink>
                       <hr />
 
-                      <div className="flex flex-col pt-[16px] px-[16px]">
-                      <div className="flex justify-start mt-2">
+                      <div className="flex flex-col pt-[8px] px-[16px]">
+                      <div className="flex justify-start ">
                           {/* <span className="text-[16px] font-[600] mt-1">{data?.product_name}</span> */}
                           <span className="flex gap-2">
                             {/* <span style={{ color: marketInfo?.brand_primary_color !== '' ? marketInfo?.brand_primary_color : '#0071BC', textDecorationLine: 'line-through' }} className={`text-[15px] font-[700]`}>{new Intl.NumberFormat('en-US', { style: 'currency', currency: 'NGN' }).format(data?.product_price)} </span> */}
@@ -283,7 +283,7 @@ export default function CardViewProductPage() {
 
 
 
-                        <span className="text-[14px] font-[400] mt-3 text-[#808191] h-10 overflow-auto">{data?.product_description}</span>
+                        <span className="text-[10px] font-[400] mt-2 text-[#808191] h-10 overflow-auto">{data?.product_description}</span>
 
                         <div className="lg:flex lg:justify-between grid lg:grid-cols-2 grid-cols-2 gap-1 py-3">
                           <NavLink to={`/storedetails/${data?.id}`}
