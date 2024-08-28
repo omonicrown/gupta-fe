@@ -625,9 +625,8 @@ export default function CardCreateProduct() {
 
       <hr className="mb-5"/>
 
-      <div className="flex flex-col ">
+      <div className="flex flex-col mb-10">
         <div className=" font-[600] underline mb-3">Market Links</div>
-
         {productLink?.length > 0 ?
           productLink.map(
             (data, index) => (
