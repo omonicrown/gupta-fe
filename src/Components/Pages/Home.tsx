@@ -300,7 +300,7 @@ function Home() {
               <div className='bg-black text-white text-sm font-medium mr-2 mt-1 px-3 py-1.5 rounded'>2</div>
               <div>
                 <h3 className='font-semibold text-[20px] leading-[25px]'>Customized Redirect Links</h3>
-                <p className='mt-3 text-[#6C757D] max-w-[280px]'>You can make short, custom URLs that redirect to a specific website. You can see how many times each link is clicked and create QR codes for them, making it even easier to use."</p>
+                <p className='mt-3 text-[#6C757D] max-w-[280px]'>You can make short, custom URLs that redirect to a specific website. You can see how many times each link is clicked and create QR codes for them, making it even easier to use.</p>
               </div>
             </div>
             <div className='flex-1 flex space-x-2 justify-center items-start md:mt-0 mt-5'>

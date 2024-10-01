@@ -72,6 +72,13 @@ function Navbar() {
                   FAQ
                 </div>
               </NavLink>
+              <NavLink to='/product-demo'>
+                <div
+                  className=" hover:bg-gray-100 font-medium rounded-lg text-[16px] pl-8 pr-8 mt-3 p-2 text-center mr-1 md:mr-1 "
+                >
+                  Product Demo
+                </div>
+              </NavLink>
             </div>
 
             <span className="hidden md:flex justify-center">

@@ -40,6 +40,7 @@ import WitdrawalRequest from './Components/admin/WitdrawalRequest';
 import UserDetails from './Components/admin/UserDetails';
 import FAQ from './Components/Pages/FAQ';
 import Pricing from './Components/Pages/Pricing';
+import ProductDemo from './Components/Pages/ProductDemo';
 
 
 function App() {
@@ -53,6 +54,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/faq" element={<FAQ />} />
         <Route path="/pricing" element={<Pricing />} />
+        <Route path="/product-demo" element={<ProductDemo/>} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/email-verify" element={<EmailVerify />} />
