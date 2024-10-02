@@ -203,6 +203,16 @@ function Navbar() {
                 >
                   FAQ
                 </NavLink>
+
+                <hr className="pb-3" />
+                <NavLink
+                  to='/product-demo'
+                  className="block text-[#616161] py-3 font-bold hover:bg-gray-100"
+                >
+                  Product Demo
+                </NavLink>
+
+
                 <hr className="pb-3" />
                 <NavLink
                   to="/login"

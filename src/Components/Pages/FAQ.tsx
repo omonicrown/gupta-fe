@@ -41,7 +41,7 @@ function FAQ() {
     return (
         <>
             <Navbar />
-            <div className='bg-[#FFFFFF] sm:px-16 px-6 flex justify-center items-start relative' >
+            <div className='bg-[#FFFFFF] sm:px-16 mt-14 px-6 flex justify-center items-start relative' >
                 <div className='xl:max-w-[1280px] w-full'>
                     <div className='flex flex-col justify-center items-center sm:py-16 py-6'>
                         <h1 className='lg:text-[48px] text-[38px] font-bold text-center'>Frequently Asked Questions</h1>
@@ -60,12 +60,12 @@ function FAQ() {
                                         <h3
                                             onClick={() => setOpenTestTab(1)}
                                             className={` ${openTestTab === 1 ? "text-[#0071BC] bg-white rounded-[20px] px-5 py-1.5" : "text-white"} lg:text-[16px] text-[14px] font-medium cursor-pointer`}>General</h3>
-                                        <h3 onClick={() => setOpenTestTab(2)}
+                                        {/* <h3 onClick={() => setOpenTestTab(2)}
                                             className={` ${openTestTab === 2 ? "text-[#0071BC] bg-white rounded-[20px] px-5 py-1.5" : "text-white"} lg:text-[16px] text-[14px] font-medium cursor-pointer`}>Whatsapp Link</h3>
                                         <h3 onClick={() => setOpenTestTab(3)}
                                             className={` ${openTestTab === 3 ? "text-[#0071BC] bg-white rounded-[20px] px-5 py-1.5" : "text-white"} lg:text-[16px] text-[14px] font-medium cursor-pointer`}>Multi Link</h3>
                                         <h3 onClick={() => setOpenTestTab(4)}
-                                            className={` ${openTestTab === 4 ? "text-[#0071BC] bg-white rounded-[20px] px-5 py-1.5" : "text-white"} lg:text-[16px] text-[14px] font-medium cursor-pointer`}>Mini Store</h3>
+                                            className={` ${openTestTab === 4 ? "text-[#0071BC] bg-white rounded-[20px] px-5 py-1.5" : "text-white"} lg:text-[16px] text-[14px] font-medium cursor-pointer`}>Mini Store</h3> */}
                                         <h3 onClick={() => setOpenTestTab(5)}
                                             className={` ${openTestTab === 5 ? "text-[#0071BC] bg-white rounded-[20px] px-5 py-1.5" : "text-white"} lg:text-[16px] text-[14px] font-medium cursor-pointer`}>Payment</h3>
                                         <h3 onClick={() => setOpenTestTab(6)}
@@ -168,7 +168,7 @@ function FAQ() {
                                 </div>
 
                                 {/* <-- Whatsapp Link --> */}
-                                <div className={openTestTab === 2 ? "block" : "hidden"}>
+                                {/* <div className={openTestTab === 2 ? "block" : "hidden"}>
                                     <Accordion open={open === 4} icon={<Icon id={4} open={open} />} >
                                         <AccordionHeader onClick={() => handleOpen(4)}>What is gupta Tailwind?</AccordionHeader>
                                         <AccordionBody>
@@ -200,8 +200,10 @@ function FAQ() {
                                             ourselves and actualize our dreams.
                                         </AccordionBody>
                                     </Accordion>
-                                </div>
-                                <div className={openTestTab === 3 ? "block" : "hidden"}>
+                                </div> */}
+
+
+                                {/* <div className={openTestTab === 3 ? "block" : "hidden"}>
                                     <Accordion open={open === 4} icon={<Icon id={4} open={open} />} >
                                         <AccordionHeader onClick={() => handleOpen(4)}>What is gupta Tailwind?</AccordionHeader>
                                         <AccordionBody>
@@ -233,7 +235,7 @@ function FAQ() {
                                             ourselves and actualize our dreams.
                                         </AccordionBody>
                                     </Accordion>
-                                </div>
+                                </div> */}
 
                             </div>
 
