@@ -1,5 +1,5 @@
 import React from 'react'
-import { NavLink } from 'react-router-dom'
+import { Link, NavLink } from 'react-router-dom'
 
 const CTA = () => {
   return (
@@ -23,7 +23,7 @@ const CTA = () => {
         <h1 className='lg:text-[48px] text-[30px] text-white font-bold md:leading-[58px] leading-[45px]'>Starting with Gupta is Easy and Fast.</h1>
        
      <div className='my-[35px]'>
-      <button className='bg-white text-[#0071BC] py-[13px] px-[30px] rounded-[29px] font-medium'>Get Started - It's free</button>
+      <Link to="/register"><button className='bg-white text-[#0071BC] py-[13px] px-[30px] rounded-[29px] font-medium'>Get Started - It's free</button></Link>
      </div>
       </div>
       <div className='flex-1 lg:mt-0 mt-[20px]'>
