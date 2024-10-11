@@ -631,7 +631,7 @@ export default function CardCreateProduct() {
           productLink.map(
             (data, index) => (
               <span className="flex justify-start gap-5 mb-4">
-                <span><span>({index + 1}) </span>mygupta.co/store/{data?.link_name}</span>
+                <span><span>({index + 1}) </span>mygupta.co/s/{data?.link_name}</span>
 
                 <span className="flex space-x-2">
 
@@ -675,7 +675,7 @@ export default function CardCreateProduct() {
             <div>
               <form onSubmit={CreateMarketLink}>
                 <div className="">
-                  <label for="first_name" class="block mb-2 mt-6 text-sm  text-gray-900 dark:text-gray-600">Market Link Name</label>
+                  <label for="first_name" class="block mb-2 mt-6 text-sm  text-gray-900 dark:text-gray-600">Market Link Name&nbsp; <b>(Keep it short)</b></label>
                   <div className="gap-4">
                     <input type="text" defaultValue={checkLink} onChange={(e) => setCheckLink(e?.target?.value)} id="first_name" class="bg-[#F4FBFF] border border-gray-300 text-gray-900 text-sm rounded-lg  p-2.5 w-4/5 " required placeholder="E.g mark-stores" />
                     {(checkLink?.length !== 0 && data == 0) ? <span className="pl-4 w-1/5 text-[30px]">👌</span> : (data != 1 ? '' : <span className="pl-4 w-1/5 text-[30px] "> 😭 </span>)}
@@ -782,7 +782,7 @@ export default function CardCreateProduct() {
             <div>
               <form onSubmit={UpdateMarketLink}>
                 <div className="">
-                  <label for="first_name" class="block mb-2 mt-6 text-sm  text-gray-900 dark:text-gray-600">Market Link Name</label>
+                  <label for="first_name" class="block mb-2 mt-6 text-sm  text-gray-900 dark:text-gray-600">Market Link Name&nbsp; <b>(Keep it short)</b></label>
                   <div className="gap-4">
                     <input type="text" disabled defaultValue={marketLinkData?.link_name} onChange={(e) => setCheckLink(e?.target?.value)} id="first_name" class="bg-[#F4FBFF] border border-gray-300 text-gray-900 text-sm rounded-lg  p-2.5 w-4/5 " placeholder="Eg. Mark-store" />
                     {/* {(checkLink?.length !== 0 && data == 0) ? <span className="pl-4 w-1/5 text-[30px]">👌</span> : (data != 1 ? '' : <span className="pl-4 w-1/5 text-[30px] "> 😭 </span>)} */}

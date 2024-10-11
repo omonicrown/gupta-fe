@@ -1,6 +1,6 @@
 import './App.css';
 import React from 'react'
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import EmailVerify from './Components/Pages/Auth/EmailVerify'
 import ForgotPassword from './Components/Pages/Auth/ForgotPword'
 import ResetPassword from './Components/Pages/Auth/ResetPassword'
@@ -50,7 +50,8 @@ function App() {
       {/* <Navbar/> */}
 
       <Routes>
-       
+      <Route path="*" element={<Navigate to="/" replace />} />
+      {/* <Route path="*" element={<Home />} /> */}
         <Route path="/" element={<Home />} />
         <Route path="/faq" element={<FAQ />} />
         <Route path="/pricing" element={<Pricing />} />
@@ -74,7 +75,7 @@ function App() {
         <Route path="/edit-product/:id" element={<EditProduct />} />
         <Route path="/update-multi-link/:linkId" element={<EditMultiLink />} />
         <Route path="/:linkId" element={<ViewMultiPage />} />
-        <Route path="/store/:storeId" element={<ViewProductPage />} />
+        <Route path="/s/:storeId" element={<ViewProductPage />} />
         <Route path="/storedetails/:storeId" element={<ViewProductDetailPage />} />
         <Route path="/create-multi-link" element={<CreateMultiLink />} />
         <Route path="/EditUserMessage" element={<EditUserMessage />} />

@@ -172,7 +172,7 @@ export default function CardCreateLink() {
                     htmlFor="name"
                     className="flex justify-start  mb-2 text-sm  text-gray-600 "
                   >
-                    Brand name
+                    Brand name&nbsp; <b>(Keep it short)</b>
                   </label>
                   <div class="relative">
                     <input
