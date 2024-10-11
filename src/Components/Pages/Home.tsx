@@ -422,7 +422,7 @@ function Home() {
                           style={{ backgroundColor: '#0071BC', borderRadius: '50px' }}
                           className=" text-white hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm w-full px-2 py-2.5 text-center "
                         >
-                          Generate my gupta.ink
+                          Generate my Gupta Link
                         </button>
                       </span>
                       <NavLink to='/register' className="flex justify-center">
