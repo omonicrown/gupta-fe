@@ -241,7 +241,7 @@ export default function CardMiniStore() {
                                 <div className="flex flex-col mx-1 my-2">
                                   <span className="flex justify-start">
                                     <span className="flex flex-col">
-                                      <span className="font-[600] text-[8px] md:text-[12px] "> {truncateText(`${configs?.baseRedirectFront}store/${(data?.link_name)}`)} { }</span>
+                                      <span className="font-[600] text-[8px] md:text-[12px] "> {truncateText(`${configs?.baseRedirectFront}s/${(data?.link_name)}`)} { }</span>
                                     </span>
                                   </span>
 
@@ -249,7 +249,7 @@ export default function CardMiniStore() {
                                     <span className="flex justify-between gap-1 ">
 
                                       <span>
-                                        <CopyToClipboard text={`${configs?.baseRedirectFront}store/${(data?.link_name)}`}
+                                        <CopyToClipboard text={`${configs?.baseRedirectFront}s/${(data?.link_name)}`}
                                           onCopy={() => isCopied()}>
                                           <span
                                             style={{ color: 'white' }}

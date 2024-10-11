@@ -318,7 +318,7 @@ export default function CardTiredLinks() {
                             )}
                           </ImageUploading>
                         </span>
-                        <label for="first_name" class="block mb-2 text-sm  text-gray-900 dark:text-gray-600">Brand name </label>
+                        <label for="first_name" class="block mb-2 text-sm  text-gray-900 dark:text-gray-600">Brand name&nbsp; <b>(Keep it short)</b></label>
                         <input type="text" defaultValue={name} onChange={(e) => setName(e?.target?.value)} id="first_name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg mt-1 block w-full p-2.5" placeholder="E.g mark-shoe-links" style={{ backgroundColor: '#F4FBFF' }} required />
                         
                         <div className="flex justify-between">

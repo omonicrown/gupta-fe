@@ -150,7 +150,7 @@ export default function CardCreateRedirectLink() {
                     htmlFor="name"
                     className="flex justify-start  mb-2 text-sm  text-gray-600 "
                   >
-                    Name
+                    Brand name <b>&nbsp;(Keep it short)</b>
                   </label>
                   <div class="relative">
                     <input

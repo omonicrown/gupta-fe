@@ -43,7 +43,7 @@ export default function CardViewProductPage() {
   }
 
   if (searchParams.get('status') == 'cancelled') {
-    navigate(`/store/${params?.storeId}`);
+    navigate(`/s/${params?.storeId}`);
   }
 
 
@@ -54,7 +54,7 @@ export default function CardViewProductPage() {
           // navigate('/wallet');
           if (response?.data?.success === true) {
             if (response?.data?.data?.status == 'successful') {
-              navigate(`/store/${params?.storeId}`);
+              navigate(`/s/${params?.storeId}`);
               toast.success(response?.data?.data?.status);
             } else {
               // navigate('/mylinks');
@@ -216,13 +216,13 @@ export default function CardViewProductPage() {
           <span><img src={marketInfo?.brand_logo} style={{ height: '50px', width: '70px' }} /></span>
         }
 
-        {(loader || data?.products?.data?.length <= 0) ?
+        {/* {(loader || data?.products?.data?.length <= 0) ?
           ''
           :
           <span style={{ borderColor: marketInfo?.brand_primary_color }} className={` font-bold text-[20px] capitalize mt-2 border-[${marketInfo?.brand_primary_color}] rounded-lg pt-1 px-2 border-[1px]`}>
             {(params?.storeId).replace("-", ' ')}
           </span>
-        }
+        } */}
 
 
 
@@ -233,17 +233,17 @@ export default function CardViewProductPage() {
       </div>
       <hr className=" mt-4 h-4" />
 
-      {/* <div className="border border-[#D9D9D9] rounded md:mx-20 py-8 mt-5 px-10 flex gap-6">
-        <span><img src="/images/los.png" /></span>
-        <div className="flex flex-col ">
-          <span className="text-[20px] font-[600]">Samodex Store</span>
-          <div className="flex justify-start my-1">
-            <span><img src="/images/locate.png" /></span>
-            <span className="text-[#A9A9A9] text-[14px]">Abuja,Nigeria.</span>
+      <div style={{ backgroundColor: marketInfo?.brand_primary_color }} className="border border-[#D9D9D9] rounded md:mx-20 py-8  px-10 ">
+
+
+        <div className="flex justify-center">
+          <div className="flex flex-col ">
+            <span className=" text-center text-white">Welcome to</span>
+            <span className="text-[24px] font-[600] text-white capitalize"> {(params?.storeId).replace("-", ' ')}</span>
           </div>
-          <span className="text-[#A9A9A9] text-[14px]">A few descriptions of the product appears her just say anything but you know just say yada yada A few descriptions of the product appears her just say anything but you know just say yada yada .......</span>
         </div>
-      </div> */}
+
+      </div>
 
       <div className=" mt-10 mb-4 md:px-8 ">
 
@@ -266,7 +266,7 @@ export default function CardViewProductPage() {
                       <hr />
 
                       <div className="flex flex-col pt-[8px] px-[16px]">
-                      <div className="flex justify-start ">
+                        <div className="flex justify-start ">
                           {/* <span className="text-[16px] font-[600] mt-1">{data?.product_name}</span> */}
                           <span className="flex gap-2">
                             {/* <span style={{ color: marketInfo?.brand_primary_color !== '' ? marketInfo?.brand_primary_color : '#0071BC', textDecorationLine: 'line-through' }} className={`text-[15px] font-[700]`}>{new Intl.NumberFormat('en-US', { style: 'currency', currency: 'NGN' }).format(data?.product_price)} </span> */}
@@ -279,7 +279,7 @@ export default function CardViewProductPage() {
                         <div className="flex justify-start">
                           <span className="text-[16px] font-[600] mt-1">{data?.product_name}</span>
                         </div>
-                       
+
 
 
 
@@ -297,7 +297,7 @@ export default function CardViewProductPage() {
                             style={{ backgroundColor: marketInfo?.brand_primary_color }}
                             className={"text-[8px] text-white pt-1 pb-1  flex justify-center cursor-pointer bg-[" + (marketInfo?.brand_primary_color) + "] rounded-md lg:px-4"}
                           >
-                             Contact&nbsp;Vendor
+                            Contact&nbsp;Vendor
                           </a>
 
                           <span onClick={() => togglePaymentModal(data)}

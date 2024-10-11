@@ -41,6 +41,8 @@ const Hero = () => {
           <p className={`font-poppins font-normal text-gray-500 md:text-[15px] text-[13px] md:leading-[23.85px] leading-[20px] max-w-[530px] mt-5 `}>
             Gupta helps small businesses create customized WhatsApp links for chats or catalogs, a mini webpage with multiple links, and a customized website with product links for easy customer contact.
           </p>
+
+          
           <div className='flex flex-row mt-[36px]'>
             <NavLink to='/login'>
               <button type="button" className="text-white bg-[#0071BC] hover:bg-[#DBF2FF] hover:text-[#0071BC] font-medium rounded-[45px] text-[14px] md:px-[30px] md:py-3 px-4 py-2.5 md:mr-4 mr-8">Login</button>
@@ -56,6 +58,16 @@ const Hero = () => {
                 </svg>
               </button>
             </NavLink>
+          </div>
+
+
+          <div className='flex justify-start gap-2 mt-5'>
+          <p className={`font-poppins font-bold text-gray-500 md:text-[20px] text-[15px] md:leading-[23.85px] leading-[20px] max-w-[530px] mt-5 `}>
+            Payment&nbsp;powered&nbsp;by
+          </p>
+
+          <img src="/images/Flutterwave_Logo.png" className='md:pt-2 pt-3 md:w-[200px] w-[150px]'  alt="" />
+
           </div>
         </div>
 
