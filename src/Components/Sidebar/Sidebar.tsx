@@ -8,6 +8,7 @@ import { login } from '../../reducer/loginSlice'
 import { useNavigate } from 'react-router-dom';
 import { AiOutlineSetting } from "react-icons/ai";
 import { IoArrowBack } from "react-icons/io5";
+import { IoMdCloseCircle } from "react-icons/io";
 import { NavLink } from "react-router-dom";
 import { AuthApis } from "../../apis/authApis";
 import { AxiosResponse } from "axios";
@@ -89,7 +90,7 @@ export default function Sidebar(title: any) {
           <button
             className="cursor-pointer text-black md:hidden px-3 py-1 text-xl leading-none bg-transparent rounded border border-solid border-transparent"
             type="button"
-            onClick={() => setCollapseShow("bg-white m-2 py-3 px-6")}
+            onClick={() => setCollapseShow("bg-white p-3 mr-1")}
           >
             <b className="fas fa-bars text-3xl"> ≡ </b><span className="text-black ">{title?.title}</span>
           </button>
@@ -121,7 +122,7 @@ export default function Sidebar(title: any) {
           {/* Collapse */}
           <div
             className={
-              "md:flex md:flex-col items-stretch md:opacity-100 md:relative md:mt-4 md:shadow-none shadow bg-[#0071BC] absolute top-4 left-0 right-1  h-auto flex-1 rounded " +
+              "md:flex md:flex-col items-stretch md:opacity-100 md:relative md:mt-4 md:shadow-none shadow bg-[#0071BC] absolute top-0 left-0 right-0  h-auto flex-1 rounded " +
               collapseShow
             }
           >
@@ -129,7 +130,7 @@ export default function Sidebar(title: any) {
             <div className="md:min-w-full md:hidden block pb-1 mb-4  ">
               <div className="flex justify-between ">
 
-                <span className="flex justify-start gap-1" onClick={() => setCollapseShow("hidden")}><IoArrowBack style={{ color: '#333333' }} className="bg-gray-200 text-xs text-gray-500 rounded-full p-1 h-6 w-6" /> <span className="text-white ml-2">Back</span></span>
+                <span className="flex justify-start gap-1" onClick={() => setCollapseShow("hidden")}><IoMdCloseCircle style={{ color: '#333333' }} className="bg-gray-200 text-xs text-gray-500 rounded-full p-1 h-6 w-6" /> <span className="text-white ml-2"></span></span>
 
                 <span
                   className="cursor-pointer opacity-50 md:hidden  py-1 text-xl leading-none bg-transparent rounded border border-solid border-transparent"
@@ -388,14 +389,6 @@ export default function Sidebar(title: any) {
 
                 </NavLink>
               </li>
-
-
-
-
-
-
-
-
 
 
               <li className="items-center pt-36 mx-3 pl-3 mb-2">

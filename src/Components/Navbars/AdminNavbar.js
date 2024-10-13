@@ -13,19 +13,48 @@ export default function Navbar({ title }) {
 
 
   let [data, setdata] = React.useState([]);
+  const [daysLeft, setDaysLeft] = React.useState(null);
+  const [color, setColor] = React.useState(null);
+  const [subType, setSubType] = React.useState(null);
+
+  const calculateDaysLeft = (subEnd) => {
+    const endDate = new Date(subEnd);
+    const today = new Date();
+
+    // Calculate time difference in milliseconds
+    const timeDiff = endDate.getTime() - today.getTime();
+
+    // Convert time difference from milliseconds to days
+    const daysRemaining = Math.ceil(timeDiff / (1000 * 3600 * 24));
+
+    // If daysRemaining is negative, subscription has expired
+    if (daysRemaining >= 15) {
+      setColor('green')
+    } else if (daysRemaining < 15 && daysRemaining >= 7) {
+      setColor('orange')
+    } else if (daysRemaining < 7) {
+      setColor('red')
+    }
+    setDaysLeft(daysRemaining > 0 ? daysRemaining : 0);
+  };
+
 
   React.useEffect(() => {
     PaymentApis.getWalletDetails().then(
       (response) => {
         if (response?.data) {
           // setdata(response?.data)
-          setdata(new Intl.NumberFormat('en-US', { style: 'currency', currency: 'NGN' }).format((response?.data?.data?.total_amount) ? (response?.data?.data?.total_amount) : 0.0))
+          calculateDaysLeft(response?.data?.data?.sub_end)
+          setSubType(response?.data?.data?.sub_type)
+          setdata(new Intl.NumberFormat('en-US', { style: 'currency', currency: 'NGN' }).format((response?.data?.data[0]?.total_amount) ? (response?.data?.data[0]?.total_amount) : 0.0))
           // window.location.reload();
         }
       }
     );
 
   }, []);
+
+
 
   // $currency = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(100000000)
 
@@ -44,12 +73,12 @@ export default function Navbar({ title }) {
             >
               {title}
             </a>
-            <h2 className="mt-2 flex md:hidden "><span className="text-[14px]">Total Amount </span>: <b> {data}</b></h2>
+            <h2 className="mt-2 flex md:hidden "><span className="text-[14px]" style={{color:color}}>Subscription expires in <b>{daysLeft}</b> days. ({subType}) </span></h2>
 
 
             {/* Form */}
             <span className="flex justify-end">
-            
+
               <span className="md:flex hidden flex-row flex-wrap items-center lg:ml-auto mr-3">
                 <div className="relative flex justify-end w-full flex-wrap items-stretch gap-5">
 
@@ -62,19 +91,19 @@ export default function Navbar({ title }) {
 
               </div>
             </form> */}
-                  <h2 className="mt-2"><span className="text-[14px]">Total Amount </span>: <b> {data}</b></h2>
+                  <h2 className="mt-2"><span className="text-[14px]" style={{color:color}}>Subscription expires in <b>{daysLeft}</b> days. ({subType}) </span></h2>
                   {/* <NavLink to='/proplan'>
             <h2 className=""><SvgElement type={icontypesEnum.UPGRADE} /></h2>
             </NavLink> */}
                   {/* <h2 className="pt-2"><SvgElement type={icontypesEnum.NOTIFICATION} /></h2> */}
                   <span className="md:flex hidden flex-row flex-wrap items-center lg:ml-auto mr-3">
-                <NavLink to='/subscription'>
-                <div className="relative bg-blue-200 flex w-full font-bold rounded-lg border-[2px] p-1 flex-wrap items-stretch">
-                  👑 Upgrade
-                  </div>
-                </NavLink>
+                    <NavLink to='/subscription'>
+                      <div className="relative bg-blue-200 flex w-full font-bold rounded-lg border-[2px] p-1 flex-wrap items-stretch">
+                        👑 Upgrade
+                      </div>
+                    </NavLink>
 
-              </span>
+                  </span>
                   <NavLink to='/editprofile'>
                     <h2 className=" pt-2"><SvgElement type={icontypesEnum.SETTINGS} /></h2>
                   </NavLink>
