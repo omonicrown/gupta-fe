@@ -35,10 +35,10 @@ const configs = {
   socket: SOCKET_URL,
   type: TYPE_REST,
 
-  imageUrl: "https://link.mygupta.co/TieredImages/",
-  context: "https://link.mygupta.co/api",
-  baseRedirectFront:'mygupta.co/',
-  baseRedirect:'https://link.mygupta.co',
+  // imageUrl: "https://link.mygupta.co/TieredImages/",
+  // context: "https://link.mygupta.co/api",
+  // baseRedirectFront:'mygupta.co/',
+  // baseRedirect:'https://link.mygupta.co',
 
   
   // imageUrl2: "http://127.0.0.1:8000/products/",

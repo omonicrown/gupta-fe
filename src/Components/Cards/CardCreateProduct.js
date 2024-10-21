@@ -635,7 +635,7 @@ export default function CardCreateProduct() {
 
                 <span className="flex space-x-2">
 
-                  {userData?.sub_type == 'premium' ? <span className=" text-blue-500 cursor-pointer" onClick={() => toggleMarketLinkData(data)}><FaEdit /></span> : ''}
+                  {userData?.sub_type == 'premium' || userData?.sub_type == 'free' ? <span className=" text-blue-500 cursor-pointer" onClick={() => toggleMarketLinkData(data)}><FaEdit /></span> : ''}
 
 
                   <span className=" text-red-500 cursor-pointer" onClick={() => toggleDeleteMarketLink(data?.id)}><FaTrash /></span>
@@ -661,7 +661,7 @@ export default function CardCreateProduct() {
         <Modal
           visible={visible}
           width="380"
-          height={userData?.sub_type == 'premium' ||userData?.sub_type =='popular' ? '700' : '300'}
+          height={userData?.sub_type == 'premium' ||userData?.sub_type =='popular' || userData?.sub_type =='free' ? '700' : '300'}
           effect="fadeInUp"
           onClickAway={() => toggleModal}
         >
@@ -686,7 +686,7 @@ export default function CardCreateProduct() {
                 </div>
 
 
-                {userData?.sub_type == 'premium' || userData?.sub_type =='popular' ?
+                {userData?.sub_type == 'premium' || userData?.sub_type =='popular' || userData?.sub_type =='free' ?
                   <div>
                     <div>
 
@@ -768,7 +768,7 @@ export default function CardCreateProduct() {
         <Modal
           visible={toggleEditMarketLink}
           width="380"
-          height="700"
+          height={userData?.sub_type == 'premium' ||userData?.sub_type =='popular' || userData?.sub_type =='free' ? '700' : '300'}
           effect="fadeInUp"
           onClickAway={() => setToggleEditMarketLink}
         >
@@ -791,7 +791,7 @@ export default function CardCreateProduct() {
 
 
                 </div>
-                {userData?.sub_type == 'premium' || userData?.sub_type =='popular' ?
+                {userData?.sub_type == 'premium' || userData?.sub_type =='popular' || userData?.sub_type =='free' ?
                   <div>
                     <div>
 
