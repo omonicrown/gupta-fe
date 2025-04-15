@@ -35,10 +35,16 @@ const configs = {
   socket: SOCKET_URL,
   type: TYPE_REST,
 
-  imageUrl: "http://localhost:8000/TieredImages/",
-  context: "http://localhost:8000/api",
-  baseRedirectFront:'http://localhost:8000/',
-  baseRedirect:'http://localhost:8000',
+  // imageUrl: "http://localhost:8000/TieredImages/",
+  // context: "http://localhost:8000/api",
+  // baseRedirectFront:'http://localhost:8000/',
+  // baseRedirect:'http://localhost:8000',
+
+  imageUrl: "https://link.mygupta.co/TieredImages/",
+  context: "https://link.mygupta.co/api",
+  baseRedirectFront:'mygupta.co/',
+  baseRedirect:'https://link.mygupta.co',
+
 
   
   // imageUrl2: "https://beternl-app-4lwxp.ondigitalocean.app/products/",

@@ -2,7 +2,7 @@ import axios from "axios";
 import { AxiosResponse, AxiosRequestHeaders } from "axios";
 import { store } from "../store/store";
 
-const BASE_URL = process.env.REACT_APP_API_URL || "https://beternl-app-4lwxp.ondigitalocean.app";
+const BASE_URL = process.env.REACT_APP_API_URL || "https://link.mygupta.co";
 
 // const BASE_URL = process.env.REACT_APP_API_URL || "http://localhost:8000";
 
