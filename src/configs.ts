@@ -35,17 +35,17 @@ const configs = {
   socket: SOCKET_URL,
   type: TYPE_REST,
 
-  imageUrl: "https://link.mygupta.co/TieredImages/",
-  context: "https://link.mygupta.co/api",
-  baseRedirectFront:'mygupta.co/',
-  baseRedirect:'https://link.mygupta.co',
+  imageUrl: "http://localhost:8000/TieredImages/",
+  context: "http://localhost:8000/api",
+  baseRedirectFront:'http://localhost:8000/',
+  baseRedirect:'http://localhost:8000',
 
   
-  // imageUrl2: "http://127.0.0.1:8000/products/",
-  // imageUrl: "http://127.0.0.1:8000/TieredImages/",
-  // context: "http://127.0.0.1:8000/api",
+  // imageUrl2: "https://beternl-app-4lwxp.ondigitalocean.app/products/",
+  // imageUrl: "hhttps://beternl-app-4lwxp.ondigitalocean.app/TieredImages/",
+  // context: "https://beternl-app-4lwxp.ondigitalocean.app/api",
   // baseRedirectFront:'http://localhost:3000/',
-  // baseRedirect:'http://127.0.0.1:8000',
+  // baseRedirect:'https://beternl-app-4lwxp.ondigitalocean.app',
 
   history: createBrowserHistory(),
   requestTimeOut: 30000,
