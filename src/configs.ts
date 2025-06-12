@@ -42,7 +42,7 @@ const configs = {
 
   imageUrl: "https://link.mygupta.co/TieredImages/",
   context: "https://link.mygupta.co/api",
-  baseRedirectFront:'mygupta.co/',
+  baseRedirectFront:'www.mygupta.co/',
   baseRedirect:'https://link.mygupta.co',
 
 
