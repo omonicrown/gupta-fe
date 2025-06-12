@@ -1,684 +1,822 @@
-import React from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import { AdminApis } from "../../apis/adminApi";
-import { FaTrash, FaEdit, FaWhatsapp } from "react-icons/fa";
-import CardNavBar from "./CardNavBar";
+import { 
+  FaTrash, 
+  FaEdit, 
+  FaSearch, 
+  FaPlus, 
+  FaExternalLinkAlt,
+  FaStore,
+  FaTh,
+  FaList,
+  FaCopy,
+  FaTag,
+  FaMapMarkerAlt
+} from "react-icons/fa";
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { ToastContainer, toast } from 'react-toastify';
 import { NavLink } from "react-router-dom";
 import Modal from 'react-awesome-modal';
-import { useSelector, useDispatch } from 'react-redux';
-import CardPageVisits from "./CardPageVisits";
+import { useSelector } from 'react-redux';
 import { SvgElement, icontypesEnum } from "../assets/svgElement";
-import AwesomeSlider from 'react-awesome-slider';
-import 'react-awesome-slider/dist/custom-animations/cube-animation.css';
-// import { url } from "inspector";
-import { store } from "../../store/store";
-import { Oval } from 'react-loader-spinner'
+import { Oval } from 'react-loader-spinner';
 import CardRenewSubscription from "./CardRenewSubscription";
 import configs from "../../configs";
 
-
-// components
-
 export default function CardMiniStore() {
-
   const userLoginData = useSelector((state) => state.data.login.value);
-  let [visible, setVisible] = React.useState(false);
-  let [toggleDeleteModal, setToggleDeleteModal] = React.useState(false);
-  let [toggleExceedModal, setToggleExceedModal] = React.useState(false);
-  let [value, setvalue] = React.useState('');
-  let [contact, setContact] = React.useState('');
-  let [effect, setEffect] = React.useState('');
+  
+  // State management
+  const [modals, setModals] = useState({
+    edit: false,
+    delete: false,
+    exceed: false
+  });
+  
+  const [selectedProduct, setSelectedProduct] = useState(null);
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [filteredProducts, setFilteredProducts] = useState([]);
+  const [viewMode, setViewMode] = useState('grid');
+  const [sortBy, setSortBy] = useState('newest');
+  const [selectedCategory, setSelectedCategory] = useState('all');
+  const [selectedMarketLink, setSelectedMarketLink] = useState('all');
+  const [message, setMessage] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [paginationData, setPaginationData] = useState(null);
 
-  // console?.log(value)
+  const searchInputRef = useRef(null);
 
-  function toggleModal(value2, contact) {
-    setvalue(value2)
-    setContact(contact)
-    setVisible(!visible)
-  }
+  // Categories for filtering
+  const categories = [
+    { value: 'all', label: 'All Categories', color: 'bg-gray-100' },
+    { value: 'women fashion', label: "Women's Fashion", color: 'bg-pink-100' },
+    { value: 'men fashion', label: "Men's Fashion", color: 'bg-blue-100' },
+    { value: 'beauty&cosmetics', label: 'Beauty & Cosmetics', color: 'bg-purple-100' },
+    { value: 'bags', label: 'Bags', color: 'bg-yellow-100' },
+    { value: 'sport/outdoor', label: 'Sport/Outdoor', color: 'bg-green-100' },
+    { value: 'home/kitchen', label: 'Home/Kitchen', color: 'bg-orange-100' },
+    { value: 'shoes', label: 'Shoes', color: 'bg-red-100' },
+    { value: 'watches', label: 'Watches', color: 'bg-indigo-100' },
+    { value: 'laptops', label: 'Laptops', color: 'bg-gray-100' },
+    { value: 'phones', label: 'Phones', color: 'bg-cyan-100' }
+  ];
 
-  function toggleDelete(value2) {
-    setvalue(value2)
-
-    setToggleDeleteModal(!visible)
-  }
-  // console.log(contact)
-
-  const [message, setMessage] = React.useState("");
-  const [name, setName] = React.useState("");
-
-
-  function isCopied() {
-    toast.success("Copied to Clipboard");
-  }
-
-  const [loader, setLoader] = React.useState(true);
-  function isCopied() {
-    toast.success("Copied to Clipboard");
-  }
-
-  let [data, setdata] = React.useState([]);
-
-  React.useEffect(() => {
-    setLoader(true);
-    setEffect('')
-    AdminApis.getAllStore('').then(
-      (response) => {
-        if (response?.data) {
-          setdata(response?.data)
-          setLoader(false);
-          //console.log(response?.data)
-        }
+  // Fetch products data
+  const fetchProducts = useCallback(async (page = '') => {
+    try {
+      setLoading(true);
+      const response = await AdminApis.getAllStore(page);
+      if (response?.data) {
+        setProducts(response.data?.data?.data || []);
+        setPaginationData(response.data?.data);
+        setLoading(false);
       }
-    );
-
-  }, [effect]);
-
-  const paginator = React.useCallback(
-    (value) => {
-      //   setLoader(true);
-      let value2 = '';
-      if (value !== null) {
-        value2 = value;
-      } else {
-        value2 = ''
-      }
-      setLoader(true)
-      AdminApis.getAllStore(value2).then(
-        (response) => {
-          if (response?.data) {
-            setdata(response?.data)
-            setLoader(false);
-          }
-        }
-      ).catch(function (error) {
-        console.log(error.response.data);
-      })
-
-    }, [data, loader]);
-
-
-
-
-  const handleSubmit = React.useCallback(
-    (e) => {
-      e.preventDefault();
-      console?.log(message)
-      data = {
-        'message': message,
-        'id': value?.id,
-        'name': value?.name,
-        'phone_number': value?.link_info?.phone_number
-      }
-      AdminApis.editLink(data).then(
-        (response) => {
-          if (response?.data) {
-            console.log(response.data)
-            setVisible(false)
-            setEffect('')
-            toast.success(response?.data?.message);
-          }
-        }
-      ).catch(function (error) {
-        // handle error
-        console.log(error.response.data);
-        toast.error("Offfline");
-      }).finally(() => {
-        //toast.error("No Internet Connection");
-
-      });
-    },
-    [value, message, contact, name]
-  );
-
-  const deleteLink = React.useCallback(
-    (e) => {
-      e.preventDefault();
-      setLoader(true);
-      AdminApis.deleteProduct(value).then(
-        (response) => {
-          if (response?.data) {
-            console.log(response.data)
-            setToggleDeleteModal(false)
-            toast.success("Link Deleted Successfully");
-            setLoader(false);
-            setEffect('d')
-          }
-        }
-      ).catch(function (error) {
-        // handle error
-        console.log(error.response.data);
-        toast.error("Offfline");
-      }).finally(() => {
-        //toast.error("No Internet Connection");
-
-      });
-    },
-    [value, message, effect]
-  );
-
-  const [searchTerm, setSearchTerm] = React.useState("");
-  const inputEl = React.useRef("");
-  const [searchResult, setSearchResult] = React.useState({ sa: '32' });
-
-  const getSearchTerm = React.useCallback(
-    () => {
-      console.log(inputEl.current.value);
-      setSearchTerm(inputEl.current.value);
-      if (searchTerm !== "") {
-        const newContactList = data?.data?.data?.filter((data) => {
-          return Object.values(data).join(" ")?.toLowerCase()?.includes(inputEl?.current?.value?.toLowerCase());
-        });
-        setSearchResult(newContactList);
-      } else {
-        setSearchResult(data?.data?.data);
-      }
-    }, [inputEl, searchTerm, searchResult, data]);
-
-
-  const truncateText = (str) => {
-    if (str.length > 40) {
-      return str.substring(0, 40) + '...';
+    } catch (error) {
+      console.error('Error fetching products:', error);
+      setLoading(false);
+      toast.error('Failed to load products');
     }
-    return str;
+  }, []);
+
+  useEffect(() => {
+    fetchProducts();
+  }, [fetchProducts]);
+
+  // Search and filter logic
+  useEffect(() => {
+    let filtered = [...products];
+
+    // Search filter
+    if (searchTerm.trim()) {
+      filtered = filtered.filter(product => 
+        product.product_name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        product.product_description?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        product.link_name?.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+    }
+
+    // Category filter
+    if (selectedCategory !== 'all') {
+      filtered = filtered.filter(product => product.category === selectedCategory);
+    }
+
+    // Market link filter
+    if (selectedMarketLink !== 'all') {
+      filtered = filtered.filter(product => product.link_name === selectedMarketLink);
+    }
+
+    // Sorting
+    filtered.sort((a, b) => {
+      switch (sortBy) {
+        case 'newest':
+          return new Date(b.created_at) - new Date(a.created_at);
+        case 'oldest':
+          return new Date(a.created_at) - new Date(b.created_at);
+        case 'price-low':
+          return parseFloat(a.product_price || 0) - parseFloat(b.product_price || 0);
+        case 'price-high':
+          return parseFloat(b.product_price || 0) - parseFloat(a.product_price || 0);
+        case 'name':
+          return (a.product_name || '').localeCompare(b.product_name || '');
+        default:
+          return 0;
+      }
+    });
+
+    setFilteredProducts(filtered);
+  }, [products, searchTerm, selectedCategory, selectedMarketLink, sortBy]);
+
+  // Get unique market links from products
+  const getUniqueMarketLinks = () => {
+    const links = [...new Set(products.map(p => p.link_name).filter(Boolean))];
+    return links;
   };
 
-  return (
-    <>
+  // Modal handlers
+  const toggleModal = (modalName, state = null, product = null) => {
+    setModals(prev => ({
+      ...prev,
+      [modalName]: state !== null ? state : !prev[modalName]
+    }));
+    if (product) setSelectedProduct(product);
+  };
 
+  // API actions
+  const updateProduct = async (e) => {
+    e.preventDefault();
+    try {
+      const data = {
+        message,
+        id: selectedProduct?.id,
+        name: selectedProduct?.product_name,
+        phone_number: selectedProduct?.link_info?.phone_number
+      };
+      
+      const response = await AdminApis.editLink(data);
+      if (response?.data) {
+        toast.success(response.data.message);
+        toggleModal('edit', false);
+        fetchProducts();
+        setMessage("");
+      }
+    } catch (error) {
+      console.error('Error updating product:', error);
+      toast.error('Failed to update product');
+    }
+  };
 
-      <div className="relative flex flex-col min-w-0 break-words bg-white w-full mb-6  rounded">
-        <div className="rounded-t mb-0  md:py-1 p-1 border-0">
-          <div className="bg-blue-100  rounded-lg ml-3 m-1 p-2 mb-3">
-            <span className=" bg-blue-100  rounded-lg  text-gray-500 text-[12px]"><span className="mr-4 text-red-500 bg-red-200 p-1 px-3 rounded-full text-[15px]">!</span>Unlock a personalized shopping hub with Gupta's Mini Store. Tailor market links, showcase products, and enhance the shopping journey effortlessly.</span>
-          </div>
-          <div className="flex flex-wrap items-center">
-            <div className="w-full  max-w-full flex-grow flex-1">
-              {data?.data?.data?.length ?
-                <span className="flex justify-between" >
-                  {/* <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-gray-300">Search</label> */}
-                  <div class="relative  visible">
-                    <input ref={inputEl} onChange={getSearchTerm} type="text" style={{ borderColor: '#0071BC' }} id="default-search" class="block p-4 pl-4 w-full h-4 text-sm text-gray-900 bg-gray-50 rounded-lg border focus:ring-green-500 focus:border-green-500 " placeholder="Search " />
-                    <svg aria-hidden="true" class="w-5 h-5 right-2.5 bottom-3 absolute text-gray-500 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
-                  </div>
+  const deleteProduct = async (e) => {
+    e.preventDefault();
+    try {
+      setLoading(true);
+      const response = await AdminApis.deleteProduct(selectedProduct);
+      if (response?.data) {
+        toast.success("Product deleted successfully");
+        toggleModal('delete', false);
+        fetchProducts();
+      }
+    } catch (error) {
+      console.error('Error deleting product:', error);
+      toast.error('Failed to delete product');
+    } finally {
+      setLoading(false);
+    }
+  };
 
-                  <NavLink onClick={(userLoginData?.data?.no_of_mstore <= data?.data?.length) ? (() => setToggleExceedModal(true)) : null} to={(userLoginData?.data?.no_of_mstore <= data?.data?.length) ? '' : `/createproduct`} className="flex justify-center">
-                    < span className="flex justify-center ">
-                      <button
-                        type="button"
-                        style={{ backgroundColor: '#0071BC', borderRadius: '10px' }}
-                        className=" text-white hover:bg-blue-800 focus:ring-4 focus:outline-none font-medium rounded-lg text-sm w-28 px-5 py-2.5 text-center "
-                      >
-                        + Add
-                      </button>
-                    </span>
-                  </NavLink>
-                </span>
-                :
-                ''
-              }
+  // Pagination
+  const handlePageChange = (page) => {
+    fetchProducts(page);
+    setCurrentPage(page);
+  };
 
+  // Utility functions
+  const truncateText = (str, length = 60) => {
+    if (!str) return '';
+    return str.length > length ? str.substring(0, length) + '...' : str;
+  };
 
+  const formatPrice = (price) => {
+    return new Intl.NumberFormat('en-NG', { 
+      style: 'currency', 
+      currency: 'NGN' 
+    }).format(price || 0);
+  };
 
-              <div>
-                {!loader ? (
-                  (searchResult?.length == 0 ?
-                    <div className="p-2  shadow animate-pulse md:p-6 dark:border-gray-700" style={{ height: '70vh', width: '78vw' }}>
-                      <div className="flex justify-center items-center mb-4 h-48 bg-gray-300 rounded dark:bg-gray-400">
-                        <span>Empty Record</span>
-                      </div>
+  const copyToClipboard = () => {
+    toast.success("Link copied to clipboard!", {
+      position: "bottom-right",
+      autoClose: 2000,
+    });
+  };
 
-                    </div>
-                    :
-                    (data?.data?.data?.length >= 1 && data?.data?.data !== 'sub_expired') ?
-                      <div className="container  flex-col md:flex-row md:justify-start mt-1 pt-1 grid lg:grid-cols-3 grid-cols-2 md:gap-1 gap-3">
-                        {(inputEl?.current?.value?.length > 1 ? searchResult : data?.data?.data)?.map(
-                          (data, index) => (
+  const getCategoryColor = (category) => {
+    const cat = categories.find(c => c.value === category);
+    return cat?.color || 'bg-gray-100';
+  };
 
-                            <>
-                              <div class="max-w-sm bg-white rounded-lg border border-gray-200 shadow-md">
-                                <div className="flex flex-col mx-1 my-2">
-                                  <span className="flex justify-start">
-                                    <span className="flex flex-col">
-                                      <span className="font-[600] text-[8px] md:text-[12px] "> {truncateText(`${configs?.baseRedirectFront}s/${(data?.link_name)}`)} { }</span>
-                                    </span>
-                                  </span>
-
-                                  <span className="mt-2">
-                                    <span className="flex justify-between gap-1 ">
-
-                                      <span>
-                                        <CopyToClipboard text={`${configs?.baseRedirectFront}s/${(data?.link_name)}`}
-                                          onCopy={() => isCopied()}>
-                                          <span
-                                            style={{ color: 'white' }}
-                                            className=" bg-[#0071BC] font-xs rounded-sm text-[10px] px-2 py-[3px] cursor-pointer"
-                                          >
-                                            Copy&nbsp;link
-                                          </span>
-                                        </CopyToClipboard>
-                                      </span>
-
-                                      <span className="flex gap-1">
-                                        <NavLink to={`/edit-product/${data?.id}`} className={'cursor-pointer mt-1.5'}>
-                                          <FaEdit />
-                                        </NavLink>
-                                        <button
-                                          type="button"
-                                          onClick={(e) => toggleDelete(data?.id)}
-                                          className=" outline-none  font-xs text-red-500 rounded-full text-xs px-2 py-2 text-center "
-                                        >
-                                          <FaTrash />
-                                        </button>
-                                      </span>
-
-
-
-                                    </span>
-                                  </span>
-
-                                </div>
-                                <hr />
-                                <NavLink to={`/edit-product/${data?.id}`} className={'cursor-pointer'}>
-                                  <p class="mb-2 tracking-tight m-2 p-2 bg-[#F4FBFF] h-44" style={{ fontSize: '16px', color: '#595959', backgroundImage: `url(${data?.product_image_1})`, backgroundRepeat: "no-repeat", backgroundSize: 'cover', backgroundPosition: 'center center' }}>{data?.link_info?.message}</p>
-                                </NavLink>
-                                <hr />
-
-                                <div className="flex flex-col pt-[7px] px-[4px]">
-
-                                  <div className="flex justify-start pb-2">
-                                    <div className="flex flex-col ">
-                                      {/* <span className="text-[#149E49] text-[9px] font-[400]" style={{ textDecorationLine: 'line-through' }}> {new Intl.NumberFormat('en-US', { style: 'currency', currency: 'NGN' }).format(data?.product_price)}</span> */}
-                                      <span className="text-[#149E49] md:text-[12px] text-[9px] font-[600]"> {new Intl.NumberFormat('en-US', { style: 'currency', currency: 'NGN' }).format(data?.no_of_items)}</span>
-                                    </div>
-
-                                  </div>
-
-                                  <div className="flex justify-start pb-2">
-                                    <span className="text-[10px] font-[500]">{data?.product_name}</span>
-                                    {/* <span
-                                    style={{ color: 'white' }}
-                                    className="ring-1 outline-none bg-[#149E49] font-xs rounded-lg text-xs px-4 h-5 pt-[2px] text-center cursor-pointer"
-                                  >
-                                    Active
-                                  </span> */}
-                                  </div>
-                                  <span className="text-[10px] font-[400] text-[#808191] h-10 overflow-auto">{data?.product_description}</span>
-
-                                </div>
-                              </div>
-
-
-                             
-                            </>
-
-
-
-                          )
-                        )}
-
-
-
-                      </div>
-                      :
-                      (data?.data == 'sub_expired' ?
-                        <CardRenewSubscription />
-                        :
-                        <div className="relative flex flex-col min-w-0 break-words bg-white w-full mb-6  rounded">
-                          <div className="rounded-t mb-0  py-3 border-0">
-                            <div className="flex flex-wrap items-center">
-                              <div className="w-full px-4 max-w-full p-52 flex-grow flex-1">
-
-                                <h3 className="flex justify-center font-bold"> You haven’t created any Product Link</h3>
-                                <p className="flex text-sm justify-center"> Click on the button below to create a new </p>
-                                <p className="flex text-sm justify-center text-black font-bold"> Product.</p>
-
-                                <NavLink to='/createproduct' className="flex justify-center">
-                                  < span className="flex justify-center pt-4">
-                                    <button
-                                      type="submit"
-                                      style={{ backgroundColor: '#0071BC', borderRadius: '50px' }}
-                                      className=" text-white hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm w-40 px-5 py-2.5 text-center "
-                                    >
-                                      + Create New
-                                    </button>
-                                  </span>
-                                </NavLink>
-
-                              </div>
-
-                            </div>
-                          </div>
-                          <div className="block w-full overflow-x-auto">
-                            {/* Projects table */}
-
-                          </div>
-                        </div>)
-                  )
-                )
-
-                  :
-
-                  <div className="p-2  shadow animate-pulse md:p-6 dark:border-gray-700" style={{ height: '70vh', width: '78vw' }}>
-                    <div className="flex justify-center items-center mb-4 h-48 bg-gray-300 rounded dark:bg-gray-400">
-
-                    </div>
-                    <div className="h-2.5 bg-gray-200 rounded-full dark:bg-gray-400 w-48 mb-4"></div>
-                    <div className="h-2 bg-gray-200 rounded-full dark:bg-gray-400 mb-2.5"></div>
-                    <div className="h-2 bg-gray-200 rounded-full dark:bg-gray-400 mb-2.5"></div>
-                    <div className="h-2 bg-gray-200 rounded-full dark:bg-gray-400"></div>
-                    <div className="flex items-center mt-4 space-x-3">
-
-                    </div>
-                    <span className="sr-only">Loading...</span>
-                  </div>
-                  //  :
-                  //  <div>
-                  //   <h2>Pending </h2>
-                  //  </div>
-                }
-
-
-
-
-
-
-
-
-              </div>
-
-              <div className='m-4 mt-10 flex justify-end'>
-                {
-                  data?.data?.links?.filter(((item, idx) => idx < 1000)).map(
-                    (datas, index) => (
-                      <button onClick={() => paginator(datas?.label == 'Next &raquo;' ? datas?.url.charAt(datas?.url.length - 1) : (datas?.label === '&laquo; Previous') ? datas?.url.charAt(datas?.url.length - 1) : datas?.label)} disabled={datas?.active} className={'mx-1 py-1 px-2 ' + (datas?.active == false ? 'bg-gray-300 text-black ' : 'bg-[#0071BC] text-white')}>
-                        {datas?.label == '&laquo; Previous' ? '< Previous' : (datas?.label === 'Next &raquo;') ? 'Next  >' : datas?.label}
-                      </button>
-                    )
-                  )
-                }
-
-              </div>
-
-
-
-
-
-            </div>
-
-          </div>
-        </div>
-        <div className="block w-full overflow-x-auto">
-          {/* Projects table */}
-
-        </div>
-      </div >
-
-
-      <section>
-        <Modal
-          visible={visible}
-          width="400"
-          height="400"
-          effect="fadeInUp"
-          onClickAway={() => setVisible(false)}
+  // Render components
+  const ProductCard = ({ product, isListView = false }) => (
+    <div className={`group bg-white rounded-lg border border-gray-100 shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden ${
+      isListView ? 'flex h-24' : 'flex flex-col h-80'
+    }`}>
+      {/* Product Image */}
+      <div className={`relative overflow-hidden ${isListView ? 'w-24 flex-shrink-0' : 'w-full h-40'}`}>
+        <div
+          className={`w-full h-full bg-gradient-to-br from-gray-100 to-gray-200 bg-cover bg-center group-hover:scale-105 transition-transform duration-300`}
+          style={{
+            backgroundImage: product.product_image_1 
+              ? `url(${product.product_image_1})` 
+              : 'none'
+          }}
         >
-          <div className=" " style={{ height: '100%', overflow: 'auto' }}>
-            <span className="flex justify-end p-3">
-              <p className="cursor-pointer font-bold" onClick={(e) => setVisible(false)}><SvgElement type={icontypesEnum.CANCEL} /></p>
+          {!product.product_image_1 && (
+            <div className="flex items-center justify-center h-full text-gray-400">
+              <FaStore size={isListView ? 14 : 20} />
+            </div>
+          )}
+        </div>
+        
+        {/* Market Link Badge */}
+        <div className={`absolute ${isListView ? 'top-1 left-1' : 'top-2 left-2'}`}>
+          <span className={`bg-white/90 backdrop-blur-sm text-gray-700 font-medium px-1.5 py-0.5 rounded-full border border-gray-200 ${isListView ? 'text-xs' : 'text-xs'}`}>
+            {truncateText(product.link_name, 8)}
+          </span>
+        </div>
+
+        {/* Quick Actions Overlay - Only for grid view */}
+        {!isListView && (
+          <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center">
+            <div className="flex space-x-2">
+              <NavLink 
+                to={`/edit-product/${product.id}`}
+                className="p-1.5 bg-white/90 text-gray-700 rounded-full hover:bg-white transition-colors"
+                title="Edit Product"
+              >
+                <FaEdit size={12} />
+              </NavLink>
+              
+              <a
+                href={`${configs?.baseRedirectFront}s/${product.link_name}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-1.5 bg-white/90 text-gray-700 rounded-full hover:bg-white transition-colors"
+                title="View Store"
+              >
+                <FaExternalLinkAlt size={12} />
+              </a>
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* Product Info */}
+      <div className={`p-3 flex-1 flex flex-col ${isListView ? 'justify-between' : ''}`}>
+        {/* Top Section - Name, Description, Price */}
+        <div className="flex-1">
+          {/* Product Name */}
+          <h3 className={`font-semibold text-gray-900 mb-1 line-clamp-1 ${isListView ? 'text-sm' : 'text-sm'}`}>
+            {truncateText(product.product_name, isListView ? 25 : 30)}
+          </h3>
+
+          {/* Product Description - Only show in grid view */}
+          {!isListView && (
+            <p className="text-gray-600 text-xs mb-2 line-clamp-2">
+              {truncateText(product.product_description, 60)}
+            </p>
+          )}
+
+          {/* Price */}
+          <div className="flex items-center space-x-1 mb-2">
+            {product.no_of_items && parseFloat(product.no_of_items) < parseFloat(product.product_price) && (
+              <span className="text-gray-400 line-through text-xs">
+                {formatPrice(product.product_price)}
+              </span>
+            )}
+            <span className={`text-green-600 font-bold ${isListView ? 'text-sm' : 'text-base'}`}>
+              {formatPrice(product.no_of_items || product.product_price)}
             </span>
-            <div className=" flex flex-row justify-around bg-[#fff]  items-center rounded-lg p-1">
-
-              <div className="">
-
-                <span className="flex justify-around">
-                  {/* <h1 className=" text-xs text-red-600" style={{ fontSize: '10px' }}>Link can’t be edited in free plan. <span style={{ color: '#61A24F' }} className="font-bold text-xs">Upgrade to Pro</span></h1> */}
-
-
-                </span>
-
-                <label
-                  className="flex justify-start  mb-2 pt-2 text-md font-bold text-black"
-                >
-                  Edit User Message
-                </label>
-
-                <label
-                  className="flex justify-start  mb-2 pt-2 text-xs font-medium text-gray-600"
-                >
-                  User message
-                </label>
-
-
-                <form onSubmit={handleSubmit} className="pb-4 rounded-lg">
-                  <div className="mb-6 ">
-                    <textarea id="message" rows={3} defaultValue={value?.link_info?.message} className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-gray-500 focus:border-gray-500" placeholder="User message" style={{ backgroundColor: '#F5F5F5' }} onChange={(e) => setMessage(e?.target?.value)}></textarea>
-                  </div>
-
-                  {/* <div className="mb-6 ">
-                    <input id="message" type="text" defaultValue={value?.name} className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-gray-500 focus:border-gray-500" placeholder="User message" style={{ backgroundColor: '#F5F5F5' }} onChange={(e) => setName(e?.target?.value)} />
-                  </div> */}
-
-                  <span className="flex justify-center pt-4">
-                    <button
-                      type="submit"
-                      style={{ backgroundColor: '#61A24F', borderRadius: '50px' }}
-                      className=" text-white hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm w-full px-2 py-2.5 text-center "
-                    >
-                      Update
-                    </button>
-                  </span>
-
-                  <span className="flex justify-center pt-4">
-                    <button
-                      type="button"
-                      onClick={(e) => setVisible(false)}
-                      style={{ borderRadius: '50px' }}
-                      className=" text-black bg-gray-300 hover:bg-gray-500 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm w-full px-2 py-2.5 text-center "
-                    >
-                      Cancel
-                    </button>
-                  </span>
-
-                </form>
-
-
-
-              </div>
-
-            </div>
-
           </div>
-        </Modal>
-      </section>
 
-
-
-      <section>
-        <Modal
-          visible={toggleDeleteModal}
-          width="350"
-          height="430"
-          effect="fadeInUp"
-          onClickAway={() => setToggleDeleteModal(false)}
-        >
-          <div className=" " style={{ height: '100%', overflow: 'auto' }}>
-
-            <div className="container flex flex-row justify-around bg-[#fff]  items-center rounded-lg p-2">
-
-              <div className="px-3">
-
-                {/* <span className="flex justify-around">
-                    <h1 className=" text-xs text-red-600" style={{ fontSize: '10px' }}>Link can’t be edited in free plan. <span style={{ color: '#61A24F' }} className="font-bold text-xs">Upgrade to Pro</span></h1>
-                  </span> */}
-                <span className="flex justify-end px-2 pt-3">
-                  <p className="cursor-pointer font-bold" onClick={(e) => setToggleDeleteModal(false)}><SvgElement type={icontypesEnum.CANCEL} /></p>
+          {/* Category & Location Tags - Only in grid view */}
+          {!isListView && (
+            <div className="flex flex-wrap gap-1 mb-2">
+              {product.category && (
+                <span className={`${getCategoryColor(product.category)} text-gray-700 text-xs px-1.5 py-0.5 rounded-full flex items-center`}>
+                  <FaTag size={6} className="mr-1" />
+                  {truncateText(product.category, 10)}
                 </span>
-
-                <label
-                  className="flex justify-start mb-2 pt-1 text-md font-bold text-black"
-                >
-                  Delete Product
-                </label>
-
-                <label
-                  style={{ fontSize: '14px' }}
-                  className="flex justify-start mb-2 pt-2 text-xs font-medium text-gray-600"
-                >
-                  You are about to delete the Product you created.
-
-
-                </label>
-                <label
-                  style={{ fontSize: '14px' }}
-                  className="flex justify-start mb-2 pt-2 text-xs font-medium text-gray-600"
-                >
-
-
-                  Please note that:
-                </label>
-
-                <ul class="space-y-1 max-w-md list-disc list-inside text-gray-500 dark:text-gray-400 pl-2">
-
-                  <li style={{ color: '#2C2C2C', fontSize: '14px' }} className="text-xs">
-                    All Product data will be lost
-                  </li>
-                  <li style={{ color: '#2C2C2C', fontSize: '14px' }} className="text-xs">
-                    The product will not be made available to customers again
-                  </li>
-
-                </ul>
-
-
-
-                <form onSubmit={deleteLink} className="pb-4 rounded-lg">
-                  <span className="flex justify-center pt-4">
-                    <button
-                      type="submit"
-                      style={{ borderRadius: '50px', color: '#F52424' }}
-                      className=" text-red-700 bg-red-200 focus:ring-4 focus:outline-none focus:ring-grredeen-300 font-medium rounded-lg text-sm w-full px-2 py-2.5 text-center "
-                    >
-                      Delete Link
-                    </button>
-                  </span>
-
-                  <span className="flex justify-center pt-4">
-                    <button
-                      type="button"
-                      onClick={(e) => setToggleDeleteModal(false)}
-                      style={{ borderRadius: '50px' }}
-                      className=" text-black   focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm w-full px-2 py-1.5 text-center "
-                    >
-                      Cancel
-                    </button>
-                  </span>
-
-                  <span className="flex justify-center pt-4">
-                    <Oval
-                      height={40}
-                      width={40}
-                      color="#0071BC"
-                      wrapperStyle={{}}
-                      wrapperClass=""
-                      visible={loader}
-                      ariaLabel='oval-loading'
-                      secondaryColor="#96cff6"
-                      strokeWidth={2}
-                      strokeWidthSecondary={2}
-                    />
-                  </span>
-
-                </form>
-              </div>
-
+              )}
+              {product.location && (
+                <span className="bg-blue-50 text-blue-700 text-xs px-1.5 py-0.5 rounded-full flex items-center">
+                  <FaMapMarkerAlt size={6} className="mr-1" />
+                  {truncateText(product.location, 8)}
+                </span>
+              )}
             </div>
+          )}
+        </div>
 
+        {/* Bottom Section - Actions */}
+        <div className={`flex items-center justify-between ${isListView ? 'mt-2' : 'pt-2 border-t border-gray-100'}`}>
+          {/* Copy Link */}
+          <CopyToClipboard 
+            text={`${configs?.baseRedirectFront}s/${product.link_name}`}
+            onCopy={copyToClipboard}
+          >
+            <button className={`flex items-center space-x-1 bg-blue-50 text-blue-600 hover:bg-blue-100 transition-colors rounded ${isListView ? 'text-xs px-2 py-1' : 'text-xs px-2 py-1'}`}>
+              <FaCopy size={10} />
+              <span>Copy</span>
+            </button>
+          </CopyToClipboard>
+
+          {/* Action Icons */}
+          <div className="flex items-center space-x-2">
+            <NavLink 
+              to={`/edit-product/${product.id}`}
+              className="p-1.5 text-blue-600 hover:text-blue-700 hover:bg-blue-50 rounded-full transition-colors"
+              title="Edit Product"
+            >
+              <FaEdit size={12} />
+            </NavLink>
+            
+            <a
+              href={`${configs?.baseRedirectFront}s/${product.link_name}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="p-1.5 text-green-600 hover:text-green-700 hover:bg-green-50 rounded-full transition-colors"
+              title="View Store"
+            >
+              <FaExternalLinkAlt size={12} />
+            </a>
+            
+            <button
+              onClick={() => toggleModal('delete', true, product.id)}
+              className="p-1.5 text-red-600 hover:text-red-700 hover:bg-red-50 rounded-full transition-colors"
+              title="Delete Product"
+            >
+              <FaTrash size={12} />
+            </button>
           </div>
-        </Modal>
-      </section>
-
-
-      <section>
-        <Modal
-          visible={toggleExceedModal}
-          width="350"
-          height="260"
-          effect="fadeInUp"
-          onClickAway={() => setToggleExceedModal(false)}
-        >
-          <div className=" " style={{ height: 'auto', overflow: 'auto' }}>
-
-            <div className="container flex flex-row justify-around bg-[#fff]  items-center rounded-lg p-2">
-
-              <div className="px-3">
-
-                {/* <span className="flex justify-around">
-                    <h1 className=" text-xs text-red-600" style={{ fontSize: '10px' }}>Link can’t be edited in free plan. <span style={{ color: '#61A24F' }} className="font-bold text-xs">Upgrade to Pro</span></h1>
-                  </span> */}
-                <span className="flex justify-end px-2 pt-3">
-                  <p className="cursor-pointer font-bold" onClick={(e) => setToggleExceedModal(false)}><SvgElement type={icontypesEnum.CANCEL} /></p>
-                </span>
-
-                <label
-                  className="flex justify-start mb-2 pt-1 text-md font-bold text-black"
-                >
-                  Maximum Link Exceeded
-                </label>
-
-                <label
-                  style={{ fontSize: '14px' }}
-                  className="flex justify-start mb-2 pt-4 pb-4 text-xs font-medium text-gray-600"
-                >
-                  You have exceeded the number of product links you can create.
-
-
-                </label>
-
-
-                <span className="flex justify-center pt-4 pb-4">
-
-                  <NavLink to={`/subscription`} className="  bg-[#0071BC] text-white focus:ring-4 font-medium rounded-lg text-sm w-full px-2 py-2.5 text-center ">
-                    Proceed
-                  </NavLink>
-                </span>
-
-
-
-                {/* <span className="flex justify-center pt-4">
-                    <Oval
-                      height={40}
-                      width={40}
-                      color="#0071BC"
-                      wrapperStyle={{}}
-                      wrapperClass=""
-                      visible={loader}
-                      ariaLabel='oval-loading'
-                      secondaryColor="#96cff6"
-                      strokeWidth={2}
-                      strokeWidthSecondary={2}
-                    />
-                  </span> */}
-
-
-              </div>
-
-            </div>
-
-          </div>
-        </Modal>
-      </section>
-
-      <ToastContainer
-        position="top-right"
-        autoClose={2000}
-        hideProgressBar={true}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover />
-    </>
+        </div>
+      </div>
+    </div>
   );
-}
+
+  const EmptyState = () => (
+    <div className="text-center py-16">
+      <div className="mx-auto w-32 h-32 bg-gradient-to-br from-blue-50 to-indigo-100 rounded-full flex items-center justify-center mb-6">
+        <FaStore className="text-blue-400 text-4xl" />
+      </div>
+      <h3 className="text-xl font-semibold text-gray-900 mb-3">
+        {searchTerm || selectedCategory !== 'all' || selectedMarketLink !== 'all'
+          ? "No products match your criteria"
+          : "Start Your Product Journey"
+        }
+      </h3>
+      <p className="text-gray-600 mb-8 max-w-md mx-auto">
+        {searchTerm || selectedCategory !== 'all' || selectedMarketLink !== 'all'
+          ? "Try adjusting your filters or search terms to find what you're looking for."
+          : "Create your first product and start building your online store. It's easy and takes just a few minutes!"
+        }
+      </p>
+      {!searchTerm && selectedCategory === 'all' && selectedMarketLink === 'all' && (
+        <NavLink
+          to="/createproduct"
+          className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-xl hover:from-blue-700 hover:to-indigo-700 transition-all duration-200 shadow-lg hover:shadow-xl"
+        >
+          <FaPlus className="mr-2" />
+          Create Your First Product
+        </NavLink>
+      )}
+    </div>
+  );
+
+  if (loading && products.length === 0) {
+    return (
+      <div className="flex items-center justify-center min-h-screen bg-gray-50">
+        <div className="text-center">
+          <div className="inline-flex items-center justify-center w-16 h-16 bg-blue-100 rounded-full mb-4">
+            <Oval height={32} width={32} color="#3b82f6" secondaryColor="#93c5fd" />
+          </div>
+          <p className="text-gray-600 font-medium">Loading your amazing products...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Check for subscription expiry
+  if (paginationData?.data === 'sub_expired') {
+    return <CardRenewSubscription />;
+  }
+
+  return (
+    <div className="min-h-screen bg-gray-50">
+      <div className="max-w-7xl mx-auto p-4 md:p-6">
+        {/* Compact Header */}
+        <div className="mb-6">
+          {/* Compact Info Banner */}
+          <div className="bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-lg p-3 mb-4">
+            <div className="flex items-center">
+              <FaStore className="text-blue-600 mr-2" size={14} />
+              <p className="text-blue-700 text-sm">
+                <strong>Mini Store:</strong> Create custom market links and showcase products beautifully.
+              </p>
+            </div>
+          </div>
+
+          {/* Compact Header Content */}
+          <div className="flex items-center justify-between">
+            <div>
+              <h1 className="text-2xl font-bold text-gray-900">My Products</h1>
+              <p className="text-gray-600 text-sm">
+                {filteredProducts.length} {filteredProducts.length === 1 ? 'product' : 'products'}
+                {searchTerm && (
+                  <span className="text-blue-600 font-medium"> matching "{searchTerm}"</span>
+                )}
+              </p>
+            </div>
+
+            <NavLink
+              to={
+                userLoginData?.data?.no_of_mstore <= products.length 
+                  ? "#" 
+                  : "/createproduct"
+              }
+              onClick={
+                userLoginData?.data?.no_of_mstore <= products.length
+                  ? () => toggleModal('exceed', true)
+                  : undefined
+              }
+              className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-lg hover:from-blue-700 hover:to-indigo-700 transition-all duration-200 shadow-md hover:shadow-lg text-sm font-medium"
+            >
+              <FaPlus className="mr-2" size={12} />
+              Add Product
+            </NavLink>
+          </div>
+        </div>
+
+        {/* Compact Filters and Controls */}
+        <div className="bg-white rounded-lg border border-gray-200 shadow-sm p-4 mb-6">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-3">
+            {/* Search */}
+            <div className="lg:col-span-4">
+              <div className="relative">
+                <FaSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={14} />
+                <input
+                  ref={searchInputRef}
+                  type="text"
+                  placeholder="Search products..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="w-full pl-10 pr-3 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
+                />
+              </div>
+            </div>
+
+            {/* Category Filter */}
+            <div className="lg:col-span-2">
+              <select
+                value={selectedCategory}
+                onChange={(e) => setSelectedCategory(e.target.value)}
+                className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm bg-white"
+              >
+                {categories.map(category => (
+                  <option key={category.value} value={category.value}>
+                    {category.label}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            {/* Market Link Filter */}
+            <div className="lg:col-span-2">
+              <select
+                value={selectedMarketLink}
+                onChange={(e) => setSelectedMarketLink(e.target.value)}
+                className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm bg-white"
+              >
+                <option value="all">All Market Links</option>
+                {getUniqueMarketLinks().map(link => (
+                  <option key={link} value={link}>{link}</option>
+                ))}
+              </select>
+            </div>
+
+            {/* Sort */}
+            <div className="lg:col-span-2">
+              <select
+                value={sortBy}
+                onChange={(e) => setSortBy(e.target.value)}
+                className="w-full px-3 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm bg-white"
+              >
+                <option value="newest">Newest First</option>
+                <option value="oldest">Oldest First</option>
+                <option value="name">Name A-Z</option>
+                <option value="price-low">Price: Low to High</option>
+                <option value="price-high">Price: High to Low</option>
+              </select>
+            </div>
+
+            {/* View Toggle */}
+            <div className="lg:col-span-2">
+              <div className="flex bg-gray-100 rounded-lg p-0.5">
+                <button
+                  onClick={() => setViewMode('grid')}
+                  className={`flex-1 flex items-center justify-center px-2 py-1.5 text-xs font-medium rounded-md transition-all duration-200 ${
+                    viewMode === 'grid'
+                      ? 'bg-white text-blue-600 shadow-sm'
+                      : 'text-gray-600 hover:text-gray-900'
+                  }`}
+                >
+                  <FaTh className="mr-1" size={12} />
+                  Grid
+                </button>
+                <button
+                  onClick={() => setViewMode('list')}
+                  className={`flex-1 flex items-center justify-center px-2 py-1.5 text-xs font-medium rounded-md transition-all duration-200 ${
+                    viewMode === 'list'
+                      ? 'bg-white text-blue-600 shadow-sm'
+                      : 'text-gray-600 hover:text-gray-900'
+                  }`}
+                >
+                  <FaList className="mr-1" size={12} />
+                  List
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Products Grid/List */}
+        {filteredProducts.length === 0 ? (
+          <EmptyState />
+        ) : (
+          <div className={
+            viewMode === 'grid'
+              ? "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
+              : "space-y-4"
+          }>
+            {filteredProducts.map((product) => (
+              <ProductCard 
+                key={product.id} 
+                product={product} 
+                isListView={viewMode === 'list'} 
+              />
+            ))}
+          </div>
+        )}
+
+        {/* Pagination */}
+        {paginationData?.links && paginationData.links.length > 3 && (
+          <div className="flex justify-center mt-12">
+            <div className="flex space-x-2">
+              {paginationData.links.map((link, index) => (
+                <button
+                  key={index}
+                  onClick={() => {
+                    if (link.label === 'Next &raquo;' || link.label === '&laquo; Previous') {
+                      const page = link.url?.charAt(link.url.length - 1);
+                      handlePageChange(page);
+                    } else if (!isNaN(link.label)) {
+                      handlePageChange(link.label);
+                    }
+                  }}
+                  disabled={link.active || !link.url}
+                  className={`px-4 py-2 text-sm font-medium rounded-lg transition-all duration-200 ${
+                    link.active
+                      ? 'bg-blue-600 text-white shadow-md'
+                      : link.url
+                      ? 'bg-white text-gray-700 border border-gray-300 hover:bg-gray-50 hover:border-gray-400'
+                      : 'bg-gray-100 text-gray-400 cursor-not-allowed'
+                  }`}
+                >
+                  {link.label === '&laquo; Previous' 
+                    ? 'Previous' 
+                    : link.label === 'Next &raquo;' 
+                    ? 'Next' 
+                    : link.label
+                  }
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Click outside to close dropdown */}
+        {/* {dropdownOpen && (
+          <div 
+            className="fixed inset-0 z-40" 
+            onClick={() => setDropdownOpen(null)}
+          />
+        )} */}
+
+        {/* Edit Modal */}
+        <Modal
+          visible={modals.edit}
+          width="90%"
+          height="auto"
+          effect="fadeInUp"
+          onClickAway={() => toggleModal('edit', false)}
+        >
+          <div className="max-w-md mx-auto bg-white rounded-xl shadow-xl">
+            <div className="p-6 border-b border-gray-200">
+              <div className="flex justify-between items-center">
+                <h2 className="text-xl font-bold text-gray-900">Edit Product Message</h2>
+                <button 
+                  onClick={() => toggleModal('edit', false)}
+                  className="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-full transition-colors"
+                >
+                  <SvgElement type={icontypesEnum.CANCEL} />
+                </button>
+              </div>
+            </div>
+
+            <form onSubmit={updateProduct} className="p-6">
+              <div className="mb-6">
+                <label className="block text-sm font-medium text-gray-700 mb-3">
+                  Product Message
+                </label>
+                <textarea
+                  rows={4}
+                  defaultValue={selectedProduct?.link_info?.message}
+                  onChange={(e) => setMessage(e.target.value)}
+                  className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+                  placeholder="Enter a custom message for this product..."
+                />
+              </div>
+
+              <div className="flex justify-end space-x-3">
+                <button
+                  type="button"
+                  onClick={() => toggleModal('edit', false)}
+                  className="px-5 py-2.5 text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors font-medium"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className="px-5 py-2.5 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors font-medium"
+                >
+                  Update Message
+                </button>
+              </div>
+            </form>
+          </div>
+        </Modal>
+
+        {/* Delete Modal */}
+        <Modal
+          visible={modals.delete}
+          width="90%"
+          height="auto"
+          effect="fadeInUp"
+          onClickAway={() => toggleModal('delete', false)}
+          >
+            <div className="max-w-md mx-auto bg-white rounded-xl shadow-xl">
+              <div className="p-6 border-b border-gray-200">
+                <div className="flex justify-between items-center">
+                  <h2 className="text-xl font-bold text-red-600">Delete Product</h2>
+                  <button 
+                    onClick={() => toggleModal('delete', false)}
+                    className="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-full transition-colors"
+                  >
+                    <SvgElement type={icontypesEnum.CANCEL} />
+                  </button>
+                </div>
+              </div>
+  
+              <div className="p-6">
+                <div className="flex items-center space-x-3 mb-4">
+                  <div className="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center">
+                    <FaTrash className="text-red-600" size={20} />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-gray-900">Are you sure?</h3>
+                    <p className="text-gray-600 text-sm">This action cannot be undone.</p>
+                  </div>
+                </div>
+  
+                <div className="bg-red-50 border border-red-200 rounded-lg p-4 mb-6">
+                  <h4 className="font-medium text-red-800 mb-2">This will permanently:</h4>
+                  <ul className="text-sm text-red-700 space-y-1">
+                    <li className="flex items-center">
+                      <span className="w-1.5 h-1.5 bg-red-400 rounded-full mr-2"></span>
+                      Delete all product data permanently
+                    </li>
+                    <li className="flex items-center">
+                      <span className="w-1.5 h-1.5 bg-red-400 rounded-full mr-2"></span>
+                      Remove product from customer view
+                    </li>
+                    <li className="flex items-center">
+                      <span className="w-1.5 h-1.5 bg-red-400 rounded-full mr-2"></span>
+                      Break any existing product links
+                    </li>
+                  </ul>
+                </div>
+  
+                <div className="flex justify-end space-x-3">
+                  <button
+                    onClick={() => toggleModal('delete', false)}
+                    className="px-5 py-2.5 text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors font-medium"
+                  >
+                    Keep Product
+                  </button>
+                  <button
+                    onClick={deleteProduct}
+                    disabled={loading}
+                    className="px-5 py-2.5 bg-red-600 text-white rounded-lg hover:bg-red-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors font-medium"
+                  >
+                    {loading ? (
+                      <div className="flex items-center">
+                        <Oval height={16} width={16} color="#ffffff" secondaryColor="#ef4444" />
+                        <span className="ml-2">Deleting...</span>
+                      </div>
+                    ) : (
+                      'Yes, Delete Product'
+                    )}
+                  </button>
+                </div>
+              </div>
+            </div>
+          </Modal>
+  
+          {/* Exceed Limit Modal */}
+          <Modal
+            visible={modals.exceed}
+            width="90%"
+            height="auto"
+            effect="fadeInUp"
+            onClickAway={() => toggleModal('exceed', false)}
+          >
+            <div className="max-w-md mx-auto bg-white rounded-xl shadow-xl">
+              <div className="p-6 border-b border-gray-200">
+                <div className="flex justify-between items-center">
+                  <h2 className="text-xl font-bold text-gray-900">Upgrade Required</h2>
+                  <button 
+                    onClick={() => toggleModal('exceed', false)}
+                    className="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-full transition-colors"
+                  >
+                    <SvgElement type={icontypesEnum.CANCEL} />
+                  </button>
+                </div>
+              </div>
+  
+              <div className="p-6">
+                <div className="flex items-center space-x-3 mb-4">
+                  <div className="w-12 h-12 bg-amber-100 rounded-full flex items-center justify-center">
+                    <FaStore className="text-amber-600" size={20} />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-gray-900">Product Limit Reached</h3>
+                    <p className="text-gray-600 text-sm">You've hit your plan's limit</p>
+                  </div>
+                </div>
+  
+                <div className="bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-lg p-4 mb-6">
+                  <p className="text-blue-800 text-sm leading-relaxed">
+                    You've reached the maximum number of products allowed on your current plan. 
+                    Upgrade to continue adding more products and unlock additional features.
+                  </p>
+                </div>
+  
+                <div className="flex justify-end space-x-3">
+                  <button
+                    onClick={() => toggleModal('exceed', false)}
+                    className="px-5 py-2.5 text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors font-medium"
+                  >
+                    Maybe Later
+                  </button>
+                  <NavLink
+                    to="/subscription"
+                    className="px-5 py-2.5 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-lg hover:from-blue-700 hover:to-indigo-700 transition-all duration-200 font-medium"
+                  >
+                    Upgrade Now
+                  </NavLink>
+                </div>
+              </div>
+            </div>
+          </Modal>
+  
+          {/* Toast Container */}
+          <ToastContainer
+            position="bottom-right"
+            autoClose={3000}
+            hideProgressBar={false}
+            newestOnTop
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            theme="light"
+            toastStyle={{
+              borderRadius: '12px',
+              boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)'
+            }}
+          />
+        </div>
+      </div>
+    );
+  }

@@ -1,563 +1,703 @@
-
-import React, { useState } from "react";
-import { Dispatch } from "redux";
-import { useSelector, useDispatch } from 'react-redux';
-import { NavLink } from "react-router-dom";
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect, useCallback } from "react";
+import { useNavigate, useParams, Link } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Modal from 'react-awesome-modal';
-import { PhoneInput } from "react-contact-number-input";
 import { SvgElement, icontypesEnum } from "../assets/svgElement";
 import { AdminApis } from "../../apis/adminApi";
-import { FaTrash, FaEdit } from "react-icons/fa";
-import { AiOutlineWarning } from "react-icons/ai";
-import EmojiPicker from 'emoji-picker-react';
-import { useParams } from 'react-router-dom';
-import { MutatingDots } from 'react-loader-spinner'
-import { ThreeDots } from 'react-loader-spinner' 
-import { TailSpin } from 'react-loader-spinner'
-import { Oval } from 'react-loader-spinner'
-
-// components
-
-
+import { FaArrowLeft, FaImage, FaStore, FaSave, FaSpinner } from "react-icons/fa";
+import { IoMdClose } from "react-icons/io";
+import { AiOutlineInfoCircle } from "react-icons/ai";
+import { Oval } from 'react-loader-spinner';
 
 export default function CardEditProduct() {
   const navigate = useNavigate();
-  let [visible, setVisible] = React.useState(false);
-  const [addLink, setAddLink] = React.useState([]);
-
-  const [addContact, setAddContact] = React.useState([]);
-
-  const [productLink, setProductLink] = React.useState([]);
   const params = useParams();
+  
+  // Modal states
+  const [showCreateMarketLinkModal, setShowCreateMarketLinkModal] = useState(false);
+  
+  // Form states
+  const [productForm, setProductForm] = useState({
+    id: '',
+    name: '',
+    description: '',
+    phoneNumber: '',
+    discountedPrice: '',
+    category: '',
+    location: '',
+    price: '',
+    marketLinkId: ''
+  });
 
-  const [productName, setProductName] = useState('');
-  const [productId, setProductId] = useState('');
-  const [productDescription, setProductDescription] = useState('');
-  const [phoneNumber, setPhoneNumber] = useState('');
-  const [noOfItems, setNoOfItems] = useState('');
-  const [category, setCategory] = useState('');
-  const [location, setLocation] = useState('');
-  const [price, setPrice] = useState('');
+  const [marketLinkForm, setMarketLinkForm] = useState({
+    name: '',
+    available: null,
+    checking: false
+  });
 
-  const [imgId1, setImgId1] = useState('');
-  const [imgId2, setImgId2] = useState('');
-  const [imgId3, setImgId3] = useState('');
+  // Data states
+  const [productLinks, setProductLinks] = useState([]);
+  const [whatsappLinks, setWhatsappLinks] = useState([]);
+  
+  // Image states
+  const [productImages, setProductImages] = useState({
+    image1: { file: 'No selected file', preview: '', id: '' },
+    image2: { file: 'No selected file', preview: '', id: '' },
+    image3: { file: 'No selected file', preview: '', id: '' }
+  });
 
+  // UI states
+  const [loading, setLoading] = useState(false);
+  const [initialLoading, setInitialLoading] = useState(true);
 
-  React.useEffect(() => {
-    AdminApis.getlinks().then(
-      (response) => {
-        if (response?.data) {
-          setAddContact(response?.data?.link)
-          // setPermissionIdList(response?.data?.data)
-        }
-      }
-    );
+  // Categories and locations data
+  const categories = [
+    { value: 'all', label: 'All Categories' },
+    { value: 'women fashion', label: "Women's Fashion" },
+    { value: 'men fashion', label: "Men's Fashion" },
+    { value: 'beauty&cosmetics', label: 'Beauty and Cosmetics' },
+    { value: 'bags', label: 'Bags' },
+    { value: 'sport/outdoor', label: 'Sport/Outdoor' },
+    { value: 'home/kitchen', label: 'Home/Kitchen' },
+    { value: 'shoes', label: 'Shoes' },
+    { value: 'watches', label: 'Watches' },
+    { value: 'keyboard & mice', label: 'Keyboard & Mice' },
+    { value: 'laptops', label: 'Laptops' },
+    { value: 'phones', label: 'Phones' }
+  ];
 
+  const nigerianStates = [
+    'Abuja FCT', 'Abia', 'Adamawa', 'Akwa Ibom', 'Anambra', 'Bauchi', 'Bayelsa',
+    'Benue', 'Borno', 'Cross River', 'Delta', 'Ebonyi', 'Edo', 'Ekiti', 'Enugu',
+    'Gombe', 'Imo', 'Jigawa', 'Kaduna', 'Kano', 'Katsina', 'Kebbi', 'Kogi',
+    'Kwara', 'Lagos', 'Nassarawa', 'Niger', 'Ogun', 'Ondo', 'Osun', 'Oyo',
+    'Plateau', 'Rivers', 'Sokoto', 'Taraba', 'Yobe', 'Zamfara'
+  ];
+
+  // Fetch initial data
+  useEffect(() => {
+    fetchInitialData();
   }, []);
 
+  // Check market link availability
+  useEffect(() => {
+    if (marketLinkForm.name.length > 0) {
+      setMarketLinkForm(prev => ({ ...prev, available: null, checking: true }));
+      const timeoutId = setTimeout(() => {
+        checkLinkAvailability();
+      }, 500);
+      return () => clearTimeout(timeoutId);
+    }
+  }, [marketLinkForm.name]);
 
+  const fetchInitialData = async () => {
+    try {
+      setInitialLoading(true);
+      await Promise.all([
+        fetchWhatsappLinks(),
+        fetchMarketLinks(),
+        fetchProductData()
+      ]);
+    } catch (error) {
+      console.error('Error fetching initial data:', error);
+      toast.error('Failed to load product data');
+    } finally {
+      setInitialLoading(false);
+    }
+  };
 
+  const fetchWhatsappLinks = async () => {
+    try {
+      const response = await AdminApis.getlinks();
+      if (response?.data) {
+        setWhatsappLinks(response.data.link || []);
+      }
+    } catch (error) {
+      console.error('Error fetching WhatsApp links:', error);
+    }
+  };
 
-  function toggleModal() {
-    setVisible(!visible)
+  const fetchMarketLinks = async () => {
+    try {
+      const response = await AdminApis.getMarketLink();
+      if (response?.data) {
+        setProductLinks(response.data.link || []);
+      }
+    } catch (error) {
+      console.error('Error fetching market links:', error);
+    }
+  };
+
+  const fetchProductData = async () => {
+    try {
+      const response = await AdminApis.getSingleProduct(params?.id);
+      if (response?.data?.data?.product) {
+        const product = response.data.data.product;
+        
+        setProductForm({
+          id: product.id,
+          name: product.product_name || '',
+          description: product.product_description || '',
+          phoneNumber: product.phone_number || '',
+          discountedPrice: product.no_of_items || '',
+          category: product.category || '',
+          location: product.location || '',
+          price: product.product_price || '',
+          marketLinkId: product.link_name || ''
+        });
+
+        setProductImages({
+          image1: {
+            file: product.product_image_1 || 'No selected file',
+            preview: product.product_image_1 || '',
+            id: product.product_image_id_1 || ''
+          },
+          image2: {
+            file: product.product_image_2 || 'No selected file',
+            preview: product.product_image_2 || '',
+            id: product.product_image_id_2 || ''
+          },
+          image3: {
+            file: product.product_image_3 || 'No selected file',
+            preview: product.product_image_3 || '',
+            id: product.product_image_id_3 || ''
+          }
+        });
+      }
+    } catch (error) {
+      console.error('Error fetching product data:', error);
+      toast.error('Failed to load product details');
+    }
+  };
+
+  const checkLinkAvailability = async () => {
+    try {
+      const cleanLinkName = marketLinkForm.name.toLowerCase()
+        .replace(/\s+/g, '-')
+        .replace(/[^a-zA-Z0-9\-]/g, '');
+      
+      const response = await AdminApis.checkMarketLink({ link_name: cleanLinkName });
+      setMarketLinkForm(prev => ({
+        ...prev,
+        available: response?.data?.link === 0,
+        checking: false
+      }));
+    } catch (error) {
+      setMarketLinkForm(prev => ({
+        ...prev,
+        available: false,
+        checking: false
+      }));
+    }
+  };
+
+  // Image upload handler
+  const handleImageUpload = (e, imageKey) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const size = file.size / 1048576.0; // Convert to MB
+    
+    if (size > 4) {
+      e.target.value = '';
+      toast.warn(`Image too large (${size.toFixed(2)}MB). Maximum size is 4MB.`);
+      return;
+    }
+
+    const preview = URL.createObjectURL(file);
+    
+    setProductImages(prev => ({
+      ...prev,
+      [imageKey]: { 
+        ...prev[imageKey], 
+        file, 
+        preview 
+      }
+    }));
+  };
+
+  // Form handlers
+  const handleProductFormChange = (field, value) => {
+    setProductForm(prev => ({ ...prev, [field]: value }));
+  };
+
+  const handleMarketLinkFormChange = (field, value) => {
+    setMarketLinkForm(prev => ({ ...prev, [field]: value }));
+  };
+
+  // API calls
+  const updateProduct = async (e) => {
+    e.preventDefault();
+    
+    setLoading(true);
+    
+    try {
+      const formData = new FormData();
+      const linkData = productForm.marketLinkId.split(' ');
+      
+      formData.append('link_name', linkData[0]);
+      formData.append('link_id', linkData[1]);
+      formData.append('product_name', productForm.name);
+      formData.append('product_description', productForm.description);
+      formData.append('phone_number', productForm.phoneNumber);
+      formData.append('no_of_items', productForm.discountedPrice);
+      formData.append('product_price', productForm.price);
+      formData.append('category', productForm.category);
+      formData.append('location', productForm.location);
+      formData.append('id', productForm.id);
+      
+      // Handle images
+      formData.append('product_image_1', productImages.image1.file);
+      formData.append('product_image_2', productImages.image2.file);
+      formData.append('product_image_3', productImages.image3.file);
+      formData.append('product_image_id_1', productImages.image1.id);
+      formData.append('product_image_id_2', productImages.image2.id);
+      formData.append('product_image_id_3', productImages.image3.id);
+
+      const response = await AdminApis.updateProduct(formData);
+      
+      if (response?.data) {
+        toast.success('Product updated successfully');
+        navigate('/mini-store');
+      } else {
+        toast.error(response?.response?.data?.message || 'Failed to update product');
+      }
+    } catch (error) {
+      toast.error(error.response?.data?.message || 'Failed to update product');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const createMarketLink = async (e) => {
+    e.preventDefault();
+    
+    if (!marketLinkForm.available) {
+      toast.error("Please choose an available link name");
+      return;
+    }
+
+    try {
+      const formData = new FormData();
+      const cleanLinkName = marketLinkForm.name.toLowerCase()
+        .replace(/\s+/g, '-')
+        .replace(/[^a-zA-Z0-9\-]/g, '');
+      
+      formData.append('link_name', cleanLinkName);
+
+      const response = await AdminApis.createMarketLink(formData);
+      
+      if (response?.data) {
+        toast.success(response.data.message);
+        setShowCreateMarketLinkModal(false);
+        fetchMarketLinks();
+        setMarketLinkForm({ name: '', available: null, checking: false });
+      } else {
+        toast.error(response?.response?.data?.message || 'Failed to create market link');
+      }
+    } catch (error) {
+      toast.error(error.response?.data?.message || 'Failed to create market link');
+    }
+  };
+
+  // Render helper components
+  const ImageUploadCard = ({ imageKey, image, placeholder = "Upload Image" }) => (
+    <div className="relative group">
+      <label className="flex flex-col items-center justify-center w-full h-48 md:h-64 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100 transition-colors">
+        {!image.preview || image.preview === 'no image' ? (
+          <div className="flex flex-col items-center justify-center pt-5 pb-6">
+            <FaImage className="w-8 h-8 mb-4 text-gray-500" />
+            <p className="text-sm text-gray-500">{placeholder}</p>
+          </div>
+        ) : (
+          <img 
+            src={image.preview} 
+            alt="Preview" 
+            className="w-full h-full object-cover rounded-lg"
+          />
+        )}
+        <input
+          type="file"
+          className="hidden"
+          accept="image/*"
+          onChange={(e) => handleImageUpload(e, imageKey)}
+        />
+      </label>
+      {image.preview && image.preview !== 'no image' && (
+        <button
+          type="button"
+          onClick={() => {
+            setProductImages(prev => ({
+              ...prev,
+              [imageKey]: { 
+                ...prev[imageKey], 
+                file: 'No selected file', 
+                preview: '' 
+              }
+            }));
+          }}
+          className="absolute top-2 right-2 bg-red-500 text-white rounded-full p-1 opacity-0 group-hover:opacity-100 transition-opacity"
+        >
+          <IoMdClose size={16} />
+        </button>
+      )}
+      <p className="text-xs text-gray-500 mt-1">Max 4MB</p>
+    </div>
+  );
+
+  const InfoAlert = ({ children }) => (
+    <div className="bg-blue-50 border-l-4 border-blue-400 p-4 mb-6">
+      <div className="flex">
+        <AiOutlineInfoCircle className="h-5 w-5 text-blue-400 mt-0.5 mr-3 flex-shrink-0" />
+        <div className="text-sm text-blue-700">{children}</div>
+      </div>
+    </div>
+  );
+
+  if (initialLoading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="text-center">
+          <Oval height={60} width={60} color="#2563eb" secondaryColor="#93c5fd" />
+          <p className="mt-4 text-gray-600">Loading product details...</p>
+        </div>
+      </div>
+    );
   }
 
-  // setLinkName(addLink.split(" "))
-  // console?.log((addLink.split(" "))[1])
-
-
-
-
-
-  React.useEffect(() => {
-    AdminApis.getMarketLink().then(
-      (response) => {
-        if (response?.data) {
-          setProductLink(response?.data?.link)
-          // setPermissionIdList(response?.data?.data)
-
-          // console?.log(response?.data?.data?.length)
-        }
-      }
-    );
-
-  }, []);
-
-  const [img1, setImg1] = React.useState('No selected file');
-  const [img12, setImg12] = React.useState('empty');
-  function uploadImg1(e) {
-    let size = (e.target.files[0].size / 1048576.0)
-    if (e.target.files && e.target.files[0]) {
-      if (size > 4) {
-        if (e.target.name == 'uploadImg1') {
-          e.target.value = ''
-          toast.warn(`Image too large ${size}`)
-        }
-      }
-      if (size <=4) {
-        if (e.target.name == 'uploadImg1') {
-          setImg12(URL.createObjectURL(e.target.files[0]))
-          setImg1(e.target.files[0]);
-        }
-      }
-    }
-  };
-
-
-  const [img2, setImg2] = React.useState('No selected file');
-  const [img22, setImg22] = React.useState('empty');
-  function uploadImg2(e) {
-    let size = (e.target.files[0].size / 1048576.0)
-    if (e.target.files && e.target.files[0]) {
-      if (size > 4) {
-        if (e.target.name == 'uploadImg2') {
-          e.target.value = ''
-          toast.warn(`Image too large.`)
-        }
-      }
-      if (size <= 4) {
-        if (e.target.name == 'uploadImg2') {
-          setImg22(URL.createObjectURL(e.target.files[0]))
-          setImg2(e.target.files[0]);
-        }
-      }
-    }
-  };
-
-  const [img3, setImg3] = React.useState('No selected file');
-  const [img32, setImg32] = React.useState('empty');
-  function uploadImg3(e) {
-    let size = (e.target.files[0].size / 1048576.0)
-    if (e.target.files && e.target.files[0]) {
-      if (size > 4) {
-        if (e.target.name == 'uploadImg3') {
-          e.target.value = ''
-          toast.warn('Image too large')
-        }
-      }
-      if (size <= 4) {
-        if (e.target.name == 'uploadImg3') {
-          setImg32(URL.createObjectURL(e.target.files[0]))
-          setImg3(e.target.files[0]);
-        }
-      }
-    }
-  };
-
-  const [loader, setLoader] = React.useState(false);
-  let [data, setdata] = React.useState(0);
-  let [checkLink, setCheckLink] = React.useState('');
-
-  React.useEffect(() => {
-    setLoader(true);
-    AdminApis.checkMarketLink({ 'link_name': checkLink.replace(/ /g, '-') }).then(
-      (response) => {
-        if (response?.data) {
-          setdata(response?.data?.link)
-          setLoader(false);
-        }
-      }
-    );
-
-  }, [checkLink]);
-
-  React.useEffect(() => {
-    AdminApis.getSingleProduct(params?.id).then(
-      (response) => {
-        if (response?.data) {
-          setProductName(response?.data?.data?.product?.product_name);
-          setProductDescription(response?.data?.data?.product?.product_description);
-          setPrice(response?.data?.data?.product?.product_price)
-          setNoOfItems(response?.data?.data?.product?.no_of_items)
-          setAddLink(response?.data?.data?.product?.link_name)
-          setCategory(response?.data?.data?.product?.category)
-          setLocation(response?.data?.data?.product?.location)
-          setPhoneNumber(response?.data?.data?.product?.phone_number)
-          setPhoneNumber(response?.data?.data?.product?.phone_number)
-          setImg12(response?.data?.data?.product?.product_image_1)
-          setImg1(response?.data?.data?.product?.product_image_1)
-          setImg22(response?.data?.data?.product?.product_image_2)
-          setImg2(response?.data?.data?.product?.product_image_2)
-          setImg32(response?.data?.data?.product?.product_image_3)
-          setImg3(response?.data?.data?.product?.product_image_3)
-          setProductId(response?.data?.data?.product?.id)
-          setImgId1(response?.data?.data?.product?.product_image_id_1)
-          setImgId2(response?.data?.data?.product?.product_image_id_2)
-          setImgId3(response?.data?.data?.product?.product_image_id_3)
-         
-        }
-      }
-    );
-
-  }, []);
-
-
-  const CreateMarketLink = React.useCallback(
-    (e) => {
-      e.preventDefault();
-      const formData = new FormData()
-      formData.append('link_name', checkLink.replace(/ /g, '-'))
-
-      AdminApis.createMarketLink(formData).then(
-        (response) => {
-          if (response?.data) {
-            // console.log(response?.data)
-            toggleModal()
-            toast.success(response?.data?.message);
-          } else {
-            toggleModal()
-            toast.error('link name already in use');
-
-          }
-
-          // toast.success(response?.data?.message);
-        }
-      ).catch(function (error) {
-        // handle error
-        // console.log(error.response);
-        toast.error(error.response.data.message);
-      })
-    },
-    [checkLink]
-  );
-
-
-
-  const createProduct = React.useCallback(
-    (e) => {
-      e.preventDefault();
-      setLoader(true);
-      const formData = new FormData()
-      formData.append('link_name', (addLink.split(" "))[0])
-      formData.append('link_id', (addLink.split(" "))[1])
-      formData.append('product_name', productName)
-      formData.append('product_description', productDescription)
-      formData.append('phone_number', phoneNumber)
-      formData.append('no_of_items', noOfItems)
-      formData.append('id', productId)
-      formData.append('category', category)
-        formData.append('location', location)
-      formData.append('product_price', price)
-      formData.append('product_image_1', img1)
-      formData.append('product_image_2', img2)
-      formData.append('product_image_3', img3)
-      formData.append('product_image_id_1', imgId1)
-      formData.append('product_image_id_2', imgId2)
-      formData.append('product_image_id_3', imgId3)
-
-      AdminApis.updateProduct(formData).then(
-        (response) => {
-          if (response?.data) {
-            // console.log(response?.data)
-            // toggleModal()
-            setLoader(false);
-            toast.success("Product Updated Successfully");
-          } else {
-            // toggleModal()
-            toast.error('link name already in use');
-
-          }
-
-          // toast.success(response?.data?.message);
-        }
-      ).catch(function (error) {
-        // handle error
-        // console.log(error.response);
-        toast.error(error.response.data.message);
-      })
-    },
-    [addLink, productName, productDescription, noOfItems, price, img1, img2, img3, productId, imgId1, imgId2, imgId3,phoneNumber,location,category]
-  );
-
-  // const handleSubmit = React.useCallback(
-  //   (e) => {
-  //     e.preventDefault();
-  //     const formData = new FormData()
-  //     formData.append('name', name.replace(/ /g, ''))
-  //     formData.append('title', title)
-  //     formData.append('bio', bio)
-  //     AdminApis.createTieredLink(formData).then(
-  //       (response) => {
-  //         if (response?.data) {
-  //           console.log(response?.data)
-  //           toast.success(response?.data?.message);
-  //         } else {
-  //           toast.error('link name already in use');
-  //         }
-
-  //         // toast.success(response?.data?.message);
-  //       }
-  //     ).catch(function (error) {
-  //       // handle error
-  //       // console.log(error.response);
-  //       toast.error(error.response.data.message);
-  //     })
-  //   },
-  //   [title, bio, name]
-  // );
-
-  // console.log((data?.url).slice(8))
   return (
-    <>
-
-      <form onSubmit={createProduct} className="pb-32 sm:px-5">
-      
-
-        <div className={"lg:grid lg:grid-cols-2 gap-2 mt-10 "+(loader?'shadow animate-pulse ':'')}>
-          <div className="mb-10">
-            <div className=" lg:w-4/5">
-              <label for="first_name" class="block mb-2 mt-6 text-sm  text-gray-900 dark:text-gray-600">Product Name</label>
-              <input type="text" defaultValue={productName} onChange={(e) => setProductName(e?.target?.value)} id="first_name" class="bg-[#F4FBFF] border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" placeholder="Title of business here" />
-
-              <label for="first_name" class="block mb-2 mt-4 text-sm  text-gray-900 dark:text-gray-600 ">Product Description</label>
-              <textarea id="message" defaultValue={productDescription} onChange={(e) => setProductDescription(e?.target?.value)} rows={3} className="block bg-[#F4FBFF] p-2.5 w-full text-sm text-gray-900  rounded-lg border border-gray-300 focus:ring-gray-500 focus:border-gray-500" placeholder="Bio" ></textarea>
-
-              <div className="grid md:grid-cols-2 gap-2">
-                <div>
-                  <label for="first_name" class="block mb-2 mt-6 text-sm  text-gray-900 dark:text-gray-600">Category</label>
-                  <select id="gender" defaultValue={category} onChange={e => setCategory(e.target.value)} name="programs_type" class="bg-[#F4FBFF] border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 cursor-pointer">
-                    <option selected value={category}>{category}</option>
-                    <option value="women fashion">Women's Fashion</option>
-                    <option value="men fashion">Men's Fashion</option>
-                    <option value="bags">Bags</option>
-                    <option value="beauty&cosmetics">Beauty and cosmetics</option>
-                    <option value="sport/outdoor">Sport/Outdoor</option>
-                    <option value="home/kitchen">Home/Kitchen</option>
-                    <option value="shoes">Shoes</option>
-                    <option value="watches">Watches</option>
-                    <option value="keyboard & mice">Keyboard & mice</option>
-                    <option value="laptops">Laptops</option>
-                    <option value="phones">Phones</option>
-                  </select>
-
-                </div>
-
-                <div>
-                  <label for="first_name" class="block mb-2 mt-6 text-sm  text-gray-900 dark:text-gray-600">Location</label>
-                  <select id="gender" defaultValue={location} onChange={e => setLocation(e.target.value)} name="programs_type" class="bg-[#F4FBFF] border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 cursor-pointer">
-                    <option value={location} selected="selected">{location}</option>
-                    <option value="Abuja FCT">Abuja FCT</option>
-                    <option value="Abia">Abia</option>
-                    <option value="Adamawa">Adamawa</option>
-                    <option value="Akwa Ibom">Akwa Ibom</option>
-                    <option value="Anambra">Anambra</option>
-                    <option value="Bauchi">Bauchi</option>
-                    <option value="Bayelsa">Bayelsa</option>
-                    <option value="Benue">Benue</option>
-                    <option value="Borno">Borno</option>
-                    <option value="Cross River">Cross River</option>
-                    <option value="Delta">Delta</option>
-                    <option value="Ebonyi">Ebonyi</option>
-                    <option value="Edo">Edo</option>
-                    <option value="Ekiti">Ekiti</option>
-                    <option value="Enugu">Enugu</option>
-                    <option value="Gombe">Gombe</option>
-                    <option value="Imo">Imo</option>
-                    <option value="Jigawa">Jigawa</option>
-                    <option value="Kaduna">Kaduna</option>
-                    <option value="Kano">Kano</option>
-                    <option value="Katsina">Katsina</option>
-                    <option value="Kebbi">Kebbi</option>
-                    <option value="Kogi">Kogi</option>
-                    <option value="Kwara">Kwara</option>
-                    <option value="Lagos">Lagos</option>
-                    <option value="Nassarawa">Nassarawa</option>
-                    <option value="Niger">Niger</option>
-                    <option value="Ogun">Ogun</option>
-                    <option value="Ondo">Ondo</option>
-                    <option value="Osun">Osun</option>
-                    <option value="Oyo">Oyo</option>
-                    <option value="Plateau">Plateau</option>
-                    <option value="Rivers">Rivers</option>
-                    <option value="Sokoto">Sokoto</option>
-                    <option value="Taraba">Taraba</option>
-                    <option value="Yobe">Yobe</option>
-                    <option value="Zamfara">Zamfara</option>
-                  </select>
-                </div>
-
-              </div>
-              
-              <div className="grid md:grid-cols-2 gap-2">
-                <div>
-                  <label for="first_name" class="block mb-2 mt-6 text-sm  text-gray-900 dark:text-gray-600">Sales Price</label>
-                  <input type="number" defaultValue={price} onChange={(e) => setPrice(e?.target?.value)} id="first_name" class="bg-[#F4FBFF] border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" placeholder="Eg. 3500" />
-                </div>
-
-                <div>
-                  <label for="first_name" class="block mb-2 mt-6 text-sm  text-gray-900 dark:text-gray-600">Discount Price</label>
-                  <input type="number" defaultValue={noOfItems} onChange={(e) => setNoOfItems(e?.target?.value)} id="first_name" class="bg-[#F4FBFF] border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" placeholder="Discount Price" />
-                </div>
-
-              </div>
-
-              <div className="grid md:grid-cols-2 gap-2">
-                <div>
-
-                  <label for="first_name" class="block mb-2 mt-6 text-sm  text-gray-900 dark:text-gray-600">Link to Product : ({addLink})</label>
-                  <select onChange={(e) => { setAddLink(e?.target?.value); }} class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
-                    <option value={''}>Select link</option>
-                    {productLink.map(
-                      (data, index) => (
-                        <option value={`${data?.link_name} ${data?.id}`}>{data?.link_name}</option>
-                      )
-                    )}
-
-                  </select>
-                </div>
-
-
-                <div>
-                  <label for="first_name" class="block mb-2 mt-6 text-sm  text-gray-900 dark:text-gray-600">Whatsapp Link : ({phoneNumber})</label>
-                  <select onChange={(e) => { setPhoneNumber(e?.target?.value); }} class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
-                    <option value={''}>Select whatsapp url</option>
-                    {addContact?.map(
-                      (data, index) => (
-                        <option value={`${data?.name}`}>{data?.name}</option>
-                      )
-                    )}
-
-                  </select>
-                </div>
-              </div>
-
-
-
-
-            </div>
-
-          </div>
-
-          {/* second Div */}
-          <div className="grid grid-cols-2 gap-2">
-            <div className="">
-              <label className="flex flex-col items-center justify-center w-full  rounded-[5px] cursor-pointer ">
-                <div className="flex flex-col items-center justify-center  ">
-                  {img12 == 'no image' ? <img src="/images/img1.png" style={{ minHeight: '200px' }} /> : <img src={img12} className=" md:min-h-[250px] md:max-h-[250px] min-h-[200px] max-h-[200px]"/>}
-                </div>
-                <input id="dropzone-file" onChange={uploadImg1} name='uploadImg1' type="file" className={"hidden mb-2 text-sm text-[#6C757D] font-medium"} />
-              </label>
-              <span className="text-[10px] text-[#dc143c]">Image should not be more than 4MB.</span>
-            </div>
-
-            <div className="">
-              <label className="flex flex-col items-center justify-center w-full  rounded-[5px] cursor-pointer ">
-                <div className="flex flex-col items-center justify-center ">
-                  {img22 == 'no image' ?  <img src={`/images/img2.png`} alt={img22} style={{ minHeight: '200px' }} /> : <img src={img22} className=" md:min-h-[250px] md:max-h-[250px] min-h-[200px] max-h-[200px]" />}
-                </div>
-                <input id="dropzone-file" name='uploadImg2' onChange={uploadImg2} type="file" className={"hidden mb-2 text-sm text-[#6C757D] font-medium"} />
-              </label>
-              <span className="text-[10px] text-[#dc143c]">Image should not be more than 4MB.</span>
-            </div>
-
-            <div className="">
-              <label className="flex flex-col items-center justify-center w-full  rounded-[5px] cursor-pointer ">
-                <div className="flex flex-col items-center justify-center ">
-                  {img32 == 'no image' ? <img src="/images/img3.png" style={{ minHeight: '200px'}} /> : <img src={img32} className=" md:min-h-[250px] md:max-h-[250px] min-h-[200px] max-h-[200px]" />}
-                </div>
-                <input id="dropzone-file" name='uploadImg3' onChange={uploadImg3} type="file" className={"hidden mb-2 text-sm text-[#6C757D] font-medium"} />
-              </label>
-              <span className="text-[10px] text-[#dc143c]">Image should not be more than 4MB.</span>
-            </div>
-
-
-          </div>
-
-        </div>
-
-
-        <div className="flex justify-center gap-2 mt-5">
-          {
-            loader ?
-              <div className='flex justify-center '>
-                <Oval
-                  height={40}
-                  width={40}
-                  color="#0071BC"
-                  wrapperStyle={{}}
-                  wrapperClass=""
-                  visible={loader}
-                  ariaLabel='oval-loading'
-                  secondaryColor="#96cff6"
-                  strokeWidth={2}
-                  strokeWidthSecondary={2}
-                />
-              </div>
-              :
-              ''
-          }
-
+    <div className="max-w-7xl mx-auto p-4 md:p-6">
+      {/* Header Section */}
+      <div className="mb-8">
+        <div className="flex items-center mb-4">
           <button
-            type="submit"
-            className=" text-white bg-[#0071BC] hover:bg-[#103f5e] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm  px-5 py-2.5 text-center "
+            onClick={() => navigate('/mini-store')}
+            className="flex items-center text-gray-600 hover:text-gray-900 mr-4"
           >
-            Update Product 
+            <FaArrowLeft className="mr-2" />
+            Back to Products
           </button>
         </div>
+        <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">Edit Product</h1>
+        <p className="text-gray-600">Update your product information and images</p>
+      </div>
 
+      {/* Info Alert */}
+      <InfoAlert>
+        <strong>Editing:</strong> {productForm.name || 'Product'} - Make changes and click "Update Product" to save.
+      </InfoAlert>
 
-      </form>
-
-
-
-
-
-      <section>
-        <Modal
-          visible={visible}
-          width="400"
-          height="450"
-          effect="fadeInUp"
-          onClickAway={() => toggleModal}
-        >
-          <div className="px-2 bg-[#fff]  items-center rounded-lg p-2">
-            <span className="flex justify-between px-1 pt-1">
-              <p className="cursor-pointer font-bold mt-2" >Create Market Link</p>
-              <p className="cursor-pointer font-bold" onClick={toggleModal}><SvgElement type={icontypesEnum.CANCEL} /></p>
-            </span>
-
-
-            <div>
-              <form onSubmit={CreateMarketLink}>
-                <div className="">
-                  <label for="first_name" class="block mb-2 mt-6 text-sm  text-gray-900 dark:text-gray-600">Market Link Name</label>
-                  <div className="gap-4">
-                    <input type="text" defaultValue={checkLink} onChange={(e) => setCheckLink(e?.target?.value)} id="first_name" class="bg-[#F4FBFF] border border-gray-300 text-gray-900 text-sm rounded-lg  p-2.5 w-4/5 " required placeholder="Business Link Name" />
-                    {(checkLink?.length !== 0 && data == 0) ? <span className="pl-4 w-1/5 text-[30px]">👌</span> : (data != 1 ? '' : <span className="pl-4 w-1/5 text-[30px] "> 😭 </span>)}
-                  </div>
-                  <span className="text-[10px]">{`https://www.gupta.link/market-place/${checkLink.replace(/ /g, '-')}`} </span> <br />{(checkLink?.length !== 0 && data == 0) ? <span className=" w-1/5 text-[10px] text-green-500">Available</span> : (data != 1 ? '' : <span className=" w-1/5 text-[10px] text-red-500"> Link is taken </span>)}
-
-
+      {/* Main Form */}
+      <form onSubmit={updateProduct} className="space-y-8">
+        <div className="grid lg:grid-cols-2 gap-8">
+          {/* Product Details */}
+          <div className="space-y-6">
+            <div className="bg-white p-6 rounded-lg shadow-sm border">
+              <h3 className="text-lg font-semibold mb-4">Product Information</h3>
+              
+              <div className="space-y-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Product Name *
+                  </label>
+                  <input
+                    type="text"
+                    required
+                    value={productForm.name}
+                    onChange={(e) => handleProductFormChange('name', e.target.value)}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    placeholder="Enter product name"
+                  />
                 </div>
 
-                <button
-                  type="submit"
-                  disabled={data == 0 ? false : true}
-                  className={"text-white mt-10" + (data == 0 ? ' bg-[#0071BC]' : ' bg-[#E03130] ') + " " + (data == 0 ? 'hover:bg-[#103f5e] ' : '') + " focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm  px-5 py-2.5 text-center"}
-                >
-                  {data == 0 ? 'Create Link' : 'Taken'}
-                </button>
-              </form>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Product Description *
+                  </label>
+                  <textarea
+                    required
+                    rows={4}
+                    value={productForm.description}
+                    onChange={(e) => handleProductFormChange('description', e.target.value)}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    placeholder="Describe your product, including size, features, etc."
+                  />
+                </div>
+
+                <div className="grid md:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Category
+                    </label>
+                    <select
+                      value={productForm.category}
+                      onChange={(e) => handleProductFormChange('category', e.target.value)}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    >
+                      {categories.map(cat => (
+                        <option key={cat.value} value={cat.value}>{cat.label}</option>
+                      ))}
+                    </select>
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Location
+                    </label>
+                    <select
+                      value={productForm.location}
+                      onChange={(e) => handleProductFormChange('location', e.target.value)}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    >
+                      <option value="">Select State</option>
+                      {nigerianStates.map(state => (
+                        <option key={state} value={state}>{state}</option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+
+                <div className="grid md:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Sales Price *
+                    </label>
+                    <input
+                      type="number"
+                      required
+                      value={productForm.price}
+                      onChange={(e) => handleProductFormChange('price', e.target.value)}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      placeholder="3500"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Discounted Price (Optional)
+                    </label>
+                    <input
+                      type="number"
+                      value={productForm.discountedPrice}
+                      onChange={(e) => handleProductFormChange('discountedPrice', e.target.value)}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      placeholder="3000"
+                    />
+                  </div>
+                </div>
+
+                <div className="grid md:grid-cols-2 gap-4">
+                  <div>
+                    <label className="flex items-center text-sm font-medium text-gray-700 mb-2">
+                      Market Link *
+                      {/* <button
+                        type="button"
+                        onClick={() => setShowCreateMarketLinkModal(true)}
+                        className="ml-2 text-blue-600 hover:text-blue-800"
+                      >
+                        <FaStore size={16} />
+                      </button> */}
+                    </label>
+                    <select
+                      required
+                      value={productForm.marketLinkId}
+                      onChange={(e) => handleProductFormChange('marketLinkId', e.target.value)}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    >
+                      <option value="">Select market link</option>
+                      {productLinks.map(link => (
+                        <option key={link.id} value={`${link.link_name} ${link.id}`}>
+                          mygupta.co/store/{link.link_name}
+                        </option>
+                      ))}
+                    </select>
+                    {productForm.marketLinkId && (
+                      <p className="text-xs text-gray-500 mt-1">
+                        Current: {productForm.marketLinkId}
+                      </p>
+                    )}
+                  </div>
+
+                  <div>
+                    <label className="flex items-center text-sm font-medium text-gray-700 mb-2">
+                      WhatsApp Contact *
+                      {/* <Link to="/mylinks" className="ml-2 text-blue-600 hover:text-blue-800">
+                        <FaStore size={16} />
+                      </Link> */}
+                    </label>
+                    <select
+                      required
+                      value={productForm.phoneNumber}
+                      onChange={(e) => handleProductFormChange('phoneNumber', e.target.value)}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    >
+                      <option value="">Select WhatsApp contact</option>
+                      {whatsappLinks.map(link => (
+                        <option key={link.id} value={link.name}>{link.name}</option>
+                      ))}
+                    </select>
+                    {productForm.phoneNumber && (
+                      <p className="text-xs text-gray-500 mt-1">
+                        Current: {productForm.phoneNumber}
+                      </p>
+                    )}
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
 
-        </Modal>
-      </section>
+          {/* Product Images */}
+          <div className="space-y-6">
+            <div className="bg-white p-6 rounded-lg shadow-sm border">
+              <h3 className="text-lg font-semibold mb-4">Product Images</h3>
+              <div className="space-y-4">
+                <ImageUploadCard 
+                  imageKey="image1" 
+                  image={productImages.image1}
+                  placeholder="Main Product Image *"
+                />
+                
+                <div className="grid grid-cols-2 gap-4">
+                  <ImageUploadCard 
+                    imageKey="image2" 
+                    image={productImages.image2}
+                    placeholder="Additional Image"
+                  />
+                  <ImageUploadCard 
+                    imageKey="image3" 
+                    image={productImages.image3}
+                    placeholder="Additional Image"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
 
+        {/* Submit Button */}
+        <div className="flex justify-center space-x-4">
+          <button
+            type="button"
+            onClick={() => navigate('/mini-store')}
+            className="px-6 py-3 text-gray-700 bg-gray-200 rounded-lg hover:bg-gray-300 font-medium"
+          >
+            Cancel
+          </button>
+          <button
+            type="submit"
+            disabled={loading}
+            className="flex items-center px-8 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed font-medium"
+          >
+            {loading ? (
+              <>
+                <FaSpinner className="animate-spin mr-2" />
+                Updating...
+              </>
+            ) : (
+              <>
+                <FaSave className="mr-2" />
+                Update Product
+              </>
+            )}
+          </button>
+        </div>
+      </form>
+
+      {/* Create Market Link Modal */}
+      <Modal
+        visible={showCreateMarketLinkModal}
+        width="90%"
+        height="auto"
+        effect="fadeInUp"
+        onClickAway={() => setShowCreateMarketLinkModal(false)}
+      >
+        <div className="max-w-md mx-auto bg-white rounded-lg p-6">
+          <div className="flex justify-between items-center mb-6">
+            <h2 className="text-xl font-bold">Create Market Link</h2>
+            <button onClick={() => setShowCreateMarketLinkModal(false)}>
+              <IoMdClose size={24} />
+            </button>
+          </div>
+
+          <form onSubmit={createMarketLink} className="space-y-4">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Market Link Name *
+              </label>
+              <div className="relative">
+                <input
+                  type="text"
+                  required
+                  value={marketLinkForm.name}
+                  onChange={(e) => handleMarketLinkFormChange('name', e.target.value)}
+                  className="w-full px-3 py-2 pr-10 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  placeholder="e.g. john-stores"
+                />
+                {marketLinkForm.checking && (
+                  <div className="absolute right-3 top-3">
+                    <Oval height={16} width={16} color="#2563eb" />
+                  </div>
+                )}
+                {!marketLinkForm.checking && marketLinkForm.available === true && (
+                  <div className="absolute right-3 top-3 text-green-500">✓</div>
+                )}
+                {!marketLinkForm.checking && marketLinkForm.available === false && (
+                  <div className="absolute right-3 top-3 text-red-500">✗</div>
+                )}
+              </div>
+              
+              <div className="mt-2 space-y-1">
+                <p className="text-xs text-gray-500">
+                  https://www.mygupta.co/store/{marketLinkForm.name.toLowerCase().replace(/\s+/g, '-').replace(/[^a-zA-Z0-9\-]/g, '')}
+                </p>
+                {!marketLinkForm.checking && marketLinkForm.available === true && (
+                  <p className="text-xs text-green-600">✓ Available</p>
+                )}
+                {!marketLinkForm.checking && marketLinkForm.available === false && (
+                  <p className="text-xs text-red-600">✗ Link is taken</p>
+                )}
+              </div>
+            </div>
+
+            <div className="flex justify-end space-x-3 pt-4">
+              <button
+                type="button"
+                onClick={() => setShowCreateMarketLinkModal(false)}
+                className="px-4 py-2 text-gray-700 bg-gray-200 rounded-lg hover:bg-gray-300 transition-colors"
+              >
+                Cancel
+              </button>
+              <button
+                type="submit"
+                disabled={!marketLinkForm.available}
+                className={`px-4 py-2 rounded-lg font-medium transition-colors ${
+                  marketLinkForm.available
+                    ? 'bg-blue-600 text-white hover:bg-blue-700'
+                    : 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                }`}
+              >
+                {marketLinkForm.available ? 'Create Link' : 'Unavailable'}
+              </button>
+            </div>
+          </form>
+        </div>
+      </Modal>
+
+      {/* Toast Container */}
       <ToastContainer
         position="top-right"
-        autoClose={2000}
-        hideProgressBar={true}
+        autoClose={3000}
+        hideProgressBar={false}
         newestOnTop={false}
         closeOnClick
         rtl={false}
         pauseOnFocusLoss
         draggable
-        pauseOnHover />
-    </>
+        pauseOnHover
+        theme="light"
+      />
+    </div>
   );
 }
