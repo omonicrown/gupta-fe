@@ -13,7 +13,7 @@ export default function CreateProduct() {
       <div className="relative md:ml-64 bg-white">
       <AdminNavbar title="Create Product"/>
       <div className="flex flex-wrap md:mt-4 mt-1">
-        <div className="w-full xl:w-12/12 mb-12 xl:mb-0 px-4">
+        <div className="w-full xl:w-12/12 mb-12 xl:mb-12 px-4">
           <CardCreateProduct />
         </div>
       </div>

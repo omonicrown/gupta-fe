@@ -1,993 +1,1099 @@
-
-import React, { useState } from "react";
-import { Dispatch } from "redux";
-import { useSelector, useDispatch } from 'react-redux';
-import { Link, NavLink, useNavigate } from "react-router-dom";
+import React, { useState, useEffect, useCallback } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Modal from 'react-awesome-modal';
-import { PhoneInput } from "react-contact-number-input";
 import { SvgElement, icontypesEnum } from "../assets/svgElement";
 import { AdminApis } from "../../apis/adminApi";
-import { FaTrash, FaEdit,} from "react-icons/fa";
-import { IoIosAddCircle } from "react-icons/io";
-import { AiOutlineWarning } from "react-icons/ai";
-import EmojiPicker from 'emoji-picker-react';
-import { Oval } from 'react-loader-spinner'
+import { FaTrash, FaEdit, FaPlus, FaImage, FaStore, FaExternalLinkAlt } from "react-icons/fa";
+import { IoIosAddCircle, IoMdClose } from "react-icons/io";
+import { AiOutlineWarning, AiOutlineInfoCircle } from "react-icons/ai";
+import { Oval } from 'react-loader-spinner';
 import InputColor from 'react-input-color';
-
-// components
-
-
 
 export default function CardCreateProduct() {
   const navigate = useNavigate();
-  let [visible, setVisible] = React.useState(false);
-  const [addLink, setAddLink] = React.useState([]);
+  
+  // Modal states
+  const [modals, setModals] = useState({
+    createMarketLink: false,
+    editMarketLink: false,
+    deleteMarketLink: false
+  });
 
-  const [addContact, setAddContact] = React.useState([]);
-  const [color, setColor] = React.useState({ hex: '#0071BC' });
+  // Form states
+  const [productForm, setProductForm] = useState({
+    name: '',
+    description: '',
+    phoneNumber: '',
+    discountedPrice: '',
+    category: 'all',
+    location: '',
+    price: '',
+    marketLinkId: '',
+    whatsappLink: ''
+  });
 
-  const [productLink, setProductLink] = React.useState([]);
-  let [toggleDeleteModal, setToggleDeleteModal] = React.useState(false);
+  const [marketLinkForm, setMarketLinkForm] = useState({
+    name: '',
+    color: { hex: '#0071BC' },
+    description: '',
+    facebookUrl: '',
+    instagramUrl: '',
+    tiktokUrl: '',
+    logo: 'No selected file'
+  });
 
-  const [productName, setProductName] = useState('');
-  const [productDescription, setProductDescription] = useState('');
-  const [phoneNumber, setPhoneNumber] = useState('');
-  const [noOfItems, setNoOfItems] = useState('0');
-  const [category, setCategory] = useState('all');
-  const [location, setLocation] = useState('');
-  const [price, setPrice] = useState('');
-  const [facebookUrl, setFacebookUrl] = useState('');
-  const [instagramUrl, setInstagramUrl] = useState('');
-  const [tiktokUrl, setTiktokUrl] = useState('');
-  const [brandDescription, setBrandDescription] = useState('');
+  // Data states
+  const [productLinks, setProductLinks] = useState([]);
+  const [whatsappLinks, setWhatsappLinks] = useState([]);
+  const [userData, setUserData] = useState({});
+  
+  // Image states
+  const [productImages, setProductImages] = useState({
+    image1: { file: 'No selected file', preview: 'empty' },
+    image2: { file: 'No selected file', preview: 'empty' },
+    image3: { file: 'No selected file', preview: 'empty' }
+  });
 
-  const [linkId, setLinkId] = useState('');
-  function toggleDeleteMarketLink(id) {
-    setLinkId(id)
-    setToggleDeleteModal(true)
-  }
-
-  let [toggleEditMarketLink, setToggleEditMarketLink] = React.useState(false);
-  const [marketLinkData, setMarketLinkData] = useState([]);
-  function toggleMarketLinkData(data) {
-    setMarketLinkData(data)
-    setToggleEditMarketLink(true)
-  }
-
-
+  const [logoPreview, setLogoPreview] = useState('empty');
+  
+  // UI states
+  const [loading, setLoading] = useState(false);
+  const [linkAvailability, setLinkAvailability] = useState({ available: null, checking: false });
+  const [selectedLinkId, setSelectedLinkId] = useState('');
+  const [editingMarketLink, setEditingMarketLink] = useState(null);
   const [refresh, setRefresh] = useState(false);
 
+  // Categories and locations data
+  const categories = [
+    { value: 'all', label: 'All Categories' },
+    { value: 'women fashion', label: "Women's Fashion" },
+    { value: 'men fashion', label: "Men's Fashion" },
+    { value: 'beauty&cosmetics', label: 'Beauty and Cosmetics' },
+    { value: 'bags', label: 'Bags' },
+    { value: 'sport/outdoor', label: 'Sport/Outdoor' },
+    { value: 'home/kitchen', label: 'Home/Kitchen' },
+    { value: 'shoes', label: 'Shoes' },
+    { value: 'watches', label: 'Watches' },
+    { value: 'keyboard & mice', label: 'Keyboard & Mice' },
+    { value: 'laptops', label: 'Laptops' },
+    { value: 'phones', label: 'Phones' }
+  ];
 
-  React.useEffect(() => {
-    AdminApis.getlinks().then(
-      (response) => {
-        if (response?.data) {
-          setAddContact(response?.data?.link)
-          // setPermissionIdList(response?.data?.data)
+  const nigerianStates = [
+    'Abuja FCT', 'Abia', 'Adamawa', 'Akwa Ibom', 'Anambra', 'Bauchi', 'Bayelsa',
+    'Benue', 'Borno', 'Cross River', 'Delta', 'Ebonyi', 'Edo', 'Ekiti', 'Enugu',
+    'Gombe', 'Imo', 'Jigawa', 'Kaduna', 'Kano', 'Katsina', 'Kebbi', 'Kogi',
+    'Kwara', 'Lagos', 'Nassarawa', 'Niger', 'Ogun', 'Ondo', 'Osun', 'Oyo',
+    'Plateau', 'Rivers', 'Sokoto', 'Taraba', 'Yobe', 'Zamfara'
+  ];
 
-          // console?.log(response?.data?.data?.length)
-        }
-      }
-    );
-
-  }, []);
-
-  const [title, setTitle] = useState('');
-  const [logo, setlogo] = useState('');
-  const [bio, SetBio] = useState('');
-
-
-
-  function deleteMarketLink() {
-    setLoader(true)
-    AdminApis.deleteMarketLink(linkId).then(
-      (response) => {
-        if (response?.data) {
-          console.log(response?.data)
-          setRefresh(!refresh)
-          setLoader(false)
-          setToggleDeleteModal(false)
-          toast.success(response?.data?.message);
-        } else {
-          setLoader(false)
-          toast.error(response?.response?.data?.message);
-
-        }
-
-        // toast.success(response?.data?.message);
-      }
-    ).catch(function (error) {
-      // handle error
-      // console.log(error.response);
-      toast.error(error.response.data.message);
-    })
-  }
-
-  // setLinkName(addLink.split(" "))
-  // console?.log((addLink.split(" "))[1])
-
-
-
-
-  const [userData, setUserData] = useState([]);
-  React.useEffect(() => {
-    AdminApis.getMarketLink().then(
-      (response) => {
-        if (response?.data) {
-          setProductLink(response?.data?.link)
-          // setPermissionIdList(response?.data?.data)
-          setUserData(response?.data?.user_data)
-
-        }
-      }
-    );
-
+  // Fetch initial data
+  useEffect(() => {
+    fetchWhatsappLinks();
+    fetchMarketLinks();
   }, [refresh]);
 
-  function toggleModal() {
-    if (parseInt(userData?.no_of_malink) > ((productLink?.length))) {
-      setVisible(!visible)
+  // Check link availability
+  useEffect(() => {
+    if (marketLinkForm.name.length > 0) {
+      setLinkAvailability({ available: null, checking: true });
+      const timeoutId = setTimeout(() => {
+        checkLinkAvailability();
+      }, 500);
+      return () => clearTimeout(timeoutId);
+    }
+  }, [marketLinkForm.name]);
+
+  const fetchWhatsappLinks = async () => {
+    try {
+      const response = await AdminApis.getlinks();
+      if (response?.data) {
+        setWhatsappLinks(response.data.link || []);
+      }
+    } catch (error) {
+      console.error('Error fetching WhatsApp links:', error);
+    }
+  };
+
+  const fetchMarketLinks = async () => {
+    try {
+      const response = await AdminApis.getMarketLink();
+      if (response?.data) {
+        setProductLinks(response.data.link || []);
+        setUserData(response.data.user_data || {});
+      }
+    } catch (error) {
+      console.error('Error fetching market links:', error);
+    }
+  };
+
+  const checkLinkAvailability = async () => {
+    try {
+      const cleanLinkName = marketLinkForm.name.toLowerCase()
+        .replace(/\s+/g, '-')
+        .replace(/[^a-zA-Z0-9\-]/g, '');
+      
+      const response = await AdminApis.checkMarketLink({ link_name: cleanLinkName });
+      setLinkAvailability({
+        available: response?.data?.link === 0,
+        checking: false
+      });
+    } catch (error) {
+      setLinkAvailability({ available: false, checking: false });
+    }
+  };
+
+  // Modal handlers
+  const toggleModal = (modalName, state = null) => {
+    setModals(prev => ({
+      ...prev,
+      [modalName]: state !== null ? state : !prev[modalName]
+    }));
+  };
+
+  const openCreateMarketLinkModal = () => {
+    if (parseInt(userData?.no_of_malink || 0) > productLinks.length) {
+      toggleModal('createMarketLink', true);
     } else {
       toast.error("Market Link limit exceeded");
     }
+  };
 
-  }
+  const openEditMarketLinkModal = (linkData) => {
+    setEditingMarketLink(linkData);
+    setMarketLinkForm({
+      name: linkData.link_name,
+      color: { hex: linkData.brand_primary_color || '#0071BC' },
+      description: linkData.brand_description || '',
+      facebookUrl: linkData.facebook_url || '',
+      instagramUrl: linkData.instagram_url || '',
+      tiktokUrl: linkData.tiktok_url || '',
+      logo: 'No selected file'
+    });
+    toggleModal('editMarketLink', true);
+  };
 
+  const openDeleteMarketLinkModal = (linkId) => {
+    setSelectedLinkId(linkId);
+    toggleModal('deleteMarketLink', true);
+  };
 
-  const [logoImg, setLogoImg] = React.useState('No selected file');
-  const [logoImgPrev, setLogoImgPrev] = React.useState('empty');
-  function uploadLogoImg(e) {
-    let size = (e.target.files[0].size / 1048576.0)
-    setLogoImgPrev(URL.createObjectURL(e.target.files[0]))
-    if (e.target.files && e.target.files[0]) {
-      if (size > 4) {
-        if (e.target.name == 'uploadImg1') {
-          e.target.value = ''
-          toast.warn('Image too large')
-        }
-      }
-      if (size <= 4) {
-        if (e.target.name == 'uploadImg1') {
-          setLogoImg(e.target.files[0]);
-        }
-      }
+  // Image upload handlers
+  const handleImageUpload = (e, imageKey) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const size = file.size / 1048576.0; // Convert to MB
+    
+    if (size > 4) {
+      e.target.value = '';
+      toast.warn('Image too large. Maximum size is 4MB.');
+      return;
+    }
+
+    const preview = URL.createObjectURL(file);
+    
+    if (imageKey === 'logo') {
+      setMarketLinkForm(prev => ({ ...prev, logo: file }));
+      setLogoPreview(preview);
+    } else {
+      setProductImages(prev => ({
+        ...prev,
+        [imageKey]: { file, preview }
+      }));
     }
   };
 
-
-
-  const [img1, setImg1] = React.useState('No selected file');
-  const [img12, setImg12] = React.useState('empty');
-  
-  function uploadImg1(e) {
-    let size = (e.target.files[0].size / 1048576.0)
-    if (e.target.files && e.target.files[0]) {
-      if (size > 4) {
-        if (e.target.name == 'uploadImg1') {
-          e.target.value = ''
-          toast.warn('Image too large')
-        }
-      }
-      if (size <= 4) {
-        if (e.target.name == 'uploadImg1') {
-          setImg1(e.target.files[0]);
-          setImg12(URL.createObjectURL(e.target.files[0]))
-        }
-      }
-    }
+  // Form handlers
+  const handleProductFormChange = (field, value) => {
+    setProductForm(prev => ({ ...prev, [field]: value }));
   };
 
-
-  const [img2, setImg2] = React.useState('No selected file');
-  const [img22, setImg22] = React.useState('empty');
-  function uploadImg2(e) {
-    let size = (e.target.files[0].size / 1048576.0)
-    if (e.target.files && e.target.files[0]) {
-      if (size > 4) {
-        if (e.target.name == 'uploadImg2') {
-          e.target.value = ''
-          toast.warn('Image too large')
-        }
-      }
-      if (size <= 4) {
-        if (e.target.name == 'uploadImg2') {
-          setImg2(e.target.files[0]);
-          setImg22(URL.createObjectURL(e.target.files[0]))
-        }
-      }
-    }
+  const handleMarketLinkFormChange = (field, value) => {
+    setMarketLinkForm(prev => ({ ...prev, [field]: value }));
   };
 
-  const [img3, setImg3] = React.useState('No selected file');
-  const [img32, setImg32] = React.useState('empty');
-  function uploadImg3(e) {
-    let size = (e.target.files[0].size / 1048576.0)
-    if (e.target.files && e.target.files[0]) {
-      if (size > 4) {
-        if (e.target.name == 'uploadImg3') {
-          e.target.value = ''
-          toast.warn('Image too large')
-        }
-      }
-      if (size <= 4) {
-        if (e.target.name == 'uploadImg3') {
-          setImg3(e.target.files[0]);
-          setImg32(URL.createObjectURL(e.target.files[0]))
-        }
-      }
+  // API calls
+  const createProduct = async (e) => {
+    e.preventDefault();
+    
+    if (productImages.image1.file === 'No selected file') {
+      toast.error("Please upload at least one product image");
+      return;
     }
-  };
 
-  const [loader, setLoader] = React.useState(false);
-  let [data, setdata] = React.useState(0);
-  let [checkLink, setCheckLink] = React.useState('');
+    setLoading(true);
+    
+    try {
+      const formData = new FormData();
+      const linkData = productForm.marketLinkId.split(' ');
+      
+      formData.append('link_name', linkData[0]);
+      formData.append('link_id', linkData[1]);
+      formData.append('product_name', productForm.name);
+      formData.append('product_description', productForm.description);
+      formData.append('phone_number', productForm.whatsappLink);
+      formData.append('no_of_items', productForm.discountedPrice);
+      formData.append('product_price', productForm.price);
+      formData.append('category', productForm.category);
+      formData.append('location', productForm.location);
+      formData.append('product_image_1', productImages.image1.file);
+      formData.append('product_image_2', productImages.image2.file);
+      formData.append('product_image_3', productImages.image3.file);
 
-  React.useEffect(() => {
-    setLoader(true);
-    AdminApis.checkMarketLink({ 'link_name': checkLink.toLowerCase().replace(/\s+/g, '-').replace(/[^a-zA-Z0-9\-]/g, '')}).then(
-      (response) => {
-        if (response?.data) {
-          setLoader(false)
-          setdata(response?.data?.link)
-        }
-      }
-    );
-
-  }, [checkLink]);
-
-
-  const CreateMarketLink = React.useCallback(
-    (e) => {
-      e.preventDefault();
-      const formData = new FormData()
-      formData.append('link_name', checkLink.toLowerCase().replace(/\s+/g, '-').replace(/[^a-zA-Z0-9\-]/g, ''))
-      formData.append('brand_primary_color', color?.hex)
-      formData.append('brand_description', brandDescription)
-      formData.append('facebook_url', facebookUrl)
-      formData.append('instagram_url', instagramUrl)
-      formData.append('tiktok_url', tiktokUrl)
-      formData.append('brand_logo', logoImg)
-
-      AdminApis.createMarketLink(formData).then(
-        (response) => {
-          if (response?.data) {
-            // console.log(response?.data)
-            setRefresh(!refresh)
-            setVisible(false);
-            setBrandDescription('')
-            setFacebookUrl('')
-            setInstagramUrl('')
-            setTiktokUrl('')
-            setLogoImg("No selected file")
-            setColor('');
-            toast.success(response?.data?.message);
-          } else {
-            toggleModal()
-            toast.error(response?.response?.data?.message);
-
-          }
-
-          // toast.success(response?.data?.message);
-        }
-      ).catch(function (error) {
-        // handle error
-        // console.log(error.response);
-        toast.error(error.response.data.message);
-      })
-    },
-    [checkLink, color, brandDescription, facebookUrl, instagramUrl, tiktokUrl, refresh, logoImg]
-  );
-
-
-  const UpdateMarketLink = React.useCallback(
-    (e) => {
-      // console?.log(color.hex)
-      e.preventDefault();
-      const formData = new FormData()
-      formData.append('link_name', (marketLinkData?.link_name).toLowerCase().replace(/\s+/g, '-').replace(/[^a-zA-Z0-9\-]/g, ''))
-      formData.append('brand_primary_color', (color?.hex) ? color?.hex : marketLinkData?.brand_primary_color)
-      formData.append('brand_description', brandDescription == '' ? marketLinkData?.brand_description : brandDescription)
-      formData.append('facebook_url', facebookUrl == '' ? marketLinkData?.facebook_url : facebookUrl)
-      formData.append('instagram_url', instagramUrl == '' ? marketLinkData?.instagram_url : instagramUrl)
-      formData.append('tiktok_url', tiktokUrl == '' ? marketLinkData?.tiktok_url : tiktokUrl)
-      formData.append('brand_logo', logoImg)
-      formData.append('brand_logo_id', logoImg)
-      formData.append('id', marketLinkData?.id)
-
-      AdminApis.updateMarketLink(formData).then(
-        (response) => {
-          if (response?.data) {
-            // console.log(response?.data)
-            setRefresh(!refresh)
-            setToggleEditMarketLink(false);
-            setBrandDescription('')
-            setFacebookUrl('')
-            setInstagramUrl('')
-            setTiktokUrl('')
-            setLogoImg("No selected file")
-            setColor('');
-            toast.success(response?.data?.message);
-          } else {
-            toggleModal()
-            toast.error(response?.response?.data?.message);
-
-          }
-
-          // toast.success(response?.data?.message);
-        }
-      ).catch(function (error) {
-        // handle error
-        // console.log(error.response);
-        toast.error(error.response.data.message);
-      })
-    },
-    [checkLink, color, brandDescription, facebookUrl, instagramUrl, tiktokUrl, refresh, logoImg]
-  );
-
-
-  const createProduct = React.useCallback(
-    (e) => {
-      e.preventDefault();
-      if (img1 == 'No selected file') {
-        toast.error("Upload Product Images");
+      const response = await AdminApis.createProduct(formData);
+      
+      if (response?.data) {
+        toast.success(response.data.message);
+        navigate('/mini-store');
       } else {
-
-        setLoader(true)
-        const formData = new FormData()
-        formData.append('link_name', (addLink.split(" "))[0])
-        formData.append('link_id', (addLink.split(" "))[1])
-        formData.append('product_name', productName)
-        formData.append('product_description', productDescription)
-        formData.append('phone_number', phoneNumber)
-        formData.append('no_of_items', noOfItems)
-        formData.append('product_price', price)
-        formData.append('category', category)
-        formData.append('location', location)
-        // formData.append('id', 'nill')
-        formData.append('product_image_1', img1)
-        formData.append('product_image_2', img2)
-        formData.append('product_image_3', img3)
-
-        AdminApis.createProduct(formData).then(
-          (response) => {
-            if (response?.data) {
-              // console.log(response?.data)
-              // toggleModal()
-              setLoader(false)
-              toast.success(response?.data?.message);
-              navigate('/mini-store');
-            } else {
-              // toggleModal()
-              toast.error(response?.response?.data?.message);
-            }
-
-            // toast.success(response?.data?.message);
-          }
-        ).catch(function (error) {
-          // handle error
-          // console.log(error.response);
-          setLoader(false)
-          toast.error(error.response.data.message);
-        }).finally(function () {
-          setLoader(false)
-        })
+        toast.error(response?.response?.data?.message || 'Failed to create product');
       }
-    },
-    [addLink, productName, productDescription, noOfItems, price, img1, img2, img3, phoneNumber, loader, category, location]
+    } catch (error) {
+      toast.error(error.response?.data?.message || 'Failed to create product');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const createMarketLink = async (e) => {
+    e.preventDefault();
+    
+    if (!linkAvailability.available) {
+      toast.error("Please choose an available link name");
+      return;
+    }
+
+    try {
+      const formData = new FormData();
+      const cleanLinkName = marketLinkForm.name.toLowerCase()
+        .replace(/\s+/g, '-')
+        .replace(/[^a-zA-Z0-9\-]/g, '');
+      
+      formData.append('link_name', cleanLinkName);
+      formData.append('brand_primary_color', marketLinkForm.color.hex);
+      formData.append('brand_description', marketLinkForm.description);
+      formData.append('facebook_url', marketLinkForm.facebookUrl);
+      formData.append('instagram_url', marketLinkForm.instagramUrl);
+      formData.append('tiktok_url', marketLinkForm.tiktokUrl);
+      formData.append('brand_logo', marketLinkForm.logo);
+
+      const response = await AdminApis.createMarketLink(formData);
+      
+      if (response?.data) {
+        toast.success(response.data.message);
+        setRefresh(!refresh);
+        toggleModal('createMarketLink', false);
+        resetMarketLinkForm();
+      } else {
+        toast.error(response?.response?.data?.message || 'Failed to create market link');
+      }
+    } catch (error) {
+      toast.error(error.response?.data?.message || 'Failed to create market link');
+    }
+  };
+
+  const updateMarketLink = async (e) => {
+    e.preventDefault();
+    
+    try {
+      const formData = new FormData();
+      
+      formData.append('link_name', editingMarketLink.link_name);
+      formData.append('brand_primary_color', marketLinkForm.color.hex);
+      formData.append('brand_description', marketLinkForm.description || editingMarketLink.brand_description);
+      formData.append('facebook_url', marketLinkForm.facebookUrl || editingMarketLink.facebook_url);
+      formData.append('instagram_url', marketLinkForm.instagramUrl || editingMarketLink.instagram_url);
+      formData.append('tiktok_url', marketLinkForm.tiktokUrl || editingMarketLink.tiktok_url);
+      formData.append('brand_logo', marketLinkForm.logo);
+      formData.append('id', editingMarketLink.id);
+
+      const response = await AdminApis.updateMarketLink(formData);
+      
+      if (response?.data) {
+        toast.success(response.data.message);
+        setRefresh(!refresh);
+        toggleModal('editMarketLink', false);
+        resetMarketLinkForm();
+      } else {
+        toast.error(response?.response?.data?.message || 'Failed to update market link');
+      }
+    } catch (error) {
+      toast.error(error.response?.data?.message || 'Failed to update market link');
+    }
+  };
+
+  const deleteMarketLink = async () => {
+    setLoading(true);
+    
+    try {
+      const response = await AdminApis.deleteMarketLink(selectedLinkId);
+      
+      if (response?.data) {
+        toast.success(response.data.message);
+        setRefresh(!refresh);
+        toggleModal('deleteMarketLink', false);
+      } else {
+        toast.error(response?.response?.data?.message || 'Failed to delete market link');
+      }
+    } catch (error) {
+      toast.error(error.response?.data?.message || 'Failed to delete market link');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const resetMarketLinkForm = () => {
+    setMarketLinkForm({
+      name: '',
+      color: { hex: '#0071BC' },
+      description: '',
+      facebookUrl: '',
+      instagramUrl: '',
+      tiktokUrl: '',
+      logo: 'No selected file'
+    });
+    setLogoPreview('empty');
+  };
+
+  // Render helper components
+  const ImageUploadCard = ({ imageKey, preview, placeholder = "Upload Image" }) => (
+    <div className="relative group">
+      <label className="flex flex-col items-center justify-center w-full h-48 md:h-64 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100 transition-colors">
+        {preview === 'empty' ? (
+          <div className="flex flex-col items-center justify-center pt-5 pb-6">
+            <FaImage className="w-8 h-8 mb-4 text-gray-500" />
+            <p className="text-sm text-gray-500">{placeholder}</p>
+          </div>
+        ) : (
+          <img 
+            src={preview} 
+            alt="Preview" 
+            className="w-full h-full object-cover rounded-lg"
+          />
+        )}
+        <input
+          type="file"
+          className="hidden"
+          accept="image/*"
+          onChange={(e) => handleImageUpload(e, imageKey)}
+        />
+      </label>
+      {preview !== 'empty' && (
+        <button
+          type="button"
+          onClick={() => {
+            if (imageKey === 'logo') {
+              setLogoPreview('empty');
+              setMarketLinkForm(prev => ({ ...prev, logo: 'No selected file' }));
+            } else {
+              setProductImages(prev => ({
+                ...prev,
+                [imageKey]: { file: 'No selected file', preview: 'empty' }
+              }));
+            }
+          }}
+          className="absolute top-2 right-2 bg-red-500 text-white rounded-full p-1 opacity-0 group-hover:opacity-100 transition-opacity"
+        >
+          <IoMdClose size={16} />
+        </button>
+      )}
+      <p className="text-xs text-gray-500 mt-1">Max 4MB</p>
+    </div>
   );
 
-  // const handleSubmit = React.useCallback(
-  //   (e) => {
-  //     e.preventDefault();
-  //     const formData = new FormData()
-  //     formData.append('name', name.replace(/ /g, ''))
-  //     formData.append('title', title)
-  //     formData.append('bio', bio)
-  //     AdminApis.createTieredLink(formData).then(
-  //       (response) => {
-  //         if (response?.data) {
-  //           console.log(response?.data)
-  //           toast.success(response?.data?.message);
-  //         } else {
-  //           toast.error('link name already in use');
-  //         }
+  const InfoAlert = ({ children }) => (
+    <div className="bg-blue-50 border-l-4 border-blue-400 p-4 mb-6">
+      <div className="flex">
+        <AiOutlineInfoCircle className="h-5 w-5 text-blue-400 mt-0.5 mr-3 flex-shrink-0" />
+        <div className="text-sm text-blue-700">{children}</div>
+      </div>
+    </div>
+  );
 
-  //         // toast.success(response?.data?.message);
-  //       }
-  //     ).catch(function (error) {
-  //       // handle error
-  //       // console.log(error.response);
-  //       toast.error(error.response.data.message);
-  //     })
-  //   },
-  //   [title, bio, name]
-  // );
-
-  // console.log((data?.url).slice(8))
   return (
-    <>
-      <form onSubmit={createProduct} className="pb-12 sm:px-3">
-
-        <div className="md:flex md:justify-between">
-          <div className="bg-blue-100 md:w-2/5 rounded-lg m-1 p-2">
-            <span className=" bg-blue-100  rounded-lg  text-gray-500 text-[12px]"><span className=" text-red-500 bg-red-200 p-1 px-3 rounded-full text-[15px]">!</span><br />  ATTENTION : Please kindly note that the market link is the link where your customers will see the list of your products</span>
-          </div>
-
-
-          <div className="flex justify-end gap-2 mt-5">
-            <button
-              type="button"
-              onClick={toggleModal}
-              className=" text-gray-900 h-10 bg-[#8ed2ff] hover:bg-[#167bbe] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm  px-5 py-2.5 text-center "
-            >
-              Add Market Link
-            </button>
-
-
-
-            <Oval
-              height={40}
-              width={40}
-              color="#0071BC"
-              wrapperStyle={{}}
-              wrapperClass=""
-              visible={loader}
-              ariaLabel='oval-loading'
-              secondaryColor="#96cff6"
-              strokeWidth={2}
-              strokeWidthSecondary={2}
-            />
-
-          </div>
-
-        </div>
-
-
-        <div className={"lg:grid lg:grid-cols-2 gap-2 mt-10 " + (loader ? 'shadow animate-pulse ' : '')}>
-          <div className="mb-10">
-            <div className=" lg:w-4/5">
-              <label for="first_name" class="block mb-2 mt-6 text-sm  text-gray-900 dark:text-gray-600">Product Name</label>
-              <input required type="text" defaultValue={title} onChange={(e) => setProductName(e?.target?.value)} id="first_name" class="bg-[#F4FBFF] border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" placeholder="Title of business here" />
-
-              <label for="first_name" class="block mb-2 mt-4 text-sm  text-gray-900 dark:text-gray-600 ">Product Description / Details</label>
-              <textarea required id="message" defaultValue={bio} onChange={(e) => setProductDescription(e?.target?.value)} rows={3} className="block bg-[#F4FBFF] p-2.5 w-full text-sm text-gray-900  rounded-lg border border-gray-300 focus:ring-gray-500 focus:border-gray-500" placeholder="eg. about product,product size e.t.c..." ></textarea>
-
-
-              <div className="grid md:grid-cols-2 gap-2">
-                <div>
-                  <label for="first_name" class="block mb-2 mt-6 text-sm  text-gray-900 dark:text-gray-600">Category</label>
-                  <select id="gender" defaultValue={category} onChange={e => setCategory(e.target.value)} name="programs_type" class="bg-[#F4FBFF] border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 cursor-pointer">
-                    <option selected value="all">All Categories</option>
-                    <option value="women fashion">Women's Fashion</option>
-                    <option value="men fashion">Men's Fashion</option>
-                    <option value="beauty&cosmetics">Beauty and cosmetics</option>
-                    <option value="bags">Bags</option>
-                    <option value="sport/outdoor">Sport/Outdoor</option>
-                    <option value="home/kitchen">Home/Kitchen</option>
-                    <option value="shoes">Shoes</option>
-                    <option value="watches">Watches</option>
-                    <option value="keyboard & mice">Keyboard & mice</option>
-                    <option value="laptops">Laptops</option>
-                    <option value="phones">Phones</option>
-                  </select>
-
-                </div>
-
-                <div>
-                  <label for="first_name" class="block mb-2 mt-6 text-sm  text-gray-900 dark:text-gray-600">Location</label>
-                  <select id="gender" defaultValue={location} onChange={e => setLocation(e.target.value)} name="programs_type" class="bg-[#F4FBFF] border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 cursor-pointer">
-                    <option value="" selected>- Select State -</option>
-                    <option value="Abuja FCT">Abuja FCT</option>
-                    <option value="Abia">Abia</option>
-                    <option value="Adamawa">Adamawa</option>
-                    <option value="Akwa Ibom">Akwa Ibom</option>
-                    <option value="Anambra">Anambra</option>
-                    <option value="Bauchi">Bauchi</option>
-                    <option value="Bayelsa">Bayelsa</option>
-                    <option value="Benue">Benue</option>
-                    <option value="Borno">Borno</option>
-                    <option value="Cross River">Cross River</option>
-                    <option value="Delta">Delta</option>
-                    <option value="Ebonyi">Ebonyi</option>
-                    <option value="Edo">Edo</option>
-                    <option value="Ekiti">Ekiti</option>
-                    <option value="Enugu">Enugu</option>
-                    <option value="Gombe">Gombe</option>
-                    <option value="Imo">Imo</option>
-                    <option value="Jigawa">Jigawa</option>
-                    <option value="Kaduna">Kaduna</option>
-                    <option value="Kano">Kano</option>
-                    <option value="Katsina">Katsina</option>
-                    <option value="Kebbi">Kebbi</option>
-                    <option value="Kogi">Kogi</option>
-                    <option value="Kwara">Kwara</option>
-                    <option value="Lagos">Lagos</option>
-                    <option value="Nassarawa">Nassarawa</option>
-                    <option value="Niger">Niger</option>
-                    <option value="Ogun">Ogun</option>
-                    <option value="Ondo">Ondo</option>
-                    <option value="Osun">Osun</option>
-                    <option value="Oyo">Oyo</option>
-                    <option value="Plateau">Plateau</option>
-                    <option value="Rivers">Rivers</option>
-                    <option value="Sokoto">Sokoto</option>
-                    <option value="Taraba">Taraba</option>
-                    <option value="Yobe">Yobe</option>
-                    <option value="Zamfara">Zamfara</option>
-                  </select>
-                </div>
-
-              </div>
-
-
-              <div className="grid md:grid-cols-2 gap-2">
-                <div>
-                  <label for="first_name" class="block mb-2 mt-6 text-sm  text-gray-900 dark:text-gray-600">Sales Price</label>
-                  <input required type="number" defaultValue={title} onChange={(e) => setPrice(e?.target?.value)} id="first_name" class="bg-[#F4FBFF] border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" placeholder="Eg.3500" />
-                </div>
-
-                <div>
-                  <label for="first_name" class="block mb-2 mt-6 text-sm  text-gray-900 dark:text-gray-600">Discounted Price(Optional)</label>
-                  <input type="number" defaultValue={title} onChange={(e) => setNoOfItems(e?.target?.value)} id="first_name" class="bg-[#F4FBFF] border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" placeholder="Discount Price" />
-                </div>
-
-              </div>
-
-              <div className="grid md:grid-cols-2 gap-2">
-                <div>
-                  <label for="first_name" class=" mb-2 mt-6 text-sm inline-flex gap-2 text-gray-900 dark:text-gray-600">Link to Product (Market Link) <span className=" cursor-pointer" onClick={toggleModal}><IoIosAddCircle color="#0071BC" size={20} /></span> </label> 
-                  <select required onChange={(e) => { setAddLink(e?.target?.value); }} class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
-                    <option value={''}>Select link</option>
-                    {productLink.map(
-                      (data, index) => (
-                        <option className="flex justify-between" value={`${data?.link_name} ${data?.id}`}>
-                           <span>mygupta.co/store/ {data?.link_name} </span> 
-                            </option>
-                      )
-                    )}
-
-                  </select>
-                </div>
-
-
-                <div>
-                  <label for="first_name" class="gap-2 mb-2 mt-6 text-sm flex justify-between  text-gray-900 dark:text-gray-600"> <span>Whatsapp Link</span>  <Link to={'/mylinks'} className=" cursor-pointer"><IoIosAddCircle color="#0071BC" size={20} /></Link></label>
-                  <select required onChange={(e) => { setPhoneNumber(e?.target?.value); }} class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
-                    <option value={''}>Select whatsapp url</option>
-                    {addContact.map(
-                      (data, index) => (
-                        <option value={`${data?.name}`}>{data?.name}</option>
-                      )
-                    )}
-
-                  </select>
-                </div>
-              </div>
-            </div>
-          </div>
-
-
-
-
-          {/* second Div */}
-          <div className="grid grid-cols-2 gap-1">
-            <div className="">
-              <label className="flex flex-col items-center justify-center w-full  rounded-[5px] cursor-pointer ">
-                <div className="flex flex-col items-center justify-center  ">
-                  {img12 == 'empty' ? <img src="/images/img1.png" style={{ minHeight: '200px' }} /> : <img src={img12} className=" md:min-h-[250px] md:max-h-[250px] min-h-[200px] max-h-[200px]" />}
-                </div>
-                <input id="dropzone-file" onChange={uploadImg1} accept="image/x-png,image/gif,image/jpeg" name='uploadImg1' type="file" className={"hidden mb-2 text-sm text-[#6C757D] font-medium"} />
-              </label>
-              <span className="text-[10px] text-[#dc143c]">Image should not be more than 4MB.</span>
-            </div>
-
-            <div className="">
-              <label className="flex flex-col items-center justify-center w-full  rounded-[5px] cursor-pointer ">
-                <div className="flex flex-col items-center justify-center ">
-                  {img22 == 'empty' ? <img src="/images/img2.png" style={{ minHeight: '200px' }} /> : <img src={img22} className=" md:min-h-[250px] md:max-h-[250px] min-h-[200px] max-h-[200px]"/>}
-                </div>
-                <input id="dropzone-file" name='uploadImg2' accept="image/x-png,image/gif,image/jpeg" onChange={uploadImg2} type="file" className={"hidden mb-2 text-sm text-[#6C757D] font-medium"} />
-              </label>
-              <span className="text-[10px] text-[#dc143c]">Image should not be more than 4MB.</span>
-            </div>
-
-            <div className="">
-              <label className="flex flex-col items-center justify-center w-full  rounded-[5px] cursor-pointer ">
-                <div className="flex flex-col items-center justify-center ">
-                  {img32 == 'empty' ? <img src="/images/img3.png" style={{ minHeight: '200px' }} /> : <img src={img32} className=" md:min-h-[250px] md:max-h-[250px] min-h-[200px] max-h-[200px]" />}
-                </div>
-                <input id="dropzone-file" name='uploadImg3' accept="image/x-png,image/gif,image/jpeg" onChange={uploadImg3} type="file" className={"hidden mb-2 text-sm text-[#6C757D] font-medium"} />
-              </label>
-              <span className="text-[10px] text-[#dc143c]">Image should not be more than 4MB.</span>
-            </div>
-
-
-          </div>
-
-        </div>
-
-        <div className=" w-full py-10 flex justify-center">
-          <button
-            type="submit"
-            className=" text-white h-10 bg-[#0071BC] hover:bg-[#103f5e] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm  px-5 py-2.5 text-center "
-          >
-            Add Product
-          </button>
-        </div>
-
-
-
-
-
-      </form>
-
-      <hr className="mb-5"/>
-
-      <div className="flex flex-col mb-10">
-        <div className=" font-[600] underline mb-3">Market Links</div>
-        {productLink?.length > 0 ?
-          productLink.map(
-            (data, index) => (
-              <span className="flex justify-start gap-5 mb-4">
-                <span><span>({index + 1}) </span>mygupta.co/s/{data?.link_name}</span>
-
-                <span className="flex space-x-2">
-
-                  {userData?.sub_type == 'premium' || userData?.sub_type == 'free' ? <span className=" text-blue-500 cursor-pointer" onClick={() => toggleMarketLinkData(data)}><FaEdit /></span> : ''}
-
-
-                  <span className=" text-red-500 cursor-pointer" onClick={() => toggleDeleteMarketLink(data?.id)}><FaTrash /></span>
-
-                </span>
-
-
-              </span>
-            )
-          )
-          :
-          "No Market Link Created"
-        }
-
-
+    <div className="max-w-7xl mx-auto  md:p-6">
+      {/* Header Section */}
+      <div className="mb-8">
+        <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">Add New Product</h1>
+        <p className="text-gray-600">Create and manage your product listings</p>
       </div>
 
+      {/* Info Alert */}
+      <InfoAlert>
+        <strong>Note:</strong> Market links are custom URLs where your customers can view all your products. 
+        Create a market link first, then add products to it.
+      </InfoAlert>
 
-
-      {/* CREATE MARKET LINK */}
-
-      <section>
-        <Modal
-          visible={visible}
-          width="380"
-          height={userData?.sub_type == 'premium' ||userData?.sub_type =='popular' || userData?.sub_type =='free' ? '700' : '300'}
-          effect="fadeInUp"
-          onClickAway={() => toggleModal}
+      {/* Action Buttons */}
+      <div className="flex flex-col sm:flex-row gap-3 mb-8">
+        <button
+          type="button"
+          onClick={openCreateMarketLinkModal}
+          className="flex items-center justify-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
         >
-          <div className="px-2 bg-[#fff]  items-center rounded-lg p-2">
-            <span className="flex justify-between px-1 pt-1">
-              <p className="cursor-pointer font-bold mt-2" >Create Market Link</p>
-              <p className="cursor-pointer font-bold" onClick={(e) => setVisible(false)}><SvgElement type={icontypesEnum.CANCEL} /></p>
-            </span>
+          <FaStore className="mr-2" />
+          Add Market Link
+        </button>
+        
+        {loading && (
+          <div className="flex items-center">
+            <Oval height={32} width={32} color="#2563eb" secondaryColor="#93c5fd" />
+          </div>
+        )}
+      </div>
 
-
-            <div>
-              <form onSubmit={CreateMarketLink}>
-                <div className="">
-                  <label for="first_name" class="block mb-2 mt-6 text-sm  text-gray-900 dark:text-gray-600">Market Link Name&nbsp; <b>(Keep it short)</b></label>
-                  <div className="gap-4">
-                    <input type="text" defaultValue={checkLink} onChange={(e) => setCheckLink(e?.target?.value)} id="first_name" class="bg-[#F4FBFF] border border-gray-300 text-gray-900 text-sm rounded-lg  p-2.5 w-4/5 " required placeholder="E.g mark-stores" />
-                    {(checkLink?.length !== 0 && data == 0) ? <span className="pl-4 w-1/5 text-[30px]">👌</span> : (data != 1 ? '' : <span className="pl-4 w-1/5 text-[30px] "> 😭 </span>)}
-                  </div>
-                  <span className="text-[10px]">{`https://www.mygupta.co/store/${checkLink.toLowerCase().replace(/\s+/g, '-').replace(/[^a-zA-Z0-9\-]/g, '')}`} </span> <br />{(checkLink?.length !== 0 && data == 0) ? <span className=" w-1/5 text-[10px] text-green-500">Available</span> : (data != 1 ? '' : <span className=" w-1/5 text-[10px] text-red-500"> Link is taken </span>)}
-
-
+      {/* Main Form */}
+      <form onSubmit={createProduct} className="space-y-8">
+        <div className="grid lg:grid-cols-2 gap-8">
+          {/* Product Details */}
+          <div className="space-y-6">
+            <div className="bg-white p-6 rounded-lg shadow-sm border">
+              <h3 className="text-lg font-semibold mb-4">Product Information</h3>
+              
+              <div className="space-y-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Product Name *
+                  </label>
+                  <input
+                    type="text"
+                    required
+                    value={productForm.name}
+                    onChange={(e) => handleProductFormChange('name', e.target.value)}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    placeholder="Enter product name"
+                  />
                 </div>
 
-
-                {userData?.sub_type == 'premium' || userData?.sub_type =='popular' || userData?.sub_type =='free' ?
-                  <div>
-                    <div>
-
-                      <label for="first_name" class="block mt-4 text-xs  text-gray-900 dark:text-gray-600">Select Brand Primary Color</label>
-
-                      <span className="flex justify-between">
-                        <span className="mt-3 mr-2">
-                          <InputColor
-                            initialValue="#0071BC"
-                            className=""
-                            onChange={setColor}
-                            placement="right"
-                          />
-                        </span>
-
-                        <div
-                          className="w-full  rounded-lg"
-                          style={{
-
-                            height: 30,
-                            marginTop: 10,
-                            border: "2px solid #777",
-                            backgroundColor: color.hex,
-                          }}
-                        >
-                          <span className="flex justify-center text-white"> {color.hex}</span>
-                        </div>
-                      </span>
-
-
-                    </div>
-
-                    <div>
-                      <label for="first_name" class="block mb-2 mt-2 text-xs  text-gray-900 dark:text-gray-600">Facebook Url</label>
-                      <input type="text" defaultValue={facebookUrl} onChange={(e) => setFacebookUrl(e?.target?.value)} id="first_name" class="bg-[#F4FBFF] border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" placeholder="https://www.facebook.com/..." />
-                    </div>
-
-                    <div>
-                      <label for="first_name" class="block mb-2 mt-2 text-xs  text-gray-900 dark:text-gray-600">Instagram Url</label>
-                      <input type="text" defaultValue={instagramUrl} onChange={(e) => setInstagramUrl(e?.target?.value)} id="first_name" class="bg-[#F4FBFF] border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" placeholder="https://www.instagram.com/..." />
-                    </div>
-
-                    <div>
-                      <label for="first_name" class="block mb-2 mt-2 text-xs  text-gray-900 dark:text-gray-600">TikTok Url</label>
-                      <input type="text" defaultValue={tiktokUrl} onChange={(e) => setTiktokUrl(e?.target?.value)} id="first_name" class="bg-[#F4FBFF] border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" placeholder="https://www.tiktok.com/..." />
-                    </div>
-
-                    <div>
-                      <label for="first_name" class="block mb-2 mt-2 text-xs  text-gray-900 dark:text-gray-600">Brand Description</label>
-                      <textarea type="text" onChange={(e) => setBrandDescription(e?.target?.value)} id="first_name" class="bg-[#F4FBFF] border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" placeholder="Brief description of your brand" > </textarea>
-                    </div>
-
-                    <div>
-                      <label for="first_name" class="block mb-2 mt-3 text-xs  text-gray-900 dark:text-gray-600">Upload Brand Logo</label>
-                      <input id="dropzone-file" accept="image/x-png,image/gif,image/jpeg" onChange={uploadLogoImg} placeholder="upload brand logo" name='uploadImg1' type="file" className={" mb-2 text-sm text-[#6C757D] font-medium"} />
-                    </div>
-                  </div>
-
-                  :
-                  ''
-                }
-
-                <button
-                  type="submit"
-                  disabled={data == 0 ? false : true}
-                  className={"text-white mt-10" + (data == 0 ? ' bg-[#0071BC]' : ' bg-[#E03130] ') + " " + (data == 0 ? 'hover:bg-[#103f5e] ' : '') + " focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm  px-5 py-2.5 text-center"}
-                >
-                  {data == 0 ? 'Create Link' : 'Taken'}
-                </button>
-              </form>
-            </div>
-          </div>
-
-        </Modal>
-      </section>
-
-
-      <section>
-        <Modal
-          visible={toggleEditMarketLink}
-          width="380"
-          height={userData?.sub_type == 'premium' ||userData?.sub_type =='popular' || userData?.sub_type =='free' ? '700' : '300'}
-          effect="fadeInUp"
-          onClickAway={() => setToggleEditMarketLink}
-        >
-          <div className="px-2 bg-[#fff]  items-center rounded-lg p-2">
-            <span className="flex justify-between px-1 pt-1">
-              <p className="cursor-pointer font-bold mt-2" >Edit Market Link</p>
-              <p className="cursor-pointer font-bold" onClick={(e) => setToggleEditMarketLink(false)}><SvgElement type={icontypesEnum.CANCEL} /></p>
-            </span>
-
-
-            <div>
-              <form onSubmit={UpdateMarketLink}>
-                <div className="">
-                  <label for="first_name" class="block mb-2 mt-6 text-sm  text-gray-900 dark:text-gray-600">Market Link Name&nbsp; <b>(Keep it short)</b></label>
-                  <div className="gap-4">
-                    <input type="text" disabled defaultValue={marketLinkData?.link_name} onChange={(e) => setCheckLink(e?.target?.value)} id="first_name" class="bg-[#F4FBFF] border border-gray-300 text-gray-900 text-sm rounded-lg  p-2.5 w-4/5 " placeholder="Eg. Mark-store" />
-                    {/* {(checkLink?.length !== 0 && data == 0) ? <span className="pl-4 w-1/5 text-[30px]">👌</span> : (data != 1 ? '' : <span className="pl-4 w-1/5 text-[30px] "> 😭 </span>)} */}
-                  </div>
-                  {/* <span className="text-[10px]">{`https://www.mygupta.co/store/${checkLink.replace(/ /g, '-')}`} </span> <br />{(checkLink?.length !== 0 && data == 0) ? <span className=" w-1/5 text-[10px] text-green-500">Available</span> : (data != 1 ? '' : <span className=" w-1/5 text-[10px] text-red-500"> Link is taken </span>)} */}
-
-
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Product Description *
+                  </label>
+                  <textarea
+                    required
+                    rows={4}
+                    value={productForm.description}
+                    onChange={(e) => handleProductFormChange('description', e.target.value)}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    placeholder="Describe your product, including size, features, etc."
+                  />
                 </div>
-                {userData?.sub_type == 'premium' || userData?.sub_type =='popular' || userData?.sub_type =='free' ?
+
+                <div className="grid md:grid-cols-2 gap-4">
                   <div>
-                    <div>
-
-                      <label for="first_name" class="block mt-4 text-xs  text-gray-900 dark:text-gray-600">Select Brand Primary Color</label>
-
-                      <span className="flex justify-between">
-                        <span className="mt-3 mr-2">
-                          <InputColor
-                            initialValue={marketLinkData?.brand_primary_color ? marketLinkData?.brand_primary_color : '#0071BC'}
-                            className=""
-                            onChange={setColor}
-                            placement="right"
-                          />
-                        </span>
-
-                        <div
-                          className="w-full  rounded-lg"
-                          style={{
-
-                            height: 30,
-                            marginTop: 10,
-                            border: "2px solid #777",
-                            backgroundColor: color?.hex,
-                          }}
-                        >
-                          <span className="flex justify-center text-white"> {color?.hex}</span>
-                        </div>
-                      </span>
-
-
-                    </div>
-
-                    <div>
-                      <label for="first_name" class="block mb-2 mt-2 text-xs  text-gray-900 dark:text-gray-600">Facebook Url</label>
-                      <input type="text" defaultValue={marketLinkData?.facebook_url} onChange={(e) => setFacebookUrl(e?.target?.value)} id="first_name" class="bg-[#F4FBFF] border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" placeholder="https://www.facebook.com/..." />
-                    </div>
-
-                    <div>
-                      <label for="first_name" class="block mb-2 mt-2 text-xs  text-gray-900 dark:text-gray-600">Instagram Url</label>
-                      <input type="text" defaultValue={marketLinkData?.instagram_url} onChange={(e) => setInstagramUrl(e?.target?.value)} id="first_name" class="bg-[#F4FBFF] border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" placeholder="https://www.instagram.com/..." />
-                    </div>
-
-                    <div>
-                      <label for="first_name" class="block mb-2 mt-2 text-xs  text-gray-900 dark:text-gray-600">TikTok Url</label>
-                      <input type="text" defaultValue={marketLinkData?.tiktok_url} onChange={(e) => setTiktokUrl(e?.target?.value)} id="first_name" class="bg-[#F4FBFF] border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" placeholder="https://www.tiktok.com/..." />
-                    </div>
-
-                    <div>
-                      <label for="first_name" class="block mb-2 mt-2 text-xs  text-gray-900 dark:text-gray-600">Brand Description</label>
-                      <textarea type="text" defaultValue={marketLinkData?.brand_description} onChange={(e) => setBrandDescription(e?.target?.value)} id="first_name" class="bg-[#F4FBFF] border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" placeholder="Brief description of your brand" > </textarea>
-                    </div>
-
-                    <div className="flex justify-between">
-
-                      <span>
-                        <label for="first_name" class="block mb-2 mt-3 text-xs  text-gray-900 dark:text-gray-600">Upload Brand Logo</label>
-                        <input id="dropzone-file" accept="image/x-png,image/gif,image/jpeg" onChange={uploadLogoImg} placeholder="upload brand logo" name='uploadImg1' type="file" className={" mb-2 text-sm text-[#6C757D] font-medium"} />
-                      </span>
-
-                      <span className="mt-2">
-                        <img src={marketLinkData?.brand_logo} />
-                      </span>
-
-                    </div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Category
+                    </label>
+                    <select
+                      value={productForm.category}
+                      onChange={(e) => handleProductFormChange('category', e.target.value)}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    >
+                      {categories.map(cat => (
+                        <option key={cat.value} value={cat.value}>{cat.label}</option>
+                      ))}
+                    </select>
                   </div>
-                  :
-                  ''
-                }
 
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Location
+                    </label>
+                    <select
+                      value={productForm.location}
+                      onChange={(e) => handleProductFormChange('location', e.target.value)}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    >
+                      <option value="">Select State</option>
+                      {nigerianStates.map(state => (
+                        <option key={state} value={state}>{state}</option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
 
+                <div className="grid md:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Sales Price *
+                    </label>
+                    <input
+                      type="number"
+                      required
+                      value={productForm.price}
+                      onChange={(e) => handleProductFormChange('price', e.target.value)}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      placeholder="3500"
+                    />
+                  </div>
 
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Discounted Price (Optional)
+                    </label>
+                    <input
+                      type="number"
+                      value={productForm.discountedPrice}
+                      onChange={(e) => handleProductFormChange('discountedPrice', e.target.value)}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      placeholder="3000"
+                    />
+                  </div>
+                </div>
 
-                <button
-                  type="submit"
+                <div className="grid md:grid-cols-2 gap-4">
+                  <div>
+                    <label className="flex items-center text-sm font-medium text-gray-700 mb-2">
+                      Market Link *
+                      <button
+                        type="button"
+                        onClick={openCreateMarketLinkModal}
+                        className="ml-2 text-blue-600 hover:text-blue-800"
+                      >
+                        <IoIosAddCircle size={20} />
+                      </button>
+                    </label>
+                    <select
+                      required
+                      value={productForm.marketLinkId}
+                      onChange={(e) => handleProductFormChange('marketLinkId', e.target.value)}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    >
+                      <option value="">Select market link</option>
+                      {productLinks.map(link => (
+                        <option key={link.id} value={`${link.link_name} ${link.id}`}>
+                          mygupta.co/store/{link.link_name}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
 
-                  className={"text-white mt-10" + (data == 0 ? ' bg-[#0071BC]' : ' bg-[#E03130] ') + " " + (data == 0 ? 'hover:bg-[#103f5e] ' : '') + " focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm  px-5 py-2.5 text-center"}
-                >
-                  {data == 0 ? 'Update Link' : 'Taken'}
-                </button>
-              </form>
-            </div>
-          </div>
-
-        </Modal>
-      </section>
-
-
-
-      {/* DELETE MARKET LINK */}
-
-      <section>
-        <Modal
-          visible={toggleDeleteModal}
-          width="350"
-          height="430"
-          effect="fadeInUp"
-          onClickAway={() => setToggleDeleteModal(false)}
-        >
-          <div className=" " style={{ height: '100%', overflow: 'auto' }}>
-
-            <div className="container flex flex-row justify-around bg-[#fff]  items-center rounded-lg p-2">
-
-              <div className="px-3">
-
-                {/* <span className="flex justify-around">
-                    <h1 className=" text-xs text-red-600" style={{ fontSize: '10px' }}>Link can’t be edited in free plan. <span style={{ color: '#61A24F' }} className="font-bold text-xs">Upgrade to Pro</span></h1>
-                  </span> */}
-                <span className="flex justify-end px-2 pt-3">
-                  <p className="cursor-pointer font-bold" onClick={(e) => setToggleDeleteModal(false)}><SvgElement type={icontypesEnum.CANCEL} /></p>
-                </span>
-
-                <label
-                  className="flex justify-start mb-2 pt-1 text-md font-bold text-black"
-                >
-                  Delete Market Link
-                </label>
-
-                <label
-                  style={{ fontSize: '14px' }}
-                  className="flex justify-start mb-2 pt-2 text-xs font-medium text-gray-600"
-                >
-                  You are about to delete the market link you created.
-
-
-                </label>
-                <label
-                  style={{ fontSize: '14px' }}
-                  className="flex justify-start mb-2 pt-2 text-xs font-medium text-gray-600"
-                >
-
-
-                  Please note that:
-                </label>
-
-                <ul class="space-y-1 max-w-md list-disc list-inside text-gray-500 dark:text-gray-400 pl-2">
-                  <li style={{ color: '#2C2C2C', fontSize: '14px' }}>
-                    The link will stop working.
-                  </li>
-                  <li style={{ color: '#2C2C2C', fontSize: '14px' }} className="text-xs">
-                    All link data will be lost.
-                  </li>
-                  <li style={{ color: '#2C2C2C', fontSize: '14px' }} className="text-xs">
-                    The link name will be made available to others.
-                  </li>
-                  <li style={{ color: '#2C2C2C', fontSize: '14px' }} className="text-xs font-bold">
-                    All products attached to the market link will be lost.
-                  </li>
-                  {/* <li style={{ color: '#2C2C2C', fontSize: '14px' }} className="text-xs">
-                    If you used this link in your Tiered links, the button will stop working
-                  </li> */}
-                </ul>
-
-
-
-
-                <span className="flex justify-center pt-4">
-                  <button
-                    type="button"
-                    onClick={deleteMarketLink}
-                    style={{ borderRadius: '50px', color: '#F52424' }}
-                    className=" text-red-700 bg-red-200 focus:ring-4 focus:outline-none focus:ring-grredeen-300 font-medium rounded-lg text-sm w-full px-2 py-2.5 text-center "
-                  >
-                    Delete Link
-                  </button>
-                </span>
-
-                <span className="flex justify-center pt-4">
-                  <button
-                    type="button"
-                    onClick={(e) => setToggleDeleteModal(false)}
-                    style={{ borderRadius: '50px' }}
-                    className=" text-black   focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm w-full px-2 py-1.5 text-center "
-                  >
-                    Cancel
-                  </button>
-                </span>
-
-
+                  <div>
+                    <label className="flex items-center text-sm font-medium text-gray-700 mb-2">
+                      WhatsApp Contact *
+                      <Link to="/mylinks" className="ml-2 text-blue-600 hover:text-blue-800">
+                        <IoIosAddCircle size={20} />
+                      </Link>
+                    </label>
+                    <select
+                      required
+                      value={productForm.whatsappLink}
+                      onChange={(e) => handleProductFormChange('whatsappLink', e.target.value)}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    >
+                      <option value="">Select WhatsApp contact</option>
+                      {whatsappLinks.map(link => (
+                        <option key={link.id} value={link.name}>{link.name}</option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
               </div>
+            </div>
+          </div>
 
+          {/* Product Images */}
+          <div className="space-y-6">
+            <div className="bg-white p-6 rounded-lg shadow-sm border">
+              <h3 className="text-lg font-semibold mb-4">Product Images</h3>
+              <div className="space-y-4">
+                <ImageUploadCard 
+                  imageKey="image1" 
+                  preview={productImages.image1.preview}
+                  placeholder="Main Product Image *"
+                />
+                
+                <div className="grid grid-cols-2 gap-4">
+                  <ImageUploadCard 
+                    imageKey="image2" 
+                    preview={productImages.image2.preview}
+                    placeholder="Additional Image"
+                  />
+                  <ImageUploadCard 
+                    imageKey="image3" 
+                    preview={productImages.image3.preview}
+                    placeholder="Additional Image"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Submit Button */}
+        <div className="flex justify-center">
+          <button
+            type="submit"
+            disabled={loading}
+            className="px-8 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed font-medium"
+          >
+            {loading ? 'Adding Product...' : 'Add Product'}
+          </button>
+        </div>
+      </form>
+
+      {/* Market Links Section */}
+      <div className="mt-12">
+        <hr className="mb-8" />
+        <h3 className="text-xl font-semibold mb-6">Your Market Links</h3>
+        
+        {productLinks.length > 0 ? (
+          <div className="space-y-3">
+            {productLinks.map((link, index) => (
+              <div key={link.id} className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                <div className="flex items-center space-x-3">
+                  <span className="text-sm font-medium text-gray-500">#{index + 1}</span>
+                  <div>
+                    <p className="font-medium">mygupta.co/s/{link.link_name}</p>
+                    <p className="text-sm text-gray-500">{link.brand_description}</p>
+                  </div>
+                </div>
+                
+                <div className="flex items-center space-x-2">
+                  <button
+                    type="button"
+                    onClick={() => window.open(`https://mygupta.co/s/${link.link_name}`, '_blank')}
+                    className="p-2 text-gray-600 hover:text-blue-600"
+                    title="View Link"
+                  >
+                    <FaExternalLinkAlt size={16} />
+                  </button>
+                  
+                  {(userData?.sub_type === 'premium' || userData?.sub_type === 'free') && (
+                    <button
+                      type="button"
+                      onClick={() => openEditMarketLinkModal(link)}
+                      className="p-2 text-gray-600 hover:text-blue-600"
+                      title="Edit Link"
+                    >
+                      <FaEdit size={16} />
+                    </button>
+                  )}
+                  
+                  <button
+                    type="button"
+                    onClick={() => openDeleteMarketLinkModal(link.id)}
+                    className="p-2 text-gray-600 hover:text-red-600"
+                    title="Delete Link"
+                  >
+                    <FaTrash size={16} />
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div className="text-center py-8 text-gray-500">
+            No market links created yet. Create your first market link to start adding products.
+          </div>
+        )}
+      </div>
+
+      {/* Create Market Link Modal */}
+      <Modal
+        visible={modals.createMarketLink}
+        width="90%"
+        height="auto"
+        effect="fadeInUp"
+        onClickAway={() => toggleModal('createMarketLink', false)}
+      >
+        <div className="max-w-lg mx-auto bg-white rounded-lg p-6 max-h-[90vh] overflow-y-auto">
+          <div className="flex justify-between items-center mb-6">
+            <h2 className="text-xl font-bold">Create Market Link</h2>
+            <button onClick={() => toggleModal('createMarketLink', false)}>
+              <IoMdClose size={24} />
+            </button>
+          </div>
+
+          <form onSubmit={createMarketLink} className="space-y-4">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Market Link Name *
+              </label>
+              <div className="relative">
+                <input
+                  type="text"
+                  required
+                  value={marketLinkForm.name}
+                  onChange={(e) => handleMarketLinkFormChange('name', e.target.value)}
+                  className="w-full px-3 py-2 pr-10 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  placeholder="e.g. john-stores"
+                />
+                {linkAvailability.checking && (
+                  <div className="absolute right-3 top-3">
+                    <Oval height={16} width={16} color="#2563eb" />
+                  </div>
+                )}
+                {!linkAvailability.checking && linkAvailability.available === true && (<div className="absolute right-3 top-3 text-green-500">
+                    ✓
+                  </div>
+                )}
+                {!linkAvailability.checking && linkAvailability.available === false && (
+                  <div className="absolute right-3 top-3 text-red-500">
+                    ✗
+                  </div>
+                )}
+              </div>
+              
+              <div className="mt-2 space-y-1">
+                <p className="text-xs text-gray-500">
+                  https://www.mygupta.co/store/{marketLinkForm.name.toLowerCase().replace(/\s+/g, '-').replace(/[^a-zA-Z0-9\-]/g, '')}
+                </p>
+                {!linkAvailability.checking && linkAvailability.available === true && (
+                  <p className="text-xs text-green-600">✓ Available</p>
+                )}
+                {!linkAvailability.checking && linkAvailability.available === false && (
+                  <p className="text-xs text-red-600">✗ Link is taken</p>
+                )}
+              </div>
             </div>
 
-          </div>
-        </Modal>
-      </section>
+            {/* Premium Features */}
+            {(userData?.sub_type === 'premium' || userData?.sub_type === 'popular' || userData?.sub_type === 'free') && (
+              <div className="space-y-4">
+                {/* Color Picker */}
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Brand Primary Color
+                  </label>
+                  <div className="flex items-center space-x-3">
+                    <InputColor
+                      initialValue="#0071BC"
+                      onChange={(color) => handleMarketLinkFormChange('color', color)}
+                      placement="right"
+                    />
+                    <div 
+                      className="flex-1 h-10 rounded-lg border-2 border-gray-300 flex items-center justify-center text-white font-medium"
+                      style={{ backgroundColor: marketLinkForm.color.hex }}
+                    >
+                      {marketLinkForm.color.hex}
+                    </div>
+                  </div>
+                </div>
 
+                {/* Social Media URLs */}
+                <div className="grid grid-cols-1 gap-4">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Facebook URL
+                    </label>
+                    <input
+                      type="url"
+                      value={marketLinkForm.facebookUrl}
+                      onChange={(e) => handleMarketLinkFormChange('facebookUrl', e.target.value)}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      placeholder="https://www.facebook.com/..."
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Instagram URL
+                    </label>
+                    <input
+                      type="url"
+                      value={marketLinkForm.instagramUrl}
+                      onChange={(e) => handleMarketLinkFormChange('instagramUrl', e.target.value)}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      placeholder="https://www.instagram.com/..."
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      TikTok URL
+                    </label>
+                    <input
+                      type="url"
+                      value={marketLinkForm.tiktokUrl}
+                      onChange={(e) => handleMarketLinkFormChange('tiktokUrl', e.target.value)}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      placeholder="https://www.tiktok.com/..."
+                    />
+                  </div>
+                </div>
+
+                {/* Brand Description */}
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Brand Description
+                  </label>
+                  <textarea
+                    rows={3}
+                    value={marketLinkForm.description}
+                    onChange={(e) => handleMarketLinkFormChange('description', e.target.value)}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    placeholder="Brief description of your brand"
+                  />
+                </div>
+
+                {/* Brand Logo Upload */}
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Brand Logo
+                  </label>
+                  <ImageUploadCard 
+                    imageKey="logo" 
+                    preview={logoPreview}
+                    placeholder="Upload Brand Logo"
+                  />
+                </div>
+              </div>
+            )}
+
+            <div className="flex justify-end space-x-3 pt-4">
+              <button
+                type="button"
+                onClick={() => toggleModal('createMarketLink', false)}
+                className="px-4 py-2 text-gray-700 bg-gray-200 rounded-lg hover:bg-gray-300 transition-colors"
+              >
+                Cancel
+              </button>
+              <button
+                type="submit"
+                disabled={!linkAvailability.available}
+                className={`px-4 py-2 rounded-lg font-medium transition-colors ${
+                  linkAvailability.available
+                    ? 'bg-blue-600 text-white hover:bg-blue-700'
+                    : 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                }`}
+              >
+                {linkAvailability.available ? 'Create Link' : 'Unavailable'}
+              </button>
+            </div>
+          </form>
+        </div>
+      </Modal>
+
+      {/* Edit Market Link Modal */}
+      <Modal
+        visible={modals.editMarketLink}
+        width="90%"
+        height="auto"
+        effect="fadeInUp"
+        onClickAway={() => toggleModal('editMarketLink', false)}
+      >
+        <div className="max-w-lg mx-auto bg-white rounded-lg p-6 max-h-[90vh] overflow-y-auto">
+          <div className="flex justify-between items-center mb-6">
+            <h2 className="text-xl font-bold">Edit Market Link</h2>
+            <button onClick={() => toggleModal('editMarketLink', false)}>
+              <IoMdClose size={24} />
+            </button>
+          </div>
+
+          <form onSubmit={updateMarketLink} className="space-y-4">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Market Link Name (Cannot be changed)
+              </label>
+              <input
+                type="text"
+                disabled
+                value={editingMarketLink?.link_name || ''}
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg bg-gray-100 text-gray-500"
+              />
+              <p className="text-xs text-gray-500 mt-1">
+                https://www.mygupta.co/store/{editingMarketLink?.link_name}
+              </p>
+            </div>
+
+            {/* Premium Features for Edit */}
+            {(userData?.sub_type === 'premium' || userData?.sub_type === 'popular' || userData?.sub_type === 'free') && (
+              <div className="space-y-4">
+                {/* Color Picker */}
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Brand Primary Color
+                  </label>
+                  <div className="flex items-center space-x-3">
+                    <InputColor
+                      initialValue={editingMarketLink?.brand_primary_color || '#0071BC'}
+                      onChange={(color) => handleMarketLinkFormChange('color', color)}
+                      placement="right"
+                    />
+                    <div 
+                      className="flex-1 h-10 rounded-lg border-2 border-gray-300 flex items-center justify-center text-white font-medium"
+                      style={{ backgroundColor: marketLinkForm.color.hex }}
+                    >
+                      {marketLinkForm.color.hex}
+                    </div>
+                  </div>
+                </div>
+
+                {/* Social Media URLs */}
+                <div className="grid grid-cols-1 gap-4">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Facebook URL
+                    </label>
+                    <input
+                      type="url"
+                      defaultValue={editingMarketLink?.facebook_url}
+                      onChange={(e) => handleMarketLinkFormChange('facebookUrl', e.target.value)}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      placeholder="https://www.facebook.com/..."
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Instagram URL
+                    </label>
+                    <input
+                      type="url"
+                      defaultValue={editingMarketLink?.instagram_url}
+                      onChange={(e) => handleMarketLinkFormChange('instagramUrl', e.target.value)}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      placeholder="https://www.instagram.com/..."
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      TikTok URL
+                    </label>
+                    <input
+                      type="url"
+                      defaultValue={editingMarketLink?.tiktok_url}
+                      onChange={(e) => handleMarketLinkFormChange('tiktokUrl', e.target.value)}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      placeholder="https://www.tiktok.com/..."
+                    />
+                  </div>
+                </div>
+
+                {/* Brand Description */}
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Brand Description
+                  </label>
+                  <textarea
+                    rows={3}
+                    defaultValue={editingMarketLink?.brand_description}
+                    onChange={(e) => handleMarketLinkFormChange('description', e.target.value)}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    placeholder="Brief description of your brand"
+                  />
+                </div>
+
+                {/* Brand Logo Upload */}
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Brand Logo
+                  </label>
+                  <div className="flex items-start space-x-4">
+                    <div className="flex-1">
+                      <ImageUploadCard 
+                        imageKey="logo" 
+                        preview={logoPreview}
+                        placeholder="Upload New Logo"
+                      />
+                    </div>
+                    {editingMarketLink?.brand_logo && (
+                      <div className="w-24 h-24">
+                        <img 
+                          src={editingMarketLink.brand_logo} 
+                          alt="Current logo"
+                          className="w-full h-full object-cover rounded-lg border"
+                        />
+                        <p className="text-xs text-gray-500 mt-1">Current logo</p>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
+            )}
+
+            <div className="flex justify-end space-x-3 pt-4">
+              <button
+                type="button"
+                onClick={() => toggleModal('editMarketLink', false)}
+                className="px-4 py-2 text-gray-700 bg-gray-200 rounded-lg hover:bg-gray-300 transition-colors"
+              >
+                Cancel
+              </button>
+              <button
+                type="submit"
+                className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+              >
+                Update Link
+              </button>
+            </div>
+          </form>
+        </div>
+      </Modal>
+
+      {/* Delete Market Link Modal */}
+      <Modal
+        visible={modals.deleteMarketLink}
+        width="90%"
+        height="auto"
+        effect="fadeInUp"
+        onClickAway={() => toggleModal('deleteMarketLink', false)}
+      >
+        <div className="max-w-md mx-auto bg-white rounded-lg p-6">
+          <div className="flex justify-between items-center mb-6">
+            <h2 className="text-xl font-bold text-red-600">Delete Market Link</h2>
+            <button onClick={() => toggleModal('deleteMarketLink', false)}>
+              <IoMdClose size={24} />
+            </button>
+          </div>
+
+          <div className="space-y-4">
+            <div className="flex items-center space-x-3 text-amber-600 bg-amber-50 p-3 rounded-lg">
+              <AiOutlineWarning size={24} />
+              <p className="text-sm font-medium">
+                You are about to delete this market link permanently.
+              </p>
+            </div>
+
+            <div className="text-sm text-gray-600 space-y-2">
+              <p className="font-medium">Please note that:</p>
+              <ul className="space-y-1 list-disc list-inside ml-4">
+                <li>The link will stop working immediately</li>
+                <li>All link data will be permanently lost</li>
+                <li>The link name will become available to others</li>
+                <li className="font-bold text-red-600">All products attached to this market link will be lost</li>
+              </ul>
+            </div>
+
+            <div className="flex justify-end space-x-3 pt-4">
+              <button
+                type="button"
+                onClick={() => toggleModal('deleteMarketLink', false)}
+                className="px-4 py-2 text-gray-700 bg-gray-200 rounded-lg hover:bg-gray-300 transition-colors"
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                onClick={deleteMarketLink}
+                disabled={loading}
+                className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+              >
+                {loading ? 'Deleting...' : 'Delete Link'}
+              </button>
+            </div>
+          </div>
+        </div>
+      </Modal>
+
+      {/* Toast Container */}
       <ToastContainer
         position="top-right"
-        autoClose={2000}
-        hideProgressBar={true}
+        autoClose={3000}
+        hideProgressBar={false}
         newestOnTop={false}
         closeOnClick
         rtl={false}
         pauseOnFocusLoss
         draggable
-        pauseOnHover />
-    </>
+        pauseOnHover
+        theme="light"
+      />
+    </div>
   );
 }
