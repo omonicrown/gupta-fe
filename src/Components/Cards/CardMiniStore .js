@@ -257,8 +257,9 @@ export default function CardMiniStore() {
                 <FaEdit size={12} />
               </NavLink>
               
+              {/* ${configs?.baseRedirectFront} */}
               <a
-                href={`${configs?.baseRedirectFront}s/${product.link_name}`}
+                href={`/s/${product.link_name}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="p-1.5 bg-white/90 text-gray-700 rounded-full hover:bg-white transition-colors"
@@ -305,13 +306,13 @@ export default function CardMiniStore() {
               {product.category && (
                 <span className={`${getCategoryColor(product.category)} text-gray-700 text-xs px-1.5 py-0.5 rounded-full flex items-center`}>
                   <FaTag size={6} className="mr-1" />
-                  {truncateText(product.category, 10)}
+                  {truncateText(product.category, 20)}
                 </span>
               )}
               {product.location && (
                 <span className="bg-blue-50 text-blue-700 text-xs px-1.5 py-0.5 rounded-full flex items-center">
                   <FaMapMarkerAlt size={6} className="mr-1" />
-                  {truncateText(product.location, 8)}
+                  {truncateText(product.location, 12)}
                 </span>
               )}
             </div>
