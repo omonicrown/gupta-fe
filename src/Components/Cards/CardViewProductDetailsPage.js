@@ -1,366 +1,619 @@
-
-import React, { useState } from "react";
-import { Dispatch } from "redux";
-import { useSelector, useDispatch } from 'react-redux';
-import { NavLink } from "react-router-dom";
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect, useCallback } from "react";
+import { useNavigate, useParams } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Modal from 'react-awesome-modal';
-import { PhoneInput } from "react-contact-number-input";
 import { SvgElement, icontypesEnum } from "../assets/svgElement";
 import { AdminApis } from "../../apis/adminApi";
-import { FaTrash, FaEdit } from "react-icons/fa";
-import { AiOutlineWarning } from "react-icons/ai";
-import EmojiPicker from 'emoji-picker-react';
-import { useParams } from 'react-router-dom';
-import { MutatingDots } from 'react-loader-spinner'
-import { ThreeDots } from 'react-loader-spinner'
-import { TailSpin } from 'react-loader-spinner'
-import { Oval } from 'react-loader-spinner'
-import { Swiper, SwiperSlide } from "swiper/react";
-import { FaWhatsapp, FaEye } from "react-icons/fa";
+import { 
+  FaWhatsapp, 
+  FaArrowLeft, 
+  FaHeart, 
+  FaShare, 
+  FaShoppingCart,
+  FaCreditCard,
+  FaStore,
+  FaTag,
+  FaMapMarkerAlt,
+  FaInfoCircle,
+  FaShieldAlt,
+  FaTruck,
+  FaUndo,
+  FaStar,
+  FaChevronLeft,
+  FaChevronRight
+} from "react-icons/fa";
+import { PhoneInput } from "react-contact-number-input";
+import { Oval } from 'react-loader-spinner';
 import configs from "../../configs";
-
-
-
-// Import Swiper styles
-import "swiper/css";
-import "swiper/css/navigation";
-// import required modules
-import { Navigation } from "swiper";
 import { PaymentApis } from "../../apis/paymentApis";
-
-// components
-
-
 
 export default function CardEditProduct() {
   const navigate = useNavigate();
   const params = useParams();
 
+  // State management
+  const [data, setData] = useState({});
+  const [marketInfo, setMarketInfo] = useState({});
+  const [loading, setLoading] = useState(true);
+  const [paymentModal, setPaymentModal] = useState(false);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [isInWishlist, setIsInWishlist] = useState(false);
+  const [quantity, setQuantity] = useState(1);
 
-  const [pro1, setPro1] = React.useState([]);
-  const [pro2, setPro2] = React.useState([]);
-  const [pro3, setPro3] = React.useState([]);
-  const [data, setData] = React.useState([]);
-  const delay = 2500;
+  // Payment form state
+  const [paymentForm, setPaymentForm] = useState({
+    fullName: '',
+    email: '',
+    phoneNumber: '',
+    quantity: 1
+  });
 
+  // Product images
+  const productImages = [
+    data?.product_image_1,
+    data?.product_image_2,
+    data?.product_image_3
+  ].filter(img => img && img !== 'no image');
 
-  const [index, setIndex] = React.useState(0);
-  const timeoutRef = React.useRef(null);
+  useEffect(() => {
+    fetchProductData();
+  }, [params.storeId]);
 
-  function resetTimeout() {
-    if (timeoutRef.current) {
-      clearTimeout(timeoutRef.current);
+  const fetchProductData = async () => {
+    try {
+      setLoading(true);
+      const response = await AdminApis.getSingleProductOutside(params?.storeId);
+      if (response?.data) {
+        setData(response.data.data.product);
+        setMarketInfo(response.data.data.market_info);
+      }
+    } catch (error) {
+      console.error('Error fetching product:', error);
+      toast.error('Failed to load product details');
+    } finally {
+      setLoading(false);
     }
-  }
+  };
 
-  React.useEffect(() => {
-    resetTimeout();
-    timeoutRef.current = setTimeout(
-      () =>
-        setIndex((prevIndex) =>
-          prevIndex === colors.length - 1 ? 0 : prevIndex + 1
-        ),
-      delay
-    );
-
-    return () => {
-      resetTimeout();
+  const handlePayment = async (e) => {
+    e.preventDefault();
+    
+    const paymentData = {
+      user_id: data?.user_id,
+      amount: (data?.product_price * paymentForm.quantity),
+      customer_full_name: paymentForm.fullName,
+      product_qty: paymentForm.quantity+'',
+      pay_for: data?.product_name,
+      store_id: data?.link_name,
+      customer_email: paymentForm.email,
+      customer_phone_number: paymentForm.phoneNumber?.countryCode + paymentForm.phoneNumber?.phoneNumber
     };
-  }, [index]);
-  let [marketInfo, setMarketInfo] = React.useState('');
 
-  React.useEffect(() => {
-    AdminApis.getSingleProductOutside(params?.storeId).then(
-      (response) => {
-        if (response?.data) {
-          setPro1(response?.data?.data?.product?.product_image_1)
-          setPro2(response?.data?.data?.product?.product_image_2)
-          setPro3(response?.data?.data?.product?.product_image_3)
-          // setData(response?.data?.data)
-          setData(response?.data?.data?.product)
-          setMarketInfo(response?.data?.data?.market_info)
-        }
+    try {
+      const response = await PaymentApis.payForProduct(paymentData);
+      if (response?.data?.success) {
+        window.location.replace(response.data.data.data.link);
+        setPaymentModal(false);
       }
+    } catch (error) {
+      toast.error('Payment failed. Please try again.');
+    }
+  };
+
+  const formatPrice = (price) => {
+    return new Intl.NumberFormat('en-NG', { 
+      style: 'currency', 
+      currency: 'NGN' 
+    }).format(price || 0);
+  };
+
+  const getStoreTheme = () => ({
+    primary: marketInfo?.brand_primary_color || '#2563EB',
+    primaryLight: marketInfo?.brand_primary_color ? `${marketInfo.brand_primary_color}20` : '#EFF6FF',
+    primaryDark: marketInfo?.brand_primary_color || '#1D4ED8'
+  });
+
+  const theme = getStoreTheme();
+
+  const nextImage = () => {
+    setCurrentImageIndex((prev) => 
+      prev === productImages.length - 1 ? 0 : prev + 1
     );
+  };
 
-  }, []);
+  const prevImage = () => {
+    setCurrentImageIndex((prev) => 
+      prev === 0 ? productImages.length - 1 : prev - 1
+    );
+  };
 
-  let colors = [pro1, pro2, pro3];
+  const toggleWishlist = () => {
+    setIsInWishlist(!isInWishlist);
+    toast.success(isInWishlist ? 'Removed from wishlist' : 'Added to wishlist');
+  };
 
-  let [visible, setVisible] = React.useState(false);
-  let [value, setvalue] = React.useState('');
-  let [fullName, setFullName] = React.useState('');
-  let [email, setEmail] = React.useState('');
-  let [phoneNumber, setPhoneNumber] = React.useState('');
-  let [productQty, setProductQty] = React.useState('');
-
-
-  function togglePaymentModal(value2) {
-    setvalue(value2)
-    setVisible(true)
-  }
-
-  const handlePayment = React.useCallback(
-    (e) => {
-      console?.log('hello')
-      e.preventDefault();
-      console?.log('hello2')
-      let data = {
-        'user_id': value?.user_id,
-        'amount': ((value?.product_price) * productQty),
-        'customer_full_name': fullName,
-        'product_qty': productQty,
-        'pay_for': value?.product_name,
-        'store_id': value?.link_name,
-        'customer_email': email,
-        'customer_phone_number': phoneNumber?.countryCode + phoneNumber?.phoneNumber
+  const shareProduct = async () => {
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: data?.product_name,
+          text: data?.product_description,
+          url: window.location.href,
+        });
+      } catch (err) {
+        console.log('Error sharing:', err);
       }
-      PaymentApis.payForProduct(data).then(
-        (response) => {
-          if (response?.data?.success) {
-            console.log(response?.data)
-            window.location.replace(response?.data?.data?.data?.link);
-            setVisible(false)
-            // toast.success(response?.data?.message);
-          }
-        }
-      ).catch(function (error) {
-        // handle error
-        console.log(error.response.data);
-        toast.error("Offfline");
-      }).finally(() => {
-        //toast.error("No Internet Connection");
+    } else {
+      // Fallback - copy to clipboard
+      navigator.clipboard.writeText(window.location.href);
+      toast.success('Product link copied to clipboard!');
+    }
+  };
 
-      });
-    },
-    [value, fullName, email, phoneNumber, params, productQty]
-  );
-
-
-
-
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="w-20 h-20 mx-auto mb-6 bg-white rounded-full shadow-lg flex items-center justify-center">
+            <Oval height={40} width={40} color="#2563EB" secondaryColor="#93C5FD" />
+          </div>
+          <h3 className="text-lg font-semibold text-gray-800 mb-2">Loading Product</h3>
+          <p className="text-gray-600">Please wait while we load the product details...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
-    <>
-
-      <div className="flex justify-between md:px-20">
-
-        {marketInfo?.brand_logo == 'no image' || marketInfo?.brand_logo == null ?
-          <span><img src="/images/image.png" /> </span>
-          :
-          <span><img src={marketInfo?.brand_logo} style={{ height: '50px', width: '90px' }} /></span>
-        }
-        {/* <span  className=""><img src="/images/image.png" /> </span> */}
-        {/* <span>djdjks</span> */}
-        {/* <span><img src="/images/los.png" style={{ height: '30px' }} /></span> */}
-      </div>
-
-      <div className="md:pl-20 mt-4 cursor-pointer">
-        <span onClick={() => navigate(-1)}><img src="/images/backarrow.png" style={{ height: '30px' }} /></span>
-      </div>
-
-      <div className="flex md:pl-24 md:pr-24 pt-10">
-        <Swiper
-          navigation={true}
-          modules={[Navigation]}
-          pagination={true}
-          grabCursor={true}
-          centeredSlides={true}
-          slidesPerView={"auto"}
-          className="mySwiper"
-        // style={{maxHeight:'400px'}}
-        >
-          <SwiperSlide style={{ color: 'red' }}>
-
-            {pro1 == 'no image' ?
-              <img className="object-fill w-full h-[500px] md:min-h-[500px] min-h-[300px] max-h-[300px] md:max-h-[500px]" src="/images/noimage.jpeg" alt={pro1} />
-              :
-              <img className="object-fill w-full h-[500px] md:min-h-[500px] min-h-[300px] max-h-[300px] md:max-h-[500px]" src={pro1} alt={pro1} />
-            }
-
-            <h3 className="absolute text-5xl text-gray-400 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-              gupta</h3>
-          </SwiperSlide>
-          <SwiperSlide>
-
-          {pro2 == 'no image' ?
-              <img className="object-fill w-full h-[500px] md:min-h-[500px] min-h-[300px] max-h-[300px] md:max-h-[500px]" src="/images/noimage.jpeg" alt={pro2} />
-              :
-              <img className="object-fill w-full h-[500px] md:min-h-[500px] min-h-[300px] max-h-[300px] md:max-h-[500px]" src={pro2} alt={pro2} />
-            }
-            
-            <h3 className="absolute text-5xl text-gray-400 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-              gupta</h3>
-          </SwiperSlide>
-          <SwiperSlide>
-          {pro3 == 'no image' ?
-              <img className="object-fill w-full h-[500px] md:min-h-[500px] min-h-[300px] max-h-[300px] md:max-h-[500px]" src="/images/noimage.jpeg" alt={pro3} />
-              :
-              <img className="object-fill w-full h-[500px] md:min-h-[500px] min-h-[300px] max-h-[300px] md:max-h-[500px]" src={pro3} alt={pro3} />
-            }
-           
-            <h3 className="absolute text-5xl text-gray-400 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-              gupta</h3>
-          </SwiperSlide>
-
-        </Swiper>
-      </div>
-
-      <div className="md:pl-24 md:pr-24 mt-10">
-        <div className="flex flex-col">
-          <span className="text-[16px] font-[600] mt-1">{data?.product_name}</span>
-          <span className="text-[#0071BC] text-[20px] font-[700]">NGN {data?.product_price}</span>
-        </div>
-
-        <div className="flex justify-start gap-3 py-3">
-          <a target='_blank' href={`${configs?.baseRedirect}/${data?.phone_number}`}
-            style={{ backgroundColor: marketInfo?.brand_primary_color }}
-            className=" text-[10px] text-white pt-1  flex cursor-pointer bg-[#0071BC] rounded-full px-2"
-          >
-            <FaWhatsapp className="mt-[2px] mr-1" />  Contact Vendor
-          </a>
-
-          <span onClick={() => togglePaymentModal(data)}
-            style={{ backgroundColor: marketInfo?.brand_primary_color }}
-            className=" text-[10px] text-[white] py-1  flex cursor-pointer bg-[#DBF2FF] rounded-full px-2"
-          >
-            Pay with gupta
-          </span>
-
-
-        </div>
-
-        <span>{data?.product_description}</span>
-      </div>
-
-
-
-
-
-
-
-      <section>
-        <Modal
-          visible={visible}
-          width="340"
-          height="550"
-          effect="fadeInUp"
-          onClickAway={() => setVisible(false)}
-        >
-          <div className=" " style={{ height: '100%', overflow: 'auto' }}>
-            <span className="flex justify-end pr-2 pt-2">
-              <p className="cursor-pointer font-bold" onClick={(e) => setVisible(false)}><SvgElement type={icontypesEnum.CANCEL} /></p>
-            </span>
-            <div className=" bg-[#fff]  items-center rounded-lg p-1 px-4">
-
-              <div className="">
-
-                <span className="flex justify-around">
-                  {/* <h1 className=" text-xs text-red-600" style={{ fontSize: '10px' }}>Link can’t be edited in free plan. <span style={{ color: '#61A24F' }} className="font-bold text-xs">Upgrade to Pro</span></h1> */}
-
-                </span>
-
-                <label
-                  className="flex justify-start  mb-2 pt-1 text-md font-bold text-black"
+    <div className="min-h-screen bg-gray-50">
+      {/* Header */}
+      <header className="bg-white shadow-sm border-b sticky top-0 z-40">
+        <div className="max-w-7xl mx-auto px-4 py-4">
+          <div className="flex items-center justify-between">
+            {/* Left side - Logo and Back */}
+            <div className="flex items-center space-x-4">
+              <button 
+                onClick={() => navigate(-1)}
+                className="p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-full transition-colors"
+              >
+                <FaArrowLeft size={18} />
+              </button>
+              
+              {marketInfo?.brand_logo && marketInfo.brand_logo !== 'no image' ? (
+                <img 
+                  src={marketInfo.brand_logo} 
+                  alt="Store Logo"
+                  className="w-10 h-10 object-cover rounded-lg"
+                />
+              ) : (
+                <div 
+                  className="w-10 h-10 rounded-lg flex items-center justify-center text-white"
+                  style={{ backgroundColor: theme.primary }}
                 >
-                  You are about to pay for {value?.product_name}
-                </label>
-                {/* <label
-                  style={{ fontSize: '14px' }}
-                  className="flex justify-start mb-2 pt-2 text-xs font-medium text-gray-600"
-                >
-                  You are about to delete the Product you created.
-
-
-                </label> */}
-
-
-
-
-                <form onSubmit={handlePayment} className="pb-4 rounded-lg">
-
-                  <label class="block mb-2 mt-3 text-sm  text-gray-900 dark:text-gray-600">Full Name</label>
-                  <input required type="text" name="full_name" onChange={(e) => setFullName(e.target.value)} class="bg-[#F4FBFF] border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" placeholder="Your Full Name" />
-
-                  <label class="block mb-2 mt-2 text-sm  text-gray-900 dark:text-gray-600">Email</label>
-                  <input required type="email" name="email" onChange={(e) => setEmail(e.target.value)} class="bg-[#F4FBFF] border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" placeholder="Your Email" />
-
-
-                  <label class="block mb-2 mt-2 text-sm  text-gray-900 dark:text-gray-600">Quantity</label>
-                  <input required type="number" name="productQty" onChange={(e) => setProductQty(e.target.value)} class="bg-[#F4FBFF] border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" placeholder="Paying for how many?" />
-
-                  <label class="block mb-2 mt-2 text-sm  text-gray-900 dark:text-gray-600">Phone Number</label>
-                  <PhoneInput
-                    style={{ backgroundColor: '#F4FBFF' }}
-                    disabled={false}
-                    name="phone"
-                    required
-                    // containerClass={"shadow-sm bg-gray-100 block border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 "}
-                    countryCode={'ng'}
-                    onChange={setPhoneNumber}
-                    placeholder={'Enter Mobile Number'}
-                  />
-
-                  <span className=" text-red-500 text-[10px]">{phoneNumber?.message}</span>
-
-                  {/* <input required type="text"  id="customer_full_name" onChange={(e)=>setPhoneNumber(e.target.value)} class="bg-[#F4FBFF] border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" placeholder="Your phone number" /> */}
-
-
-
-                  <span className="flex justify-center pt-4">
-                    <button
-                      type="submit"
-                      style={{ backgroundColor: '#0071BC', borderRadius: '50px' }}
-                      className=" text-white hover:bg-[#0071BC] focus:ring-4 focus:outline-none focus:ring-[#0071BC] font-medium rounded-lg text-sm w-full px-2 py-2.5 text-center "
-                    >
-                      Proceed to payment
-                    </button>
-                  </span>
-
-                  <span className="flex justify-center pt-4">
-                    <button
-                      type="button"
-                      onClick={(e) => setVisible(false)}
-                      style={{ borderRadius: '50px' }}
-                      className=" text-black bg-gray-300 hover:bg-gray-500 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm w-full px-2 py-2.5 text-center "
-                    >
-                      Cancel
-                    </button>
-                  </span>
-
-                </form>
-
-
-
-              </div>
-
+                  <FaStore size={16} />
+                </div>
+              )}
             </div>
 
+            {/* Right side - Actions */}
+            <div className="flex items-center space-x-3">
+              {/* <button 
+                onClick={toggleWishlist}
+                className={`p-3 rounded-full transition-all duration-200 ${
+                  isInWishlist 
+                    ? 'bg-red-500 text-white' 
+                    : 'bg-gray-100 text-gray-600 hover:text-red-500 hover:bg-red-50'
+                }`}
+              >
+                <FaHeart size={16} />
+              </button> */}
+              
+              {/* <button 
+                onClick={shareProduct}
+                className="p-3 text-gray-600 hover:text-blue-600 hover:bg-blue-50 rounded-full transition-all duration-200"
+              >
+                <FaShare size={16} />
+              </button> */}
+            </div>
           </div>
-        </Modal>
-      </section>
+        </div>
+      </header>
 
+      <div className="max-w-7xl mx-auto px-4 py-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+          {/* Product Images */}
+          <div className="space-y-4">
+            {/* Main Image */}
+            <div className="relative bg-white rounded-2xl shadow-lg overflow-hidden border border-gray-200">
+              <div className="aspect-square relative">
+                {productImages.length > 0 ? (
+                  <>
+                    <img 
+                      src={productImages[currentImageIndex]} 
+                      alt={data?.product_name}
+                      className="w-full h-full object-cover"
+                    />
+                    
+                    {/* Watermark */}
+                    <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                      <span className="text-6xl text-gray-200 font-bold opacity-30 select-none">
+                        Gupta
+                      </span>
+                    </div>
 
+                    {/* Navigation Arrows */}
+                    {productImages.length > 1 && (
+                      <>
+                        <button
+                          onClick={prevImage}
+                          className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white/90 hover:bg-white p-2 rounded-full shadow-lg transition-all duration-200"
+                        >
+                          <FaChevronLeft size={16} />
+                        </button>
+                        <button
+                          onClick={nextImage}
+                          className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white/90 hover:bg-white p-2 rounded-full shadow-lg transition-all duration-200"
+                        >
+                          <FaChevronRight size={16} />
+                        </button>
+                      </>
+                    )}
+                  </>
+                ) : (
+                  <div className="w-full h-full bg-gray-200 flex items-center justify-center">
+                    <div className="text-center">
+                      <FaStore className="mx-auto text-gray-400 text-6xl mb-4" />
+                      <p className="text-gray-500">No image available</p>
+                    </div>
+                  </div>
+                )}
+              </div>
 
+              {/* Image Indicators */}
+              {productImages.length > 1 && (
+                <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
+                  {productImages.map((_, index) => (
+                    <button
+                      key={index}
+                      onClick={() => setCurrentImageIndex(index)}
+                      className={`w-3 h-3 rounded-full transition-all duration-200 ${
+                        index === currentImageIndex 
+                          ? 'bg-white' 
+                          : 'bg-white/50 hover:bg-white/75'
+                      }`}
+                    />
+                  ))}
+                </div>
+              )}
+            </div>
 
+            {/* Thumbnail Images */}
+            {productImages.length > 1 && (
+              <div className="grid grid-cols-3 gap-3">
+                {productImages.map((image, index) => (
+                  <button
+                    key={index}
+                    onClick={() => setCurrentImageIndex(index)}
+                    className={`aspect-square bg-white rounded-lg overflow-hidden border-2 transition-all duration-200 ${
+                      index === currentImageIndex 
+                        ? 'border-blue-500 ring-2 ring-blue-200' 
+                        : 'border-gray-200 hover:border-gray-300'
+                    }`}
+                  >
+                    <img 
+                      src={image} 
+                      alt={`${data?.product_name} ${index + 1}`}
+                      className="w-full h-full object-cover"
+                    />
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
 
+          {/* Product Details */}
+          <div className="space-y-6">
+            {/* Product Title and Price */}
+            <div>
+              <h1 className="text-3xl font-bold text-gray-900 mb-3 capitalize">
+                {data?.product_name}
+              </h1>
+              
+              <div className="flex items-center space-x-4 mb-4">
+                <span className="text-3xl font-bold" style={{ color: theme.primary }}>
+                  {formatPrice(data?.product_price)}
+                </span>
+                
+                {data?.no_of_items && parseFloat(data.no_of_items) < parseFloat(data.product_price) && (
+                  <span className="text-xl text-gray-400 line-through">
+                    {formatPrice(data.no_of_items)}
+                  </span>
+                )}
+              </div>
 
+              {/* Product Rating */}
+              <div className="flex items-center space-x-2 mb-4">
+                <div className="flex items-center">
+                  {[...Array(5)].map((_, i) => (
+                    <FaStar 
+                      key={i} 
+                      className={`text-sm ${i < 4 ? 'text-yellow-400' : 'text-gray-300'}`} 
+                    />
+                  ))}
+                </div>
+                <span className="text-sm text-gray-600">(4.0) • 127 reviews</span>
+              </div>
 
+              {/* Product Categories */}
+              <div className="flex flex-wrap gap-2 mb-6">
+                {data?.category && (
+                  <span className="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm font-medium">
+                    <FaTag className="inline mr-1" size={12} />
+                    {data.category}
+                  </span>
+                )}
+                {data?.location && (
+                  <span className="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm font-medium">
+                    <FaMapMarkerAlt className="inline mr-1" size={12} />
+                    {data.location}
+                  </span>
+                )}
+              </div>
+            </div>
 
+            {/* Quantity Selector */}
+            <div className="bg-white rounded-xl p-6 border border-gray-200">
+              <h3 className="font-semibold text-gray-900 mb-4">Quantity</h3>
+              <div className="flex items-center space-x-4">
+                <div className="flex items-center border border-gray-300 rounded-lg">
+                  <button
+                    onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                    className="px-4 py-2 text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-l-lg transition-colors"
+                  >
+                    -
+                  </button>
+                  <span className="px-4 py-2 font-medium min-w-[60px] text-center">
+                    {quantity}
+                  </span>
+                  <button
+                    onClick={() => setQuantity(quantity + 1)}
+                    className="px-4 py-2 text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-r-lg transition-colors"
+                  >
+                    +
+                  </button>
+                </div>
+                
+                <div className="text-sm text-gray-600">
+                  Total: <span className="font-bold" style={{ color: theme.primary }}>
+                    {formatPrice(data?.product_price * quantity)}
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            {/* Action Buttons */}
+            <div className="space-y-3">
+              <button
+                onClick={() => {
+                  setPaymentForm(prev => ({ ...prev, quantity }));
+                  setPaymentModal(true);
+                }}
+                className="w-full py-4 text-white rounded-xl font-semibold text-lg shadow-lg hover:shadow-xl transition-all duration-200 flex items-center justify-center space-x-3"
+                style={{ backgroundColor: theme.primary }}
+              >
+                <FaShoppingCart size={20} />
+                <span>Buy Now</span>
+              </button>
+
+              <a
+                href={`${configs?.baseRedirect}/${data?.phone_number}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full py-4 bg-green-600 text-white rounded-xl font-semibold text-lg shadow-lg hover:shadow-xl hover:bg-green-700 transition-all duration-200 flex items-center justify-center space-x-3"
+              >
+                <FaWhatsapp size={20} />
+                <span>Contact Vendor</span>
+              </a>
+            </div>
+
+            {/* Product Features */}
+            <div className="bg-white rounded-xl p-6 border border-gray-200">
+              <h3 className="font-semibold text-gray-900 mb-4">Why Choose This Product?</h3>
+              <div className="space-y-3">
+                <div className="flex items-center space-x-3">
+                  <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
+                    <FaShieldAlt className="text-green-600" size={14} />
+                  </div>
+                  <span className="text-gray-700">Secure payment guaranteed</span>
+                </div>
+                <div className="flex items-center space-x-3">
+                  <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
+                    <FaTruck className="text-blue-600" size={14} />
+                  </div>
+                  <span className="text-gray-700">Fast delivery available</span>
+                </div>
+                <div className="flex items-center space-x-3">
+                  <div className="w-8 h-8 bg-purple-100 rounded-full flex items-center justify-center">
+                    <FaUndo className="text-purple-600" size={14} />
+                  </div>
+                  <span className="text-gray-700">Easy returns policy</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Product Description */}
+            <div className="bg-white rounded-xl p-6 border border-gray-200">
+              <h3 className="font-semibold text-gray-900 mb-4">Product Description</h3>
+              <p className="text-gray-700 leading-relaxed">
+                {data?.product_description || 'No description available for this product.'}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Enhanced Payment Modal */}
+      <Modal
+        visible={paymentModal}
+        // width="90%"
+        // height="90%"
+        maxHeight="60%"
+        effect="fadeInUp"
+        onClickAway={() => setPaymentModal(false)}
+      >
+        <div className="max-w-lg mx-auto  rounded-2xl shadow-2xl overflow-hidden">
+          {/* Modal Header */}
+          <div 
+            className="p-6 text-white"
+            style={{ background: `linear-gradient(135deg, ${theme.primary}, ${theme.primaryDark})` }}
+          >
+            <div className="flex justify-between items-center">
+              <div>
+                <h2 className="text-xl font-bold">Complete Your Purchase</h2>
+                <p className="text-white/80 text-sm">Secure checkout for {data?.product_name}</p>
+              </div>
+              <button 
+                onClick={() => setPaymentModal(false)}
+                className="p-2 text-white/80 hover:text-white hover:bg-white/20 rounded-full transition-colors"
+              >
+                ✕
+              </button>
+            </div>
+          </div>
+
+          <form onSubmit={handlePayment} className="p-6">
+            {/* Product Summary */}
+            <div className="bg-gray-50 rounded-xl p-4 mb-6 border border-gray-200">
+              <div className="flex items-center space-x-4">
+                {productImages[0] && (
+                  <img 
+                    src={productImages[0]} 
+                    alt={data?.product_name}
+                    className="w-16 h-16 object-cover rounded-lg"
+                  />
+                )}
+                <div className="flex-1">
+                  <h3 className="font-semibold text-gray-900 mb-1">{data?.product_name}</h3>
+                  <div className="flex justify-between items-center">
+                    <span className="text-gray-600">Unit Price:</span>
+                    <span className="font-bold" style={{ color: theme.primary }}>
+                      {formatPrice(data?.product_price)}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="space-y-4">
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Full Name *</label>
+                  <input
+                    type="text"
+                    required
+                    value={paymentForm.fullName}
+                    onChange={(e) => setPaymentForm(prev => ({ ...prev, fullName: e.target.value }))}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    placeholder="John Doe"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Quantity *</label>
+                  <input
+                    type="number"
+                    min="1"
+                    required
+                    value={paymentForm.quantity}
+                    onChange={(e) => setPaymentForm(prev => ({ ...prev, quantity: parseInt(e.target.value) || 1 }))}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Email Address *</label>
+                <input
+                  type="email"
+                  required
+                  value={paymentForm.email}
+                  onChange={(e) => setPaymentForm(prev => ({ ...prev, email: e.target.value }))}
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  placeholder="john@example.com"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Phone Number *</label>
+                <PhoneInput
+                  required
+                  countryCode="ng"
+                  onChange={(phone) => setPaymentForm(prev => ({ ...prev, phoneNumber: phone }))}
+                  placeholder="Enter your phone number"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                />
+              </div>
+            </div>
+
+            {/* Order Summary */}
+            <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-6 mt-6 border border-blue-200">
+              <h4 className="font-semibold text-gray-900 mb-4">Order Summary</h4>
+              <div className="space-y-3">
+                <div className="flex justify-between text-sm">
+                  <span className="text-gray-600">Subtotal:</span>
+                  <span className="font-medium">{formatPrice(data?.product_price || 0)}</span>
+                </div>
+                <div className="flex justify-between text-sm">
+                  <span className="text-gray-600">Quantity:</span>
+                  <span className="font-medium">×{paymentForm.quantity}</span>
+                </div>
+                <div className="border-t border-blue-200 pt-3">
+                  <div className="flex justify-between items-center">
+                    <span className="text-lg font-bold text-gray-900">Total Amount:</span>
+                    <span className="text-2xl font-bold" style={{ color: theme.primary }}>
+                      {formatPrice((data?.product_price || 0) * paymentForm.quantity)}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Action Buttons */}
+            <div className="flex space-x-4 mt-8">
+              <button
+                type="button"
+                onClick={() => setPaymentModal(false)}
+                className="flex-1 py-3 px-6 text-gray-700 bg-gray-100 rounded-xl hover:bg-gray-200 transition-all duration-200 font-medium"
+              >
+                Cancel
+              </button>
+              <button
+                type="submit"
+                className="flex-2 py-3 px-8 text-white rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-200 flex items-center justify-center space-x-2"
+                style={{ backgroundColor: theme.primary }}
+              >
+                <FaCreditCard size={16} />
+                <span>Pay Now</span>
+              </button>
+            </div>
+          </form>
+        </div>
+      </Modal>
 
       <ToastContainer
-         position="top-right"
-        autoClose={2000}
-        hideProgressBar={true}
-        newestOnTop={false}
+        position="bottom-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop
         closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover />
-    </>
+        pauseOnHover
+        theme="light"
+        toastStyle={{
+          borderRadius: '12px',
+          boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)'
+        }}
+      />
+    </div>
   );
 }
