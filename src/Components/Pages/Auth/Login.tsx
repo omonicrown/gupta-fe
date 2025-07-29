@@ -16,7 +16,6 @@ import 'react-toastify/dist/ReactToastify.css';
 import Navbar from "../../Navbars/Navbar";
 import { Oval } from "react-loader-spinner";
 
-
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -43,20 +42,38 @@ function Login() {
       AuthApis.login(formData).then(
         (response: AxiosResponse<any>) => {
           if (response?.data?.status === true) {
-            dispatch(login({ email: email, token: response.data.token, name: response.data.name, data: response.data?.data }))
-            // navigate('/mylinks');
+            // UPDATED: Include service_type in the login dispatch
+            dispatch(login({
+              email: email,
+              token: response.data.token,
+              name: response.data.name,
+              data: response.data?.data,
+              service_type: response.data?.service_type || response.data?.data?.service_type
+            }))
+
             setLoader(false);
 
-            {
-              response.data?.data?.role == 'admin'
-              ? navigate('/admin-dashboard')
-              :
-              navigate('/mylinks')
+            // Route user based on role and service type
+            if (response.data?.data?.role === 'admin') {
+              navigate('/admin-dashboard')
+            } else {
+              // Route based on service type
+              const serviceType = response.data?.service_type || response.data?.data?.service_type;
+
+              switch (serviceType) {
+                case 'sms':
+                  navigate('/sms-dashboard');
+                  break;
+                case 'whatsapp':
+                  navigate('/mylinks');
+                  break;
+                case 'all':
+                default:
+                  navigate('/mylinks'); // Default to WhatsApp for 'all' service users
+                  break;
+              }
             }
 
-
-
-            // window.location.reload();
           } else {
             setLoader(false);
             toast.error(response?.data?.message);
@@ -66,13 +83,11 @@ function Login() {
       ).catch(function (error) {
         // handle error
         setLoader(false);
-        toast.error("Offfline");
+        toast.error("Something went wrong. Please try again.");
       });
     },
-    [email, password,loader]
+    [email, password, loader]
   );
-
-
 
   return (
     <>
@@ -83,7 +98,6 @@ function Login() {
           <div className="border py-6 rounded-lg px-6">
             <div className=" ">
               <h1 className=" my-4 text-xl font-semibold text-gray-600 text-center">Welcome Back!</h1>
-
             </div>
 
             <div className="mt-2 ">
@@ -136,7 +150,6 @@ function Login() {
                 </div>
 
                 <div className="flex justify-between mb-4 w-80">
-
                   <div className="flex items-center mb-4">
                     <input id="green-checkbox" type="checkbox" value="" className="w-4 h-4 text-green-600 bg-gray-100 rounded border-gray-300 focus:ring-green-500 dark:focus:ring-green-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
                     <label htmlFor="green-checkbox" className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-400">Remember me</label>
@@ -145,13 +158,9 @@ function Login() {
                   <NavLink to='/forgot-password'>
                     <p className="ml-2 text-sm font-medium text-gray-400 "> <a href="#" className="text-[#0071BC] hover:underline ">Forgot Password?</a></p>
                   </NavLink>
-
                 </div>
 
-
-
-                < span className="flex justify-center w-80">
-
+                <span className="flex justify-center w-80">
                   <button
                     type="submit"
                     disabled={loader}
@@ -178,18 +187,9 @@ function Login() {
                 </NavLink>
 
               </form>
-
-
             </div>
           </div>
         </div>
-        {/* <button
-                 
-                  onClick={getdata}
-                  className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center "
-                >
-                  getData
-                </button> */}
       </div>
 
       <ToastContainer

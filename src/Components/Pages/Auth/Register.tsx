@@ -24,18 +24,7 @@ function Register() {
   const [phone, setPhone] = useState<any>("");
   const [loader, setLoader] = useState(false);
 
-  // initialValue
-  const initialValue = {
-    email: "",
-    fullName: "",
-    phoneNo: "",
-    gender: "",
-    password: "",
-    comfirmPassword: "",
-    phone_number: "",
-    checked: false,
-  };
-
+  // Updated user data state to include service_type
   const [userData, setUserdata] = useState({
     'name': "",
     'fullName': "",
@@ -43,6 +32,7 @@ function Register() {
     'password': "",
     'confirm_password': "",
     'phone_number': "",
+    'service_type': "", // NEW FIELD
     'checked': false
   });
 
@@ -51,12 +41,8 @@ function Register() {
     setUserdata({ ...userData, [name]: value });
   };
 
-  // console.log(userData);
-
-
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  // const [show, setShow] = useState(false);
 
   const navigate = useNavigate();
 
@@ -72,7 +58,14 @@ function Register() {
       setLoader(true);
 
       if (userData?.password !== userData?.confirm_password) {
+        setLoader(false);
         return toast.error("Password does not match");
+      }
+
+      // NEW VALIDATION: Check if service type is selected
+      if (!userData?.service_type) {
+        setLoader(false);
+        return toast.error("Please select a service type");
       }
 
       const formData = new FormData()
@@ -80,6 +73,7 @@ function Register() {
       formData.append('email', userData?.email)
       formData.append('phone_number', (phone?.countryCode + phone?.phoneNumber).replace(/ /g, ''))
       formData.append('password', userData?.password)
+      formData.append('service_type', userData?.service_type) // NEW FIELD
       console.log(formData)
 
       AuthApis.register(formData).then(
@@ -88,15 +82,20 @@ function Register() {
             setLoader(false);
 
             if (response?.data?.status === true) {
-              dispatch(login({ email: userData?.email, token: response.data.token, name: response.data.name }))
-              toast.success("Login Successful");
+              // UPDATED: Include service_type in the login dispatch
+              dispatch(login({
+                email: userData?.email,
+                token: response.data.token,
+                name: response.data.name,
+                service_type: userData?.service_type // Pass service type to store
+              }))
+              toast.success("Registration Successful");
               navigate('/email-verify');
-
             }
 
           } else {
             setLoader(false);
-            toast.warn('Invalid Login Credentials');
+            toast.warn('Registration Failed');
           }
           setLoader(false);
           toast.success(response?.data?.message);
@@ -104,7 +103,7 @@ function Register() {
       ).catch(function (error) {
         // handle error
         setLoader(false);
-        toast.error("Offfline");
+        toast.error("Something went wrong. Please try again.");
       }).finally(() => {
 
       });
@@ -112,10 +111,6 @@ function Register() {
     [userData, phone, loader]
   );
 
-
-
-
-  //   console.log(userData);
   return (
     <>
       <Navbar />
@@ -125,7 +120,6 @@ function Register() {
           <div className="border py-6 rounded-lg px-6">
             <div className=" ">
               <h1 className=" my-4 text-xl font-semibold text-gray-600">Sign up</h1>
-
             </div>
 
             <div className="mt-2">
@@ -133,7 +127,7 @@ function Register() {
 
                 <div className="mb-6 ">
                   <label
-                    htmlFor="email"
+                    htmlFor="brand"
                     className="flex justify-start mb-2 text-sm font-medium text-gray-400 "
                   >
                     Brand/Business Name
@@ -149,7 +143,6 @@ function Register() {
                     required={true}
                   />
                 </div>
-
 
                 <div className="mb-6 ">
                   <label
@@ -180,12 +173,36 @@ function Register() {
                   <PhoneInput
                     style={{ backgroundColor: '#F4FBFF' }}
                     disabled={false}
-                    // containerClass={"shadow-sm bg-gray-100 block border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 "}
                     countryCode={'ng'}
                     onChange={setPhone}
                     placeholder={'Enter Mobile Number'}
                   />
+                </div>
 
+                {/* NEW SERVICE SELECTION DROPDOWN */}
+                <div className="mb-6">
+                  <label
+                    htmlFor="service_type"
+                    className="flex justify-start mb-2 text-sm font-medium text-gray-400"
+                  >
+                    Select Service <span className="text-red-500">*</span>
+                  </label>
+                  <select
+                    id="service_type"
+                    name="service_type"
+                    className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 w-full p-2.5"
+                    value={userData.service_type}
+                    onChange={handleChange}
+                    required={true}
+                  >
+                    <option value="">Choose a service...</option>
+                    <option value="whatsapp">WhatsApp Links & Marketplace</option>
+                    <option value="sms">SMS Platform</option>
+                    <option value="all">All Services</option>
+                  </select>
+                  <p className="mt-1 text-xs text-gray-500">
+                    You can change this later in your account settings
+                  </p>
                 </div>
 
                 <div className="mb-4">
@@ -216,10 +233,9 @@ function Register() {
                   </div>
                 </div>
 
-
                 <div className="mb-4">
                   <label
-                    htmlFor="password"
+                    htmlFor="confirm_password"
                     className="flex justify-start mb-2 text-sm font-medium text-gray-400"
                   >
                     Confirm Password
@@ -227,8 +243,8 @@ function Register() {
                   <div className="relative">
                     <input
                       type={show ? "text" : "password"}
-                      placeholder="Password"
-                      id="password"
+                      placeholder="Confirm Password"
+                      id="confirm_password"
                       name="confirm_password"
                       className="shadow-sm  bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
                       required={true}
@@ -246,15 +262,20 @@ function Register() {
                 </div>
 
                 <div className="flex justify-between mb-4 w-80">
-
                   <div className="flex items-center mb-4">
-                    <input id="green-checkbox" type="checkbox" value="" className="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
-                    <label htmlFor="green-checkbox" className="ml-2 text-xs font-small text-gray-900 dark:text-gray-400">I accept the <b>terms of service</b> and <b>privacy policy</b> </label>
+                    <input
+                      id="green-checkbox"
+                      type="checkbox"
+                      value=""
+                      className="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                    />
+                    <label htmlFor="green-checkbox" className="ml-2 text-xs font-small text-gray-900 dark:text-gray-400">
+                      I accept the <b>terms of service</b> and <b>privacy policy</b>
+                    </label>
                   </div>
                 </div>
 
-                < span className="flex justify-center w-80">
-
+                <span className="flex justify-center w-80">
                   <button
                     type="submit"
                     disabled={loader}
@@ -277,22 +298,15 @@ function Register() {
                   </button>
                 </span>
                 <NavLink to='/login' className="flex justify-center">
-                  <p className="ml-2 mt-3 text-sm font-medium text-gray-400 ">Already have an account? <a href="/login" className="text-[#0071BC] hover:underline ">Log in</a></p>
+                  <p className="ml-2 mt-3 text-sm font-medium text-gray-400 ">
+                    Already have an account? <a href="/login" className="text-[#0071BC] hover:underline ">Log in</a>
+                  </p>
                 </NavLink>
 
               </form>
-
-
             </div>
           </div>
         </div>
-        {/* <button
-                 
-                  onClick={getdata}
-                  className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center "
-                >
-                  getData
-                </button> */}
       </div>
 
       <ToastContainer

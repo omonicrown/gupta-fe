@@ -37,16 +37,16 @@ const configs = {
 
   // imageUrl: "http://localhost:8000/TieredImages/",
   // context: "http://localhost:8000/api",
-  // baseRedirectFront:'http://localhost:8000/',
-  // baseRedirect:'http://localhost:8000',
+  // baseRedirectFront: 'http://localhost:8000/',
+  // baseRedirect: 'http://localhost:8000',
 
   imageUrl: "https://link.mygupta.co/TieredImages/",
   context: "https://link.mygupta.co/api",
-  baseRedirectFront:'https://www.mygupta.co/',
-  baseRedirect:'https://link.mygupta.co',
+  baseRedirectFront: 'https://www.mygupta.co/',
+  baseRedirect: 'https://link.mygupta.co',
 
 
-  
+
   // imageUrl2: "https://beternl-app-4lwxp.ondigitalocean.app/products/",
   // imageUrl: "hhttps://beternl-app-4lwxp.ondigitalocean.app/TieredImages/",
   // context: "https://beternl-app-4lwxp.ondigitalocean.app/api",

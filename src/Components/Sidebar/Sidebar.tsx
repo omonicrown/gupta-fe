@@ -16,9 +16,25 @@ import { FiBarChart2, FiMessageSquare, FiUsers, FiChevronDown, FiChevronUp, FiLi
 export default function Sidebar(title: any) {
   const navigate = useNavigate();
   const [collapseShow, setCollapseShow] = React.useState("hidden");
-  const [activeTab, setActiveTab] = React.useState<"whatsapp" | "sms">("whatsapp"); // Track active tab
+  const [activeTab, setActiveTab] = React.useState<"whatsapp" | "sms">("whatsapp");
   const dispatch: Dispatch = useDispatch();
   const userLoginData = useSelector((state: any) => state.data.login.value);
+
+  // Get user's service type from Redux store
+  const userServiceType = userLoginData?.data?.service_type || userLoginData?.service_type || 'all';
+
+  // Helper functions to check service access
+  const hasWhatsAppAccess = () => {
+    return ['whatsapp', 'all'].includes(userServiceType);
+  };
+
+  const hasSmsAccess = () => {
+    return ['sms', 'all'].includes(userServiceType);
+  };
+
+  const hasAllServicesAccess = () => {
+    return userServiceType === 'all';
+  };
 
   // Authentication checks
   React.useEffect(() => {
@@ -41,11 +57,23 @@ export default function Sidebar(title: any) {
     }
   }, []);
 
-  // Set initial active tab based on current URL
+  // Set initial active tab based on current URL and user's service access
   React.useEffect(() => {
     const isSmsRoute = isSmsRouteActive();
-    setActiveTab(isSmsRoute ? "sms" : "whatsapp");
-  }, []);
+
+    // If user only has SMS access, force SMS tab
+    if (userServiceType === 'sms') {
+      setActiveTab("sms");
+    }
+    // If user only has WhatsApp access, force WhatsApp tab
+    else if (userServiceType === 'whatsapp') {
+      setActiveTab("whatsapp");
+    }
+    // If user has all services, set based on current route
+    else {
+      setActiveTab(isSmsRoute ? "sms" : "whatsapp");
+    }
+  }, [userServiceType]);
 
   const logOut = () => {
     AuthApis.logout('').then(
@@ -88,11 +116,15 @@ export default function Sidebar(title: any) {
   };
 
   const switchToWhatsappTab = () => {
-    setActiveTab("whatsapp");
+    if (hasWhatsAppAccess()) {
+      setActiveTab("whatsapp");
+    }
   };
 
   const switchToSmsTab = () => {
-    setActiveTab("sms");
+    if (hasSmsAccess()) {
+      setActiveTab("sms");
+    }
   };
 
   return (
@@ -107,7 +139,7 @@ export default function Sidebar(title: any) {
           >
             <b className="fas fa-bars text-3xl"> ≡ </b><span className="text-black ">{title?.title}</span>
           </button>
-          
+
           {/* Mobile header content */}
           <span className="flex justify-end md:hidden">
             <span className="flex flex-row flex-wrap items-center lg:ml-auto mr-3">
@@ -143,7 +175,7 @@ export default function Sidebar(title: any) {
             <div className="md:min-w-full md:hidden block pb-1 mb-4">
               <div className="flex justify-between">
                 <span className="flex justify-start gap-1" onClick={() => setCollapseShow("hidden")}>
-                  <IoMdCloseCircle style={{ color: '#333333' }} className="bg-gray-200 text-xs text-gray-500 rounded-full p-1 h-6 w-6" /> 
+                  <IoMdCloseCircle style={{ color: '#333333' }} className="bg-gray-200 text-xs text-gray-500 rounded-full p-1 h-6 w-6" />
                   <span className="text-white ml-2"></span>
                 </span>
                 <span
@@ -157,35 +189,58 @@ export default function Sidebar(title: any) {
               </div>
             </div>
 
-            {/* Platform selection tabs */}
-            <div className="flex mb-4 mx-3">
-              <button 
-                onClick={switchToWhatsappTab}
-                className={`flex-1 py-2 px-3 text-center text-xs font-medium rounded-l-lg ${activeTab === "whatsapp" || isWhatsappRouteActive() ? 'bg-white text-[#0071BC]' : 'bg-white/10 text-white'}`}
-              >
-                <div className="flex justify-center items-center">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" className="mr-1" viewBox="0 0 24 24">
-                    <path fill={activeTab === "whatsapp" || isWhatsappRouteActive() ? "#0071BC" : "white"} d="M19.05 4.91A9.816 9.816 0 0 0 12.04 2c-5.46 0-9.91 4.45-9.91 9.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21c5.46 0 9.91-4.45 9.91-9.91c0-2.65-1.03-5.14-2.9-7.01m-7.01 15.24c-1.48 0-2.93-.4-4.2-1.15l-.3-.18l-3.12.82l.83-3.04l-.2-.31a8.264 8.264 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.24-8.24c2.2 0 4.27.86 5.82 2.42a8.183 8.183 0 0 1 2.41 5.83c.02 4.54-3.68 8.23-8.22 8.23m4.52-6.16c-.25-.12-1.47-.72-1.69-.81c-.23-.08-.39-.12-.56.12c-.17.25-.64.81-.78.97c-.14.17-.29.19-.54.06c-.25-.12-1.05-.39-1.99-1.23c-.74-.66-1.23-1.47-1.38-1.72c-.14-.25-.02-.38.11-.51c.11-.11.25-.29.37-.43s.17-.25.25-.41c.08-.17.04-.31-.02-.43s-.56-1.34-.76-1.84c-.2-.48-.41-.42-.56-.43h-.48c-.17 0-.43.06-.66.31c-.22.25-.86.85-.86 2.07c0 1.22.89 2.4 1.01 2.56c.12.17 1.75 2.67 4.23 3.74c.59.26 1.05.41 1.41.52c.59.19 1.13.16 1.56.1c.48-.07 1.47-.6 1.67-1.18c.21-.58.21-1.07.14-1.18s-.22-.16-.47-.28" />
-                  </svg>
-                  WhatsApp
+            {/* Platform selection tabs - Only show if user has access to multiple services */}
+            {hasAllServicesAccess() && (
+              <div className="flex mb-4 mx-3">
+                <button
+                  onClick={switchToWhatsappTab}
+                  className={`flex-1 py-2 px-3 text-center text-xs font-medium rounded-l-lg ${activeTab === "whatsapp" || isWhatsappRouteActive() ? 'bg-white text-[#0071BC]' : 'bg-white/10 text-white'}`}
+                >
+                  <div className="flex justify-center items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" className="mr-1" viewBox="0 0 24 24">
+                      <path fill={activeTab === "whatsapp" || isWhatsappRouteActive() ? "#0071BC" : "white"} d="M19.05 4.91A9.816 9.816 0 0 0 12.04 2c-5.46 0-9.91 4.45-9.91 9.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21c5.46 0 9.91-4.45 9.91-9.91c0-2.65-1.03-5.14-2.9-7.01m-7.01 15.24c-1.48 0-2.93-.4-4.2-1.15l-.3-.18l-3.12.82l.83-3.04l-.2-.31a8.264 8.264 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.24-8.24c2.2 0 4.27.86 5.82 2.42a8.183 8.183 0 0 1 2.41 5.83c.02 4.54-3.68 8.23-8.22 8.23m4.52-6.16c-.25-.12-1.47-.72-1.69-.81c-.23-.08-.39-.12-.56.12c-.17.25-.64.81-.78.97c-.14.17-.29.19-.54.06c-.25-.12-1.05-.39-1.99-1.23c-.74-.66-1.23-1.47-1.38-1.72c-.14-.25-.02-.38.11-.51c.11-.11.25-.29.37-.43s.17-.25.25-.41c.08-.17.04-.31-.02-.43s-.56-1.34-.76-1.84c-.2-.48-.41-.42-.56-.43h-.48c-.17 0-.43.06-.66.31c-.22.25-.86.85-.86 2.07c0 1.22.89 2.4 1.01 2.56c.12.17 1.75 2.67 4.23 3.74c.59.26 1.05.41 1.41.52c.59.19 1.13.16 1.56.1c.48-.07 1.47-.6 1.67-1.18c.21-.58.21-1.07.14-1.18s-.22-.16-.47-.28" />
+                    </svg>
+                    WhatsApp
+                  </div>
+                </button>
+                <button
+                  onClick={switchToSmsTab}
+                  className={`flex-1 py-2 px-3 text-center text-xs font-medium rounded-r-lg ${activeTab === "sms" || isSmsRouteActive() ? 'bg-white text-[#0071BC]' : 'bg-white/10 text-white'}`}
+                >
+                  <div className="flex justify-center items-center">
+                    <FiMessageSquare className="h-4 w-4 mr-1" />
+                    SMS Platform
+                  </div>
+                </button>
+              </div>
+            )}
+
+            {/* Show service type indicator for single-service users */}
+            {!hasAllServicesAccess() && (
+              <div className="mb-4 mx-3">
+                <div className="py-2 px-3 text-center text-xs font-medium rounded-lg bg-white/10 text-white">
+                  {userServiceType === 'whatsapp' ? (
+                    <div className="flex justify-center items-center">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" className="mr-1" viewBox="0 0 24 24">
+                        <path fill="white" d="M19.05 4.91A9.816 9.816 0 0 0 12.04 2c-5.46 0-9.91 4.45-9.91 9.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21c5.46 0 9.91-4.45 9.91-9.91c0-2.65-1.03-5.14-2.9-7.01m-7.01 15.24c-1.48 0-2.93-.4-4.2-1.15l-.3-.18l-3.12.82l.83-3.04l-.2-.31a8.264 8.264 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.24-8.24c2.2 0 4.27.86 5.82 2.42a8.183 8.183 0 0 1 2.41 5.83c.02 4.54-3.68 8.23-8.22 8.23m4.52-6.16c-.25-.12-1.47-.72-1.69-.81c-.23-.08-.39-.12-.56.12c-.17.25-.64.81-.78.97c-.14.17-.29.19-.54.06c-.25-.12-1.05-.39-1.99-1.23c-.74-.66-1.23-1.47-1.38-1.72c-.14-.25-.02-.38.11-.51c.11-.11.25-.29.37-.43s.17-.25.25-.41c.08-.17.04-.31-.02-.43s-.56-1.34-.76-1.84c-.2-.48-.41-.42-.56-.43h-.48c-.17 0-.43.06-.66.31c-.22.25-.86.85-.86 2.07c0 1.22.89 2.4 1.01 2.56c.12.17 1.75 2.67 4.23 3.74c.59.26 1.05.41 1.41.52c.59.19 1.13.16 1.56.1c.48-.07 1.47-.6 1.67-1.18c.21-.58.21-1.07.14-1.18s-.22-.16-.47-.28" />
+                      </svg>
+                      WhatsApp & Marketplace
+                    </div>
+                  ) : (
+                    <div className="flex justify-center items-center">
+                      <FiMessageSquare className="h-4 w-4 mr-1" />
+                      SMS Platform
+                    </div>
+                  )}
                 </div>
-              </button>
-              <button 
-                onClick={switchToSmsTab}
-                className={`flex-1 py-2 px-3 text-center text-xs font-medium rounded-r-lg ${activeTab === "sms" || isSmsRouteActive() ? 'bg-white text-[#0071BC]' : 'bg-white/10 text-white'}`}
-              >
-                <div className="flex justify-center items-center">
-                  <FiMessageSquare className="h-4 w-4 mr-1" />
-                  SMS Platform
-                </div>
-              </button>
-            </div>
+              </div>
+            )}
 
             {/* Navigation menus */}
             <ul className="flex-col list-none flex bg-[#0071BC] md:mt-1 mt-2">
-              
-              {/* WhatsApp section */}
-              {activeTab === "whatsapp" && (
+
+              {/* WhatsApp section - Only show if user has WhatsApp access */}
+              {hasWhatsAppAccess() && (activeTab === "whatsapp" || userServiceType === 'whatsapp') && (
                 <>
                   <li className="items-center mx-3 mb-3">
                     <NavLink
@@ -251,7 +306,6 @@ export default function Sidebar(title: any) {
                     >
                       <span className="flex py-2.5 px-2">
                         <svg width="31" height="16" viewBox="0 0 31 16" className="mr-3" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          {/* SVG content remains the same */}
                           <path d="M20.0276 4.33741C20.5368 4.84845 20.8228 5.54048 20.8228 6.26193C20.8228 6.98337 20.5368 7.67541 20.0276 8.18645L19.0622 9.14555C18.3555 9.85226 17.3585 10.0731 16.4499 9.83333L18.1031 8.18645L18.5826 7.70058L19.0622 7.22103C19.5922 6.691 19.5922 5.83285 19.0622 5.30282C18.9371 5.17538 18.7878 5.07414 18.6232 5.00504C18.4585 4.93593 18.2817 4.90034 18.1031 4.90034C17.9245 4.90034 17.7477 4.93593 17.583 5.00504C17.4184 5.07414 17.2691 5.17538 17.144 5.30282L16.6581 5.78237L14.5254 7.91512C14.2919 7.0065 14.5128 6.00953 15.2195 5.30282L16.1786 4.33741C16.6896 3.82817 17.3816 3.54224 18.1031 3.54224C18.8245 3.54224 19.5166 3.82817 20.0276 4.33741ZM14.2541 11.0701L17.6235 7.70058C17.8886 7.43557 17.8886 7.0065 17.6235 6.74148C17.3459 6.47015 16.9105 6.49539 16.6581 6.74148L13.2949 10.111C13.0299 10.376 13.0299 10.8051 13.2949 11.0701C13.5726 11.3414 14.008 11.3162 14.2541 11.0701ZM13.7745 12.515L16.3868 9.89643C16.6266 10.8051 16.4057 11.802 15.699 12.5087L14.7399 13.4741C14.2289 13.9834 13.5368 14.2693 12.8154 14.2693C12.0939 14.2693 11.4019 13.9834 10.8909 13.4741C10.3816 12.9631 10.0957 12.2711 10.0957 11.5496C10.0957 10.8282 10.3816 10.1361 10.8909 9.62511L11.8563 8.666C12.563 7.95929 13.56 7.73844 14.4686 7.97191L11.8563 10.5905C11.3199 11.1206 11.3199 11.9787 11.8563 12.515C12.3863 13.0451 13.2445 13.0451 13.7745 12.515Z" fill="white" />
                           <g clipPath="url(#clip0_757_439)">
                             <path d="M1.9598 4.6015C2.3761 4.01228 3.00896 3.61208 3.71975 3.48855C4.43054 3.36502 5.16132 3.52824 5.752 3.94245L6.86225 4.72939C7.67952 5.30466 8.06781 6.24908 7.98716 7.18535L6.08153 5.83855L5.52073 5.44927L4.96615 5.05891C4.35319 4.62746 3.50771 4.7744 3.07626 5.38735C2.97212 5.53244 2.89794 5.69682 2.85805 5.8709C2.81816 6.04498 2.81337 6.22526 2.84395 6.40121C2.87453 6.57716 2.93987 6.74525 3.03615 6.89567C3.13243 7.04608 3.25772 7.1758 3.40471 7.27724L3.96037 7.67381L6.4268 9.40989C5.57156 9.79549 4.55151 9.7486 3.73423 9.17334L2.61885 8.3937C2.02963 7.9774 1.62943 7.34454 1.5059 6.63375C1.38237 5.92296 1.54559 5.19218 1.9598 4.6015ZM9.58161 9.13701L5.68495 6.39421C5.37847 6.17849 4.95573 6.25195 4.74001 6.55843C4.52023 6.87843 4.61964 7.30306 4.90531 7.50959L8.80089 10.2462C9.10737 10.4619 9.53011 10.3884 9.74584 10.0819C9.96562 9.76195 9.8662 9.33732 9.58161 9.13701ZM11.0874 9.36206L8.06013 7.23671C8.91428 6.8449 9.93434 6.89178 10.7516 7.46704L11.867 8.24668C12.4562 8.66298 12.8564 9.29584 12.9799 10.0066C13.1035 10.7174 12.9403 11.4482 12.526 12.0389C12.1097 12.6281 11.4769 13.0283 10.7661 13.1518C10.0553 13.2754 9.32453 13.1121 8.73384 12.6979L7.6236 11.911C6.80632 11.3357 6.41803 10.3913 6.49247 9.45612L9.5197 11.5815C10.1337 12.0191 10.9792 11.8722 11.4158 11.2519C11.8472 10.639 11.7003 9.79351 11.0874 9.36206Z" fill="white" />
@@ -298,8 +352,8 @@ export default function Sidebar(title: any) {
                 </>
               )}
 
-              {/* SMS Platform section */}
-              {activeTab === "sms" && (
+              {/* SMS Platform section - Only show if user has SMS access */}
+              {hasSmsAccess() && (activeTab === "sms" || userServiceType === 'sms') && (
                 <>
                   {/* Dashboard */}
                   <li className="items-center mx-3 mb-2">
@@ -499,7 +553,7 @@ export default function Sidebar(title: any) {
                 </>
               )}
 
-              {/* Payment - always visible */}
+              {/* Shared Payment Section - Always visible regardless of service type */}
               <li className="items-center mx-3 mb-3">
                 <NavLink
                   onClick={() => setCollapseShow("hidden")}
@@ -523,86 +577,90 @@ export default function Sidebar(title: any) {
                 </NavLink>
               </li>
 
-              {/* Coming Soon items */}
-              <li className="items-center mx-3 mb-3">
-                <NavLink
-                  onClick={() => setCollapseShow("hidden")}
-                  style={{
-                    backgroundColor: (window.location.href.indexOf("/chatrouting") !== -1
-                      ? "rgba(255, 255, 255, 0.1)"
-                      : "text-black hover:text-blueGray-500")
-                  }}
-                  className={
-                    "text-xs cursor-pointer pl-3 block " +
-                    (window.location.href.indexOf("/chatrouting") !== -1
-                      ? "text-white rounded-[8px]"
-                      : "text-white border border-white/[0.1] rounded-[8px] hover:bg-white/[0.1]")
-                  }
-                  to="/chatrouting"
-                >
-                  <span className="flex justify-between py-2.5 px-2">
-                    <span className="flex justify-start">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" className="mr-3" viewBox="0 0 24 24"><path fill="white" d="m12 5.69l5 4.5V18h-2v-6H9v6H7v-7.81l5-4.5M12 3L2 12h3v8h6v-6h2v6h6v-8h3L12 3z" /></svg>
-                      <span style={{ fontSize: '15px' }} className="font-normal mt-1"><span className="text-[10px]">Automation</span></span>
-                    </span>
-                    <span className="text-[9px] rounded-full border border-white border-opacity-20 px-2 pt-0.5 bg-white bg-opacity-20">Coming Soon</span>
-                  </span>
-                </NavLink>
-              </li>
+              {/* Coming Soon items - Only show for users with All Services access */}
+              {hasAllServicesAccess() && (
+                <>
+                  <li className="items-center mx-3 mb-3">
+                    <NavLink
+                      onClick={() => setCollapseShow("hidden")}
+                      style={{
+                        backgroundColor: (window.location.href.indexOf("/automation") !== -1
+                          ? "rgba(255, 255, 255, 0.1)"
+                          : "text-black hover:text-blueGray-500")
+                      }}
+                      className={
+                        "text-xs cursor-pointer pl-3 block " +
+                        (window.location.href.indexOf("/automation") !== -1
+                          ? "text-white rounded-[8px]"
+                          : "text-white border border-white/[0.1] rounded-[8px] hover:bg-white/[0.1]")
+                      }
+                      to="/automation"
+                    >
+                      <span className="flex justify-between py-2.5 px-2">
+                        <span className="flex justify-start">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" className="mr-3" viewBox="0 0 24 24"><path fill="white" d="m12 5.69l5 4.5V18h-2v-6H9v6H7v-7.81l5-4.5M12 3L2 12h3v8h6v-6h2v6h6v-8h3L12 3z" /></svg>
+                          <span style={{ fontSize: '15px' }} className="font-normal mt-1"><span className="text-[10px]">Automation</span></span>
+                        </span>
+                        <span className="text-[9px] rounded-full border border-white border-opacity-20 px-2 pt-0.5 bg-white bg-opacity-20">Coming Soon</span>
+                      </span>
+                    </NavLink>
+                  </li>
 
-              <li className="items-center mx-3 mb-3">
-                <NavLink
-                  onClick={() => setCollapseShow("hidden")}
-                  style={{
-                    backgroundColor: (window.location.href.indexOf("/chatrouting") !== -1
-                      ? "rgba(255, 255, 255, 0.1)"
-                      : "text-black hover:text-blueGray-500")
-                  }}
-                  className={
-                    "text-xs cursor-pointer pl-3 block " +
-                    (window.location.href.indexOf("/chatrouting") !== -1
-                      ? "text-white rounded-[8px]"
-                      : "text-white border border-white/[0.1] rounded-[8px] hover:bg-white/[0.1]")
-                  }
-                  to="/chatrouting"
-                >
-                  <span className="flex justify-between py-2.5 px-2">
-                    <span className="flex justify-start">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" className="mr-3" viewBox="0 0 24 24"><path fill="white" d="m12 5.69l5 4.5V18h-2v-6H9v6H7v-7.81l5-4.5M12 3L2 12h3v8h6v-6h2v6h6v-8h3L12 3z" /></svg>
-                      <span style={{ fontSize: '15px' }} className="font-normal mt-1"><span className="text-[10px]">Chat Routing</span></span>
-                    </span>
-                    <span className="text-[9px] rounded-full border border-white border-opacity-20 px-2 pt-0.5 bg-white bg-opacity-20">Coming Soon</span>
-                  </span>
-                </NavLink>
-              </li>
+                  <li className="items-center mx-3 mb-3">
+                    <NavLink
+                      onClick={() => setCollapseShow("hidden")}
+                      style={{
+                        backgroundColor: (window.location.href.indexOf("/chatrouting") !== -1
+                          ? "rgba(255, 255, 255, 0.1)"
+                          : "text-black hover:text-blueGray-500")
+                      }}
+                      className={
+                        "text-xs cursor-pointer pl-3 block " +
+                        (window.location.href.indexOf("/chatrouting") !== -1
+                          ? "text-white rounded-[8px]"
+                          : "text-white border border-white/[0.1] rounded-[8px] hover:bg-white/[0.1]")
+                      }
+                      to="/chatrouting"
+                    >
+                      <span className="flex justify-between py-2.5 px-2">
+                        <span className="flex justify-start">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" className="mr-3" viewBox="0 0 24 24"><path fill="white" d="m12 5.69l5 4.5V18h-2v-6H9v6H7v-7.81l5-4.5M12 3L2 12h3v8h6v-6h2v6h6v-8h3L12 3z" /></svg>
+                          <span style={{ fontSize: '15px' }} className="font-normal mt-1"><span className="text-[10px]">Chat Routing</span></span>
+                        </span>
+                        <span className="text-[9px] rounded-full border border-white border-opacity-20 px-2 pt-0.5 bg-white bg-opacity-20">Coming Soon</span>
+                      </span>
+                    </NavLink>
+                  </li>
 
-              <li className="items-center mx-3 mb-3">
-                <NavLink
-                  onClick={() => setCollapseShow("hidden")}
-                  style={{
-                    backgroundColor: (window.location.href.indexOf("/formlinks") !== -1
-                      ? "rgba(255, 255, 255, 0.1)"
-                      : "text-black hover:text-blueGray-500")
-                  }}
-                  className={
-                    "text-xs cursor-pointer pl-3 block " +
-                    (window.location.href.indexOf("/formlinks") !== -1
-                      ? "text-white rounded-[8px]"
-                      : "text-white border border-white/[0.1] rounded-[8px] hover:bg-white/[0.1]")
-                  }
-                  to="/formlinks"
-                >
-                  <span className="flex justify-between py-2.5 px-2">
-                    <span className="flex justify-start">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" className="mr-3" viewBox="0 0 24 24"><path fill="white" d="m12 5.69l5 4.5V18h-2v-6H9v6H7v-7.81l5-4.5M12 3L2 12h3v8h6v-6h2v6h6v-8h3L12 3z" /></svg>
-                      <span style={{ fontSize: '15px' }} className="font-normal mt-1"><span className="text-[10px]">Form Links</span></span>
-                    </span>
-                    <span className="text-[9px] rounded-full border border-white border-opacity-20 px-2 pt-0.5 bg-white bg-opacity-20">Coming Soon</span>
-                  </span>
-                </NavLink>
-              </li>
+                  <li className="items-center mx-3 mb-3">
+                    <NavLink
+                      onClick={() => setCollapseShow("hidden")}
+                      style={{
+                        backgroundColor: (window.location.href.indexOf("/formlinks") !== -1
+                          ? "rgba(255, 255, 255, 0.1)"
+                          : "text-black hover:text-blueGray-500")
+                      }}
+                      className={
+                        "text-xs cursor-pointer pl-3 block " +
+                        (window.location.href.indexOf("/formlinks") !== -1
+                          ? "text-white rounded-[8px]"
+                          : "text-white border border-white/[0.1] rounded-[8px] hover:bg-white/[0.1]")
+                      }
+                      to="/formlinks"
+                    >
+                      <span className="flex justify-between py-2.5 px-2">
+                        <span className="flex justify-start">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" className="mr-3" viewBox="0 0 24 24"><path fill="white" d="m12 5.69l5 4.5V18h-2v-6H9v6H7v-7.81l5-4.5M12 3L2 12h3v8h6v-6h2v6h6v-8h3L12 3z" /></svg>
+                          <span style={{ fontSize: '15px' }} className="font-normal mt-1"><span className="text-[10px]">Form Links</span></span>
+                        </span>
+                        <span className="text-[9px] rounded-full border border-white border-opacity-20 px-2 pt-0.5 bg-white bg-opacity-20">Coming Soon</span>
+                      </span>
+                    </NavLink>
+                  </li>
+                </>
+              )}
 
-              {/* Logout at bottom */}
+              {/* Logout at bottom - Always visible */}
               <li className="items-center mx-3 mt-20 pl-3 pb-6">
                 <span
                   className="text-xs cursor-pointer block"
@@ -621,4 +679,3 @@ export default function Sidebar(title: any) {
     </>
   );
 }
-                          
