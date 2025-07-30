@@ -14,13 +14,10 @@ import { AdminApis } from "../../apis/adminApi";
 
 export default function AdminSidebar() {
 
-  const userLoginData = useSelector((state:any) => state.data.login.value);
+  const userLoginData = useSelector((state: any) => state.data.login.value);
   const [collapseShow, setCollapseShow] = React.useState("hidden");
   const navigate = useNavigate();
   const dispatch: Dispatch = useDispatch();
-
-
- 
 
   React.useEffect(() => {
     AdminApis.searchName('').then(
@@ -30,15 +27,12 @@ export default function AdminSidebar() {
           navigate('/login');
         }
       }
-    ).catch(function (error:any) {
+    ).catch(function (error: any) {
       // handle error
       console.log(error);
       console.log("new error");
     })
   }, []);
-
-
-
 
   const logOut = () => {
     AuthApis.logout('').then(
@@ -49,24 +43,19 @@ export default function AdminSidebar() {
 
         }
       }
-    ).catch(function (error:any) {
+    ).catch(function (error: any) {
       // handle error
       console.log(error.response.data);
       console.log("new error");
     })
-
   };
 
   {
-    userLoginData?.data?.role !=='admin'?
-    logOut()
-    :
-    ''
+    userLoginData?.data?.role !== 'admin' ?
+      logOut()
+      :
+      ''
   }
-
-
-
-
 
   return (
     <>
@@ -87,8 +76,7 @@ export default function AdminSidebar() {
           >
             <img src="/images/Dashboard/logo.png" alt="hero" />
           </Link>
-          {/* User */}
-         
+
           {/* Collapse */}
           <div
             className={
@@ -118,13 +106,8 @@ export default function AdminSidebar() {
                 </div>
               </div>
             </div>
-            {/* Form */}
-           
 
-           
-            
             {/* Navigation */}
-
             <ul className="md:flex-col md:min-w-full flex flex-col list-none">
               <li className="items-center">
                 <Link
@@ -148,6 +131,8 @@ export default function AdminSidebar() {
                 </Link>
               </li>
               <hr className="mb-1 md:min-w-full" />
+
+              {/* Links Management */}
               <li className="items-center">
                 <Link
                   className={
@@ -160,7 +145,7 @@ export default function AdminSidebar() {
                 >
                   <i
                     className={
-                      "fas fa-tools mr-2 text-sm " +
+                      "fas fa-users mr-2 text-sm " +
                       (window.location.href.indexOf("/admin-users") !== -1
                         ? "opacity-75"
                         : "text-blueGray-300")
@@ -170,6 +155,124 @@ export default function AdminSidebar() {
                 </Link>
               </li>
               <hr className="mb-1 md:min-w-full" />
+
+              {/* SMS Management Section */}
+              <li className="items-center">
+                <div className="text-xs py-2 font-bold text-[#666] uppercase">SMS Management</div>
+              </li>
+
+              <li className="items-center">
+                <Link
+                  className={
+                    "text-xs py-3 font-bold block " +
+                    (window.location.href.indexOf("/admin-sms-users") !== -1
+                      ? "text-[#0071BC] hover:text-lightBlue-600"
+                      : "text-[#8A92A6] hover:text-blueGray-500")
+                  }
+                  to="/admin-sms-users"
+                >
+                  <i
+                    className={
+                      "fas fa-wallet mr-2 text-sm " +
+                      (window.location.href.indexOf("/admin-sms-users") !== -1
+                        ? "opacity-75"
+                        : "text-blueGray-300")
+                    }
+                  ></i>{" "}
+                  SMS Users
+                </Link>
+              </li>
+
+              <li className="items-center">
+                <Link
+                  className={
+                    "text-xs py-3 font-bold block " +
+                    (window.location.href.indexOf("/admin-sender-ids") !== -1
+                      ? "text-[#0071BC] hover:text-lightBlue-600"
+                      : "text-[#8A92A6] hover:text-blueGray-500")
+                  }
+                  to="/admin-sender-ids"
+                >
+                  <i
+                    className={
+                      "fas fa-id-card mr-2 text-sm " +
+                      (window.location.href.indexOf("/admin-sender-ids") !== -1
+                        ? "opacity-75"
+                        : "text-blueGray-300")
+                    }
+                  ></i>{" "}
+                  Sender IDs
+                </Link>
+              </li>
+
+              <li className="items-center">
+                <Link
+                  className={
+                    "text-xs py-3 font-bold block " +
+                    (window.location.href.indexOf("/admin-sms-messages") !== -1
+                      ? "text-[#0071BC] hover:text-lightBlue-600"
+                      : "text-[#8A92A6] hover:text-blueGray-500")
+                  }
+                  to="/admin-sms-messages"
+                >
+                  <i
+                    className={
+                      "fas fa-envelope mr-2 text-sm " +
+                      (window.location.href.indexOf("/admin-sms-messages") !== -1
+                        ? "opacity-75"
+                        : "text-blueGray-300")
+                    }
+                  ></i>{" "}
+                  Messages
+                </Link>
+              </li>
+
+              <li className="items-center">
+                <Link
+                  className={
+                    "text-xs py-3 font-bold block " +
+                    (window.location.href.indexOf("/admin-sms-campaigns") !== -1
+                      ? "text-[#0071BC] hover:text-lightBlue-600"
+                      : "text-[#8A92A6] hover:text-blueGray-500")
+                  }
+                  to="/admin-sms-campaigns"
+                >
+                  <i
+                    className={
+                      "fas fa-bullhorn mr-2 text-sm " +
+                      (window.location.href.indexOf("/admin-sms-campaigns") !== -1
+                        ? "opacity-75"
+                        : "text-blueGray-300")
+                    }
+                  ></i>{" "}
+                  Campaigns
+                </Link>
+              </li>
+
+              <li className="items-center">
+                <Link
+                  className={
+                    "text-xs py-3 font-bold block " +
+                    (window.location.href.indexOf("/admin-sms-settings") !== -1
+                      ? "text-[#0071BC] hover:text-lightBlue-600"
+                      : "text-[#8A92A6] hover:text-blueGray-500")
+                  }
+                  to="/admin-sms-settings"
+                >
+                  <i
+                    className={
+                      "fas fa-cog mr-2 text-sm " +
+                      (window.location.href.indexOf("/admin-sms-settings") !== -1
+                        ? "opacity-75"
+                        : "text-blueGray-300")
+                    }
+                  ></i>{" "}
+                  SMS Settings
+                </Link>
+              </li>
+              <hr className="mb-1 md:min-w-full" />
+
+              {/* Existing menu items */}
               <li className="items-center">
                 <Link
                   className={
@@ -182,13 +285,13 @@ export default function AdminSidebar() {
                 >
                   <i
                     className={
-                      "fas fa-tools mr-2 text-sm " +
+                      "fas fa-money-bill mr-2 text-sm " +
                       (window.location.href.indexOf("/witdrawal-request") !== -1
                         ? "opacity-75"
                         : "text-blueGray-300")
                     }
                   ></i>{" "}
-                   Witdrawals
+                  Withdrawals
                 </Link>
               </li>
 
@@ -205,20 +308,18 @@ export default function AdminSidebar() {
                 >
                   <i
                     className={
-                      "fas fa-tools mr-2 text-sm " +
+                      "fas fa-crown mr-2 text-sm " +
                       (window.location.href.indexOf("/edit-house") !== -1
                         ? "opacity-75"
                         : "text-blueGray-300")
                     }
                   ></i>{" "}
-                   Subscriptions
+                  Subscriptions
                 </Link>
               </li>
 
-
-              <li className="items-center mt-[45vh]">
+              <li className="items-center mt-[25vh]">
                 <span
-                  //  style={{backgroundColor:'#61A24F'}}
                   className={
                     "text-xs cursor-pointer block "
                   }
@@ -229,30 +330,11 @@ export default function AdminSidebar() {
                   <span className="flex py-2  cursor-pointer">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" className="mr-3 " viewBox="0 0 24 24"><path fill="red" d="M16 13v-2H7V8l-5 4l5 4v-3z" /><path fill="red" d="M20 3h-9c-1.103 0-2 .897-2 2v4h2V5h9v14h-9v-4H9v4c0 1.103.897 2 2 2h9c1.103 0 2-.897 2-2V5c0-1.103-.897-2-2-2z" /></svg>
                     <span className=" text-[15px] mt-1 font-normal text-[#FF0000]">Log out</span>
-                    {/* <span style={{ color: 'red' }}>  <SvgElement type={icontypesEnum.REDARROW} /> </span> */}
                   </span>
 
                 </span>
               </li>
-             
-              
             </ul>
-
-            {/* <ul className="md:flex-col md:min-w-full flex flex-col list-none md:mb-4">
-              <li className="items-center">
-                <Link
-                  className="text-blueGray-700 hover:text-blueGray-500 text-xs uppercase py-3 font-bold block"
-                  to="/landing"
-                >
-                  <i className="fas fa-newspaper text-blueGray-400 mr-2 text-sm"></i>{" "}
-                  Logout
-                </Link>
-              </li>
-
-              
-            </ul> */}
-
-           
           </div>
         </div>
       </nav>

@@ -32,15 +32,24 @@ import EditProfile from './Components/user/EditProfile';
 import ProPlan from './Components/user/ProPlans';
 import SideBar from './Components/Sidebar/index';
 import Home from './Components/Pages/Home';
-import Dashboard from './Components/admin/Dashboard';
-import UsersList from './Components/admin/UsersList';
-import WitdrawalRequest from './Components/admin/WitdrawalRequest';
-import UserDetails from './Components/admin/UserDetails';
 import FAQ from './Components/Pages/FAQ';
 import Pricing from './Components/Pages/Pricing';
 import ProductDemo from './Components/Pages/ProductDemo';
 
-// SMS Platform Components
+// Admin Components (existing)
+import Dashboard from './Components/admin/Dashboard';
+import UsersList from './Components/admin/UsersList';
+import WitdrawalRequest from './Components/admin/WitdrawalRequest';
+import UserDetails from './Components/admin/UserDetails';
+
+// SMS Admin Components (NEW)
+import SenderIdManagement from './Components/admin/SenderIdManagement';
+import SmsUsersManagement from './Components/admin/SmsUsersManagement';
+import SmsMessagesManagement from './Components/admin/SmsMessagesManagement';
+import SmsCampaignsManagement from './Components/admin/SmsCampaignsManagement';
+import SmsSettingsManagement from './Components/admin/SmsSettingsManagement';
+
+// SMS Platform Components (User side)
 import SmsDashboard from './Components/sms/SmsDashboard';
 import Analytics from './Components/sms/Analytics';
 import CreateContact from './Components/sms/CreateContact';
@@ -72,9 +81,9 @@ function AppRoutes() {
       <Route path="/password-success" element={<PasswordSuccess />} />
       <Route path="/email-verify/:email" element={<EmailVerifyComplete />} />
 
+      {/* User Dashboard Routes */}
       <Route path="/mylinks" element={<Mylinks />} />
       <Route path="/payment-page" element={<PaymentDashboard />} />
-
       <Route path="/redirect-links" element={<RedirectLinks />} />
       <Route path="/createlink" element={<CreateLink />} />
       <Route path="/subscription" element={<Subscription />} />
@@ -96,7 +105,7 @@ function AppRoutes() {
       <Route path='/sidebar' element={<SideBar />} />
       <Route path='/proplan' element={<ProPlan />} />
 
-      {/* SMS Platform Routes */}
+      {/* SMS Platform Routes (User Side) */}
       <Route path='/sms-dashboard' element={<SmsDashboard />} />
       <Route path='/analytics' element={<Analytics />} />
       <Route path='/contacts' element={<Contacts />} />
@@ -106,37 +115,39 @@ function AppRoutes() {
       <Route path='/contact-groups' element={<ContactGroups />} />
       <Route path='/create-contact-group' element={<CreateContactGroup />} />
       <Route path='/edit-contact-group/:id' element={<EditContactGroup />} />
-
       <Route path='/sms-wallet' element={<SmsWallet />} />
+      <Route path="/sender-ids" element={<SenderIDManagement />} />
+      <Route path="/api-keys" element={<ApiKeyManagement />} />
+      <Route path="/messages" element={<MessagesManagement />} />
+      <Route path='/verify-payment' element={<VerifyPayment />} />
 
-      {/* These routes will be implemented in future phases */}
+      {/* Admin Routes (Existing) */}
+      <Route path='/admin-dashboard' element={<Dashboard />} />
+      <Route path='/admin-users' element={<UsersList />} />
+      <Route path='/witdrawal-request' element={<WitdrawalRequest />} />
+      <Route path='/user-details/:id' element={<UserDetails />} />
+
+      {/* SMS Admin Routes (NEW) */}
+      <Route path='/admin-sms-users' element={<SmsUsersManagement />} />
+      <Route path='/admin-sender-ids' element={<SenderIdManagement />} />
+      <Route path='/admin-sms-messages' element={<SmsMessagesManagement />} />
+      <Route path='/admin-sms-campaigns' element={<SmsCampaignsManagement />} />
+      <Route path='/admin-sms-settings' element={<SmsSettingsManagement />} />
+
+      {/* Marketplace */}
+      <Route path='/marketplace' element={<Marketplace />} />
+
+      {/* Future SMS Routes (commented for now) */}
       {/* 
-      <Route path='/messages' element={<Messages />} />
-      <Route path='/create-message' element={<CreateMessage />} />
       <Route path='/templates' element={<Templates />} />
       <Route path='/create-template' element={<CreateTemplate />} />
       <Route path='/edit-template/:id' element={<CreateTemplate />} />
       <Route path='/campaigns' element={<Campaigns />} />
       <Route path='/create-campaign' element={<CreateCampaign />} />
       <Route path='/edit-campaign/:id' element={<CreateCampaign />} />
-      <Route path='/sender-ids' element={<SenderIds />} />
       <Route path='/create-sender-id' element={<CreateSenderId />} />
-      <Route path='/api-keys' element={<ApiKeys />} />
       <Route path='/create-api-key' element={<CreateApiKey />} />
       */}
-
-      <Route path="/sender-ids" element={<SenderIDManagement />} />
-      <Route path="/api-keys" element={<ApiKeyManagement />} />
-      <Route path="/messages" element={<MessagesManagement />} />
-
-      <Route path='/admin-dashboard' element={<Dashboard />} />
-      <Route path='/admin-users' element={<UsersList />} />
-      <Route path='/witdrawal-request' element={<WitdrawalRequest />} />
-      <Route path='/user-details/:id' element={<UserDetails />} />
-      <Route path='/verify-payment' element={<VerifyPayment />} />
-
-      {/* Marketplace */}
-      <Route path='/marketplace' element={<Marketplace />} />
     </Routes>
   );
 }
