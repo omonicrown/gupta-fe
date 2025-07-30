@@ -8,7 +8,7 @@ import { FaMoneyBillWave, FaHistory, FaFileInvoice, FaExternalLinkAlt, FaEye } f
 import Sidebar from "../Sidebar/Sidebar";
 import AdminNavbar from "../Navbars/AdminNavbar.js";
 // import { SmsWalletApis } from "../../../apis/SmsWalletApis";
-import { SmsWalletApis,SmsApis } from "../../apis/smsApis";
+import { SmsWalletApis, SmsApis } from "../../apis/smsApis";
 
 export default function SmsWallet() {
     const navigate = useNavigate();
@@ -222,7 +222,7 @@ export default function SmsWallet() {
     };
 
     return (
-    <>
+        <>
             <Sidebar title="SMS Wallet" />
             <div className="relative md:ml-64 bg-blueGray-100">
                 <AdminNavbar title="SMS Wallet" />
@@ -263,10 +263,10 @@ export default function SmsWallet() {
                                             <span className="text-sm text-gray-600">Messages Available</span>
                                         </div>
                                         <div className="text-2xl font-bold text-gray-800">
-                                            {wallet ? Math.floor(wallet.balance / 3.89) : "0"}
+                                            {wallet ? Math.floor(wallet.balance / 4.99) : "0"}
                                         </div>
                                         <div className="mt-2 text-sm text-gray-500">
-                                            Approx. at ₦3.89/message
+                                            Approx. at ₦4.99/message
                                         </div>
                                     </div>
 
@@ -360,7 +360,7 @@ export default function SmsWallet() {
                                                 </td>
                                             </tr>
                                         ) : (
-                                            transactions?.data?.map((transaction:any) => (
+                                            transactions?.data?.map((transaction: any) => (
                                                 <tr key={transaction.id} className="hover:bg-gray-50">
                                                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                                                         {transaction.reference.substring(0, 8)}...
@@ -669,7 +669,6 @@ export default function SmsWallet() {
                     </div>
                 )}
             </Modal>
-            </>
+        </>
     );
-                                }
-            
+}
