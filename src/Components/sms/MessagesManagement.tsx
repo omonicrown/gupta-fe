@@ -32,9 +32,20 @@ interface Message {
   scheduled_at: string | null;
   created_at: string;
   sent_at: string | null;
-  recipient_count: number;
+  total_recipients: number;
+  successful_sends: number;
+  failed_sends: number;
+  cost: string;
   campaign_id: number | null;
   message_template_id: number | null;
+  delivery_status: string;
+  delivery_status_time: string | null;
+  sender: {
+    id: number;
+    sender_id: string;
+    status: string;
+  };
+  campaign: any;
 }
 
 interface Contact {
@@ -69,12 +80,15 @@ interface MessageTemplate {
 export default function MessagesManagement() {
   const navigate = useNavigate();
 
-  // State for messages list
+  // State for messages list and pagination
   const [messages, setMessages] = useState<Message[]>([]);
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-  const [perPage, setPerPage] = useState(10);
+  const [perPage, setPerPage] = useState(20);
+  const [totalItems, setTotalItems] = useState(0);
+  const [fromItem, setFromItem] = useState(0);
+  const [toItem, setToItem] = useState(0);
   const [statusFilter, setStatusFilter] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
   const [campaignFilter, setCampaignFilter] = useState("");
@@ -159,13 +173,16 @@ export default function MessagesManagement() {
         statusFilter,
         searchQuery,
         campaignFilter,
-        currentPage  // Pass current page
+        currentPage
       );
 
       if (response?.data) {
         setMessages(response.data.data);
-        setTotalPages(Math.ceil(response.data.total / response.data.per_page));
-        setCurrentPage(response.data.current_page); // Update current page from response
+        setCurrentPage(response.data.current_page);
+        setTotalPages(response.data.last_page);
+        setTotalItems(response.data.total);
+        setFromItem(response.data.from || 0);
+        setToItem(response.data.to || 0);
       } else {
         toast.error("Failed to fetch messages");
       }
@@ -212,6 +229,45 @@ export default function MessagesManagement() {
     } finally {
       setLoadingReferences(false);
     }
+  };
+
+  // Pagination handlers
+  const handlePageChange = (page: number) => {
+    if (page >= 1 && page <= totalPages && page !== currentPage) {
+      setCurrentPage(page);
+    }
+  };
+
+  const handlePrevPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
+  const handleNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  // Generate page numbers for pagination
+  const generatePageNumbers = () => {
+    const pages = [];
+    const maxPagesToShow = 5;
+
+    let startPage = Math.max(1, currentPage - Math.floor(maxPagesToShow / 2));
+    let endPage = Math.min(totalPages, startPage + maxPagesToShow - 1);
+
+    // Adjust start page if we're near the end
+    if (endPage - startPage < maxPagesToShow - 1) {
+      startPage = Math.max(1, endPage - maxPagesToShow + 1);
+    }
+
+    for (let i = startPage; i <= endPage; i++) {
+      pages.push(i);
+    }
+
+    return pages;
   };
 
   // Toggle modals
@@ -392,19 +448,6 @@ export default function MessagesManagement() {
     }
   };
 
-  // Pagination handlers
-  const handlePrevPage = () => {
-    if (currentPage > 1) {
-      setCurrentPage(currentPage - 1);
-    }
-  };
-
-  const handleNextPage = () => {
-    if (currentPage < totalPages) {
-      setCurrentPage(currentPage + 1);
-    }
-  };
-
   // Handlers for contact selection
   const handleContactSelect = (contactId: number) => {
     if (selectedContacts.includes(contactId)) {
@@ -435,12 +478,32 @@ export default function MessagesManagement() {
     }
   };
 
+  // Handle filter changes (reset to page 1)
+  const handleStatusFilterChange = (newStatus: string) => {
+    setStatusFilter(newStatus);
+    setCurrentPage(1);
+  };
+
+  const handleSearchChange = (newSearch: string) => {
+    setSearchQuery(newSearch);
+    setCurrentPage(1);
+  };
+
+  const handleCampaignFilterChange = (newCampaign: string) => {
+    setCampaignFilter(newCampaign);
+    setCurrentPage(1);
+  };
+
   // Status badge component
   const StatusBadge = ({ status }: { status: string }) => {
     switch (status.toLowerCase()) {
       case 'sent':
-        return <span className="px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">
-          Sent
+        return <span className="px-2 py-1 text-xs font-semibold rounded-full bg-green-200 text-green-800">
+          {'Sent'}
+        </span>;
+      case 'delivered':
+        return <span className="px-2 py-1 text-xs font-semibold rounded-full bg-gray-200 text-gray-800">
+          {status === 'delivered' ? 'Delivered' : 'Sent'}
         </span>;
       case 'draft':
         return <span className="px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800">
@@ -501,15 +564,13 @@ export default function MessagesManagement() {
                     id="statusFilter"
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2"
                     value={statusFilter}
-                    onChange={(e) => {
-                      setStatusFilter(e.target.value);
-                      setCurrentPage(1);
-                    }}
+                    onChange={(e) => handleStatusFilterChange(e.target.value)}
                   >
                     <option value="">All Statuses</option>
                     <option value="draft">Draft</option>
                     <option value="scheduled">Scheduled</option>
                     <option value="sent">Sent</option>
+                    <option value="delivered">Delivered</option>
                     <option value="sending">Sending</option>
                     <option value="failed">Failed</option>
                   </select>
@@ -523,10 +584,7 @@ export default function MessagesManagement() {
                     id="campaignFilter"
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2"
                     value={campaignFilter}
-                    onChange={(e) => {
-                      setCampaignFilter(e.target.value);
-                      setCurrentPage(1);
-                    }}
+                    onChange={(e) => handleCampaignFilterChange(e.target.value)}
                   >
                     <option value="">All Campaigns</option>
                     {/* Add campaign options here */}
@@ -544,10 +602,7 @@ export default function MessagesManagement() {
                       className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2 pr-10"
                       placeholder="Search messages..."
                       value={searchQuery}
-                      onChange={(e) => {
-                        setSearchQuery(e.target.value);
-                        setCurrentPage(1);
-                      }}
+                      onChange={(e) => handleSearchChange(e.target.value)}
                     />
                     <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
                       <svg className="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -589,7 +644,7 @@ export default function MessagesManagement() {
                   <tbody>
                     {loading ? (
                       <tr>
-                        <td colSpan={6} className="px-6 py-4 text-center">
+                        <td colSpan={7} className="px-6 py-4 text-center">
                           <div className="flex justify-center">
                             <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-blue-500"></div>
                           </div>
@@ -598,7 +653,7 @@ export default function MessagesManagement() {
                       </tr>
                     ) : messages.length === 0 ? (
                       <tr>
-                        <td colSpan={6} className="px-6 py-4 text-center text-gray-500">
+                        <td colSpan={7} className="px-6 py-4 text-center text-gray-500">
                           No messages found. Create your first one by clicking the "New Message" button.
                         </td>
                       </tr>
@@ -615,7 +670,7 @@ export default function MessagesManagement() {
                             {message.total_recipients}
                           </td>
                           <td className="px-6 align-middle py-3 text-xs whitespace-nowrap font-normal text-left">
-                            {message.cost}
+                            ₦{message.cost}
                           </td>
                           <td className="px-6 align-middle py-3 text-xs whitespace-nowrap text-left">
                             <StatusBadge status={message.status} />
@@ -680,7 +735,7 @@ export default function MessagesManagement() {
                 </table>
               </div>
 
-              {/* Pagination */}
+              {/* Numbered Pagination - Continuation */}
               {!loading && messages.length > 0 && (
                 <div className="px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6">
                   <div className="flex-1 flex justify-between sm:hidden">
@@ -701,30 +756,90 @@ export default function MessagesManagement() {
                       Next
                     </button>
                   </div>
+
                   <div className="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
                     <div>
                       <p className="text-sm text-gray-700">
-                        Showing page <span className="font-medium">{currentPage}</span> of{' '}
-                        <span className="font-medium">{totalPages}</span>
+                        Showing <span className="font-medium">{fromItem}</span> to{' '}
+                        <span className="font-medium">{toItem}</span> of{' '}
+                        <span className="font-medium">{totalItems}</span> results
                       </p>
                     </div>
+
                     <div>
                       <nav className="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
+                        {/* Previous Button */}
                         <button
                           onClick={handlePrevPage}
                           disabled={currentPage === 1}
-                          className={`relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 ${currentPage === 1 ? 'opacity-50 cursor-not-allowed' : ''
+                          className={`relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 ${currentPage === 1 ? 'opacity-50 cursor-not-allowed' : 'hover:text-gray-700'
                             }`}
                         >
-                          Previous
+                          <span className="sr-only">Previous</span>
+                          <svg className="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                            <path fillRule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clipRule="evenodd" />
+                          </svg>
                         </button>
+
+                        {/* First Page */}
+                        {generatePageNumbers()[0] > 1 && (
+                          <>
+                            <button
+                              onClick={() => handlePageChange(1)}
+                              className="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50"
+                            >
+                              1
+                            </button>
+                            {generatePageNumbers()[0] > 2 && (
+                              <span className="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700">
+                                ...
+                              </span>
+                            )}
+                          </>
+                        )}
+
+                        {/* Page Numbers */}
+                        {generatePageNumbers().map((page) => (
+                          <button
+                            key={page}
+                            onClick={() => handlePageChange(page)}
+                            className={`relative inline-flex items-center px-4 py-2 border text-sm font-medium ${page === currentPage
+                              ? 'z-10 bg-[#0071BC] border-[#0071BC] text-white'
+                              : 'bg-white border-gray-300 text-gray-700 hover:bg-gray-50'
+                              }`}
+                          >
+                            {page}
+                          </button>
+                        ))}
+
+                        {/* Last Page */}
+                        {generatePageNumbers()[generatePageNumbers().length - 1] < totalPages && (
+                          <>
+                            {generatePageNumbers()[generatePageNumbers().length - 1] < totalPages - 1 && (
+                              <span className="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700">
+                                ...
+                              </span>
+                            )}
+                            <button
+                              onClick={() => handlePageChange(totalPages)}
+                              className="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50"
+                            >
+                              {totalPages}
+                            </button>
+                          </>
+                        )}
+
+                        {/* Next Button */}
                         <button
                           onClick={handleNextPage}
                           disabled={currentPage === totalPages}
-                          className={`relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 ${currentPage === totalPages ? 'opacity-50 cursor-not-allowed' : ''
+                          className={`relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 ${currentPage === totalPages ? 'opacity-50 cursor-not-allowed' : 'hover:text-gray-700'
                             }`}
                         >
-                          Next
+                          <span className="sr-only">Next</span>
+                          <svg className="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                            <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd" />
+                          </svg>
                         </button>
                       </nav>
                     </div>
@@ -750,7 +865,7 @@ export default function MessagesManagement() {
             <div className="mb-4">
               <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="senderID">
                 Sender ID
-              </label>{/* Create Message Modal (Continued) */}
+              </label>
               <select
                 id="senderID"
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
@@ -992,6 +1107,16 @@ export default function MessagesManagement() {
             <div className="mb-4">
               <h3 className="text-sm font-bold text-gray-700">Recipients</h3>
               <p className="text-sm">{selectedMessage.total_recipients} recipient(s)</p>
+            </div>
+
+            <div className="mb-4">
+              <h3 className="text-sm font-bold text-gray-700">Cost</h3>
+              <p className="text-sm">₦{selectedMessage.cost}</p>
+            </div>
+
+            <div className="mb-4">
+              <h3 className="text-sm font-bold text-gray-700">Delivery Status</h3>
+              <p className="text-sm">{selectedMessage.delivery_status || 'Pending'}</p>
             </div>
 
             <div className="mb-4">
