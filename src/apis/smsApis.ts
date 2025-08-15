@@ -169,7 +169,8 @@ export const SmsApis = {
         perPage = 15,
         status = "",
         search = "",
-        campaignId = ""
+        campaignId = "",
+        page = 1  // Add page parameter
     ): Promise<AxiosResponse<any>> => {
         return axios.get(`${BASE_URL}/api/messages`, {
             params: {
@@ -177,6 +178,7 @@ export const SmsApis = {
                 status: status,
                 search: search,
                 campaign_id: campaignId,
+                page: page  // Include page in params
             },
             headers: getAuthHeader(),
         });

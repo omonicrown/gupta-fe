@@ -5,12 +5,12 @@ import 'react-toastify/dist/ReactToastify.css';
 //@ts-ignore
 import Modal from 'react-awesome-modal';
 
-import { 
-  FaTrash, 
-  FaPaperPlane, 
-  FaEye, 
-  FaClock, 
-  FaCalendarAlt, 
+import {
+  FaTrash,
+  FaPaperPlane,
+  FaEye,
+  FaClock,
+  FaCalendarAlt,
   FaBan,
   FaUserFriends,
   FaUsers
@@ -68,7 +68,7 @@ interface MessageTemplate {
 
 export default function MessagesManagement() {
   const navigate = useNavigate();
-  
+
   // State for messages list
   const [messages, setMessages] = useState<Message[]>([]);
   const [loading, setLoading] = useState(true);
@@ -78,7 +78,7 @@ export default function MessagesManagement() {
   const [statusFilter, setStatusFilter] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
   const [campaignFilter, setCampaignFilter] = useState("");
-  
+
   // State for message creation
   const [createModalVisible, setCreateModalVisible] = useState(false);
   const [selectedSenderId, setSelectedSenderId] = useState<number | string>("");
@@ -89,67 +89,67 @@ export default function MessagesManagement() {
   const [selectedTemplateId, setSelectedTemplateId] = useState<number | null>(null);
   const [selectedCampaignId, setSelectedCampaignId] = useState<number | null>(null);
   const [scheduledAt, setScheduledAt] = useState<Date | null>(null);
-  
+
   // State for scheduling modal
   const [scheduleModalVisible, setScheduleModalVisible] = useState(false);
   const [scheduledTime, setScheduledTime] = useState<Date | null>(new Date());
   const [selectedMessageId, setSelectedMessageId] = useState<number | null>(null);
-  
+
   // State for message details modal
   const [detailsModalVisible, setDetailsModalVisible] = useState(false);
   const [selectedMessage, setSelectedMessage] = useState<Message | null | any>(null);
-  
+
   // State for delete confirmation modal
   const [deleteModalVisible, setDeleteModalVisible] = useState(false);
-  
+
   // Reference data
   const [senderIDs, setSenderIDs] = useState<SenderID[]>([]);
   const [contacts, setContacts] = useState<Contact[]>([]);
   const [groups, setGroups] = useState<Group[]>([]);
   const [templates, setTemplates] = useState<MessageTemplate[]>([]);
   const [loadingReferences, setLoadingReferences] = useState(true);
-  
+
   // Modal for contact selection
   const [contactSelectionModalVisible, setContactSelectionModalVisible] = useState(false);
   const [contactSearchQuery, setContactSearchQuery] = useState("");
   const [filteredContacts, setFilteredContacts] = useState<Contact[]>([]);
-  
+
   // Modal for group selection
   const [groupSelectionModalVisible, setGroupSelectionModalVisible] = useState(false);
   const [groupSearchQuery, setGroupSearchQuery] = useState("");
   const [filteredGroups, setFilteredGroups] = useState<Group[]>([]);
-  
+
   // Fetch messages when component mounts or filters change
   useEffect(() => {
     fetchMessages();
   }, [currentPage, statusFilter, searchQuery, campaignFilter]);
-  
+
   // Fetch reference data when component mounts
   useEffect(() => {
     fetchReferenceData();
   }, []);
-  
+
   // Filter contacts when search query changes
   useEffect(() => {
     if (contacts.length > 0) {
-      const filtered = contacts.filter(contact => 
+      const filtered = contacts.filter(contact =>
         `${contact.first_name} ${contact.last_name}`.toLowerCase().includes(contactSearchQuery.toLowerCase()) ||
         contact.phone.includes(contactSearchQuery)
       );
       setFilteredContacts(filtered);
     }
   }, [contactSearchQuery, contacts]);
-  
+
   // Filter groups when search query changes
   useEffect(() => {
     if (groups.length > 0) {
-      const filtered = groups.filter(group => 
+      const filtered = groups.filter(group =>
         group.name.toLowerCase().includes(groupSearchQuery.toLowerCase())
       );
       setFilteredGroups(filtered);
     }
   }, [groupSearchQuery, groups]);
-  
+
   // Function to fetch messages
   const fetchMessages = async () => {
     setLoading(true);
@@ -158,12 +158,14 @@ export default function MessagesManagement() {
         perPage,
         statusFilter,
         searchQuery,
-        campaignFilter
+        campaignFilter,
+        currentPage  // Pass current page
       );
-      
+
       if (response?.data) {
         setMessages(response.data.data);
         setTotalPages(Math.ceil(response.data.total / response.data.per_page));
+        setCurrentPage(response.data.current_page); // Update current page from response
       } else {
         toast.error("Failed to fetch messages");
       }
@@ -174,7 +176,7 @@ export default function MessagesManagement() {
       setLoading(false);
     }
   };
-  
+
   // Function to fetch reference data (sender IDs, contacts, groups, templates)
   const fetchReferenceData = async () => {
     setLoadingReferences(true);
@@ -184,21 +186,21 @@ export default function MessagesManagement() {
       if (senderIDsResponse?.data) {
         setSenderIDs(senderIDsResponse.data.data);
       }
-      
+
       // Fetch contacts
       const contactsResponse = await SmsApis.getContacts(100);
       if (contactsResponse?.data) {
         setContacts(contactsResponse.data.data);
         setFilteredContacts(contactsResponse.data.data);
       }
-      
+
       // Fetch groups
       const groupsResponse = await SmsApis.getGroups(100);
       if (groupsResponse?.data) {
         setGroups(groupsResponse.data.data);
         setFilteredGroups(groupsResponse.data.data);
       }
-      
+
       // Fetch templates
       const templatesResponse = await SmsApis.getTemplates(100);
       if (templatesResponse?.data) {
@@ -211,7 +213,7 @@ export default function MessagesManagement() {
       setLoadingReferences(false);
     }
   };
-  
+
   // Toggle modals
   const toggleCreateModal = () => {
     setCreateModalVisible(!createModalVisible);
@@ -219,7 +221,7 @@ export default function MessagesManagement() {
       resetCreateForm();
     }
   };
-  
+
   const toggleScheduleModal = (messageId: number | null = null) => {
     setSelectedMessageId(messageId);
     setScheduleModalVisible(!scheduleModalVisible);
@@ -227,31 +229,31 @@ export default function MessagesManagement() {
       setScheduledTime(new Date());
     }
   };
-  
+
   const toggleDetailsModal = (message: Message | null = null) => {
     setSelectedMessage(message);
     setDetailsModalVisible(!detailsModalVisible);
   };
-  
+
   const toggleDeleteModal = (message: Message | null = null) => {
     setSelectedMessage(message);
     setDeleteModalVisible(!deleteModalVisible);
   };
-  
+
   const toggleContactSelectionModal = () => {
     setContactSelectionModalVisible(!contactSelectionModalVisible);
     if (!contactSelectionModalVisible) {
       setContactSearchQuery("");
     }
   };
-  
+
   const toggleGroupSelectionModal = () => {
     setGroupSelectionModalVisible(!groupSelectionModalVisible);
     if (!groupSelectionModalVisible) {
       setGroupSearchQuery("");
     }
   };
-  
+
   // Helper function to reset create form
   const resetCreateForm = () => {
     setSelectedSenderId("");
@@ -263,26 +265,26 @@ export default function MessagesManagement() {
     setSelectedCampaignId(null);
     setScheduledAt(null);
   };
-  
+
   // Handle form submission for creating a new message
   const handleCreateMessage = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (selectedContacts.length === 0 && selectedGroups.length === 0) {
       toast.error("Please select at least one contact or group");
       return;
     }
-    
+
     if (!selectedSenderId) {
       toast.error("Please select a sender ID");
       return;
     }
-    
+
     if (!messageContent) {
       toast.error("Please enter message content");
       return;
     }
-    
+
     try {
       const messageData = {
         sender_id: selectedSenderId,
@@ -294,9 +296,9 @@ export default function MessagesManagement() {
         campaign_id: selectedCampaignId,
         scheduled_at: scheduledAt ? scheduledAt.toISOString() : null
       };
-      
+
       const response = await SmsApis.createMessage(messageData);
-      
+
       if (response?.data) {
         toast.success("Message created successfully");
         fetchMessages();
@@ -309,22 +311,22 @@ export default function MessagesManagement() {
       toast.error("An error occurred while creating message");
     }
   };
-  
+
   // Handle scheduling a message
   const handleScheduleMessage = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!scheduledTime) {
       toast.error("Please select a scheduled time");
       return;
     }
-    
+
     try {
       const response = await SmsApis.scheduleMessage(
         selectedMessageId!,
         scheduledTime.toISOString()
       );
-      
+
       if (response?.data) {
         toast.success("Message scheduled successfully");
         fetchMessages();
@@ -337,12 +339,12 @@ export default function MessagesManagement() {
       toast.error("An error occurred while scheduling message");
     }
   };
-  
+
   // Handle sending a message
   const handleSendMessage = async (messageId: number) => {
     try {
       const response = await SmsApis.sendMessage(messageId);
-      
+
       if (response?.data) {
         toast.success("Message sent successfully");
         fetchMessages();
@@ -354,12 +356,12 @@ export default function MessagesManagement() {
       toast.error("An error occurred while sending message");
     }
   };
-  
+
   // Handle canceling a scheduled message
   const handleCancelScheduledMessage = async (messageId: number) => {
     try {
       const response = await SmsApis.cancelScheduledMessage(messageId);
-      
+
       if (response?.data) {
         toast.success("Scheduled message canceled successfully");
         fetchMessages();
@@ -371,12 +373,12 @@ export default function MessagesManagement() {
       toast.error("An error occurred while canceling scheduled message");
     }
   };
-  
+
   // Handle deleting a message
   const handleDeleteMessage = async () => {
     try {
       const response = await SmsApis.deleteMessage(selectedMessage!.id);
-      
+
       if (response?.data) {
         toast.success("Message deleted successfully");
         fetchMessages();
@@ -389,20 +391,20 @@ export default function MessagesManagement() {
       toast.error("An error occurred while deleting message");
     }
   };
-  
+
   // Pagination handlers
   const handlePrevPage = () => {
     if (currentPage > 1) {
       setCurrentPage(currentPage - 1);
     }
   };
-  
+
   const handleNextPage = () => {
     if (currentPage < totalPages) {
       setCurrentPage(currentPage + 1);
     }
   };
-  
+
   // Handlers for contact selection
   const handleContactSelect = (contactId: number) => {
     if (selectedContacts.includes(contactId)) {
@@ -411,7 +413,7 @@ export default function MessagesManagement() {
       setSelectedContacts([...selectedContacts, contactId]);
     }
   };
-  
+
   // Handlers for group selection
   const handleGroupSelect = (groupId: number) => {
     if (selectedGroups.includes(groupId)) {
@@ -420,7 +422,7 @@ export default function MessagesManagement() {
       setSelectedGroups([...selectedGroups, groupId]);
     }
   };
-  
+
   // Handle template selection
   const handleTemplateSelect = (templateId: number | null) => {
     setSelectedTemplateId(templateId);
@@ -432,7 +434,7 @@ export default function MessagesManagement() {
       }
     }
   };
-  
+
   // Status badge component
   const StatusBadge = ({ status }: { status: string }) => {
     switch (status.toLowerCase()) {
@@ -462,12 +464,12 @@ export default function MessagesManagement() {
         </span>;
     }
   };
-  
+
   return (
     <>
       <Sidebar title="Messages" />
       <div className="relative md:ml-64 bg-blueGray-100">
-      <AdminNavbar title=""/>
+        <AdminNavbar title="" />
         <div className="px-4 md:px-10 mx-auto w-full min-h-screen bg-gray-100">
           <div className="pt-2">
             <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded bg-white">
@@ -512,7 +514,7 @@ export default function MessagesManagement() {
                     <option value="failed">Failed</option>
                   </select>
                 </div>
-                
+
                 <div className="w-full md:w-1/4 px-2 mb-2 md:mb-0">
                   <label htmlFor="campaignFilter" className="block text-xs font-medium text-gray-700 mb-1">
                     Campaign
@@ -530,7 +532,7 @@ export default function MessagesManagement() {
                     {/* Add campaign options here */}
                   </select>
                 </div>
-                
+
                 <div className="w-full md:w-2/4 px-2">
                   <label htmlFor="searchQuery" className="block text-xs font-medium text-gray-700 mb-1">
                     Search
@@ -601,7 +603,7 @@ export default function MessagesManagement() {
                         </td>
                       </tr>
                     ) : (
-                      messages.map((message:any) => (
+                      messages.map((message: any) => (
                         <tr key={message.id} className="border-b">
                           <td className="px-6 align-middle py-3 text-xs whitespace-nowrap font-normal text-left">
                             <div className="max-w-xs truncate">{message.content}</div>
@@ -630,7 +632,7 @@ export default function MessagesManagement() {
                               >
                                 <FaEye />
                               </button>
-                              
+
                               {message.status === 'draft' && (
                                 <>
                                   <button
@@ -649,7 +651,7 @@ export default function MessagesManagement() {
                                   </button>
                                 </>
                               )}
-                              
+
                               {message.status === 'scheduled' && (
                                 <button
                                   onClick={() => handleCancelScheduledMessage(message.id)}
@@ -659,7 +661,7 @@ export default function MessagesManagement() {
                                   <FaBan />
                                 </button>
                               )}
-                              
+
                               {['draft', 'scheduled'].includes(message.status) && (
                                 <button
                                   onClick={() => toggleDeleteModal(message)}
@@ -677,7 +679,7 @@ export default function MessagesManagement() {
                   </tbody>
                 </table>
               </div>
-              
+
               {/* Pagination */}
               {!loading && messages.length > 0 && (
                 <div className="px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6">
@@ -685,18 +687,16 @@ export default function MessagesManagement() {
                     <button
                       onClick={handlePrevPage}
                       disabled={currentPage === 1}
-                      className={`relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 ${
-                        currentPage === 1 ? 'opacity-50 cursor-not-allowed' : ''
-                      }`}
+                      className={`relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 ${currentPage === 1 ? 'opacity-50 cursor-not-allowed' : ''
+                        }`}
                     >
                       Previous
                     </button>
                     <button
                       onClick={handleNextPage}
                       disabled={currentPage === totalPages}
-                      className={`ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 ${
-                        currentPage === totalPages ? 'opacity-50 cursor-not-allowed' : ''
-                      }`}
+                      className={`ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 ${currentPage === totalPages ? 'opacity-50 cursor-not-allowed' : ''
+                        }`}
                     >
                       Next
                     </button>
@@ -713,18 +713,16 @@ export default function MessagesManagement() {
                         <button
                           onClick={handlePrevPage}
                           disabled={currentPage === 1}
-                          className={`relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 ${
-                            currentPage === 1 ? 'opacity-50 cursor-not-allowed' : ''
-                          }`}
+                          className={`relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 ${currentPage === 1 ? 'opacity-50 cursor-not-allowed' : ''
+                            }`}
                         >
                           Previous
                         </button>
                         <button
                           onClick={handleNextPage}
                           disabled={currentPage === totalPages}
-                          className={`relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 ${
-                            currentPage === totalPages ? 'opacity-50 cursor-not-allowed' : ''
-                          }`}
+                          className={`relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 ${currentPage === totalPages ? 'opacity-50 cursor-not-allowed' : ''
+                            }`}
                         >
                           Next
                         </button>
@@ -970,51 +968,51 @@ export default function MessagesManagement() {
                 &times;
               </button>
             </div>
-            
+
             <div className="mb-4">
               <h3 className="text-sm font-bold text-gray-700">Status</h3>
               <StatusBadge status={selectedMessage.status} />
             </div>
-            
+
             <div className="mb-4">
               <h3 className="text-sm font-bold text-gray-700">Sender ID</h3>
               <p className="text-sm">{selectedMessage.sender.sender_id}</p>
             </div>
-            
+
             <div className="mb-4">
               <h3 className="text-sm font-bold text-gray-700">Message Content</h3>
               <p className="text-sm bg-gray-50 p-3 rounded">{selectedMessage.content}</p>
             </div>
-            
+
             <div className="mb-4">
               <h3 className="text-sm font-bold text-gray-700">Type</h3>
               <p className="text-sm capitalize">{selectedMessage.message_type}</p>
             </div>
-            
+
             <div className="mb-4">
               <h3 className="text-sm font-bold text-gray-700">Recipients</h3>
               <p className="text-sm">{selectedMessage.total_recipients} recipient(s)</p>
             </div>
-            
+
             <div className="mb-4">
               <h3 className="text-sm font-bold text-gray-700">Created</h3>
               <p className="text-sm">{new Date(selectedMessage.created_at).toLocaleString()}</p>
             </div>
-            
+
             {selectedMessage.scheduled_at && (
               <div className="mb-4">
                 <h3 className="text-sm font-bold text-gray-700">Scheduled For</h3>
                 <p className="text-sm">{new Date(selectedMessage.scheduled_at).toLocaleString()}</p>
               </div>
             )}
-            
+
             {selectedMessage.sent_at && (
               <div className="mb-4">
                 <h3 className="text-sm font-bold text-gray-700">Sent</h3>
                 <p className="text-sm">{new Date(selectedMessage.sent_at).toLocaleString()}</p>
               </div>
             )}
-            
+
             <div className="flex justify-end mt-6">
               {selectedMessage.status === 'draft' && (
                 <>
@@ -1038,7 +1036,7 @@ export default function MessagesManagement() {
                   </button>
                 </>
               )}
-              
+
               {selectedMessage.status === 'scheduled' && (
                 <button
                   onClick={() => {
@@ -1050,7 +1048,7 @@ export default function MessagesManagement() {
                   <FaBan className="mr-1" /> Cancel Schedule
                 </button>
               )}
-              
+
               {['draft', 'scheduled'].includes(selectedMessage.status) && (
                 <button
                   onClick={() => {
@@ -1117,7 +1115,7 @@ export default function MessagesManagement() {
               &times;
             </button>
           </div>
-          
+
           <div className="mb-4">
             <input
               type="text"
@@ -1127,7 +1125,7 @@ export default function MessagesManagement() {
               onChange={(e) => setContactSearchQuery(e.target.value)}
             />
           </div>
-          
+
           <div className="mb-4 max-h-72 overflow-y-auto">
             {loadingReferences ? (
               <div className="flex justify-center py-4">
@@ -1155,7 +1153,7 @@ export default function MessagesManagement() {
               </div>
             )}
           </div>
-          
+
           <div className="flex justify-end mt-4">
             <button
               type="button"
@@ -1193,7 +1191,7 @@ export default function MessagesManagement() {
               &times;
             </button>
           </div>
-          
+
           <div className="mb-4">
             <input
               type="text"
@@ -1203,7 +1201,7 @@ export default function MessagesManagement() {
               onChange={(e) => setGroupSearchQuery(e.target.value)}
             />
           </div>
-          
+
           <div className="mb-4 max-h-72 overflow-y-auto">
             {loadingReferences ? (
               <div className="flex justify-center py-4">
@@ -1231,7 +1229,7 @@ export default function MessagesManagement() {
               </div>
             )}
           </div>
-          
+
           <div className="flex justify-end mt-4">
             <button
               type="button"
