@@ -205,6 +205,9 @@ function Home() {
       </div> */}
       {/* End Section */}
 
+
+
+
       {/* Start Section */}
       <div className='bg-[#FFFFFF] sm:px-16 px-6 flex justify-center items-start md:pt-10' >
         <div className='xl:max-w-[1280px] w-full'>
@@ -216,29 +219,29 @@ function Home() {
             <div className='flex-1 flex   flex-col md:ml-[120px] ml-0 md:mt-[110px] mt-20 relative'>
               <div className="md:flex flex-row   w-full">
                 <h1 className="lg:flex hidden font-poppins font-[900] md:text-[40px] text-black md:leading-[48px] leading-[38px]">
-                Take your  business  <br className="sm:block hidden" />
-                 to the next level.
+                  Take your  business  <br className="sm:block hidden" />
+                  to the next level.
                 </h1>
                 <h1 className="flex lg:hidden font-poppins font-[900] text-[25px] text-black leading-[38px]">
-                Take your 
-                business 
-                 to the next level.
+                  Take your
+                  business
+                  to the next level.
                 </h1>
 
               </div>
               <div>
                 <ul className="max-w-md space-y-3 text-[#6C757D] list-inside mt-[24px]">
                   <li>
-                  <b>Customized WhatsApp Links:</b> Create links for direct chats with pre-written messages or to your catalog, and see how many times they are clicked.
+                    <b>Customized WhatsApp Links:</b> Create links for direct chats with pre-written messages or to your catalog, and see how many times they are clicked.
                   </li>
                   {/* <li>
                     Tailor automated messages to be concise, relevant, and personalized.
                   </li> */}
                   <li>
-                  <b>Multi-link Page:</b> Make a simple page with multiple WhatsApp links for easy customer access.
+                    <b>Multi-link Page:</b> Make a simple page with multiple WhatsApp links for easy customer access.
                   </li>
                   <li>
-                  <b>Custom Website:</b> Showcase your products with your customized Whatsapp link attached to each product, so customers can contact you easily.
+                    <b>Custom Website:</b> Showcase your products with your customized Whatsapp link attached to each product, so customers can contact you easily.
                   </li>
                 </ul>
               </div>
@@ -259,7 +262,7 @@ function Home() {
             <div className='flex-1 flex justify-center items-start flex-col'>
               <div className="md:flex flex-row justify-between items-center w-full">
                 <h1 className="flex-1 font-poppins font-[900] md:text-[40px] text-[27px] text-black md:leading-[50px] leading-[38px]">
-                The Best Online Tool  <br className="sm:block hidden" /> {" "}
+                  The Best Online Tool  <br className="sm:block hidden" /> {" "}
                   <div className='flex'>
                     <h1 className="">for Your Business </h1>
 
@@ -268,7 +271,7 @@ function Home() {
               </div>
 
               <p className={`font-poppins font-normal text-[#6C757D] md:text-[15px] text-[13px] md:leading-[23.85px] leading-[20px] max-w-[530px] mt-[30px] `}>
-              Gupta is a platform that boosts your business where you can set up different shops with many products. Each product has a direct WhatsApp link, making it easy for customers to connect and buy.
+                Gupta is a platform that boosts your business where you can set up different shops with many products. Each product has a direct WhatsApp link, making it easy for customers to connect and buy.
               </p>
             </div>
             <div className='flex-1 flex justify-center items-center'>
@@ -279,6 +282,115 @@ function Home() {
         </div>
       </div>
       {/* End Section */}
+
+
+      {/* Global Communication Section */}
+      <div className='bg-[#FFFFFF] sm:px-16 px-6 flex justify-center items-start md:pt-10'>
+        <div className='xl:max-w-[1280px] w-full'>
+          <section className='flex md:flex-row flex-col sm:py-16 py-6'>
+
+            {/* Left Content - Features */}
+            <div className='flex-1 flex-col justify-center items-start'>
+              {/* Main Heading */}
+              <div className="mb-8">
+                <h1 className="font-poppins font-[900] md:text-[40px] text-[32px] text-black md:leading-[48px] leading-[38px] text-center md:text-left">
+                  Global communication made <br className="sm:block hidden" />
+                  easy
+                </h1>
+                <p className="text-[#6C757D] text-[16px] mt-4 text-center md:text-left max-w-[500px]">
+                  Integrate customer connections and verifications seamlessly across media like
+                  voice, email, SMS, and WhatsApp.
+                </p>
+              </div>
+
+              {/* Features List */}
+              <div className="space-y-6">
+                {/* Cross-channel messaging */}
+                <div className="flex items-start space-x-4">
+                  <div className="bg-blue-50 p-3 rounded-lg flex-shrink-0">
+                    <svg className="w-6 h-6 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
+                    </svg>
+                  </div>
+                  <div>
+                    <h3 className="font-poppins font-bold text-[18px] text-gray-700 mb-2">
+                      Cross-channel messaging
+                    </h3>
+                    <p className="text-[#6C757D] text-[14px] leading-[20px]">
+                      Engage, confirm, and authenticate customers using SMS, email, voice, and instant
+                      messaging channels
+                    </p>
+                  </div>
+                </div>
+
+                {/* 99% delivery */}
+                <div className="flex items-start space-x-4">
+                  <div className="bg-blue-50 p-3 rounded-lg flex-shrink-0">
+                    <svg className="w-6 h-6 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                  </div>
+                  <div>
+                    <h3 className="font-poppins font-bold text-[18px] text-black mb-2">
+                      <span className="text-gray-700">99% delivery</span>
+                    </h3>
+                    <p className="text-[#6C757D] text-[14px] leading-[20px]">
+                      Enhance OTP and notification delivery using
+                      uniquely generated IDs and numbers
+                    </p>
+                  </div>
+                </div>
+
+                {/* Quick integration */}
+                <div className="flex items-start space-x-4">
+                  <div className="bg-blue-50 p-3 rounded-lg flex-shrink-0">
+                    <svg className="w-6 h-6 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                    </svg>
+                  </div>
+                  <div>
+                    <h3 className="font-poppins font-bold text-[18px] text-black mb-2">
+                      <span className="text-gray-700">Quick integration</span>
+                    </h3>
+                    <p className="text-[#6C757D] text-[14px] leading-[20px]">
+                      Quickly integrate powerful APIs to start building solutions for SMS and WhatsApp messaging,
+                      voice, video, and email
+                    </p>
+                  </div>
+                </div>
+
+                {/* Cost saving */}
+                <div className="flex items-start space-x-4">
+                  <div className="bg-blue-50 p-3 rounded-lg flex-shrink-0">
+                    <svg className="w-6 h-6 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"></path>
+                    </svg>
+                  </div>
+                  <div>
+                    <h3 className="font-poppins font-bold text-[18px] text-black mb-2">
+                      <span className="text-gray-700">Cost saving</span>
+                    </h3>
+                    <p className="text-[#6C757D] text-[14px] leading-[20px]">
+                      Sending out OTP messages is more cost-effective if you detect restricted contacts and
+                      network changes before sending out the
+                      message
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Right Content - Network Diagram */}
+            <div className='flex-1 flex flex-col md:ml-[60px] ml-0 md:mt-[80px] mt-12 relative justify-center items-center'>
+
+              <img src="/images/networks.png" alt="hero" />
+
+            </div>
+
+          </section>
+        </div>
+      </div>
+      {/* End Global Communication Section */}
 
       {/* Start Section */}
       <div className='bg-[#F4FBFF] sm:px-16 px-6 flex justify-center items-start pb-10' >
@@ -546,7 +658,7 @@ function Home() {
               </div>
 
               <p className={`font-poppins font-normal text-[#6C757D] md:text-[15px] text-[13px] md:leading-[23.85px] leading-[20px] max-w-[530px] mt-[30px] `}>
-              Long URLs can be hard to share and remember, especially on social media with character limits. Short links solve this by condensing long URLs into easy-to-share snippets. Learn how to create and use them to simplify your online presence.
+                Long URLs can be hard to share and remember, especially on social media with character limits. Short links solve this by condensing long URLs into easy-to-share snippets. Learn how to create and use them to simplify your online presence.
               </p>
             </div>
             <div className='flex-1 flex justify-center items-center px-6 pt-8'>
@@ -595,7 +707,7 @@ function Home() {
 
       {/* Start Section */}
       {/* <!-- Pricing Section --> */}
-    
+
       {/* End Section */}
 
       {/* Start Section */}
@@ -890,10 +1002,10 @@ function Home() {
       </div>
       {/* End Section */}
 
-       {/* Start Section */}
+      {/* Start Section */}
       <div>
-        <Footer/>
-        </div>
+        <Footer />
+      </div>
       {/* End Section */}
 
       <section>

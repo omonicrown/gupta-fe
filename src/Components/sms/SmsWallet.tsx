@@ -266,7 +266,7 @@ export default function SmsWallet() {
                                             {wallet ? Math.floor(wallet.balance / 4.99) : "0"}
                                         </div>
                                         <div className="mt-2 text-sm text-gray-500">
-                                            Approx. at ₦4.99/message
+                                            Approx. at ₦5.55/message
                                         </div>
                                     </div>
 
