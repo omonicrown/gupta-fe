@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import Modal from 'react-awesome-modal';
+import CustomModal from './CustomModal'; // Import the new custom modal
 import { SvgElement, icontypesEnum } from "../assets/svgElement";
 import { AdminApis } from "../../apis/adminApi";
 import { FaTrash, FaEdit, FaPlus, FaImage, FaStore, FaExternalLinkAlt } from "react-icons/fa";
@@ -13,7 +13,7 @@ import InputColor from 'react-input-color';
 
 export default function CardCreateProduct() {
   const navigate = useNavigate();
-  
+
   // Modal states
   const [modals, setModals] = useState({
     createMarketLink: false,
@@ -48,7 +48,7 @@ export default function CardCreateProduct() {
   const [productLinks, setProductLinks] = useState([]);
   const [whatsappLinks, setWhatsappLinks] = useState([]);
   const [userData, setUserData] = useState({});
-  
+
   // Image states
   const [productImages, setProductImages] = useState({
     image1: { file: 'No selected file', preview: 'empty' },
@@ -57,7 +57,7 @@ export default function CardCreateProduct() {
   });
 
   const [logoPreview, setLogoPreview] = useState('empty');
-  
+
   // UI states
   const [loading, setLoading] = useState(false);
   const [linkAvailability, setLinkAvailability] = useState({ available: null, checking: false });
@@ -134,7 +134,7 @@ export default function CardCreateProduct() {
       const cleanLinkName = marketLinkForm.name.toLowerCase()
         .replace(/\s+/g, '-')
         .replace(/[^a-zA-Z0-9\-]/g, '');
-      
+
       const response = await AdminApis.checkMarketLink({ link_name: cleanLinkName });
       setLinkAvailability({
         available: response?.data?.link === 0,
@@ -186,7 +186,7 @@ export default function CardCreateProduct() {
     if (!file) return;
 
     const size = file.size / 1048576.0; // Convert to MB
-    
+
     if (size > 4) {
       e.target.value = '';
       toast.warn('Image too large. Maximum size is 4MB.');
@@ -194,7 +194,7 @@ export default function CardCreateProduct() {
     }
 
     const preview = URL.createObjectURL(file);
-    
+
     if (imageKey === 'logo') {
       setMarketLinkForm(prev => ({ ...prev, logo: file }));
       setLogoPreview(preview);
@@ -218,18 +218,18 @@ export default function CardCreateProduct() {
   // API calls
   const createProduct = async (e) => {
     e.preventDefault();
-    
+
     if (productImages.image1.file === 'No selected file') {
       toast.error("Please upload at least one product image");
       return;
     }
 
     setLoading(true);
-    
+
     try {
       const formData = new FormData();
       const linkData = productForm.marketLinkId.split(' ');
-      
+
       formData.append('link_name', linkData[0]);
       formData.append('link_id', linkData[1]);
       formData.append('product_name', productForm.name);
@@ -244,7 +244,7 @@ export default function CardCreateProduct() {
       formData.append('product_image_3', productImages.image3.file);
 
       const response = await AdminApis.createProduct(formData);
-      
+
       if (response?.data) {
         toast.success(response.data.message);
         navigate('/mini-store');
@@ -260,7 +260,7 @@ export default function CardCreateProduct() {
 
   const createMarketLink = async (e) => {
     e.preventDefault();
-    
+
     if (!linkAvailability.available) {
       toast.error("Please choose an available link name");
       return;
@@ -271,7 +271,7 @@ export default function CardCreateProduct() {
       const cleanLinkName = marketLinkForm.name.toLowerCase()
         .replace(/\s+/g, '-')
         .replace(/[^a-zA-Z0-9\-]/g, '');
-      
+
       formData.append('link_name', cleanLinkName);
       formData.append('brand_primary_color', marketLinkForm.color.hex);
       formData.append('brand_description', marketLinkForm.description);
@@ -281,7 +281,7 @@ export default function CardCreateProduct() {
       formData.append('brand_logo', marketLinkForm.logo);
 
       const response = await AdminApis.createMarketLink(formData);
-      
+
       if (response?.data) {
         toast.success(response.data.message);
         setRefresh(!refresh);
@@ -297,10 +297,10 @@ export default function CardCreateProduct() {
 
   const updateMarketLink = async (e) => {
     e.preventDefault();
-    
+
     try {
       const formData = new FormData();
-      
+
       formData.append('link_name', editingMarketLink.link_name);
       formData.append('brand_primary_color', marketLinkForm.color.hex);
       formData.append('brand_description', marketLinkForm.description || editingMarketLink.brand_description);
@@ -311,7 +311,7 @@ export default function CardCreateProduct() {
       formData.append('id', editingMarketLink.id);
 
       const response = await AdminApis.updateMarketLink(formData);
-      
+
       if (response?.data) {
         toast.success(response.data.message);
         setRefresh(!refresh);
@@ -327,10 +327,10 @@ export default function CardCreateProduct() {
 
   const deleteMarketLink = async () => {
     setLoading(true);
-    
+
     try {
       const response = await AdminApis.deleteMarketLink(selectedLinkId);
-      
+
       if (response?.data) {
         toast.success(response.data.message);
         setRefresh(!refresh);
@@ -368,9 +368,9 @@ export default function CardCreateProduct() {
             <p className="text-sm text-gray-500">{placeholder}</p>
           </div>
         ) : (
-          <img 
-            src={preview} 
-            alt="Preview" 
+          <img
+            src={preview}
+            alt="Preview"
             className="w-full h-full object-cover rounded-lg"
           />
         )}
@@ -414,7 +414,7 @@ export default function CardCreateProduct() {
   );
 
   return (
-    <div className="max-w-7xl mx-auto  md:p-6">
+    <div className="max-w-7xl mx-auto md:p-6">
       {/* Header Section */}
       <div className="mb-8">
         <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">Add New Product</h1>
@@ -423,7 +423,7 @@ export default function CardCreateProduct() {
 
       {/* Info Alert */}
       <InfoAlert>
-        <strong>Note:</strong> Market links are custom URLs where your customers can view all your products. 
+        <strong>Note:</strong> Market links are custom URLs where your customers can view all your products.
         Create a market link first, then add products to it.
       </InfoAlert>
 
@@ -437,7 +437,7 @@ export default function CardCreateProduct() {
           <FaStore className="mr-2" />
           Add Market Link
         </button>
-        
+
         {loading && (
           <div className="flex items-center">
             <Oval height={32} width={32} color="#2563eb" secondaryColor="#93c5fd" />
@@ -452,7 +452,7 @@ export default function CardCreateProduct() {
           <div className="space-y-6">
             <div className="bg-white p-6 rounded-lg shadow-sm border">
               <h3 className="text-lg font-semibold mb-4">Product Information</h3>
-              
+
               <div className="space-y-4">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -600,20 +600,20 @@ export default function CardCreateProduct() {
             <div className="bg-white p-6 rounded-lg shadow-sm border">
               <h3 className="text-lg font-semibold mb-4">Product Images</h3>
               <div className="space-y-4">
-                <ImageUploadCard 
-                  imageKey="image1" 
+                <ImageUploadCard
+                  imageKey="image1"
                   preview={productImages.image1.preview}
                   placeholder="Main Product Image *"
                 />
-                
+
                 <div className="grid grid-cols-2 gap-4">
-                  <ImageUploadCard 
-                    imageKey="image2" 
+                  <ImageUploadCard
+                    imageKey="image2"
                     preview={productImages.image2.preview}
                     placeholder="Additional Image"
                   />
-                  <ImageUploadCard 
-                    imageKey="image3" 
+                  <ImageUploadCard
+                    imageKey="image3"
                     preview={productImages.image3.preview}
                     placeholder="Additional Image"
                   />
@@ -639,7 +639,7 @@ export default function CardCreateProduct() {
       <div className="mt-12">
         <hr className="mb-8" />
         <h3 className="text-xl font-semibold mb-6">Your Market Links</h3>
-        
+
         {productLinks.length > 0 ? (
           <div className="space-y-3">
             {productLinks.map((link, index) => (
@@ -651,7 +651,7 @@ export default function CardCreateProduct() {
                     <p className="text-sm text-gray-500">{link.brand_description}</p>
                   </div>
                 </div>
-                
+
                 <div className="flex items-center space-x-2">
                   <button
                     type="button"
@@ -661,7 +661,7 @@ export default function CardCreateProduct() {
                   >
                     <FaExternalLinkAlt size={16} />
                   </button>
-                  
+
                   {(userData?.sub_type === 'premium' || userData?.sub_type === 'free') && (
                     <button
                       type="button"
@@ -672,7 +672,7 @@ export default function CardCreateProduct() {
                       <FaEdit size={16} />
                     </button>
                   )}
-                  
+
                   <button
                     type="button"
                     onClick={() => openDeleteMarketLinkModal(link.id)}
@@ -693,393 +693,359 @@ export default function CardCreateProduct() {
       </div>
 
       {/* Create Market Link Modal */}
-      <Modal
-        visible={modals.createMarketLink}
-        width="90%"
-        height="auto"
-        effect="fadeInUp"
-        onClickAway={() => toggleModal('createMarketLink', false)}
+      <CustomModal
+        isOpen={modals.createMarketLink}
+        onClose={() => toggleModal('createMarketLink', false)}
+        title="Create Market Link"
+        maxWidth="max-w-2xl"
       >
-        <div className="max-w-lg mx-auto bg-white rounded-lg p-6 max-h-[90vh] overflow-y-auto">
-          <div className="flex justify-between items-center mb-6">
-            <h2 className="text-xl font-bold">Create Market Link</h2>
-            <button onClick={() => toggleModal('createMarketLink', false)}>
-              <IoMdClose size={24} />
-            </button>
-          </div>
-
-          <form onSubmit={createMarketLink} className="space-y-4">
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Market Link Name *
-              </label>
-              <div className="relative">
-                <input
-                  type="text"
-                  required
-                  value={marketLinkForm.name}
-                  onChange={(e) => handleMarketLinkFormChange('name', e.target.value)}
-                  className="w-full px-3 py-2 pr-10 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  placeholder="e.g. john-stores"
-                />
-                {linkAvailability.checking && (
-                  <div className="absolute right-3 top-3">
-                    <Oval height={16} width={16} color="#2563eb" />
-                  </div>
-                )}
-                {!linkAvailability.checking && linkAvailability.available === true && (<div className="absolute right-3 top-3 text-green-500">
-                    ✓
-                  </div>
-                )}
-                {!linkAvailability.checking && linkAvailability.available === false && (
-                  <div className="absolute right-3 top-3 text-red-500">
-                    ✗
-                  </div>
-                )}
-              </div>
-              
-              <div className="mt-2 space-y-1">
-                <p className="text-xs text-gray-500">
-                  https://www.mygupta.co/store/{marketLinkForm.name.toLowerCase().replace(/\s+/g, '-').replace(/[^a-zA-Z0-9\-]/g, '')}
-                </p>
-                {!linkAvailability.checking && linkAvailability.available === true && (
-                  <p className="text-xs text-green-600">✓ Available</p>
-                )}
-                {!linkAvailability.checking && linkAvailability.available === false && (
-                  <p className="text-xs text-red-600">✗ Link is taken</p>
-                )}
-              </div>
-            </div>
-
-            {/* Premium Features */}
-            {(userData?.sub_type === 'premium' || userData?.sub_type === 'popular' || userData?.sub_type === 'free') && (
-              <div className="space-y-4">
-                {/* Color Picker */}
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Brand Primary Color
-                  </label>
-                  <div className="flex items-center space-x-3">
-                    <InputColor
-                      initialValue="#0071BC"
-                      onChange={(color) => handleMarketLinkFormChange('color', color)}
-                      placement="right"
-                    />
-                    <div 
-                      className="flex-1 h-10 rounded-lg border-2 border-gray-300 flex items-center justify-center text-white font-medium"
-                      style={{ backgroundColor: marketLinkForm.color.hex }}
-                    >
-                      {marketLinkForm.color.hex}
-                    </div>
-                  </div>
-                </div>
-
-                {/* Social Media URLs */}
-                <div className="grid grid-cols-1 gap-4">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Facebook URL
-                    </label>
-                    <input
-                      type="url"
-                      value={marketLinkForm.facebookUrl}
-                      onChange={(e) => handleMarketLinkFormChange('facebookUrl', e.target.value)}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                      placeholder="https://www.facebook.com/..."
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Instagram URL
-                    </label>
-                    <input
-                      type="url"
-                      value={marketLinkForm.instagramUrl}
-                      onChange={(e) => handleMarketLinkFormChange('instagramUrl', e.target.value)}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                      placeholder="https://www.instagram.com/..."
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      TikTok URL
-                    </label>
-                    <input
-                      type="url"
-                      value={marketLinkForm.tiktokUrl}
-                      onChange={(e) => handleMarketLinkFormChange('tiktokUrl', e.target.value)}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                      placeholder="https://www.tiktok.com/..."
-                    />
-                  </div>
-                </div>
-
-                {/* Brand Description */}
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Brand Description
-                  </label>
-                  <textarea
-                    rows={3}
-                    value={marketLinkForm.description}
-                    onChange={(e) => handleMarketLinkFormChange('description', e.target.value)}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    placeholder="Brief description of your brand"
-                  />
-                </div>
-
-                {/* Brand Logo Upload */}
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Brand Logo
-                  </label>
-                  <ImageUploadCard 
-                    imageKey="logo" 
-                    preview={logoPreview}
-                    placeholder="Upload Brand Logo"
-                  />
-                </div>
-              </div>
-            )}
-
-            <div className="flex justify-end space-x-3 pt-4">
-              <button
-                type="button"
-                onClick={() => toggleModal('createMarketLink', false)}
-                className="px-4 py-2 text-gray-700 bg-gray-200 rounded-lg hover:bg-gray-300 transition-colors"
-              >
-                Cancel
-              </button>
-              <button
-                type="submit"
-                disabled={!linkAvailability.available}
-                className={`px-4 py-2 rounded-lg font-medium transition-colors ${
-                  linkAvailability.available
-                    ? 'bg-blue-600 text-white hover:bg-blue-700'
-                    : 'bg-gray-300 text-gray-500 cursor-not-allowed'
-                }`}
-              >
-                {linkAvailability.available ? 'Create Link' : 'Unavailable'}
-              </button>
-            </div>
-          </form>
-        </div>
-      </Modal>
-
-      {/* Edit Market Link Modal */}
-      <Modal
-        visible={modals.editMarketLink}
-        width="90%"
-        height="auto"
-        effect="fadeInUp"
-        onClickAway={() => toggleModal('editMarketLink', false)}
-      >
-        <div className="max-w-lg mx-auto bg-white rounded-lg p-6 max-h-[90vh] overflow-y-auto">
-          <div className="flex justify-between items-center mb-6">
-            <h2 className="text-xl font-bold">Edit Market Link</h2>
-            <button onClick={() => toggleModal('editMarketLink', false)}>
-              <IoMdClose size={24} />
-            </button>
-          </div>
-
-          <form onSubmit={updateMarketLink} className="space-y-4">
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Market Link Name (Cannot be changed)
-              </label>
+        <form onSubmit={createMarketLink} className="space-y-4">
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Market Link Name *
+            </label>
+            <div className="relative">
               <input
                 type="text"
-                disabled
-                value={editingMarketLink?.link_name || ''}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg bg-gray-100 text-gray-500"
+                required
+                value={marketLinkForm.name}
+                onChange={(e) => handleMarketLinkFormChange('name', e.target.value)}
+                className="w-full px-3 py-2 pr-10 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                placeholder="e.g. john-stores"
               />
-              <p className="text-xs text-gray-500 mt-1">
-                https://www.mygupta.co/store/{editingMarketLink?.link_name}
-              </p>
+              {linkAvailability.checking && (
+                <div className="absolute right-3 top-3">
+                  <Oval height={16} width={16} color="#2563eb" />
+                </div>
+              )}
+              {!linkAvailability.checking && linkAvailability.available === true && (
+                <div className="absolute right-3 top-3 text-green-500">✓</div>
+              )}
+              {!linkAvailability.checking && linkAvailability.available === false && (
+                <div className="absolute right-3 top-3 text-red-500">✗</div>
+              )}
             </div>
 
-            {/* Premium Features for Edit */}
-            {(userData?.sub_type === 'premium' || userData?.sub_type === 'popular' || userData?.sub_type === 'free') && (
-              <div className="space-y-4">
-                {/* Color Picker */}
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Brand Primary Color
-                  </label>
-                  <div className="flex items-center space-x-3">
-                    <InputColor
-                      initialValue={editingMarketLink?.brand_primary_color || '#0071BC'}
-                      onChange={(color) => handleMarketLinkFormChange('color', color)}
-                      placement="right"
-                    />
-                    <div 
-                      className="flex-1 h-10 rounded-lg border-2 border-gray-300 flex items-center justify-center text-white font-medium"
-                      style={{ backgroundColor: marketLinkForm.color.hex }}
-                    >
-                      {marketLinkForm.color.hex}
-                    </div>
-                  </div>
-                </div>
+            <div className="mt-2 space-y-1">
+              <p className="text-xs text-gray-500">
+                https://www.mygupta.co/store/{marketLinkForm.name.toLowerCase().replace(/\s+/g, '-').replace(/[^a-zA-Z0-9\-]/g, '')}
+              </p>
+              {!linkAvailability.checking && linkAvailability.available === true && (
+                <p className="text-xs text-green-600">✓ Available</p>
+              )}
+              {!linkAvailability.checking && linkAvailability.available === false && (
+                <p className="text-xs text-red-600">✗ Link is taken</p>
+              )}
+            </div>
+          </div>
 
-                {/* Social Media URLs */}
-                <div className="grid grid-cols-1 gap-4">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Facebook URL
-                    </label>
-                    <input
-                      type="url"
-                      defaultValue={editingMarketLink?.facebook_url}
-                      onChange={(e) => handleMarketLinkFormChange('facebookUrl', e.target.value)}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                      placeholder="https://www.facebook.com/..."
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Instagram URL
-                    </label>
-                    <input
-                      type="url"
-                      defaultValue={editingMarketLink?.instagram_url}
-                      onChange={(e) => handleMarketLinkFormChange('instagramUrl', e.target.value)}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                      placeholder="https://www.instagram.com/..."
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      TikTok URL
-                    </label>
-                    <input
-                      type="url"
-                      defaultValue={editingMarketLink?.tiktok_url}
-                      onChange={(e) => handleMarketLinkFormChange('tiktokUrl', e.target.value)}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                      placeholder="https://www.tiktok.com/..."
-                    />
-                  </div>
-                </div>
-
-                {/* Brand Description */}
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Brand Description
-                  </label>
-                  <textarea
-                    rows={3}
-                    defaultValue={editingMarketLink?.brand_description}
-                    onChange={(e) => handleMarketLinkFormChange('description', e.target.value)}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    placeholder="Brief description of your brand"
+          {/* Premium Features */}
+          {(userData?.sub_type === 'premium' || userData?.sub_type === 'popular' || userData?.sub_type === 'free') && (
+            <div className="space-y-4">
+              {/* Color Picker */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Brand Primary Color
+                </label>
+                <div className="flex items-center space-x-3">
+                  <InputColor
+                    initialValue="#0071BC"
+                    onChange={(color) => handleMarketLinkFormChange('color', color)}
+                    placement="right"
                   />
-                </div>
-
-                {/* Brand Logo Upload */}
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Brand Logo
-                  </label>
-                  <div className="flex items-start space-x-4">
-                    <div className="flex-1">
-                      <ImageUploadCard 
-                        imageKey="logo" 
-                        preview={logoPreview}
-                        placeholder="Upload New Logo"
-                      />
-                    </div>
-                    {editingMarketLink?.brand_logo && (
-                      <div className="w-24 h-24">
-                        <img 
-                          src={editingMarketLink.brand_logo} 
-                          alt="Current logo"
-                          className="w-full h-full object-cover rounded-lg border"
-                        />
-                        <p className="text-xs text-gray-500 mt-1">Current logo</p>
-                      </div>
-                    )}
+                  <div
+                    className="flex-1 h-10 rounded-lg border-2 border-gray-300 flex items-center justify-center text-white font-medium"
+                    style={{ backgroundColor: marketLinkForm.color.hex }}
+                  >
+                    {marketLinkForm.color.hex}
                   </div>
                 </div>
               </div>
-            )}
 
-            <div className="flex justify-end space-x-3 pt-4">
-              <button
-                type="button"
-                onClick={() => toggleModal('editMarketLink', false)}
-                className="px-4 py-2 text-gray-700 bg-gray-200 rounded-lg hover:bg-gray-300 transition-colors"
-              >
-                Cancel
-              </button>
-              <button
-                type="submit"
-                className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
-              >
-                Update Link
-              </button>
+              {/* Social Media URLs */}
+              <div className="grid grid-cols-1 gap-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Facebook URL
+                  </label>
+                  <input
+                    type="url"
+                    value={marketLinkForm.facebookUrl}
+                    onChange={(e) => handleMarketLinkFormChange('facebookUrl', e.target.value)}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    placeholder="https://www.facebook.com/..."
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Instagram URL
+                  </label>
+                  <input
+                    type="url"
+                    value={marketLinkForm.instagramUrl}
+                    onChange={(e) => handleMarketLinkFormChange('instagramUrl', e.target.value)}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    placeholder="https://www.instagram.com/..."
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    TikTok URL
+                  </label>
+                  <input
+                    type="url"
+                    value={marketLinkForm.tiktokUrl}
+                    onChange={(e) => handleMarketLinkFormChange('tiktokUrl', e.target.value)}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    placeholder="https://www.tiktok.com/..."
+                  />
+                </div>
+              </div>
+
+              {/* Brand Description */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Brand Description
+                </label>
+                <textarea
+                  rows={3}
+                  value={marketLinkForm.description}
+                  onChange={(e) => handleMarketLinkFormChange('description', e.target.value)}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  placeholder="Brief description of your brand"
+                />
+              </div>
+
+              {/* Brand Logo Upload */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Brand Logo
+                </label>
+                <ImageUploadCard
+                  imageKey="logo"
+                  preview={logoPreview}
+                  placeholder="Upload Brand Logo"
+                />
+              </div>
             </div>
-          </form>
-        </div>
-      </Modal>
+          )}
 
-      {/* Delete Market Link Modal */}
-      <Modal
-        visible={modals.deleteMarketLink}
-        width="90%"
-        height="auto"
-        effect="fadeInUp"
-        onClickAway={() => toggleModal('deleteMarketLink', false)}
-      >
-        <div className="max-w-md mx-auto bg-white rounded-lg p-6">
-          <div className="flex justify-between items-center mb-6">
-            <h2 className="text-xl font-bold text-red-600">Delete Market Link</h2>
-            <button onClick={() => toggleModal('deleteMarketLink', false)}>
-              <IoMdClose size={24} />
+          <div className="flex justify-end space-x-3 pt-4">
+            <button
+              type="button"
+              onClick={() => toggleModal('createMarketLink', false)}
+              className="px-4 py-2 text-gray-700 bg-gray-200 rounded-lg hover:bg-gray-300 transition-colors"
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              disabled={!linkAvailability.available}
+              className={`px-4 py-2 rounded-lg font-medium transition-colors ${linkAvailability.available
+                ? 'bg-blue-600 text-white hover:bg-blue-700'
+                : 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                }`}
+            >
+              {linkAvailability.available ? 'Create Link' : 'Unavailable'}
             </button>
           </div>
+        </form>
+      </CustomModal>
 
-          <div className="space-y-4">
-            <div className="flex items-center space-x-3 text-amber-600 bg-amber-50 p-3 rounded-lg">
-              <AiOutlineWarning size={24} />
-              <p className="text-sm font-medium">
-                You are about to delete this market link permanently.
-              </p>
-            </div>
+      {/* Edit Market Link Modal */}
+      <CustomModal
+        isOpen={modals.editMarketLink}
+        onClose={() => toggleModal('editMarketLink', false)}
+        title="Edit Market Link"
+        maxWidth="max-w-2xl"
+      >
+        <form onSubmit={updateMarketLink} className="space-y-4">
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Market Link Name (Cannot be changed)
+            </label>
+            <input
+              type="text"
+              disabled
+              value={editingMarketLink?.link_name || ''}
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg bg-gray-100 text-gray-500"
+            />
+            <p className="text-xs text-gray-500 mt-1">
+              https://www.mygupta.co/store/{editingMarketLink?.link_name}
+            </p>
+          </div>
 
-            <div className="text-sm text-gray-600 space-y-2">
-              <p className="font-medium">Please note that:</p>
-              <ul className="space-y-1 list-disc list-inside ml-4">
-                <li>The link will stop working immediately</li>
-                <li>All link data will be permanently lost</li>
-                <li>The link name will become available to others</li>
-                <li className="font-bold text-red-600">All products attached to this market link will be lost</li>
-              </ul>
-            </div>
+          {/* Premium Features for Edit */}
+          {(userData?.sub_type === 'premium' || userData?.sub_type === 'popular' || userData?.sub_type === 'free') && (
+            <div className="space-y-4">
+              {/* Color Picker */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Brand Primary Color
+                </label>
+                <div className="flex items-center space-x-3">
+                  <InputColor
+                    initialValue={editingMarketLink?.brand_primary_color || '#0071BC'}
+                    onChange={(color) => handleMarketLinkFormChange('color', color)}
+                    placement="right"
+                  />
+                  <div
+                    className="flex-1 h-10 rounded-lg border-2 border-gray-300 flex items-center justify-center text-white font-medium"
+                    style={{ backgroundColor: marketLinkForm.color.hex }}
+                  >
+                    {marketLinkForm.color.hex}
+                  </div>
+                </div>
+              </div>
 
-            <div className="flex justify-end space-x-3 pt-4">
-              <button
-                type="button"
-                onClick={() => toggleModal('deleteMarketLink', false)}
-                className="px-4 py-2 text-gray-700 bg-gray-200 rounded-lg hover:bg-gray-300 transition-colors"
-              >
-                Cancel
-              </button>
-              <button
-                type="button"
-                onClick={deleteMarketLink}
-                disabled={loading}
-                className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-              >
-                {loading ? 'Deleting...' : 'Delete Link'}
-              </button>
+              {/* Social Media URLs */}
+              <div className="grid grid-cols-1 gap-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Facebook URL
+                  </label>
+                  <input
+                    type="url"
+                    defaultValue={editingMarketLink?.facebook_url}
+                    onChange={(e) => handleMarketLinkFormChange('facebookUrl', e.target.value)}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    placeholder="https://www.facebook.com/..."
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Instagram URL
+                  </label>
+                  <input
+                    type="url"
+                    defaultValue={editingMarketLink?.instagram_url}
+                    onChange={(e) => handleMarketLinkFormChange('instagramUrl', e.target.value)}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    placeholder="https://www.instagram.com/..."
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    TikTok URL
+                  </label>
+                  <input
+                    type="url"
+                    defaultValue={editingMarketLink?.tiktok_url}
+                    onChange={(e) => handleMarketLinkFormChange('tiktokUrl', e.target.value)}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    placeholder="https://www.tiktok.com/..."
+                  />
+                </div>
+              </div>
+
+              {/* Brand Description */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Brand Description
+                </label>
+                <textarea
+                  rows={3}
+                  defaultValue={editingMarketLink?.brand_description}
+                  onChange={(e) => handleMarketLinkFormChange('description', e.target.value)}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  placeholder="Brief description of your brand"
+                />
+              </div>
+
+              {/* Brand Logo Upload */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Brand Logo
+                </label>
+                <div className="flex items-start space-x-4">
+                  <div className="flex-1">
+                    <ImageUploadCard
+                      imageKey="logo"
+                      preview={logoPreview}
+                      placeholder="Upload New Logo"
+                    />
+                  </div>
+                  {editingMarketLink?.brand_logo && (
+                    <div className="w-24 h-24">
+                      <img
+                        src={editingMarketLink.brand_logo}
+                        alt="Current logo"
+                        className="w-full h-full object-cover rounded-lg border"
+                      />
+                      <p className="text-xs text-gray-500 mt-1">Current logo</p>
+                    </div>
+                  )}
+                </div>
+              </div>
             </div>
+          )}
+
+          <div className="flex justify-end space-x-3 pt-4">
+            <button
+              type="button"
+              onClick={() => toggleModal('editMarketLink', false)}
+              className="px-4 py-2 text-gray-700 bg-gray-200 rounded-lg hover:bg-gray-300 transition-colors"
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+            >
+              Update Link
+            </button>
+          </div>
+        </form>
+      </CustomModal>
+
+      {/* Delete Market Link Modal */}
+      <CustomModal
+        isOpen={modals.deleteMarketLink}
+        onClose={() => toggleModal('deleteMarketLink', false)}
+        title="Delete Market Link"
+        maxWidth="max-w-md"
+      >
+        <div className="space-y-4">
+          <div className="flex items-center space-x-3 text-amber-600 bg-amber-50 p-3 rounded-lg">
+            <AiOutlineWarning size={24} />
+            <p className="text-sm font-medium">
+              You are about to delete this market link permanently.
+            </p>
+          </div>
+
+          <div className="text-sm text-gray-600 space-y-2">
+            <p className="font-medium">Please note that:</p>
+            <ul className="space-y-1 list-disc list-inside ml-4">
+              <li>The link will stop working immediately</li>
+              <li>All link data will be permanently lost</li>
+              <li>The link name will become available to others</li>
+              <li className="font-bold text-red-600">All products attached to this market link will be lost</li>
+            </ul>
+          </div>
+
+          <div className="flex justify-end space-x-3 pt-4">
+            <button
+              type="button"
+              onClick={() => toggleModal('deleteMarketLink', false)}
+              className="px-4 py-2 text-gray-700 bg-gray-200 rounded-lg hover:bg-gray-300 transition-colors"
+            >
+              Cancel
+            </button>
+            <button
+              type="button"
+              onClick={deleteMarketLink}
+              disabled={loading}
+              className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+            >
+              {loading ? 'Deleting...' : 'Delete Link'}
+            </button>
           </div>
         </div>
-      </Modal>
+      </CustomModal>
 
       {/* Toast Container */}
       <ToastContainer

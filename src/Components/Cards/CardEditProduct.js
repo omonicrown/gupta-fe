@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import { useNavigate, useParams, Link } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import Modal from 'react-awesome-modal';
+import CustomModal from './CustomModal'; // Import the custom modal
 import { SvgElement, icontypesEnum } from "../assets/svgElement";
 import { AdminApis } from "../../apis/adminApi";
 import { FaArrowLeft, FaImage, FaStore, FaSave, FaSpinner } from "react-icons/fa";
@@ -13,10 +13,10 @@ import { Oval } from 'react-loader-spinner';
 export default function CardEditProduct() {
   const navigate = useNavigate();
   const params = useParams();
-  
+
   // Modal states
   const [showCreateMarketLinkModal, setShowCreateMarketLinkModal] = useState(false);
-  
+
   // Form states
   const [productForm, setProductForm] = useState({
     id: '',
@@ -39,7 +39,7 @@ export default function CardEditProduct() {
   // Data states
   const [productLinks, setProductLinks] = useState([]);
   const [whatsappLinks, setWhatsappLinks] = useState([]);
-  
+
   // Image states
   const [productImages, setProductImages] = useState({
     image1: { file: 'No selected file', preview: '', id: '' },
@@ -134,7 +134,7 @@ export default function CardEditProduct() {
       const response = await AdminApis.getSingleProduct(params?.id);
       if (response?.data?.data?.product) {
         const product = response.data.data.product;
-        
+
         setProductForm({
           id: product.id,
           name: product.product_name || '',
@@ -176,7 +176,7 @@ export default function CardEditProduct() {
       const cleanLinkName = marketLinkForm.name.toLowerCase()
         .replace(/\s+/g, '-')
         .replace(/[^a-zA-Z0-9\-]/g, '');
-      
+
       const response = await AdminApis.checkMarketLink({ link_name: cleanLinkName });
       setMarketLinkForm(prev => ({
         ...prev,
@@ -198,7 +198,7 @@ export default function CardEditProduct() {
     if (!file) return;
 
     const size = file.size / 1048576.0; // Convert to MB
-    
+
     if (size > 4) {
       e.target.value = '';
       toast.warn(`Image too large (${size.toFixed(2)}MB). Maximum size is 4MB.`);
@@ -206,13 +206,13 @@ export default function CardEditProduct() {
     }
 
     const preview = URL.createObjectURL(file);
-    
+
     setProductImages(prev => ({
       ...prev,
-      [imageKey]: { 
-        ...prev[imageKey], 
-        file, 
-        preview 
+      [imageKey]: {
+        ...prev[imageKey],
+        file,
+        preview
       }
     }));
   };
@@ -229,13 +229,13 @@ export default function CardEditProduct() {
   // API calls
   const updateProduct = async (e) => {
     e.preventDefault();
-    
+
     setLoading(true);
-    
+
     try {
       const formData = new FormData();
       const linkData = productForm.marketLinkId.split(' ');
-      
+
       formData.append('link_name', linkData[0]);
       formData.append('link_id', linkData[1]);
       formData.append('product_name', productForm.name);
@@ -246,7 +246,7 @@ export default function CardEditProduct() {
       formData.append('category', productForm.category);
       formData.append('location', productForm.location);
       formData.append('id', productForm.id);
-      
+
       // Handle images
       formData.append('product_image_1', productImages.image1.file);
       formData.append('product_image_2', productImages.image2.file);
@@ -256,7 +256,7 @@ export default function CardEditProduct() {
       formData.append('product_image_id_3', productImages.image3.id);
 
       const response = await AdminApis.updateProduct(formData);
-      
+
       if (response?.data) {
         toast.success('Product updated successfully');
         navigate('/mini-store');
@@ -272,7 +272,7 @@ export default function CardEditProduct() {
 
   const createMarketLink = async (e) => {
     e.preventDefault();
-    
+
     if (!marketLinkForm.available) {
       toast.error("Please choose an available link name");
       return;
@@ -283,11 +283,11 @@ export default function CardEditProduct() {
       const cleanLinkName = marketLinkForm.name.toLowerCase()
         .replace(/\s+/g, '-')
         .replace(/[^a-zA-Z0-9\-]/g, '');
-      
+
       formData.append('link_name', cleanLinkName);
 
       const response = await AdminApis.createMarketLink(formData);
-      
+
       if (response?.data) {
         toast.success(response.data.message);
         setShowCreateMarketLinkModal(false);
@@ -311,9 +311,9 @@ export default function CardEditProduct() {
             <p className="text-sm text-gray-500">{placeholder}</p>
           </div>
         ) : (
-          <img 
-            src={image.preview} 
-            alt="Preview" 
+          <img
+            src={image.preview}
+            alt="Preview"
             className="w-full h-full object-cover rounded-lg"
           />
         )}
@@ -330,10 +330,10 @@ export default function CardEditProduct() {
           onClick={() => {
             setProductImages(prev => ({
               ...prev,
-              [imageKey]: { 
-                ...prev[imageKey], 
-                file: 'No selected file', 
-                preview: '' 
+              [imageKey]: {
+                ...prev[imageKey],
+                file: 'No selected file',
+                preview: ''
               }
             }));
           }}
@@ -395,7 +395,7 @@ export default function CardEditProduct() {
           <div className="space-y-6">
             <div className="bg-white p-6 rounded-lg shadow-sm border">
               <h3 className="text-lg font-semibold mb-4">Product Information</h3>
-              
+
               <div className="space-y-4">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -553,20 +553,20 @@ export default function CardEditProduct() {
             <div className="bg-white p-6 rounded-lg shadow-sm border">
               <h3 className="text-lg font-semibold mb-4">Product Images</h3>
               <div className="space-y-4">
-                <ImageUploadCard 
-                  imageKey="image1" 
+                <ImageUploadCard
+                  imageKey="image1"
                   image={productImages.image1}
                   placeholder="Main Product Image *"
                 />
-                
+
                 <div className="grid grid-cols-2 gap-4">
-                  <ImageUploadCard 
-                    imageKey="image2" 
+                  <ImageUploadCard
+                    imageKey="image2"
                     image={productImages.image2}
                     placeholder="Additional Image"
                   />
-                  <ImageUploadCard 
-                    imageKey="image3" 
+                  <ImageUploadCard
+                    imageKey="image3"
                     image={productImages.image3}
                     placeholder="Additional Image"
                   />
@@ -606,84 +606,73 @@ export default function CardEditProduct() {
       </form>
 
       {/* Create Market Link Modal */}
-      <Modal
-        visible={showCreateMarketLinkModal}
-        width="90%"
-        height="auto"
-        effect="fadeInUp"
-        onClickAway={() => setShowCreateMarketLinkModal(false)}
+      <CustomModal
+        isOpen={showCreateMarketLinkModal}
+        onClose={() => setShowCreateMarketLinkModal(false)}
+        title="Create Market Link"
+        maxWidth="max-w-md"
       >
-        <div className="max-w-md mx-auto bg-white rounded-lg p-6">
-          <div className="flex justify-between items-center mb-6">
-            <h2 className="text-xl font-bold">Create Market Link</h2>
-            <button onClick={() => setShowCreateMarketLinkModal(false)}>
-              <IoMdClose size={24} />
-            </button>
+        <form onSubmit={createMarketLink} className="space-y-4">
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Market Link Name *
+            </label>
+            <div className="relative">
+              <input
+                type="text"
+                required
+                value={marketLinkForm.name}
+                onChange={(e) => handleMarketLinkFormChange('name', e.target.value)}
+                className="w-full px-3 py-2 pr-10 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                placeholder="e.g. john-stores"
+              />
+              {marketLinkForm.checking && (
+                <div className="absolute right-3 top-3">
+                  <Oval height={16} width={16} color="#2563eb" />
+                </div>
+              )}
+              {!marketLinkForm.checking && marketLinkForm.available === true && (
+                <div className="absolute right-3 top-3 text-green-500">✓</div>
+              )}
+              {!marketLinkForm.checking && marketLinkForm.available === false && (
+                <div className="absolute right-3 top-3 text-red-500">✗</div>
+              )}
+            </div>
+
+            <div className="mt-2 space-y-1">
+              <p className="text-xs text-gray-500">
+                https://www.mygupta.co/store/{marketLinkForm.name.toLowerCase().replace(/\s+/g, '-').replace(/[^a-zA-Z0-9\-]/g, '')}
+              </p>
+              {!marketLinkForm.checking && marketLinkForm.available === true && (
+                <p className="text-xs text-green-600">✓ Available</p>
+              )}
+              {!marketLinkForm.checking && marketLinkForm.available === false && (
+                <p className="text-xs text-red-600">✗ Link is taken</p>
+              )}
+            </div>
           </div>
 
-          <form onSubmit={createMarketLink} className="space-y-4">
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Market Link Name *
-              </label>
-              <div className="relative">
-                <input
-                  type="text"
-                  required
-                  value={marketLinkForm.name}
-                  onChange={(e) => handleMarketLinkFormChange('name', e.target.value)}
-                  className="w-full px-3 py-2 pr-10 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  placeholder="e.g. john-stores"
-                />
-                {marketLinkForm.checking && (
-                  <div className="absolute right-3 top-3">
-                    <Oval height={16} width={16} color="#2563eb" />
-                  </div>
-                )}
-                {!marketLinkForm.checking && marketLinkForm.available === true && (
-                  <div className="absolute right-3 top-3 text-green-500">✓</div>
-                )}
-                {!marketLinkForm.checking && marketLinkForm.available === false && (
-                  <div className="absolute right-3 top-3 text-red-500">✗</div>
-                )}
-              </div>
-              
-              <div className="mt-2 space-y-1">
-                <p className="text-xs text-gray-500">
-                  https://www.mygupta.co/store/{marketLinkForm.name.toLowerCase().replace(/\s+/g, '-').replace(/[^a-zA-Z0-9\-]/g, '')}
-                </p>
-                {!marketLinkForm.checking && marketLinkForm.available === true && (
-                  <p className="text-xs text-green-600">✓ Available</p>
-                )}
-                {!marketLinkForm.checking && marketLinkForm.available === false && (
-                  <p className="text-xs text-red-600">✗ Link is taken</p>
-                )}
-              </div>
-            </div>
-
-            <div className="flex justify-end space-x-3 pt-4">
-              <button
-                type="button"
-                onClick={() => setShowCreateMarketLinkModal(false)}
-                className="px-4 py-2 text-gray-700 bg-gray-200 rounded-lg hover:bg-gray-300 transition-colors"
-              >
-                Cancel
-              </button>
-              <button
-                type="submit"
-                disabled={!marketLinkForm.available}
-                className={`px-4 py-2 rounded-lg font-medium transition-colors ${
-                  marketLinkForm.available
-                    ? 'bg-blue-600 text-white hover:bg-blue-700'
-                    : 'bg-gray-300 text-gray-500 cursor-not-allowed'
+          <div className="flex justify-end space-x-3 pt-4">
+            <button
+              type="button"
+              onClick={() => setShowCreateMarketLinkModal(false)}
+              className="px-4 py-2 text-gray-700 bg-gray-200 rounded-lg hover:bg-gray-300 transition-colors"
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              disabled={!marketLinkForm.available}
+              className={`px-4 py-2 rounded-lg font-medium transition-colors ${marketLinkForm.available
+                  ? 'bg-blue-600 text-white hover:bg-blue-700'
+                  : 'bg-gray-300 text-gray-500 cursor-not-allowed'
                 }`}
-              >
-                {marketLinkForm.available ? 'Create Link' : 'Unavailable'}
-              </button>
-            </div>
-          </form>
-        </div>
-      </Modal>
+            >
+              {marketLinkForm.available ? 'Create Link' : 'Unavailable'}
+            </button>
+          </div>
+        </form>
+      </CustomModal>
 
       {/* Toast Container */}
       <ToastContainer
