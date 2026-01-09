@@ -1,29 +1,35 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { AdminApis } from "../../apis/adminApi";
 import { NavLink, useNavigate, useSearchParams } from "react-router-dom";
-import { SvgElement, icontypesEnum } from "../assets/svgElement";
 import { ToastContainer, toast } from 'react-toastify';
 import { useParams } from 'react-router-dom';
 import configs from "../../configs";
 import Modal from 'react-awesome-modal';
 import {
   FaWhatsapp,
-  FaShoppingCart,
   FaCreditCard,
   FaStore,
-  FaHeart,
-  FaShare,
-  FaMapMarkerAlt,
-  FaArrowLeft,
   FaSearch,
   FaShoppingBag,
   FaInstagram,
   FaFacebook,
   FaTiktok,
   FaEye,
-  FaStar,
-  FaUsers,
-  FaBox
+  FaShieldAlt,
+  FaTruck,
+  FaHeadset,
+  FaPercent,
+  FaChevronDown,
+  FaThLarge,
+  FaList,
+  FaTimes,
+  FaCheck,
+  FaLock,
+  FaHeart,
+  FaShareAlt,
+  FaPhoneAlt,
+  FaEnvelope,
+  FaMapMarkerAlt
 } from "react-icons/fa";
 import { PhoneInput } from "react-contact-number-input";
 import { Oval } from 'react-loader-spinner';
@@ -42,7 +48,9 @@ export default function CardViewProductPage() {
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredProducts, setFilteredProducts] = useState([]);
-  const [favorites, setFavorites] = useState([]);
+  const [viewMode, setViewMode] = useState('grid');
+  const [sortBy, setSortBy] = useState('default');
+  const [isScrolled, setIsScrolled] = useState(false);
 
   // Payment form state
   const [paymentForm, setPaymentForm] = useState({
@@ -51,6 +59,15 @@ export default function CardViewProductPage() {
     phoneNumber: '',
     quantity: 1
   });
+
+  // Handle scroll for sticky header effect
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 100);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   // Handle payment callback
   useEffect(() => {
@@ -79,18 +96,28 @@ export default function CardViewProductPage() {
     fetchStoreData();
   }, []);
 
-  // Filter products based on search
+  // Filter and sort products
   useEffect(() => {
+    let filtered = data?.products?.data || [];
+
     if (searchTerm.trim()) {
-      const filtered = data?.products?.data?.filter(product =>
+      filtered = filtered.filter(product =>
         product.product_name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
         product.product_description?.toLowerCase().includes(searchTerm.toLowerCase())
       );
-      setFilteredProducts(filtered || []);
-    } else {
-      setFilteredProducts(data?.products?.data || []);
     }
-  }, [searchTerm, data]);
+
+    // Sort products
+    if (sortBy === 'price-low') {
+      filtered = [...filtered].sort((a, b) => parseFloat(a.product_price) - parseFloat(b.product_price));
+    } else if (sortBy === 'price-high') {
+      filtered = [...filtered].sort((a, b) => parseFloat(b.product_price) - parseFloat(a.product_price));
+    } else if (sortBy === 'name') {
+      filtered = [...filtered].sort((a, b) => a.product_name.localeCompare(b.product_name));
+    }
+
+    setFilteredProducts(filtered);
+  }, [searchTerm, data, sortBy]);
 
   const fetchStoreData = async (page = '') => {
     try {
@@ -136,14 +163,6 @@ export default function CardViewProductPage() {
     }
   };
 
-  const toggleFavorite = (productId) => {
-    setFavorites(prev =>
-      prev.includes(productId)
-        ? prev.filter(id => id !== productId)
-        : [...prev, productId]
-    );
-  };
-
   const formatPrice = (price) => {
     return new Intl.NumberFormat('en-NG', {
       style: 'currency',
@@ -158,166 +177,314 @@ export default function CardViewProductPage() {
   });
 
   const theme = getStoreTheme();
+  const storeName = params?.storeId?.replace(/-/g, ' ');
 
   // Loading state
   if (loading && !data?.products) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center">
+      <div className="min-h-screen bg-white flex items-center justify-center">
         <div className="text-center">
-          <div className="w-20 h-20 mx-auto mb-6 bg-white rounded-full shadow-lg flex items-center justify-center">
-            <Oval height={40} width={40} color="#2563EB" secondaryColor="#93C5FD" />
+          <div className="w-16 h-16 mx-auto mb-6">
+            <Oval height={64} width={64} color={theme.primary} secondaryColor="#E5E7EB" strokeWidth={3} />
           </div>
-          <h3 className="text-lg font-semibold text-gray-800 mb-2">Loading Store</h3>
-          <p className="text-gray-600">Please wait while we prepare your shopping experience...</p>
+          <h3 className="text-xl font-semibold text-gray-900 mb-2">Loading Store</h3>
+          <p className="text-gray-500">Setting up your shopping experience...</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50">
-      {/* Enhanced Header */}
-     
-
-      {/* Store Banner */}
+    <div className="min-h-screen bg-gray-50">
+      {/* Announcement Bar */}
       <div
-        className="relative py-8 text-white overflow-hidden md:flex block"
+        className="py-2.5 text-center text-white text-sm font-medium"
+        style={{ backgroundColor: theme.primary }}
+      >
+        <FaTruck className="inline mr-2" size={14} />
+        Shop now and save!
+      </div>
+
+      {/* Main Header */}
+      <header
+        className={`bg-white transition-all duration-300 ${isScrolled ? 'sticky top-0 z-50 shadow-md' : 'relative'
+          }`}
+      >
+        <div className="max-w-7xl mx-auto px-4">
+          {/* Top Header */}
+          <div className="flex items-center justify-between py-4 border-b border-gray-100">
+            {/* Logo & Store Name */}
+            <div className="flex items-center space-x-3">
+              {marketInfo?.brand_logo && marketInfo.brand_logo !== 'no image' ? (
+                <img
+                  src={marketInfo.brand_logo}
+                  alt="Store Logo"
+                  className="w-12 h-12 object-contain rounded-lg"
+                />
+              ) : (
+                <div
+                  className="w-12 h-12 rounded-lg flex items-center justify-center text-white shadow-lg"
+                  style={{ backgroundColor: theme.primary }}
+                >
+                  <FaStore size={20} />
+                </div>
+              )}
+              <div>
+                <h1 className="text-xl font-bold text-gray-900 capitalize">{storeName}</h1>
+                <p className="text-xs text-gray-500">Official Store</p>
+              </div>
+            </div>
+
+            {/* Search Bar - Desktop */}
+            <div className="hidden md:flex flex-1 max-w-xl mx-8">
+              <div className="relative w-full">
+                <input
+                  type="text"
+                  placeholder="Search products..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="w-full pl-12 pr-4 py-3 bg-gray-100 border-0 rounded-full focus:outline-none focus:ring-2 focus:bg-white transition-all duration-200"
+                  style={{ focusRing: theme.primary }}
+                />
+                <FaSearch className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400" size={16} />
+                {searchTerm && (
+                  <button
+                    onClick={() => setSearchTerm('')}
+                    className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                  >
+                    <FaTimes size={14} />
+                  </button>
+                )}
+              </div>
+            </div>
+
+            {/* Contact Button */}
+            {marketInfo?.phone_number && (
+              <a
+                href={`${configs?.baseRedirect}/${marketInfo.phone_number}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hidden md:flex items-center space-x-2 px-5 py-2.5 bg-green-500 text-white rounded-full hover:bg-green-600 transition-colors font-medium"
+              >
+                <FaWhatsapp size={18} />
+                <span>Contact Us</span>
+              </a>
+            )}
+          </div>
+
+          {/* Mobile Search */}
+          <div className="md:hidden py-3">
+            <div className="relative">
+              <input
+                type="text"
+                placeholder="Search products..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="w-full pl-12 pr-4 py-3 bg-gray-100 border-0 rounded-full focus:outline-none focus:ring-2 focus:bg-white transition-all duration-200"
+              />
+              <FaSearch className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400" size={16} />
+            </div>
+          </div>
+        </div>
+      </header>
+
+      {/* Hero Banner */}
+      <section
+        className="relative overflow-hidden"
         style={{
-          background: `linear-gradient(135deg, ${theme.primary}, ${theme.primaryDark})`
+          background: `linear-gradient(135deg, ${theme.primary} 0%, ${theme.primaryDark} 100%)`
         }}
       >
         {/* Background Pattern */}
         <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-10 left-10 w-32 h-32 bg-white rounded-full"></div>
-          <div className="absolute bottom-10 right-10 w-24 h-24 bg-white rounded-full"></div>
-          <div className="absolute top-1/2 left-1/3 w-16 h-16 bg-white rounded-full"></div>
+          <div className="absolute top-0 left-0 w-72 h-72 bg-white rounded-full -translate-x-1/2 -translate-y-1/2"></div>
+          <div className="absolute bottom-0 right-0 w-96 h-96 bg-white rounded-full translate-x-1/3 translate-y-1/3"></div>
         </div>
 
-        <div className="flex items-center md:pl-10  justify-center   ">
-          <div className="relative">
-            {marketInfo?.brand_logo && marketInfo.brand_logo !== 'no image' ? (
-              <img
-                src={marketInfo.brand_logo}
-                alt="Store Logo"
-                className="w-16 h-16 object-cover rounded-xl shadow-lg border-2 border-white"
-              />
-            ) : (
-              <div
-                className="w-16 h-16 rounded-xl shadow-lg border bg-blue-400 flex items-center justify-center text-white"
-                // style={{ background: `linear-gradient(135deg, ${theme.primary}, ${theme.primaryDark})` }}
+        <div className="relative max-w-7xl mx-auto px-4 py-16 md:py-24">
+          <div className="text-center text-white">
+            <h2 className="text-4xl md:text-5xl font-bold mb-4">
+              Welcome to <span className="capitalize">{storeName}</span>
+            </h2>
+            <p className="text-lg md:text-xl text-white/90 max-w-2xl mx-auto mb-8">
+              {marketInfo?.brand_description || 'Discover amazing products at unbeatable prices. Quality guaranteed.'}
+            </p>
+            <div className="flex flex-wrap justify-center gap-4">
+              <a
+                href="#products"
+                className="px-8 py-3 bg-white text-gray-900 rounded-full font-semibold hover:bg-gray-100 transition-colors shadow-lg"
               >
-                <FaStore size={24} />
+                Shop Now
+              </a>
+              {marketInfo?.phone_number && (
+                <a
+                  href={`${configs?.baseRedirect}/${marketInfo.phone_number}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-8 py-3 bg-white/20 text-white rounded-full font-semibold hover:bg-white/30 transition-colors border border-white/30"
+                >
+                  <FaWhatsapp className="inline mr-2" />
+                  Chat with Us
+                </a>
+              )}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Trust Badges */}
+      <section className="bg-white border-b border-gray-100">
+        <div className="max-w-7xl mx-auto px-4 py-6">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8">
+            <div className="flex items-center justify-center space-x-3 py-2">
+              <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center">
+                <FaTruck className="text-blue-600" size={18} />
               </div>
-            )}
-            <div className="absolute -bottom-1 -right-1 w-6 h-6 bg-green-500 rounded-full border-2 border-white flex items-center justify-center">
-              <div className="w-2 h-2 bg-white rounded-full"></div>
+              <div>
+                <p className="font-semibold text-gray-900 text-sm">Fast Delivery</p>
+                <p className="text-xs text-gray-500">Quick & reliable</p>
+              </div>
+            </div>
+            <div className="flex items-center justify-center space-x-3 py-2">
+              <div className="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center">
+                <FaShieldAlt className="text-green-600" size={18} />
+              </div>
+              <div>
+                <p className="font-semibold text-gray-900 text-sm">Secure Payment</p>
+                <p className="text-xs text-gray-500">100% protected</p>
+              </div>
+            </div>
+            <div className="flex items-center justify-center space-x-3 py-2">
+              <div className="w-10 h-10 rounded-full bg-purple-100 flex items-center justify-center">
+                <FaHeadset className="text-purple-600" size={18} />
+              </div>
+              <div>
+                <p className="font-semibold text-gray-900 text-sm">24/7 Support</p>
+                <p className="text-xs text-gray-500">Always here to help</p>
+              </div>
+            </div>
+            <div className="flex items-center justify-center space-x-3 py-2">
+              <div className="w-10 h-10 rounded-full bg-orange-100 flex items-center justify-center">
+                <FaPercent className="text-orange-600" size={18} />
+              </div>
+              <div>
+                <p className="font-semibold text-gray-900 text-sm">Best Prices</p>
+                <p className="text-xs text-gray-500">Guaranteed value</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Products Section */}
+      <section id="products" className="max-w-7xl mx-auto px-4 py-12">
+        {/* Section Header with Filters */}
+        <div className="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-4">
+          <div>
+            <h3 className="text-2xl font-bold text-gray-900">Our Products</h3>
+            <p className="text-gray-500 mt-1">
+              {filteredProducts.length} {filteredProducts.length === 1 ? 'product' : 'products'} available
+            </p>
+          </div>
+
+          <div className="flex items-center space-x-4">
+            {/* Sort Dropdown */}
+            <div className="relative">
+              <select
+                value={sortBy}
+                onChange={(e) => setSortBy(e.target.value)}
+                className="appearance-none bg-white border border-gray-200 rounded-lg px-4 py-2.5 pr-10 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer"
+              >
+                <option value="default">Sort by: Default</option>
+                <option value="price-low">Price: Low to High</option>
+                <option value="price-high">Price: High to Low</option>
+                <option value="name">Name: A to Z</option>
+              </select>
+              <FaChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 pointer-events-none" size={12} />
+            </div>
+
+            {/* View Mode Toggle */}
+            <div className="hidden md:flex items-center bg-gray-100 rounded-lg p-1">
+              <button
+                onClick={() => setViewMode('grid')}
+                className={`p-2 rounded-md transition-colors ${viewMode === 'grid' ? 'bg-white shadow text-gray-900' : 'text-gray-500'
+                  }`}
+              >
+                <FaThLarge size={14} />
+              </button>
+              <button
+                onClick={() => setViewMode('list')}
+                className={`p-2 rounded-md transition-colors ${viewMode === 'list' ? 'bg-white shadow text-gray-900' : 'text-gray-500'
+                  }`}
+              >
+                <FaList size={14} />
+              </button>
             </div>
           </div>
         </div>
 
-        <div className="relative  mx-auto px-4 text-center">
-          
-          <h2 className="text-3xl font-bold mb-4">
-            Welcome to <span className=" capitalize">{params?.storeId?.replace('-', ' ')}</span>
-          </h2>
-          <p className="text-l text-white/90 max-w-2xl mx-auto">
-            {marketInfo?.brand_description || 'Discover amazing products at unbeatable prices. Shop with confidence and style.'}
-          </p>
-
-          {/* Store Features */}
-          {/* <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-3xl mx-auto">
-            <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4">
-              <FaShoppingBag className="mx-auto mb-2 text-2xl" />
-              <h4 className="font-semibold">Quality Products</h4>
-              <p className="text-sm text-white/80">Curated selection</p>
-            </div>
-            <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4">
-              <FaCreditCard className="mx-auto mb-2 text-2xl" />
-              <h4 className="font-semibold">Secure Payment</h4>
-              <p className="text-sm text-white/80">Safe & reliable</p>
-            </div>
-            <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4">
-              <FaWhatsapp className="mx-auto mb-2 text-2xl" />
-              <h4 className="font-semibold">Quick Support</h4>
-              <p className="text-sm text-white/80">24/7 assistance</p>
-            </div>
-          </div> */}
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <div className=" mx-auto px-2 py-8">
-        {/* Search Section */}
-
-        <div className="flex-1 relative mb-6 max-w-lg">
-          <FaSearch className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400" size={16} />
-          <input
-            type="text"
-            placeholder="Search for products..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full pl-12 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition-all duration-200"
-          />
-        </div>
-
-
-
         {/* Products Grid */}
         {filteredProducts.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 mb-12">
+          <div className={`grid gap-6 ${viewMode === 'grid'
+            ? 'grid-cols-2 md:grid-cols-3 lg:grid-cols-4'
+            : 'grid-cols-1'
+            }`}>
             {filteredProducts.map((product) => (
               <div
                 key={product.id}
-                className="group bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-100"
+                className={`group bg-white rounded-2xl overflow-hidden border border-gray-100 hover:border-gray-200 hover:shadow-xl transition-all duration-300 ${viewMode === 'list' ? 'flex' : ''
+                  }`}
               >
                 {/* Product Image */}
-                <div className="relative h-48 overflow-hidden">
-                  <div
-                    className="w-full h-full bg-gradient-to-br from-gray-100 to-gray-200 bg-cover bg-center group-hover:scale-110 transition-transform duration-500"
-                    style={{
-                      backgroundImage: product.product_image_1
-                        ? `url(${product.product_image_1})`
-                        : 'none'
-                    }}
-                  >
-                    {!product.product_image_1 && (
-                      <div className="flex items-center justify-center h-full text-gray-400">
-                        <FaShoppingBag size={32} />
-                      </div>
-                    )}
-                  </div>
+                <div className={`relative overflow-hidden bg-gray-100 ${viewMode === 'list' ? 'w-48 flex-shrink-0' : 'aspect-square'
+                  }`}>
+                  {product.product_image_1 ? (
+                    <img
+                      src={product.product_image_1}
+                      alt={product.product_name}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    />
+                  ) : (
+                    <div className="w-full h-full flex items-center justify-center text-gray-300">
+                      <FaShoppingBag size={48} />
+                    </div>
+                  )}
 
-                  {/* Favorite Button */}
-                  {/* <button
-                    onClick={() => toggleFavorite(product.id)}
-                    className={`absolute top-3 right-3 p-2 rounded-full shadow-lg transition-all duration-200 ${favorites.includes(product.id)
-                        ? 'bg-red-500 text-white'
-                        : 'bg-white/90 text-gray-600 hover:text-red-500 hover:bg-white'
-                      }`}
-                  >
-                    <FaHeart size={14} />
-                  </button> */}
-
-                  {/* Quick Actions Overlay */}
-                  <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                  {/* Quick View Overlay */}
+                  <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
                     <NavLink
                       to={`/storedetails/${product.id}`}
-                      className="px-4 py-2 bg-white text-gray-900 rounded-lg hover:bg-gray-100 transition-colors font-semibold shadow-lg"
+                      className="px-6 py-2 bg-white text-gray-900 rounded-full font-medium hover:bg-gray-100 transition-colors transform translate-y-4 group-hover:translate-y-0 duration-300"
                     >
                       <FaEye className="inline mr-2" size={14} />
-                      Quick View
+                      View Details
                     </NavLink>
                   </div>
+
+                  {/* Badge */}
+                  {product.no_of_items && parseFloat(product.no_of_items) < parseFloat(product.product_price) && (
+                    <div className="absolute top-3 left-3 px-2 py-1 bg-red-500 text-white text-xs font-bold rounded-full">
+                      SALE
+                    </div>
+                  )}
                 </div>
 
                 {/* Product Info */}
-                <div className="p-4">
-                  <h3 className=" capitalize font-semibold text-gray-900 mb-2 line-clamp-2 text-sm">
-                    {product.product_name}
-                  </h3>
+                <div className={`p-4 ${viewMode === 'list' ? 'flex-1 flex flex-col justify-between' : ''}`}>
+                  <div>
+                    <NavLink to={`/storedetails/${product.id}`}>
+                      <h4 className="font-semibold text-gray-900 mb-2 capitalize line-clamp-2 hover:text-blue-600 transition-colors">
+                        {product.product_name}
+                      </h4>
+                    </NavLink>
 
-                  <div className="mb-4">
-                    <div className="flex items-center space-x-2">
+                    {viewMode === 'list' && product.product_description && (
+                      <p className="text-gray-500 text-sm mb-3 line-clamp-2">
+                        {product.product_description}
+                      </p>
+                    )}
+
+                    <div className="flex items-center space-x-2 mb-4">
                       <span
                         className="text-lg font-bold"
                         style={{ color: theme.primary }}
@@ -325,7 +492,7 @@ export default function CardViewProductPage() {
                         {formatPrice(product.product_price)}
                       </span>
                       {product.no_of_items && parseFloat(product.no_of_items) < parseFloat(product.product_price) && (
-                        <span className="text-gray-400 line-through text-sm">
+                        <span className="text-sm text-gray-400 line-through">
                           {formatPrice(product.no_of_items)}
                         </span>
                       )}
@@ -333,35 +500,29 @@ export default function CardViewProductPage() {
                   </div>
 
                   {/* Action Buttons */}
-                  <div className="space-y-2">
-                    <div className="grid grid-cols-2 gap-2">
-                      <NavLink
-                        to={`/storedetails/${product.id}`}
-                        className="px-3 py-2 text-center text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-lg transition-all duration-200 text-xs font-medium"
-                      >
-                        View
-                      </NavLink>
-
-                      <button
-                        onClick={() => {
-                          setSelectedProduct(product);
-                          setPaymentModal(true);
-                        }}
-                        className="px-3 py-2 text-white rounded-lg transition-all duration-200 text-xs font-medium hover:shadow-lg"
-                        style={{ backgroundColor: theme.primary }}
-                      >
-                        Buy Now
-                      </button>
-                    </div>
+                  <div className={`space-y-2 ${viewMode === 'list' ? 'flex space-y-0 space-x-2' : ''}`}>
+                    <button
+                      onClick={() => {
+                        setSelectedProduct(product);
+                        setPaymentForm(prev => ({ ...prev, quantity: 1 }));
+                        setPaymentModal(true);
+                      }}
+                      className={`w-full py-2.5 text-white rounded-xl font-medium transition-all duration-200 hover:shadow-lg ${viewMode === 'list' ? 'w-auto px-6' : ''
+                        }`}
+                      style={{ backgroundColor: theme.primary }}
+                    >
+                      Buy Now
+                    </button>
 
                     <a
                       href={`${configs?.baseRedirect}/${product.phone_number}`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="block w-full text-center py-2 text-green-600 bg-green-50 hover:bg-green-100 rounded-lg transition-all duration-200 text-xs font-medium"
+                      className={`block w-full py-2.5 text-center text-green-600 bg-green-50 rounded-xl font-medium hover:bg-green-100 transition-colors ${viewMode === 'list' ? 'w-auto px-6' : ''
+                        }`}
                     >
-                      <FaWhatsapp className="inline mr-1" size={12} />
-                      Contact Vendor
+                      <FaWhatsapp className="inline mr-1" size={14} />
+                      Chat
                     </a>
                   </div>
                 </div>
@@ -370,309 +531,361 @@ export default function CardViewProductPage() {
           </div>
         ) : (
           <div className="text-center py-20">
-            <div className="w-32 h-32 mx-auto bg-gradient-to-br from-blue-100 to-indigo-200 rounded-full flex items-center justify-center mb-6">
-              <FaShoppingBag className="text-blue-500 text-5xl" />
+            <div className="w-24 h-24 mx-auto bg-gray-100 rounded-full flex items-center justify-center mb-6">
+              <FaShoppingBag className="text-gray-400 text-4xl" />
             </div>
-            <h3 className="text-2xl font-bold text-gray-900 mb-3">No products found</h3>
-            <p className="text-gray-600 text-lg">
-              {searchTerm ? 'Try adjusting your search terms to find what you\'re looking for' : 'This store will be stocked with amazing products soon!'}
+            <h3 className="text-xl font-semibold text-gray-900 mb-2">No products found</h3>
+            <p className="text-gray-500">
+              {searchTerm ? 'Try adjusting your search terms' : 'Check back soon for new products!'}
             </p>
+            {searchTerm && (
+              <button
+                onClick={() => setSearchTerm('')}
+                className="mt-4 px-6 py-2 bg-gray-100 text-gray-700 rounded-full hover:bg-gray-200 transition-colors"
+              >
+                Clear Search
+              </button>
+            )}
           </div>
         )}
 
         {/* Pagination */}
         {data?.products?.links && data.products.links.length > 3 && (
           <div className="flex justify-center mt-12">
-            <div className="flex space-x-2 bg-white rounded-2xl shadow-lg p-2 border border-gray-100">
-              {data.products.links.map((link, index) => (
-                <button
-                  key={index}
-                  onClick={() => {
-                    if (link.label === 'Next &raquo;' || link.label === '&laquo; Previous') {
-                      const page = link.url?.charAt(link.url.length - 1);
-                      handlePageChange(page);
-                    } else if (!isNaN(link.label)) {
-                      handlePageChange(link.label);
-                    }
-                  }}
-                  disabled={link.active || !link.url}
-                  className={`px-4 py-2 text-sm font-medium rounded-xl transition-all duration-200 ${link.active
-                    ? 'text-white shadow-lg'
-                    : link.url
-                      ? 'text-gray-700 hover:bg-gray-100'
-                      : 'text-gray-400 cursor-not-allowed'
-                    }`}
-                  style={{
-                    backgroundColor: link.active ? theme.primary : 'transparent'
-                  }}
-                >
-                  {link.label === '&laquo; Previous'
-                    ? 'Previous'
-                    : link.label === 'Next &raquo;'
-                      ? 'Next'
-                      : link.label
-                  }
-                </button>
-              ))}
+            <div className="flex items-center space-x-1 bg-white rounded-xl shadow-sm border border-gray-100 p-1">
+              {data.products.links.map((link, index) => {
+                const isNav = link.label === 'Next &raquo;' || link.label === '&laquo; Previous';
+                const label = link.label === '&laquo; Previous'
+                  ? '←'
+                  : link.label === 'Next &raquo;'
+                    ? '→'
+                    : link.label;
+
+                return (
+                  <button
+                    key={index}
+                    onClick={() => {
+                      if (isNav) {
+                        const page = link.url?.charAt(link.url.length - 1);
+                        handlePageChange(page);
+                      } else if (!isNaN(link.label)) {
+                        handlePageChange(link.label);
+                      }
+                    }}
+                    disabled={link.active || !link.url}
+                    className={`min-w-[40px] h-10 px-3 text-sm font-medium rounded-lg transition-all duration-200 ${link.active
+                      ? 'text-white shadow-md'
+                      : link.url
+                        ? 'text-gray-700 hover:bg-gray-100'
+                        : 'text-gray-300 cursor-not-allowed'
+                      }`}
+                    style={{
+                      backgroundColor: link.active ? theme.primary : 'transparent'
+                    }}
+                  >
+                    {label}
+                  </button>
+                );
+              })}
             </div>
           </div>
         )}
-      </div>
+      </section>
 
-      {/* Enhanced Footer */}
-      <footer className="bg-white border-t-2 border-gray-100 mt-16">
+      {/* Footer */}
+      <footer className="bg-gray-900 text-white">
+        {/* Main Footer */}
         <div className="max-w-7xl mx-auto px-4 py-12">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {/* Store Information */}
-            <div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {/* Store Info */}
+            <div className="lg:col-span-2">
               <div className="flex items-center space-x-3 mb-4">
                 {marketInfo?.brand_logo && marketInfo.brand_logo !== 'no image' ? (
                   <img
                     src={marketInfo.brand_logo}
                     alt="Store Logo"
-                    className="w-12 h-12 object-cover rounded-lg"
+                    className="w-12 h-12 object-contain rounded-lg bg-white p-1"
                   />
                 ) : (
                   <div
-                    className="w-12 h-12 rounded-lg flex items-center justify-center text-white"
+                    className="w-12 h-12 rounded-lg flex items-center justify-center"
                     style={{ backgroundColor: theme.primary }}
                   >
                     <FaStore size={20} />
                   </div>
                 )}
                 <div>
-                  <h4 className="text-lg font-bold text-gray-900 capitalize">
-                    {params?.storeId?.replace('-', ' ')}
-                  </h4>
-                  <p className="text-gray-600 text-sm">Online Store</p>
+                  <h4 className="text-xl font-bold capitalize">{storeName}</h4>
+                  <p className="text-gray-400 text-sm">Official Store</p>
                 </div>
               </div>
-
-              <p className="text-gray-600 mb-6 leading-relaxed">
-                {marketInfo?.brand_description || 'Your trusted destination for quality products at great prices. Shop with confidence and enjoy exceptional customer service.'}
+              <p className="text-gray-400 mb-6 max-w-md">
+                {marketInfo?.brand_description || 'Your trusted destination for quality products. We deliver excellence with every order.'}
               </p>
 
               {/* Social Links */}
-              {(marketInfo?.facebook_url || marketInfo?.instagram_url || marketInfo?.tiktok_url) && (
-                <div className="flex space-x-4">
-                  {marketInfo.facebook_url && (
-                    <a
-                      href={marketInfo.facebook_url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="w-10 h-10 bg-blue-600 text-white rounded-full flex items-center justify-center hover:bg-blue-700 transition-colors"
-                    >
-                      <FaFacebook size={18} />
-                    </a>
-                  )}
-                  {marketInfo.instagram_url && (
-                    <a
-                      href={marketInfo.instagram_url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="w-10 h-10 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-full flex items-center justify-center hover:from-purple-600 hover:to-pink-600 transition-colors"
-                    >
-                      <FaInstagram size={18} />
-                    </a>
-                  )}
-                  {marketInfo.tiktok_url && (
-                    <a
-                      href={marketInfo.tiktok_url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="w-10 h-10 bg-gray-900 text-white rounded-full flex items-center justify-center hover:bg-gray-800 transition-colors"
-                    >
-                      <FaTiktok size={18} />
-                    </a>
-                  )}
-                </div>
-              )}
-            </div>
-
-            {/* Powered By Gupta - Enhanced */}
-            <div className="flex flex-col justify-center">
-              <div className="bg-gradient-to-br from-blue-50 to-indigo-100 rounded-2xl p-6 border border-blue-200">
-                <div className="flex items-center space-x-4 mb-4">
-                  <div className="w-12 h-12 bg-gradient-to-br from-blue-600 to-purple-600 rounded-xl flex items-center justify-center shadow-lg">
-                    <FaStore className="text-white text-xl" />
-                  </div>
-                  <div>
-                    <h4 className="text-lg font-bold text-gray-900">Powered by Gupta</h4>
-                    <p className="text-gray-600 text-sm">Professional E-commerce Solutions</p>
-                  </div>
-                </div>
-                {/* <p className="text-gray-700 text-sm leading-relaxed mb-4">
-                  Create your own professional online store with advanced features, secure payments, and beautiful designs. Join thousands of successful merchants today.
-                </p> */}
-                <div className="flex items-center justify-between">
-                  <div className="text-xs text-gray-600">
-                    Trusted by 10,000+ stores
-                  </div>
-                  <a target="" href="https://www.mygupta.co" className="px-4 py-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg text-sm font-medium hover:from-blue-700 hover:to-purple-700 transition-all duration-200 shadow-md hover:shadow-lg">
-                    Start Your Store
+              <div className="flex space-x-3">
+                {marketInfo?.facebook_url && (
+                  <a
+                    href={marketInfo.facebook_url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-10 h-10 bg-gray-800 hover:bg-blue-600 rounded-full flex items-center justify-center transition-colors"
+                  >
+                    <FaFacebook size={18} />
                   </a>
-                </div>
+                )}
+                {marketInfo?.instagram_url && (
+                  <a
+                    href={marketInfo.instagram_url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-10 h-10 bg-gray-800 hover:bg-pink-600 rounded-full flex items-center justify-center transition-colors"
+                  >
+                    <FaInstagram size={18} />
+                  </a>
+                )}
+                {marketInfo?.tiktok_url && (
+                  <a
+                    href={marketInfo.tiktok_url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-10 h-10 bg-gray-800 hover:bg-gray-700 rounded-full flex items-center justify-center transition-colors"
+                  >
+                    <FaTiktok size={18} />
+                  </a>
+                )}
+                {marketInfo?.phone_number && (
+                  <a
+                    href={`${configs?.baseRedirect}/${marketInfo.phone_number}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-10 h-10 bg-gray-800 hover:bg-green-600 rounded-full flex items-center justify-center transition-colors"
+                  >
+                    <FaWhatsapp size={18} />
+                  </a>
+                )}
               </div>
             </div>
-          </div>
 
-          {/* Footer Bottom */}
-          <div className="border-t border-gray-200 mt-8 pt-8 text-center">
-            <p className="text-gray-600 text-sm">
-              © 2024 {params?.storeId?.replace('-', ' ')}. All rights reserved. |
-              <span className="font-medium text-gray-900"> Powered by Gupta</span>
-            </p>
+            {/* Quick Links */}
+            <div>
+              <h5 className="font-semibold text-lg mb-4">Quick Links</h5>
+              <ul className="space-y-3">
+                <li>
+                  <a href="#products" className="text-gray-400 hover:text-white transition-colors">
+                    All Products
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className="text-gray-400 hover:text-white transition-colors">
+                    About Us
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className="text-gray-400 hover:text-white transition-colors">
+                    Contact
+                  </a>
+                </li>
+              </ul>
+            </div>
+
+            {/* Contact Info */}
+            <div>
+              <h5 className="font-semibold text-lg mb-4">Get in Touch</h5>
+              <ul className="space-y-3">
+                {marketInfo?.phone_number && (
+                  <li className="flex items-center space-x-3 text-gray-400">
+                    <FaPhoneAlt size={14} />
+                    <span>{marketInfo.phone_number}</span>
+                  </li>
+                )}
+                {marketInfo?.email && (
+                  <li className="flex items-center space-x-3 text-gray-400">
+                    <FaEnvelope size={14} />
+                    <span>{marketInfo.email}</span>
+                  </li>
+                )}
+                {marketInfo?.address && (
+                  <li className="flex items-start space-x-3 text-gray-400">
+                    <FaMapMarkerAlt size={14} className="mt-1" />
+                    <span>{marketInfo.address}</span>
+                  </li>
+                )}
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        {/* Footer Bottom */}
+        <div className="border-t border-gray-800">
+          <div className="max-w-7xl mx-auto px-4 py-6">
+            <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+              <p className="text-gray-400 text-sm text-center md:text-left">
+                © {new Date().getFullYear()} {storeName}. All rights reserved.
+              </p>
+
+              {/* Powered by Gupta */}
+              <a
+                href="https://www.mygupta.co"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center space-x-2 text-gray-400 hover:text-white transition-colors"
+              >
+                <span className="text-sm">Powered by</span>
+                <span className="font-bold text-white">Gupta</span>
+              </a>
+            </div>
           </div>
         </div>
       </footer>
 
-      {/* Enhanced Payment Modal */}
+      {/* Payment Modal */}
       <Modal
         visible={paymentModal}
-        width="90%"
-        height="auto"
+        width="450"
+        height="600"
         effect="fadeInUp"
         onClickAway={() => setPaymentModal(false)}
       >
-        <div className="max-w-lg mx-auto bg-white rounded-2xl shadow-2xl overflow-hidden">
+        <div className="h-full flex flex-col bg-white rounded-xl overflow-hidden">
           {/* Modal Header */}
           <div
-            className="p-6 text-white"
+            className="p-5 text-white flex-shrink-0"
             style={{ background: `linear-gradient(135deg, ${theme.primary}, ${theme.primaryDark})` }}
           >
-            <div className="flex justify-between items-center">
+            <div className="flex justify-between items-start">
               <div>
-                <h2 className="text-xl font-bold">Complete Your Purchase</h2>
-                <p className="text-white/80 text-sm">Secure checkout process</p>
+                <h2 className="text-xl font-bold">Checkout</h2>
+                <p className="text-white/80 text-sm mt-1">Complete your purchase</p>
               </div>
               <button
                 onClick={() => setPaymentModal(false)}
                 className="p-2 text-white/80 hover:text-white hover:bg-white/20 rounded-full transition-colors"
               >
-                ✕
+                <FaTimes size={16} />
               </button>
             </div>
           </div>
 
-          <form onSubmit={handlePayment} className="p-6">
+          {/* Scrollable Content */}
+          <div className="flex-1 overflow-y-auto p-5">
             {/* Product Summary */}
-            <div className="bg-gray-50 rounded-xl p-4 mb-6 border border-gray-200">
-              <h3 className="font-semibold text-gray-900 mb-2">{selectedProduct?.product_name}</h3>
-              <div className="flex justify-between items-center">
-                <span className="text-gray-600">Unit Price:</span>
-                <span className="font-bold" style={{ color: theme.primary }}>
+            <div className="flex items-center space-x-4 p-4 bg-gray-50 rounded-xl mb-6">
+              {selectedProduct?.product_image_1 ? (
+                <img
+                  src={selectedProduct.product_image_1}
+                  alt={selectedProduct.product_name}
+                  className="w-16 h-16 object-cover rounded-lg"
+                />
+              ) : (
+                <div className="w-16 h-16 bg-gray-200 rounded-lg flex items-center justify-center">
+                  <FaShoppingBag className="text-gray-400" size={24} />
+                </div>
+              )}
+              <div className="flex-1">
+                <h3 className="font-semibold text-gray-900 line-clamp-1">{selectedProduct?.product_name}</h3>
+                <p className="text-lg font-bold" style={{ color: theme.primary }}>
                   {formatPrice(selectedProduct?.product_price)}
-                </span>
+                </p>
               </div>
             </div>
 
+            {/* Form Fields */}
             <div className="space-y-4">
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Full Name *</label>
-                  <input
-                    type="text"
-                    required
-                    value={paymentForm.fullName}
-                    onChange={(e) => setPaymentForm(prev => ({ ...prev, fullName: e.target.value }))}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
-                    placeholder="John Doe"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Quantity *</label>
-                  <input
-                    type="number"
-                    min="1"
-                    required
-                    value={paymentForm.quantity}
-                    onChange={(e) => setPaymentForm(prev => ({ ...prev, quantity: parseInt(e.target.value) || 1 }))}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
-                  />
-                </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Full Name</label>
+                <input
+                  type="text"
+                  required
+                  value={paymentForm.fullName}
+                  onChange={(e) => setPaymentForm(prev => ({ ...prev, fullName: e.target.value }))}
+                  className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                  placeholder="Enter your full name"
+                />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Email Address *</label>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Email Address</label>
                 <input
                   type="email"
                   required
                   value={paymentForm.email}
                   onChange={(e) => setPaymentForm(prev => ({ ...prev, email: e.target.value }))}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
-                  placeholder="john@example.com"
+                  className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                  placeholder="Enter your email"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Phone Number *</label>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Phone Number</label>
                 <PhoneInput
                   required
                   countryCode="ng"
                   onChange={(phone) => setPaymentForm(prev => ({ ...prev, phoneNumber: phone }))}
                   placeholder="Enter your phone number"
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
                 />
               </div>
-            </div>
 
-            {/* Order Summary */}
-            <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-6 mt-6 border border-blue-200">
-              <h4 className="font-semibold text-gray-900 mb-4">Order Summary</h4>
-              <div className="space-y-3">
-                <div className="flex justify-between text-sm">
-                  <span className="text-gray-600">Subtotal:</span>
-                  <span className="font-medium">{formatPrice(selectedProduct?.product_price || 0)}</span>
-                </div>
-                <div className="flex justify-between text-sm">
-                  <span className="text-gray-600">Quantity:</span>
-                  <span className="font-medium">×{paymentForm.quantity}</span>
-                </div>
-                <div className="border-t border-blue-200 pt-3">
-                  <div className="flex justify-between items-center">
-                    <span className="text-lg font-bold text-gray-900">Total Amount:</span>
-                    <span className="text-2xl font-bold" style={{ color: theme.primary }}>
-                      {formatPrice((selectedProduct?.product_price || 0) * paymentForm.quantity)}
-                    </span>
-                  </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Quantity</label>
+                <div className="flex items-center space-x-3">
+                  <button
+                    type="button"
+                    onClick={() => setPaymentForm(prev => ({ ...prev, quantity: Math.max(1, prev.quantity - 1) }))}
+                    className="w-10 h-10 rounded-lg border border-gray-200 flex items-center justify-center hover:bg-gray-50 transition-colors"
+                  >
+                    -
+                  </button>
+                  <span className="w-16 text-center font-semibold text-lg">{paymentForm.quantity}</span>
+                  <button
+                    type="button"
+                    onClick={() => setPaymentForm(prev => ({ ...prev, quantity: prev.quantity + 1 }))}
+                    className="w-10 h-10 rounded-lg border border-gray-200 flex items-center justify-center hover:bg-gray-50 transition-colors"
+                  >
+                    +
+                  </button>
                 </div>
               </div>
             </div>
 
-            {/* Payment Security Notice */}
-            <div className="bg-green-50 border border-green-200 rounded-lg p-4 mt-6">
-              <div className="flex items-center space-x-3">
-                <div className="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center">
-                  <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                  </svg>
-                </div>
-                <div>
-                  <h5 className="font-medium text-green-800">Secure Payment</h5>
-                  <p className="text-sm text-green-700">Your payment information is protected with bank-level security</p>
+            {/* Order Total */}
+            <div className="mt-6 p-4 bg-gray-50 rounded-xl">
+              <div className="flex justify-between items-center mb-2">
+                <span className="text-gray-600">Subtotal</span>
+                <span className="font-medium">{formatPrice(selectedProduct?.product_price || 0)}</span>
+              </div>
+              <div className="flex justify-between items-center mb-2">
+                <span className="text-gray-600">Quantity</span>
+                <span className="font-medium">× {paymentForm.quantity}</span>
+              </div>
+              <div className="border-t border-gray-200 pt-2 mt-2">
+                <div className="flex justify-between items-center">
+                  <span className="font-semibold text-gray-900">Total</span>
+                  <span className="text-xl font-bold" style={{ color: theme.primary }}>
+                    {formatPrice((selectedProduct?.product_price || 0) * paymentForm.quantity)}
+                  </span>
                 </div>
               </div>
             </div>
 
-            {/* Action Buttons */}
-            <div className="flex space-x-4 mt-8">
-              <button
-                type="button"
-                onClick={() => setPaymentModal(false)}
-                className="flex-1 py-3 px-6 text-gray-700 bg-gray-100 rounded-xl hover:bg-gray-200 transition-all duration-200 font-medium"
-              >
-                Cancel
-              </button>
-              <button
-                type="submit"
-                className="flex-2 py-3 px-8 text-white rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-200 flex items-center justify-center space-x-2"
-                style={{ backgroundColor: theme.primary }}
-              >
-                <FaCreditCard size={16} />
-                <span>Proceed to Payment</span>
-              </button>
+            {/* Security Badge */}
+            <div className="flex items-center justify-center space-x-2 mt-4 text-gray-500 text-sm">
+              <FaLock size={12} />
+              <span>Secured by Flutterwave</span>
             </div>
+          </div>
+
+          {/* Fixed Footer */}
+          <form onSubmit={handlePayment} className="flex-shrink-0 p-5 border-t border-gray-100 bg-white">
+            <button
+              type="submit"
+              className="w-full py-4 text-white rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-200 flex items-center justify-center space-x-2"
+              style={{ backgroundColor: theme.primary }}
+            >
+              <FaLock size={14} />
+              <span>Pay {formatPrice((selectedProduct?.product_price || 0) * paymentForm.quantity)}</span>
+            </button>
           </form>
         </div>
       </Modal>
@@ -684,16 +897,8 @@ export default function CardViewProductPage() {
         hideProgressBar={false}
         newestOnTop
         closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
         pauseOnHover
         theme="light"
-        toastStyle={{
-          borderRadius: '12px',
-          boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
-          border: '1px solid rgba(0, 0, 0, 0.05)'
-        }}
       />
     </div>
   );
